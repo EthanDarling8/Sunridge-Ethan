@@ -1,6 +1,6 @@
-﻿using Sunridge.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Sunridge.Models;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -12,8 +12,7 @@ namespace Sunridge.DataAccess.Data
         }
 
         // **** DbSets go here ****
-
-        //public DbSet<Category> Category { get; set; }
+        public DbSet<Lot> Lot { get; set; }
        
     }
 }

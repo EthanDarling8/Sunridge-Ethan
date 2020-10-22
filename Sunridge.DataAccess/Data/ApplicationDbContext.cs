@@ -13,6 +13,8 @@ namespace Sunridge.DataAccess.Data
 
         // **** DbSets go here ****
         public DbSet<Lot> Lot { get; set; }
-       
+        public DbSet<LostItem> LostItem { get; set; }
+
+
     }
 }

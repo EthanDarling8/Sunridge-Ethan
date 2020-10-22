@@ -7,6 +7,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
     {
         // **** Model IRepositories go here ****
         ILotRepository Lot { get; }
+        ILostItemRepository LostItem { get; }
         
         void Save();
     }

@@ -10,6 +10,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
+        public ILostItemRepository LostItem { get; private set; }
         
 
         //ctor tab tab makes the constructor
@@ -18,7 +19,9 @@ namespace Sunridge.DataAccess.Data.Repository
             _db = db;
 
             // **** Models are instantiated here ****
-            Lot = new LotRepository(_db);            
+            Lot = new LotRepository(_db);
+            LostItem = new LostItemRepository(_db);
+            
         }
 
         public void Dispose()

@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sunridge.DataAccess.Data;
+using Sunridge.DataAccess.Data.Repository;
+using Sunridge.DataAccess.Data.Repository.IRepository;
 
 namespace Sunridge
 {

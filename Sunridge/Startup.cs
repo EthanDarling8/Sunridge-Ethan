@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sunridge.DataAccess.Data;
+using Sunridge.DataAccess.Data.Repository;
+using Sunridge.DataAccess.Data.Repository.IRepository;
 
 namespace Sunridge
 {
@@ -21,7 +23,7 @@ namespace Sunridge
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();           
+            services.AddRazorPages();
 
             //database connection
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -33,6 +35,9 @@ namespace Sunridge
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,12 +59,11 @@ namespace Sunridge
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+            //This is done instead of endpoints
+            app.UseMvc();
         }
     }
 }

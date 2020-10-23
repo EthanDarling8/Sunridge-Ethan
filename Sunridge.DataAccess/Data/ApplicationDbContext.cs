@@ -13,6 +13,11 @@ namespace Sunridge.DataAccess.Data
 
         // **** DbSets go here ****
         public DbSet<Lot> Lot { get; set; }
-       
+
+        //Photo Gallery DbSets
+        public DbSet<PhotoCategory> PhotoCategory { get; set; }
+        public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
+        public DbSet<Photo> Photo { get; set; }
+
     }
 }

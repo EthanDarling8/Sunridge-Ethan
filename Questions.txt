@@ -1,0 +1,6 @@
+Questions for the Client
+
+
+
+Photo Gallery:
+	Should owners be able to add their own photo categories, or just admins?

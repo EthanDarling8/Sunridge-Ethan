@@ -10,7 +10,12 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
-        
+
+        //Photo Gallery IRepositories
+        public IPhotoCategoryRepository PhotoCategory { get; private set; }
+        public IPhotoAlbumRepository PhotoAlbum { get; private set; }
+        public IPhotoRepository Photo { get; private set; }
+
 
         //ctor tab tab makes the constructor
         public UnitOfWork(ApplicationDbContext db)
@@ -18,7 +23,12 @@ namespace Sunridge.DataAccess.Data.Repository
             _db = db;
 
             // **** Models are instantiated here ****
-            Lot = new LotRepository(_db);            
+            Lot = new LotRepository(_db);
+
+            //Photo Gallery Models
+            PhotoCategory = new PhotoCategoryRepository(_db);
+            PhotoAlbum = new PhotoAlbumRepository(_db);
+            Photo = new PhotoRepository(_db);
         }
 
         public void Dispose()

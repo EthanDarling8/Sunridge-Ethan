@@ -1,6 +1,13 @@
-Questions for the Client
+Kyler's Questions for the Client
 
 
 
 Photo Gallery:
 	Should owners be able to add their own photo categories, or just admins?
+
+	Multiple categories per album?
+
+	Categories on pictures with no album, or just album categories?
+
+	Store datetime on album and photo?
+		Sort by date?

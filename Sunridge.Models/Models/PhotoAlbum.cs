@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sunridge.Models
@@ -9,7 +10,14 @@ namespace Sunridge.Models
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        //Link to it's photos (not really)
+        //Gets a thumbnail for preview displays
+        [NotMapped]
+        public Photo Thumb { get; set; }
 
 
         //Link to ApplicationUser

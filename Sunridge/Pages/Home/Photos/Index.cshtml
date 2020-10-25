@@ -3,3 +3,85 @@
 @{
     ViewData["Title"] = "Photo Gallery";
 }
+
+<div class="row m-1 p-1">
+    @*Display category filters here*@
+    @*Only display the filters if an album isn't selected.*@
+    @if (Model.PhotoVM.SelectedPhotoAlbum == null)
+    {
+        <div class="col-3">
+            @*Clear filters*@
+            <div class="row mb-1">
+                @*Highlight no filters*@
+                @if (Model.PhotoVM.SelectedPhotoCategory == null)
+                {
+                    <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Clear&nbsp;Filters</a>
+                }
+                else
+                {
+                    <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Clear&nbsp;Filters</a>
+                }
+            </div>
+
+
+            @*Photo Category Filter Selection*@
+            <h4 class="row">Select an Album Category</h4>
+            @foreach (var photoCategory in Model.PhotoVM.PhotoCategoryList)
+            {
+                @*Only display categories that have albums in them.*@
+                @if (Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == photoCategory.Id).Count() > 0)
+                {
+                    <div class="row mb-1">
+                        @*Highlight Selected Category*@
+                        @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoCategory.Id == photoCategory.Id)
+                        {
+                            <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-PhotoCategoryId="@photoCategory.Id">@photoCategory.Name</a>
+                        }
+                        else
+                        {
+                            <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-PhotoCategoryId="@photoCategory.Id">@photoCategory.Name</a>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+
+
+
+
+    @*Display rest of the page*@
+    <div class="col-9">
+        @*Display only albums for selected category*@
+        @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
+        {
+            <div class="row container pb-3 backgroundWhite">
+                <div class="col-12">
+                    <div class="row">
+                        <h2 class="pl-1"><b>@Model.PhotoVM.SelectedPhotoCategory.Name</b></h2>
+
+                        @*Display all the albums for the selected category*@
+                        <div class="col-12">
+                            <div class="row my-3">
+                                @foreach (var photoAlbum in Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @Model.PhotoVM.SelectedPhotoCategory.Id))
+                                {
+                                    //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
+                                    Model.PhotoAlbum = photoAlbum;
+
+
+                                    // **** ToDo **** This logic needs to be such that the photo object or string URL to the thumb is the only thing being passed in here.
+
+                                    //Get the first picture from the album's converted thumbnails, use it as the preview.
+                                    Model.PhotoAlbum.Thumb = @Model.PhotoVM.PhotoAlbumThumbList.Where(p => p.PhotoAlbumId == @Model.PhotoAlbum.Id);
+
+                                    < partial name="User/Views/_BrowsePhotoAlbumCard" />
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

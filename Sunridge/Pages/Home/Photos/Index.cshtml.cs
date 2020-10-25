@@ -30,6 +30,10 @@ namespace Sunridge.Pages.Home.Photos
         [BindProperty]
         public PhotoVM PhotoVM { get; set; }
 
+        //This is used by a partial view to generate cards for display based on selected category.
+        [BindProperty]
+        public PhotoAlbum PhotoAlbum { get; set; }
+
 
         // **** TODO **** Delete this if it isn't used on the page.
         // [BindProperty]
@@ -41,16 +45,18 @@ namespace Sunridge.Pages.Home.Photos
         /* Routing options:
          * 1. PhotoCategoryId: displays photo albums
          * 2. PhotoCategoryId + PhotoAlbumId: displays photos in that album
-         *      (need CategoryId for "Back" button)
-         * 3. None: displays a list of categories to filter by and all photo albums
+         *      "Back" button returns to gallery with selected category.
+         * 3. PhotoAlumbId: displays photos in that album.
+         *      "Back" button returns to gallery with no category selected. 
+         * 4. None: displays a list of categories to filter by and all photo albums
          */
         public void OnGet(int? PhotoCategoryId, int? PhotoAlbumId)
         {
-            // **** ToDo **** Delete this if initilization is not required.
-            //PhotoVM = new PhotoVM();
+            // View initilization is required.
+            PhotoVM = new PhotoVM();
 
 
-            // **** TODO **** Get UserId to display "Edit" button on Albumb if it is their album
+            // **** TODO **** Get UserId to display "Edit" button on Album if it is their album
             //Get Id of current user.
             UserId = _userManager.GetUserId(User);
 
@@ -58,21 +64,45 @@ namespace Sunridge.Pages.Home.Photos
             //1
             if (PhotoCategoryId != null && PhotoAlbumId == null)
             {
-                PhotoVM.PhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.PhotoCategoryId == PhotoCategoryId, a => a.OrderBy(a => a.Name));
+                PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
+                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.PhotoCategoryId == PhotoCategoryId, a => a.OrderBy(a => a.Title));
+
+                GenerateAlbumThumbs();
             }
             //2
             else if (PhotoCategoryId != null && PhotoAlbumId != null)
             {
-                PhotoVM.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);
+                PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
+                PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);
                 PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == PhotoAlbumId);
             }
             //3
+            else if (PhotoCategoryId == null && PhotoAlbumId != null)
+            {
+                PhotoVM.SelectedPhotoCategory = null;
+                PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);
+                PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == PhotoAlbumId);
+            }
+            //4
             else
             {
+                PhotoVM.SelectedPhotoCategory = null;
                 PhotoVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Name));
+                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title));
+
+                GenerateAlbumThumbs();
             }
         }
-    }
+
+
+
+
+        void GenerateAlbumThumbs()
+        {         
+            foreach (PhotoAlbum photoAlbum in PhotoVM.PhotoAlbumList)
+            {
+                PhotoVM.PhotoAlbumThumbList.Add(_unitOfWork.Photo.GetFirstOrDefault(p => p.PhotoAlbumId == photoAlbum.Id));
+            }
+        }
+    }    
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-/* Photos will be nested by category
+/* Albums will be nested by category
  * Owners will be able to add new Albums to a Category, or edit their existing albums. * 
  */
 namespace Sunridge.Models

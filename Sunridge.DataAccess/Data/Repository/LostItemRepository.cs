@@ -25,7 +25,8 @@ namespace Sunridge.DataAccess.Data.Repository
             objFromDb.Date = LostItem.Date;
             objFromDb.Image = LostItem.Image;
             objFromDb.Name = LostItem.Name;
-            objFromDb.Description = LostItem.Description;                           
+            objFromDb.Description = LostItem.Description;
+            //objFromDb.UserId = LostItem.UserId;
 
             _db.SaveChanges();                                                      
         }

@@ -17,6 +17,14 @@ function loadList() {
                 {
                     data: "image", width: "20%"
                 },
+                /*
+                {
+                    data: "user.name", width: "20%"
+                },
+                {
+                    data: "user.phone", width: "20%"
+                },
+                */
                 {
                     data: "date", width: "20%"
                 },

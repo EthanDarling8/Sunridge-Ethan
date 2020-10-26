@@ -2,7 +2,7 @@
 
 namespace Sunridge.Models.ViewModels
 {
-    public class PhotoVM
+    public class PhotoGalleryVM
     {
         //All the categories
         public IEnumerable<PhotoCategory> PhotoCategoryList { get; set; }
@@ -11,9 +11,6 @@ namespace Sunridge.Models.ViewModels
 
         //All the albums for the selected category (if no category selected, display all albums)
         public IEnumerable<PhotoAlbum> PhotoAlbumList { get; set; }
-
-        //Preview Images for all the albums being displayed
-        public ICollection<Photo> PhotoAlbumThumbList { get; set; }
 
         public PhotoAlbum SelectedPhotoAlbum { get; set; }
 

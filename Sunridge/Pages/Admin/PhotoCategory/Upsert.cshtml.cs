@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
@@ -34,16 +32,14 @@ namespace Sunridge.Pages.Admin.PhotoCategory
             {
                 PhotoCategoryObj = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
 
-                if (PhotoCategoryId == null)
+                if (PhotoCategoryObj == null)
                 {
                     //Returns a 404 error page.
                     return NotFound();
                 }
             }
 
-            //This refreshes the page which triggers the OnGet again. ID will be null.
             return Page();
-
         }
 
 

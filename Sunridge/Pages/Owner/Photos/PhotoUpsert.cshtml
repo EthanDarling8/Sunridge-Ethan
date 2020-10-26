@@ -1,5 +1,99 @@
 ﻿@page
-@model Sunridge.Pages.Owner.Photos.PhotoUpsertModel
+@model Sunridge.Pages.Owner.Photos.UpsertModel
 @{
-    ViewData["Title"] = "Edit Album Photos";
+    ViewData["Title"] = "Photo";
+}
+
+
+
+<form method="post" asp-action="Upsert">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Hidden Inputs*@
+            @*PhotoAlbumId*@
+            <input type="hidden" asp-for="PhotoAlbumObj.PhotoAlbum.Id" />
+
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                @*Title*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoAlbumObj.PhotoAlbum.Title"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="PhotoAlbumObj.PhotoAlbum.Title" />
+                        <span class="text-danger" asp-validation-for="PhotoAlbumObj.PhotoAlbum.Title"></span>
+                    </div>
+                </div>
+
+
+                @*Category Dropdown List*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(a => a.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId,
+                                              Model.PhotoAlbumObj.PhotoCategoryList,
+                                              new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></span>
+                    </div>
+                </div>
+
+
+
+                @*Description*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoAlbumObj.PhotoAlbum.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="PhotoAlbumObj.PhotoAlbum.Description" id="txtDesc" style="height:200px;"></textarea>
+                    </div>
+                </div>
+
+
+
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+            The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary form-control">@(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album</button>
+                            </div>
+
+                            @* **** ToDo **** Make sure this returns to the correct place (Admin DashBoard?) *@
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-secondary form-control">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: "lists",
+        menubar: 'file edit format'
+    })
+    </script>
 }

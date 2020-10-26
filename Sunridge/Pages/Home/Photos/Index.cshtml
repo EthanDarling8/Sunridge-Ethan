@@ -15,11 +15,11 @@
                 @*Highlight no filters*@
                 @if (Model.PhotoVM.SelectedPhotoCategory == null)
                 {
-                    <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Clear&nbsp;Filters</a>
+                    <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Show&nbsp;All</a>
                 }
                 else
                 {
-                    <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Clear&nbsp;Filters</a>
+                    <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Show&nbsp;All</a>
                 }
             </div>
 
@@ -68,13 +68,7 @@
                                     //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
                                     Model.PhotoAlbum = photoAlbum;
 
-
-                                    // **** ToDo **** This logic needs to be such that the photo object or string URL to the thumb is the only thing being passed in here.
-
-                                    //Get the first picture from the album's converted thumbnails, use it as the preview.
-                                    Model.PhotoAlbum.Thumb = @Model.PhotoVM.PhotoAlbumThumbList.Where(p => p.PhotoAlbumId == @Model.PhotoAlbum.Id);
-
-                                    < partial name="User/Views/_BrowsePhotoAlbumCard" />
+                                    <partial name="User/Views/_BrowsePhotoAlbumCard" />
                                 }
                             </div>
                         </div>

@@ -14,14 +14,12 @@ namespace Sunridge.Models
 
         public string Description { get; set; }
 
-        //Link to it's photos (not really)
-        //Gets a thumbnail for preview displays
-        [NotMapped]
-        public Photo Thumb { get; set; }
+        //Location of a thumbnail for preview displays
+        //This link is added when the first photo is added
+        public string Thumb { get; set; }
 
 
         //Link to ApplicationUser
-        [Required]
         public string ApplicationUserId { get; set; }
 
         [ForeignKey("ApplicationUserId")]
@@ -29,7 +27,7 @@ namespace Sunridge.Models
 
 
         //Link to PhotoCategory
-        [Required]
+        [Display(Name = "Category")]
         public int PhotoCategoryId { get; set; }
 
         [ForeignKey("PhotoCategoryId")]

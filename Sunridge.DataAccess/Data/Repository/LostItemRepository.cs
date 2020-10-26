@@ -22,7 +22,9 @@ namespace Sunridge.DataAccess.Data.Repository
             {
                 objFromDb.Image = LostItem.Image;
             }
-            objFromDb.Date = LostItem.Date;                                         
+            objFromDb.Date = LostItem.Date;
+            objFromDb.Image = LostItem.Image;
+            objFromDb.Name = LostItem.Name;
             objFromDb.Description = LostItem.Description;                           
 
             _db.SaveChanges();                                                      

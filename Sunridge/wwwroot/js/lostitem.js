@@ -15,13 +15,16 @@ function loadList() {
         "columns":
             [
                 {
-                    data: "image", width: "30%"
+                    data: "image", width: "20%"
                 },
                 {
                     data: "date", width: "20%"
                 },
                 {
-                    data: "description", width: "30%"
+                    data: "name", width: "20%"
+                },
+                {
+                    data: "description", width: "20%"
                 },
                 {
                     data: "id",

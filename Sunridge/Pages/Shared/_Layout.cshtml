@@ -118,13 +118,46 @@
             </div>
         </nav><!-- NavBar END -->
     </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
+    <!-- Wrapper -->
+    <div class="d-flex" id="wrapper">
+
+        <!-- Admin sidebar TODO: only make visible to admin role -->
+        <div class="bg-dark text-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">Admin</div>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Keys</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Reports</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-dollar-sign"></i> Classifieds</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photos</a>
+                <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>
+                <div id="sidebarSubmenu" class="collapse">
+                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Inventory Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Banner Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">News Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Events</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <button class="btn btn-primary ml-3 m-2" id="menu-toggle"><i class="fa fa-bars"></i></button>
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+
+    </div>
     <hr />
+
+    <!-- Footer -->
     <footer class="footer bg-light">
         <div class="container">
             <div class="row">
@@ -157,23 +190,23 @@
         </div>
     </footer>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fmqs5qy5c1vp5qr53a8qz2bo3u04yll68273ote9ynk1dm4p"></script>
-
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
 
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

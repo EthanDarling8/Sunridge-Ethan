@@ -9,6 +9,8 @@ namespace Sunridge.Models
         [Key]
         public int Id { get; set; }
 
+        
+        [StringLength(60, MinimumLength = 1)]
         [Required]
         public string Title { get; set; }
 
@@ -20,6 +22,8 @@ namespace Sunridge.Models
 
 
         //Link to ApplicationUser
+        [Display(Name = "Owner Name")]
+        [Required]
         public string ApplicationUserId { get; set; }
 
         [ForeignKey("ApplicationUserId")]
@@ -28,6 +32,7 @@ namespace Sunridge.Models
 
         //Link to PhotoCategory
         [Display(Name = "Category")]
+        [Required]
         public int PhotoCategoryId { get; set; }
 
         [ForeignKey("PhotoCategoryId")]

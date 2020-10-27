@@ -3,7 +3,7 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 
 namespace Sunridge.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]    
     [ApiController]
     public class PhotoCategoryController : Controller
     {

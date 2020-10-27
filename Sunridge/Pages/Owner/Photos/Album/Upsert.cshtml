@@ -1,5 +1,5 @@
 ﻿@page
-@model Sunridge.Pages.Owner.Photos.UpsertModel
+@model Sunridge.Pages.Owner.Photos.Album.UpsertModel
 @{
     ViewData["Title"] = "Photo Album";
 }
@@ -79,17 +79,38 @@
                     <div class="col-9 offset-3">
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary form-control">@(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album</button>
+                                <button type="submit"
+                                        class="btn btn-primary form-control"
+                                        asp-route-PhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
+                                        asp-route-PhotoCategoryId="@Model.PhotoCategoryId">
+
+                                    @(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album
+                                </button>
                             </div>
 
-                            @* **** ToDo **** Make sure this returns to the correct place (Admin DashBoard?) *@
+                            @* **** ToDo **** Make sure this returns to the correct place*@
                             <div class="col-6">
-                                <a asp-page="./Index" class="btn btn-secondary form-control">Back to List</a>
+                                @*Route back with the selected category maintained.*@
+
+                                <a asp-route-PhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
+                                   asp-route-PhotoCategoryId="@Model.PhotoCategoryId"
+                                   asp-page="/Home/Photos/Index"
+                                   class="btn btn-secondary form-control">
+                                    Back to Album
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            @*Display Image preview if in edit mode and image exists*@
+            @if (Model.PhotoAlbumObj.PhotoAlbum != null)
+            {
+                <div class="col-4 p-4">
+                    <img src="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" style="border-radius:5px; width:100%; border:1px solid #bbb9b9;" />
+                </div>
+            }
 
         </div>
     </div>
@@ -97,11 +118,13 @@
 
 
 @section Scripts {
-<script>
-    tinymce.init({
-        selector: 'textarea',
-        plugins: "lists",
-        menubar: 'file edit format'
-    })
-</script>
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        })
+    </script>
 }

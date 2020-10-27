@@ -6,7 +6,7 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
 
-namespace Sunridge.Pages.Owner.Photos
+namespace Sunridge.Pages.Owner.Photos.Album
 {
     // **** ToDo **** [Authorize]
     public class UpsertModel : PageModel
@@ -25,12 +25,16 @@ namespace Sunridge.Pages.Owner.Photos
         [BindProperty]
         public PhotoAlbumVM PhotoAlbumObj { get; set; }
 
+        [BindProperty]
+        public int PhotoCategoryId { get; set; }
+
+        [BindProperty]
         public string ApplicationUserId { get; set; }
 
 
 
 
-        public IActionResult OnGet(int? PhotoAlbumId)
+        public IActionResult OnGet(int? PhotoAlbumId, int photoCategoryId)
         {
             PhotoAlbumObj = new PhotoAlbumVM()
             {
@@ -39,14 +43,15 @@ namespace Sunridge.Pages.Owner.Photos
             };
 
 
-            //Get Id of current user.
-            ApplicationUserId = _userManager.GetUserId(User);
+            
 
 
             //Edit existing
             if (PhotoAlbumId != null)
             {
                 PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);
+                PhotoCategoryId = photoCategoryId;
+                ApplicationUserId = PhotoAlbumObj.PhotoAlbum.ApplicationUserId;
 
                 //Specified PhotoAlbumId does not exist or database fails
                 if (PhotoAlbumObj.PhotoAlbum == null)
@@ -55,6 +60,12 @@ namespace Sunridge.Pages.Owner.Photos
                     return NotFound();
                 }
             }
+            else
+            {
+                //Get Id of current user if making a new album
+                ApplicationUserId = _userManager.GetUserId(User);
+            }
+            
 
             return Page();
         }
@@ -62,7 +73,7 @@ namespace Sunridge.Pages.Owner.Photos
 
 
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int photoAlbumId, int photoCategoryId)
         {
             if (!ModelState.IsValid)
             {
@@ -82,7 +93,7 @@ namespace Sunridge.Pages.Owner.Photos
 
             _unitOfWork.Save();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Home/Photos/Index", new { PhotoAlbumId = photoAlbumId, PhotoCategoryId = photoCategoryId });
         }
     }
 }

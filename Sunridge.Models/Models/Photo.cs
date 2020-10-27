@@ -7,7 +7,8 @@ namespace Sunridge.Models
     {
         [Key]
         public int Id { get; set; }
-        
+
+        [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
 
         public string Description { get; set; }

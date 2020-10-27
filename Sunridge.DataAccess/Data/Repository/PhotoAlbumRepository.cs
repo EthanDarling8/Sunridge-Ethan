@@ -20,7 +20,10 @@ namespace Sunridge.DataAccess.Data.Repository
             //Gets the first object from the table that has the same id as the one passed in
             var objFromDb = _db.PhotoAlbum.FirstOrDefault(s => s.Id == photoAlbum.Id);
 
-            // **** ToDo ****
+            objFromDb.Title = photoAlbum.Title;
+            objFromDb.Description = photoAlbum.Description;
+            objFromDb.Thumb = photoAlbum.Thumb;
+            objFromDb.PhotoCategoryId = photoAlbum.PhotoCategoryId;
 
             _db.SaveChanges();
         }

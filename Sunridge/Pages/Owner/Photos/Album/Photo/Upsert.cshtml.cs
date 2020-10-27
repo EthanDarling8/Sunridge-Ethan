@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +8,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 
-namespace Sunridge.Pages.Owner.Photos
+namespace Sunridge.Pages.Owner.Photos.Album.Photo
 {
     // **** ToDo **** [Authorize]
-    public class PhotoUpsertModel : PageModel
+    public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public PhotoUpsertModel(
+        public UpsertModel(
             IUnitOfWork unitOfWork,
             IWebHostEnvironment hostingEnvironment,
             UserManager<IdentityUser> userManager)
@@ -31,14 +29,16 @@ namespace Sunridge.Pages.Owner.Photos
 
 
         [BindProperty]
-        public Photo PhotoObj { get; set; }
+        public Models.Photo PhotoObj { get; set; }
+
+        public int PhotoCategoryId { get; set; }
 
         public string ApplicationUserId { get; set; }
 
 
-        public IActionResult OnGet(int? PhotoAlbumId, int? PhotoId)
+        public IActionResult OnGet(int PhotoAlbumId, int photoCategoryId, int? PhotoId)
         {
-            PhotoObj = new Photo();
+            PhotoObj = new Models.Photo();
 
             // **** ToDo **** Ensure this can only be accessed the an admin or the user that owns this picture.
             //Get Id of current user.
@@ -57,11 +57,21 @@ namespace Sunridge.Pages.Owner.Photos
             }
             
             
-            //PhotoAlbumId entered: invalid
-            if (PhotoAlbumId == null)
+            //No PhotoAlbumId entered: invalid
+            if (PhotoAlbumId == 0)
             {
                 return NotFound();
             }
+            
+            //New photo, add it to the specified album
+            if(PhotoId == null)
+            {
+                //Pass the album in
+                PhotoObj.PhotoAlbumId = PhotoAlbumId;
+            }
+            
+            //Track selected category display
+            PhotoCategoryId = photoCategoryId;
 
             return Page();
         }
@@ -69,8 +79,13 @@ namespace Sunridge.Pages.Owner.Photos
 
 
 
-        public IActionResult OnPost(int PhotoId)
+        public IActionResult OnPost(int PhotoId, int photoAlbumId, int photoCategoryId)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
@@ -102,9 +117,24 @@ namespace Sunridge.Pages.Owner.Photos
 
                 //Save string Path to image file to database
                 PhotoObj.Image = @"\images\photoGallery\" + fileName + extension;
-                
+
+                // **** ToDo **** Replace this with an actual thumb conversion
+                PhotoObj.Thumb = @"\images\photoGallery\" + fileName + extension;
+
 
                 _unitOfWork.Photo.Add(PhotoObj);
+
+
+                //Make the thumbnail for the album if this is the first photo added to that album
+                // **** ToDo **** This needs to link to the converted thumb
+                if (_unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == PhotoObj.PhotoAlbumId).Count() == 0)
+                {
+                    PhotoAlbum PhotoAlbumObj = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoObj.PhotoAlbumId);
+
+                    PhotoAlbumObj.Thumb = @"\images\photoGallery\" + fileName + extension;
+
+                    _unitOfWork.PhotoAlbum.Update(PhotoAlbumObj);
+                }
             }
 
             //Existing Photo
@@ -149,11 +179,16 @@ namespace Sunridge.Pages.Owner.Photos
 
                     //Save string Path to image file to database
                     PhotoObj.Image = @"\images\photoGallery\" + fileName + extension;
+
+
+                    // **** ToDo **** Replace this with an actual thumb conversion
+                    PhotoObj.Thumb = @"\images\photoGallery\" + fileName + extension;
                 }
                 else
                 {
                     PhotoObj.Image = objFromDb.Image;
                 }
+
 
                 _unitOfWork.Photo.Update(PhotoObj);
             }
@@ -162,7 +197,8 @@ namespace Sunridge.Pages.Owner.Photos
             _unitOfWork.Save();
 
             //RedirectToPage allows variables to be passed in.
-            return RedirectToPage("./Index");
+            // **** ToDo **** Make sure this returns to the album that the photo belongs to
+            return RedirectToPage("/Home/Photos/Index", new { PhotoAlbumId = photoAlbumId, PhotoCategoryId = photoCategoryId });
         }
     }
 }

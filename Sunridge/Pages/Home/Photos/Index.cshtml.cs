@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Sunridge.Pages.Home.Photos
@@ -29,6 +28,9 @@ namespace Sunridge.Pages.Home.Photos
         [BindProperty]
         public PhotoAlbum PhotoAlbum { get; set; }
 
+        [BindProperty]
+        public Photo Photo { get; set; }
+
         public string ApplicationUserId { get; set; }
 
 
@@ -42,7 +44,7 @@ namespace Sunridge.Pages.Home.Photos
          *      "Back" button returns to gallery with no category selected. 
          * 4. None: displays a list of categories to filter by and all photo albums
          */
-        public void OnGet(int? PhotoCategoryId, int? PhotoAlbumId)
+        public void OnGet(int PhotoCategoryId, int PhotoAlbumId)
         {
             // View initilization is required.
             PhotoVM = new PhotoGalleryVM();
@@ -56,20 +58,21 @@ namespace Sunridge.Pages.Home.Photos
 
 
             //1
-            if (PhotoCategoryId != null && PhotoAlbumId == null)
+            if (PhotoCategoryId != 0 && PhotoAlbumId == 0)
             {
                 PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
+                PhotoVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
                 PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.PhotoCategoryId == PhotoCategoryId, a => a.OrderBy(a => a.Title));
             }
             //2
-            else if (PhotoCategoryId != null && PhotoAlbumId != null)
+            else if (PhotoCategoryId != 0 && PhotoAlbumId != 0)
             {
                 PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
                 PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);
                 PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == PhotoAlbumId);
             }
             //3
-            else if (PhotoCategoryId == null && PhotoAlbumId != null)
+            else if (PhotoCategoryId == 0 && PhotoAlbumId != 0)
             {
                 PhotoVM.SelectedPhotoCategory = null;
                 PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);

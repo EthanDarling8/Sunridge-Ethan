@@ -14,6 +14,7 @@ namespace Sunridge.DataAccess.Data
         // **** DbSets go here ****
         public DbSet<Lot> Lot { get; set; }
         public DbSet<Banner> Banner { get; set; }
-
+        public DbSet<Classifieds> Classifieds { get; set; }
+        public DbSet<ViewCount> ViewCount { get; set; }
     }
 }

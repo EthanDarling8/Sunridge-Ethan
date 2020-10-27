@@ -1,4 +1,5 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 
 namespace Sunridge.DataAccess.Data.Repository
 {
@@ -10,7 +11,9 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
-        
+        public IBannerRepository Banner { get; private set; }
+
+
 
         //ctor tab tab makes the constructor
         public UnitOfWork(ApplicationDbContext db)
@@ -18,7 +21,8 @@ namespace Sunridge.DataAccess.Data.Repository
             _db = db;
 
             // **** Models are instantiated here ****
-            Lot = new LotRepository(_db);            
+            Lot = new LotRepository(_db);
+            Banner = new BannerRepository(_db);
         }
 
         public void Dispose()

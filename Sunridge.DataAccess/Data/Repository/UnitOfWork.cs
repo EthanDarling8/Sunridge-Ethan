@@ -1,4 +1,5 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 
 namespace Sunridge.DataAccess.Data.Repository
 {
@@ -10,11 +11,14 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
+        public IBannerRepository Banner { get; private set; }
 
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
         public IPhotoAlbumRepository PhotoAlbum { get; private set; }
         public IPhotoRepository Photo { get; private set; }
+        
+
 
 
         //ctor tab tab makes the constructor
@@ -24,11 +28,13 @@ namespace Sunridge.DataAccess.Data.Repository
 
             // **** Models are instantiated here ****
             Lot = new LotRepository(_db);
+            
+            Banner = new BannerRepository(_db);
 
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);
             PhotoAlbum = new PhotoAlbumRepository(_db);
-            Photo = new PhotoRepository(_db);
+            Photo = new PhotoRepository(_db);            
         }
 
         public void Dispose()

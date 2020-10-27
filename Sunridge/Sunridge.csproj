@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Sunridge.Utility\Sunridge.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Home\" />
+    <Folder Include="Pages\Owner\" />
+  </ItemGroup>
+
 </Project>

@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using Sunridge.DataAccess.Data.Repository.IRepository;
-using Sunridge.Models;
 
-namespace Sunridge.Pages
+namespace Sunridge.Pages.Admin.Banner
 {
     public class IndexModel : PageModel
     {
@@ -19,7 +17,7 @@ namespace Sunridge.Pages
             _unitOfWork = unitOfWork;
         }
 
-        public List<Banner> BannerList { get; set; }
+        public List<Models.Banner> BannerList { get; set; }
 
         public void OnGet()
         {

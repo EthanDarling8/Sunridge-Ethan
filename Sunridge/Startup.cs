@@ -23,7 +23,7 @@ namespace Sunridge
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages();           
 
             //database connection
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -35,7 +35,7 @@ namespace Sunridge
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }
@@ -58,10 +58,10 @@ namespace Sunridge
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             //This is done instead of endpoints
             app.UseMvc();
         }

@@ -7,7 +7,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
     {
         // **** Model IRepositories go here ****
         ILotRepository Lot { get; }
-
+        IBannerRepository Banner { get; }
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }
         IPhotoAlbumRepository PhotoAlbum { get; }

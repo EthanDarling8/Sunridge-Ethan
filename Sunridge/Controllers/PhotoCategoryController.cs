@@ -32,7 +32,7 @@ namespace Sunridge.Controllers
         public IActionResult Delete(int Id)
         {
 
-            // **** To Do **** Delete needs to change all albums in that category to some default category (None)
+            // **** To Do **** Delete needs to change all albums in that category to some default category (Other)
 
 
             var objFromDb = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == Id);

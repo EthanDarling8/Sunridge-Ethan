@@ -33,7 +33,7 @@
                 }
             </div>
 
-            @*Photo Category Selection*@            
+            @*Photo Category Selection*@
             @foreach (var photoCategory in Model.PhotoVM.PhotoCategoryList)
             {
                 @*Only display categories that have albums in them.*@
@@ -59,11 +59,11 @@
 
 
     @*Display rest of the page*@
-    <div class="col-9">
 
-        @*Display only albums for selected category*@
-        @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
-        {
+    @*Display only albums for selected category*@
+    @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
+    {
+        <div class="col-9">
             <div class="row container pb-3 backgroundWhite">
                 <div class="col-12">
                     <div class="row">
@@ -85,14 +85,29 @@
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    }
 
 
-        @*Display all photos for the selected album with a selected category to come back to*@
-        else if (Model.PhotoVM.SelectedPhotoAlbum != null && Model.PhotoVM.SelectedPhotoCategory != null)
-        {  
-            // **** ToDo **** Build this display
 
+
+    @*Display all photos for the selected album*@
+    else if (Model.PhotoVM.SelectedPhotoAlbum != null)
+    {
+        <div class="col-3">
+            @*Category Selected*@
+            @if (Model.PhotoVM.SelectedPhotoCategory != null)
+            {
+                <a class="btn btn-secondary" asp-page="Index" asp-route-PhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id">Back to Photo Gallery</a>
+            }
+            @*No Category Selected*@
+            else
+            {
+                <a class="btn btn-secondary" asp-page="Index">Back to Photo Gallery</a>
+            }
+        </div>
+
+        <div class="col-9">
             <div class="row container pb-3 backgroundWhite">
                 <div class="col-12">
                     <div class="row">
@@ -114,23 +129,16 @@
                     </div>
                 </div>
             </div>
-
-            <a  class="btn btn-secondary" asp-page="Index" asp-route-PhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id">Back to Photo Gallery</a>
-        }
-
-        
-        @*Display all photos for the selected album, no selected category*@
-        else if (Model.PhotoVM.SelectedPhotoAlbum != null && Model.PhotoVM.SelectedPhotoCategory == null)
-        {
-            // **** ToDo **** Build this display
-
-            <a class="btn btn-secondary" asp-page="Index">Back to Photo Gallery</a>
-        }
+        </div>
+    }
 
 
-        @*Display all albums (no cateogry selected, no album selected)*@
-        else
-        {
+
+
+    @*Display all albums (no cateogry selected, no album selected)*@
+    else
+    {
+        <div class="col-9">
             <div class="row container pb-3 backgroundWhite">
                 <div class="col-12">
                     <div class="row">
@@ -159,7 +167,7 @@
                     </div>
                 </div>
             </div>
-        }
-
-    </div>
+        </div>
+    }
 </div>
+

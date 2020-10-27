@@ -56,13 +56,15 @@ namespace Sunridge.Pages.Home.Photos
             //Get Id of current user.
             ApplicationUserId = _userManager.GetUserId(User);
 
+            //Category and Album lists should always include everything.
+            //Use where in the html to display what is needed.
+            PhotoVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
+            PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title));
 
             //1
             if (PhotoCategoryId != 0 && PhotoAlbumId == 0)
             {
-                PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
-                PhotoVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.PhotoCategoryId == PhotoCategoryId, a => a.OrderBy(a => a.Title));
+                PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);               
             }
             //2
             else if (PhotoCategoryId != 0 && PhotoAlbumId != 0)
@@ -82,8 +84,6 @@ namespace Sunridge.Pages.Home.Photos
             else
             {
                 PhotoVM.SelectedPhotoCategory = null;
-                PhotoVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title));
             }
         }
     }    

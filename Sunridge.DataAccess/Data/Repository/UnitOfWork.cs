@@ -5,9 +5,9 @@ namespace Sunridge.DataAccess.Data.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        //Inject an instance of our database service
-        //underscore (_db) is to indicate it is read only        
+        //Inject an instance of our database service      
         private readonly ApplicationDbContext _db;
+
 
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
@@ -17,18 +17,14 @@ namespace Sunridge.DataAccess.Data.Repository
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
         public IPhotoAlbumRepository PhotoAlbum { get; private set; }
         public IPhotoRepository Photo { get; private set; }
-        
 
 
-
-        //ctor tab tab makes the constructor
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
 
             // **** Models are instantiated here ****
-            Lot = new LotRepository(_db);
-            
+            Lot = new LotRepository(_db);            
             Banner = new BannerRepository(_db);
 
             //Photo Gallery Models

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Sunridge.Models.Models;
 
 namespace Sunridge.Areas.Identity.Pages.Account
 {
@@ -23,17 +26,20 @@ namespace Sunridge.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
@@ -45,6 +51,17 @@ namespace Sunridge.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -60,6 +77,14 @@ namespace Sunridge.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            
+            [Required]
+            [Phone]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+            
+            [Display(Name = "Image")]
+            public string Image { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -72,9 +97,29 @@ namespace Sunridge.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var fileName = "";
+            var temp = "";
+            
+            
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                
+                var files = HttpContext.Request.Form.Files;
+                foreach (var Image in files) {
+                    var file = Image;
+                    temp = file.FileName;
+                    var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePictures");
+                    fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                        await file.CopyToAsync(fileStream);
+                    }
+                }
+
+                var user = new ApplicationUser {
+                    FirstName = Input.FirstName, LastName = Input.LastName,
+                    Image = fileName, PhoneNumber = Input.PhoneNumber
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

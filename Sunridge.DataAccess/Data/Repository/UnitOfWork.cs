@@ -13,7 +13,7 @@ namespace Sunridge.DataAccess.Data.Repository
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
 
-
+        public IApplicationUserRepository ApplicationUser { get; private set; }
 
         //ctor tab tab makes the constructor
         public UnitOfWork(ApplicationDbContext db)
@@ -23,6 +23,7 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****
             Lot = new LotRepository(_db);
             Banner = new BannerRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
         }
 
         public void Dispose()

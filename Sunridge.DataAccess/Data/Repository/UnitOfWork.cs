@@ -13,6 +13,7 @@ namespace Sunridge.DataAccess.Data.Repository
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
 
+        public IApplicationUserRepository ApplicationUser { get; private set; }
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
         public IPhotoAlbumRepository PhotoAlbum { get; private set; }
@@ -26,6 +27,7 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****
             Lot = new LotRepository(_db);            
             Banner = new BannerRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
 
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);

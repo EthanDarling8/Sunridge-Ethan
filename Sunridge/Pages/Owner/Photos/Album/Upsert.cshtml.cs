@@ -26,7 +26,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
         public PhotoAlbumVM PhotoAlbumObj { get; set; }
 
         [BindProperty]
-        public int PhotoCategoryId { get; set; }
+        public int SelectedPhotoCategoryId { get; set; }
 
         [BindProperty]
         public string ApplicationUserId { get; set; }
@@ -34,7 +34,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
 
 
-        public IActionResult OnGet(int? PhotoAlbumId, int photoCategoryId)
+        public IActionResult OnGet(int? selectedPhotoAlbumId, int selectedPhotoCategoryId)
         {
             PhotoAlbumObj = new PhotoAlbumVM()
             {
@@ -47,10 +47,10 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
 
             //Edit existing
-            if (PhotoAlbumId != null)
+            if (selectedPhotoAlbumId != null)
             {
-                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoAlbumId);
-                PhotoCategoryId = photoCategoryId;
+                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
+                SelectedPhotoCategoryId = selectedPhotoCategoryId;
                 ApplicationUserId = PhotoAlbumObj.PhotoAlbum.ApplicationUserId;
 
                 //Specified PhotoAlbumId does not exist or database fails
@@ -73,7 +73,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
 
 
-        public IActionResult OnPost(int photoAlbumId, int photoCategoryId)
+        public IActionResult OnPost(int selectedPhotoAlbumId, int selectedPhotoCategoryId)
         {
             if (!ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
             _unitOfWork.Save();
 
-            return RedirectToPage("/Home/Photos/Index", new { PhotoAlbumId = photoAlbumId, PhotoCategoryId = photoCategoryId });
+            return RedirectToPage("/Home/Photos/Index", new { selectedPhotoAlbumId = selectedPhotoAlbumId, selectedPhotoCategoryId = selectedPhotoCategoryId });
         }
     }
 }

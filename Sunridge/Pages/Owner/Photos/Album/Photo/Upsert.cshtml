@@ -12,15 +12,6 @@
             @*Display any validation/error messages here.*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            @*Hidden Inputs*@
-            @*PhotoId*@
-            @if (Model.PhotoObj.Id != 0)
-            {
-                <input type="hidden" asp-for="PhotoObj.Id" />
-            }
-            @*PhotoAlbumId*@
-            <input type="hidden" asp-for="PhotoObj.PhotoAlbumId" value="@Model.PhotoObj.PhotoAlbumId" />
-
 
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
                 @*Displays "Update" if their is an Id, "Create" if there is not*@
@@ -74,8 +65,9 @@
                                 {
                                     <button type="submit"
                                             class="btn btn-primary form-control"
-                                            asp-route-PhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
-                                            asp-route-PhotoCategoryId="@Model.PhotoObj.PhotoAlbumId">
+                                            asp-route-photoId="@Model.PhotoObj.Id"
+                                            asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
+                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
                                         Update Photo
                                     </button>
                                 }
@@ -84,17 +76,17 @@
                                     <button type="submit"
                                             class="btn btn-primary form-control"
                                             onclick="return ValidateInput()"
-                                            asp-route-PhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
-                                            asp-route-PhotoCategoryId="@Model.PhotoObj.PhotoAlbumId">
+                                            asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
+                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
                                         Add Photo
                                     </button>
                                 }
                             </div>
 
-                            @* **** ToDo **** Make sure this returns to the correct place (Admin DashBoard?) *@
+                            @* **** ToDo **** Make sure this returns to the correct place (album being edited) *@
                             <div class="col-6">
-                                <a asp-route-PhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
-                                   asp-route-PhotoCategoryId="@Model.PhotoObj.PhotoAlbumId"
+                                <a asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
+                                   asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
                                    asp-page="/Home/Photos/Index"
                                    class="btn btn-secondary form-control">
                                     Back to Album

@@ -6,8 +6,8 @@
     @if (@Model.PhotoVM.SelectedPhotoCategory != null)
     {
         <a asp-page="Index"
-            asp-route-PhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-            asp-route-PhotoAlbumId="@Model.PhotoAlbum.Id"
+            asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+            asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
             class="card" style="border:2px solid #008cba; border-radius: 5px; ">
 
             @*Title*@
@@ -36,7 +36,7 @@
     else
     {
     <a asp-page="Index"
-        asp-route-PhotoAlbumId="@Model.PhotoAlbum.Id"
+        asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
         class="card" style="border:2px solid #008cba; border-radius: 5px; ">
 
         @*Title*@

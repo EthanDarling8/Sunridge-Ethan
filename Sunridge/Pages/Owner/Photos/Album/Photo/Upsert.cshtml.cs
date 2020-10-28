@@ -31,12 +31,12 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
         [BindProperty]
         public Models.Photo PhotoObj { get; set; }
 
-        public int PhotoCategoryId { get; set; }
+        public int SelectedPhotoCategoryId { get; set; }
 
         public string ApplicationUserId { get; set; }
 
 
-        public IActionResult OnGet(int PhotoAlbumId, int photoCategoryId, int? PhotoId)
+        public IActionResult OnGet(int selectedPhotoAlbumId, int selectedPhotoCategoryId, int photoId)
         {
             PhotoObj = new Models.Photo();
 
@@ -45,9 +45,9 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
             ApplicationUserId = _userManager.GetUserId(User);
 
             //Existing Photo (edit)
-            if (PhotoId != null)
+            if (photoId != 0)
             {
-                PhotoObj = _unitOfWork.Photo.GetFirstOrDefault(p => p.Id == PhotoId);
+                PhotoObj = _unitOfWork.Photo.GetFirstOrDefault(p => p.Id == photoId);
 
                 if (PhotoObj == null)
                 {
@@ -55,23 +55,24 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
                     return NotFound();
                 }
             }
-            
-            
-            //No PhotoAlbumId entered: invalid
-            if (PhotoAlbumId == 0)
-            {
-                return NotFound();
-            }
-            
+
+
             //New photo, add it to the specified album
-            if(PhotoId == null)
+            if (photoId == 0)
             {
-                //Pass the album in
-                PhotoObj.PhotoAlbumId = PhotoAlbumId;
-            }
+                //No PhotoAlbumId entered and new photo: invalid
+                if (selectedPhotoAlbumId == 0)
+                {
+                    return NotFound();
+                }            
             
+                //Pass the album in
+                PhotoObj.PhotoAlbumId = selectedPhotoAlbumId;
+            }
+
+
             //Track selected category display
-            PhotoCategoryId = photoCategoryId;
+            SelectedPhotoCategoryId = selectedPhotoCategoryId;
 
             return Page();
         }
@@ -79,21 +80,21 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
 
 
-        public IActionResult OnPost(int PhotoId, int photoAlbumId, int photoCategoryId)
+        public IActionResult OnPost(int photoId, int selectedPhotoAlbumId, int selectedPhotoCategoryId)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //Keep track of selected PhotoCategory
+            SelectedPhotoCategoryId = selectedPhotoCategoryId;
 
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
 
             // **** ToDo **** Add Thumb Conversion to these areas
+            // store thumb link of last photo added to album
+            // update thumb link when that photo is edited or removed
 
             //New Photo          
-            if (PhotoId == 0)
+            if (photoId == 0)
             {
                 //Upload new image
                 //Rename file to something unique to avoid duplicate file names.
@@ -121,20 +122,22 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
                 // **** ToDo **** Replace this with an actual thumb conversion
                 PhotoObj.Thumb = @"\images\photoGallery\" + fileName + extension;
 
-
                 _unitOfWork.Photo.Add(PhotoObj);
 
 
-                //Make the thumbnail for the album if this is the first photo added to that album
+                //Make latest photo the thumbnail for the album
                 // **** ToDo **** This needs to link to the converted thumb
-                if (_unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == PhotoObj.PhotoAlbumId).Count() == 0)
-                {
-                    PhotoAlbum PhotoAlbumObj = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoObj.PhotoAlbumId);
+                PhotoAlbum PhotoAlbumObj = new PhotoAlbum();
+                PhotoAlbumObj = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
+                PhotoAlbumObj.Thumb = @"\images\photoGallery\" + fileName + extension;
 
-                    PhotoAlbumObj.Thumb = @"\images\photoGallery\" + fileName + extension;
 
-                    _unitOfWork.PhotoAlbum.Update(PhotoAlbumObj);
-                }
+                //Add PhotoAlbumId here because it is passed in via the route
+                //for condition statements rather than as hidden inputs
+                PhotoObj.PhotoAlbumId = selectedPhotoAlbumId;
+
+
+                _unitOfWork.PhotoAlbum.Update(PhotoAlbumObj);                
             }
 
             //Existing Photo
@@ -142,7 +145,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
             {
                 //Replace existing image
                 //Check that an image exists
-                var objFromDb = _unitOfWork.Photo.Get(PhotoId);
+                var objFromDb = _unitOfWork.Photo.Get(photoId);
                 if (files.Count > 0)
                 {
                     //Rename file to something unique to avoid duplicate file names.
@@ -187,8 +190,14 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
                 else
                 {
                     PhotoObj.Image = objFromDb.Image;
+                    PhotoObj.Thumb = objFromDb.Thumb;
                 }
 
+
+                //Add PhotoId and PhotoAlbumId here because they are passed in via the route
+                //for condition statements rather than as hidden inputs
+                PhotoObj.Id = photoId;
+                PhotoObj.PhotoAlbumId = selectedPhotoAlbumId;
 
                 _unitOfWork.Photo.Update(PhotoObj);
             }
@@ -196,9 +205,15 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
             _unitOfWork.Save();
 
-            //RedirectToPage allows variables to be passed in.
-            // **** ToDo **** Make sure this returns to the album that the photo belongs to
-            return RedirectToPage("/Home/Photos/Index", new { PhotoAlbumId = photoAlbumId, PhotoCategoryId = photoCategoryId });
+
+            if (selectedPhotoCategoryId != 0)
+            {
+                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId, SelectedPhotoCategoryId = selectedPhotoCategoryId });
+            }
+            else
+            {
+                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId });
+            }            
         }
     }
 }

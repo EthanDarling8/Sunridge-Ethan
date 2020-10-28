@@ -7,29 +7,134 @@
 @*TEMPORARY TEST LINKS*@
 <a class="row" asp-page="../../Admin/PhotoCategory/Index">PhotoCategory Index</a>
 <a class="row" asp-page="../../Admin/PhotoCategory/Upsert">PhotoCategory Upsert</a>
-<a class="row" asp-page="../../Owner/Photos/Album/Upsert">Add Album (BROKEN)</a>
-<a class="row" asp-route-PhotoAlbumId="4" asp-page="../../Owner/Photos/Album/Upsert">Edit Album</a>
-<a class="row" asp-route-PhotoAlbumId="4" asp-page="../../Owner/Photos/Album/Photo/Upsert">Add Photo</a>
-<a class="row" asp-route-PhotoAlbumId="4" asp-route-PhotoId="3" asp-page="../../Owner/Photos/Album/Photo/Upsert">Edit Photo</a>
 
 <div class="row m-1 p-1">
-    @*Display category filters here*@
-    @*Only display the filters if an album isn't selected.*@
-    @if (Model.PhotoVM.SelectedPhotoAlbum == null)
-    {
-        <div class="col-3">
-            <h4 class="row">Select an Album Category</h4>
+
+    @* **** ToDo **** Add authorization requirement to add and edit buttons.
+        make the buttons link to the user id *@
+
+    @*Display Add, Back, and Category buttons here*@
+    <div class="col-4">
+        @*Album selected*@
+        @if (@Model.PhotoVM.SelectedPhotoAlbum != null)
+        {
+            @*Category Selected*@
+            @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+            {
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-primary"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Photo/Upsert">
+                        <i class="fas fa-plus"></i> Add Photo
+                    </a>
+                </div>
+
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-warning"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Upsert">
+                        <i class="far fa-edit"></i> Edit Album
+                    </a>
+                </div>
+
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-secondary"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-page="Index">
+                        <i class="fas fa-arrow-left"></i> Back to Photo Gallery
+                    </a>
+                </div>
+            }
+            @*No Category Selected*@
+            else
+            {
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-primary"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Photo/Upsert">
+                        <i class="fas fa-plus"></i> Add Photo
+                    </a>
+                </div>
+
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-warning"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Upsert">
+                        <i class="far fa-edit"></i> Edit Album
+                    </a>
+                </div>
+
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-secondary"
+                       asp-page="Index">
+                        <i class="fas fa-arrow-left"></i> Back to Photo Gallery
+                    </a>
+                </div>
+            }
+        }
+
+        @*No album selected*@
+        else
+        {
+            @*Category Selected*@
+            @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+            {
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-primary"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-page="/Owner/Photos/Album/Upsert">
+                        <i class="fas fa-plus"></i> Add Album
+                    </a>
+                </div>
+            }
+            @*No Category Selected*@
+            else
+            {
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-primary"
+                       asp-page="/Owner/Photos/Album/Upsert">
+                        <i class="fas fa-plus"></i> Add Album
+                    </a>
+                </div>
+            }
+
+            <div class="row mb-2">
+                <a class="btn btn-block btn-secondary"
+                   asp-page="Index">
+                    <i class="far fa-images"></i> My Albums
+                </a>
+            </div>
+        }
+
+
+        @*Display category filters here*@
+        @*Only display the filters if an album isn't selected.*@
+        @if (@Model.PhotoVM.SelectedPhotoAlbum == null)
+        {
+            <h5 class="row">Select an Album Category</h5>
 
             @*Clear Photo Category Selection*@
             <div class="row mb-1">
                 @*Highlight no filters*@
                 @if (Model.PhotoVM.SelectedPhotoCategory == null)
                 {
-                    <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Show&nbsp;All</a>
+                    <a asp-page="Index"
+                       class="btn btn-block btn-outline-primary"
+                       style="border-radius:2px;"
+                       asp-route-selectedPhotoCategoryId="">
+                        Show&nbsp;All
+                    </a>
                 }
                 else
                 {
-                    <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-PhotoCategoryId="">Show&nbsp;All</a>
+                    <a asp-page="Index"
+                       class="btn btn-block btn-outline-secondary"
+                       style="border-radius:2px;"
+                       asp-route-selectedPhotoCategoryId="">
+                        Show&nbsp;All
+                    </a>
                 }
             </div>
 
@@ -43,28 +148,38 @@
                         @*Highlight Selected Category*@
                         @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoCategory.Id == photoCategory.Id)
                         {
-                            <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-PhotoCategoryId="@photoCategory.Id">@photoCategory.Name</a>
+                            <a asp-page="Index"
+                               class="btn btn-block btn-outline-primary"
+                               style="border-radius:2px;"
+                               asp-route-selectedPhotoCategoryId="@photoCategory.Id">
+                                @photoCategory.Name
+                            </a>
                         }
                         else
                         {
-                            <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-PhotoCategoryId="@photoCategory.Id">@photoCategory.Name</a>
+                            <a asp-page="Index"
+                               class="btn btn-block btn-outline-secondary"
+                               style="border-radius:2px;"
+                               asp-route-selectedPhotoCategoryId="@photoCategory.Id">
+                                @photoCategory.Name
+                            </a>
                         }
                     </div>
                 }
             }
-        </div>
-    }
+        }
+    </div>
 
 
 
 
-    @*Display rest of the page*@
+    @*Display rest of the page here*@
+    <div class="col-8">
 
-    @*Display only albums for selected category*@
-    @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
-    {
-        <div class="col-9">
-            <div class="row container pb-3 backgroundWhite">
+        @*Display only albums for selected category*@
+        @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
+        {
+            <div class="row container">
                 <div class="col-12">
                     <div class="row">
                         <h2 class="pl-1"><b>@Model.PhotoVM.SelectedPhotoCategory.Name</b></h2>
@@ -85,61 +200,51 @@
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 
 
+        @*Display all photos for the selected album*@
+        else if (Model.PhotoVM.SelectedPhotoAlbum != null)
+        {
+            <div class="row container">
 
+                @*Display Album Information Here*@
+                    <h2 class="col-12">@Model.PhotoVM.SelectedPhotoAlbum.Title</h2>
+                <div class="border col-12">                    
+                    <h4 class="col-12 mt-1 text-secondary">@Model.PhotoVM.SelectedPhotoAlbum.PhotoCategory.Name</h4>
+                    <div class="col-12 mt-2">@Html.Raw(Model.PhotoVM.SelectedPhotoAlbum.Description)</div>
+                </div>
+               
 
-    @*Display all photos for the selected album*@
-    else if (Model.PhotoVM.SelectedPhotoAlbum != null)
-    {
-        <div class="col-3">
-            @*Category Selected*@
-            @if (Model.PhotoVM.SelectedPhotoCategory != null)
-            {
-                <a class="btn btn-secondary" asp-page="Index" asp-route-PhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id">Back to Photo Gallery</a>
-            }
-            @*No Category Selected*@
-            else
-            {
-                <a class="btn btn-secondary" asp-page="Index">Back to Photo Gallery</a>
-            }
-        </div>
-
-        <div class="col-9">
-            <div class="row container pb-3 backgroundWhite">
+                @*Display all the photos for the selected album*@
                 <div class="col-12">
-                    <div class="row">
-                        <h2 class="pl-1"><b>@Model.PhotoVM.SelectedPhotoAlbum.Title</b></h2>
+                    <div class="row my-3">
+                        @*No photos added yet*@
+                        @if (Model.PhotoVM.PhotoList.Count() == 0)
+                        {
+                        <h2 class="col-12 ml-1 text-danger">Album Is Empty</h2>
+                        }
+                        else
+                        {
+                            @foreach (var photo in Model.PhotoVM.PhotoList)
+                            {
+                                //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
+                                Model.Photo = photo;
 
-                        @*Display all the photos for the selected album*@
-                        <div class="col-12">
-                            <div class="row my-3">
-                                @foreach (var photo in Model.PhotoVM.PhotoList)
-                                {
-                                    //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
-                                    Model.Photo = photo;
-
-                                    <partial name="Home/Photos/Views/_PhotoCard" />
-                                }
-                            </div>
-                        </div>
-
+                                <partial name="Home/Photos/Views/_PhotoCard" />
+                            }
+                        }                        
                     </div>
                 </div>
+
             </div>
-        </div>
-    }
+        }
 
 
-
-
-    @*Display all albums (no cateogry selected, no album selected)*@
-    else
-    {
-        <div class="col-9">
-            <div class="row container pb-3 backgroundWhite">
+        @*Display all albums (no cateogry selected, no album selected)*@
+        else
+        {
+            <div class="row container">
                 <div class="col-12">
                     <div class="row">
 
@@ -167,7 +272,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 

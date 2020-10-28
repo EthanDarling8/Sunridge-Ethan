@@ -15,14 +15,14 @@
             @*Keep track of Id if editing existing.*@
             @if (Model.PhotoAlbumObj.PhotoAlbum.Id != 0)
             {
-                <input type="hidden" asp-for="PhotoAlbumObj.PhotoAlbum.Id" />
+                <input type="hidden" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Id" />
             }
 
             @*Hidden Inputs*@
             @*UserId*@
-            <input type="hidden" asp-for="PhotoAlbumObj.PhotoAlbum.ApplicationUserId" value="@Model.ApplicationUserId" />
+            <input type="hidden" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.ApplicationUserId" value="@Model.ApplicationUserId" />
             @*Thumb*@
-            <input type="hidden" asp-for="PhotoAlbumObj.PhotoAlbum.Thumb" value="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" />
+            <input type="hidden" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" value="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" />
 
 
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
@@ -35,11 +35,11 @@
                 @*Title*@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="PhotoAlbumObj.PhotoAlbum.Title"></label>
+                        <label asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Title"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="PhotoAlbumObj.PhotoAlbum.Title" />
-                        <span class="text-danger" asp-validation-for="PhotoAlbumObj.PhotoAlbum.Title"></span>
+                        <input class="form-control" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Title" />
+                        <span class="text-danger" asp-validation-for="@Model.PhotoAlbumObj.PhotoAlbum.Title"></span>
                     </div>
                 </div>
 
@@ -47,13 +47,13 @@
                 @*Category Dropdown List*@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></label>
+                        <label asp-for="@Model.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></label>
                     </div>
                     <div class="col-9">
                         @Html.DropDownListFor(a => a.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId,
                                               Model.PhotoAlbumObj.PhotoCategoryList,
                                               new { @class = "form-control" })
-                        <span class="text-danger" asp-validation-for="PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></span>
+                        <span class="text-danger" asp-validation-for="@Model.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></span>
                     </div>
                 </div>
 
@@ -62,10 +62,10 @@
                 @*Description*@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="PhotoAlbumObj.PhotoAlbum.Description"></label>
+                        <label asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Description"></label>
                     </div>
                     <div class="col-9">
-                        <textarea class="form-control" asp-for="PhotoAlbumObj.PhotoAlbum.Description" id="txtDesc" style="height:200px;"></textarea>
+                        <textarea class="form-control" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Description" id="txtDesc" style="height:200px;"></textarea>
                     </div>
                 </div>
 
@@ -74,15 +74,17 @@
 
 
                 @*Buttons. offset-3 shifts the buttons 3 columns right
-            The Back to List "button" isn't actually a button. Just a link. *@
+                The Back to List "button" isn't actually a button. Just a link. *@
                 <div class="form-group row">
                     <div class="col-9 offset-3">
                         <div class="row">
+
+
                             <div class="col-6">
                                 <button type="submit"
                                         class="btn btn-primary form-control"
-                                        asp-route-PhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
-                                        asp-route-PhotoCategoryId="@Model.PhotoCategoryId">
+                                        asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
+                                        asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
 
                                     @(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album
                                 </button>
@@ -92,14 +94,15 @@
                             <div class="col-6">
                                 @*Route back with the selected category maintained.*@
 
-                                <a asp-route-PhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
-                                   asp-route-PhotoCategoryId="@Model.PhotoCategoryId"
+                                <a asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
+                                   asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
                                    asp-page="/Home/Photos/Index"
                                    class="btn btn-secondary form-control">
-                                    Back to Album
+                                    Back to Photo Gallery
                                 </a>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

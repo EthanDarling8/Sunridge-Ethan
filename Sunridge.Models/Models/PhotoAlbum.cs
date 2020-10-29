@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Dynamic;
 
 namespace Sunridge.Models
 {
@@ -22,7 +23,6 @@ namespace Sunridge.Models
 
 
         //Link to ApplicationUser
-        [Display(Name = "Owner Name")]
         [Required]
         public string ApplicationUserId { get; set; }
 

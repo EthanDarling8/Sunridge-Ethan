@@ -86,7 +86,7 @@
                                         asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
                                         asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
 
-                                    @(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album
+                                    @(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create")
                                 </button>
                             </div>
 
@@ -98,7 +98,7 @@
                                    asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
                                    asp-page="/Home/Photos/Index"
                                    class="btn btn-secondary form-control">
-                                    Back to Photo Gallery
+                                    Back
                                 </a>
                             </div>
                         </div>

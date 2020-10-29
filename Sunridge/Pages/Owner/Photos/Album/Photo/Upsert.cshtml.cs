@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@ using Sunridge.Models;
 
 namespace Sunridge.Pages.Owner.Photos.Album.Photo
 {
-    // **** ToDo **** [Authorize]
+    // **** ToDo **** setup user id check so only admin and creator can edit
+    [Authorize]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;

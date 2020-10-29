@@ -8,7 +8,8 @@ using Sunridge.Models.ViewModels;
 
 namespace Sunridge.Pages.Owner.Photos.Album
 {
-    // **** ToDo **** [Authorize]
+    // **** ToDo **** setup user id check so only admin and creator can edit
+    [Authorize]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -83,11 +84,16 @@ namespace Sunridge.Pages.Owner.Photos.Album
             //New PhotoAlbum
             if (PhotoAlbumObj.PhotoAlbum.Id == 0)
             {
+                //Store application user so their name can be displayed on the album.
+                PhotoAlbumObj.PhotoAlbum.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
+
                 _unitOfWork.PhotoAlbum.Add(PhotoAlbumObj.PhotoAlbum);
             }
             //Existing PhotoAlbum
             else
             {
+                PhotoAlbumObj.PhotoAlbum.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == PhotoAlbumObj.PhotoAlbum.ApplicationUserId);
+
                 _unitOfWork.PhotoAlbum.Update(PhotoAlbumObj.PhotoAlbum);
             }
 

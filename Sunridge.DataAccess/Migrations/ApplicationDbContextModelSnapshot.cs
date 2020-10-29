@@ -340,13 +340,6 @@ namespace Sunridge.DataAccess.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 

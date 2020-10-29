@@ -10,24 +10,25 @@
             asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
             class="card" style="border:2px solid #008cba; border-radius: 5px; ">
 
-            @*Title*@
-            <div class="pl-3 pt-1 text-center">
-                <h3 class="card-title text-primary"><b>@Model.PhotoAlbum.Title</b></h3>
+            <div class="text-center">
+                @*Title*@
+                <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+
+                @*Display an image if there is one*@
+                @if (Model.PhotoAlbum.Thumb != null)
+                {
+                    <img src="@Model.PhotoAlbum.Thumb" class="card-img-top p-2 rounded" />
+                }
+                else
+                {
+                    <p class="text-danger">Album is Empty</p>
+                }
+
+                @*Creator Name*@
+                @* **** ToDo **** THIS IS BROKEN
+                <p class="text-secondary">@Model.PhotoAlbum.ApplicationUser.FullName</p>
+                *@
             </div>
-
-
-            @*Display an image if there is one*@
-            @if (Model.PhotoAlbum.Thumb != null)
-            {
-                <img src="@Model.PhotoAlbum.Thumb" class="card-img-top p-2 rounded" />
-            }
-            else
-            {
-                <img src="" class="card-img-top p-2 rounded" />
-            }
-
-
-            @* **** ToDo **** Display Album Owner's Name *@
 
         </a>
     }
@@ -38,25 +39,26 @@
     <a asp-page="Index"
         asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
         class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+        
+        <div class="text-center">
+            @*Title*@
+            <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
 
-        @*Title*@
-        <div class="pl-3 pt-1 text-center">
-            <h3 class="card-title text-primary"><b>@Model.PhotoAlbum.Title</b></h3>
+            @*Display an image if there is one*@
+            @if (Model.PhotoAlbum.Thumb != null)
+            {
+                <img src="@Model.PhotoAlbum.Thumb" class="card-img-top p-2 rounded" />
+            }
+            else
+            {
+                <p class="text-danger">Album is Empty</p>
+            }
+
+            @*Creator Name*@
+            @* **** ToDo **** THIS IS BROKEN
+            <p class="text-secondary">@Model.PhotoAlbum.ApplicationUser.FullName</p>
+            *@
         </div>
-
-
-        @*Display an image if there is one*@
-        @if (Model.PhotoAlbum.Thumb != null)
-        {
-            <img src="@Model.PhotoAlbum.Thumb" class="card-img-top p-2 rounded" />
-        }
-        else
-        {
-            <img src="" class="card-img-top p-2 rounded" />
-        }
-
-
-        @* **** ToDo **** Display Album Owner's Name *@
 
     </a>
     }

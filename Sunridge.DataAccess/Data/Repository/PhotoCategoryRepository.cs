@@ -57,7 +57,7 @@ namespace Sunridge.DataAccess.Data.Repository
                 Text = i.Name,
                 //Id is used for url routing in the page
                 Value = i.Id.ToString()
-            });
+            }).OrderBy(c => c.Text);
         }
 
 

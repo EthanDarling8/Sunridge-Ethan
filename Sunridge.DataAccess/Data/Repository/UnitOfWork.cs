@@ -12,8 +12,8 @@ namespace Sunridge.DataAccess.Data.Repository
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
-
         public IApplicationUserRepository ApplicationUser { get; private set; }
+
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
         public IPhotoAlbumRepository PhotoAlbum { get; private set; }

@@ -1,38 +1,40 @@
 ﻿@model Sunridge.Pages.Home.Photos.IndexModel
 
 <div class="col-xl-4 col-md-6">
+
+    @*Category Selected*@
+    @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+    {
+
+
+    }
+
+    @*No Category Selected*@
+    else
+    {
+
+
+    }
+
+
     <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
-        <div class="pl-3 pt-1 text-center">
-            <h3 class="card-title text-primary"><b>@Model.Photo.Title</b></h3>
+        <div class="text-center">
+            @*Title*@
+            <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
+
+            @*Display thumb*@
+            <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-warning m-1"
+                   asp-route-photoId="@Model.Photo.Id"
+                   asp-route-selectedAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                   asp-page="/Owner/Photos/Album/Photo/Upsert">
+                    <i class="far fa-edit"></i> Edit Photo
+                </a>
+            }
         </div>
-
-
-        @*Display a thumb*@
-        <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
-
-
-        @* **** ToDo **** Convert this to an Edit button for the owner of the album or admins
-        <a asp-page="/Admin/Shoe/Details" class="fas fa-info-circle btn btn-secondary" style="border-radius:2px;" asp-route-id="@Model.shoe.Id">&nbsp;Details</a>
-        *@
-
-
-        @if (User.Identity.IsAuthenticated)
-        {
-            @*
-            **** ToDo **** Setup this Edit button for the owner of the album or admin
-                Should be checking for matching UserId or in admin role
-            *@
-
-            <form method="post">
-                @*Pass in the PhotoAlbumId to the OnPostEdit method*@
-
-                <button asp-page-handler="edit" asp-route-PhotoId="@Model.Photo.Id" class="col far fa-edit btn btn-primary mt-1"
-                        style="border-radius:2px;"
-                        type="submit">
-                    &nbsp;Edit&nbsp;Photo
-                </button>
-            </form>
-        }
     </div>
 </div>
 

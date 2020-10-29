@@ -14,30 +14,33 @@
         make the buttons link to the user id *@
 
     @*Display Add, Back, and Category buttons here*@
-    <div class="col-4">
+    <div class="col-3">
         @*Album selected*@
         @if (@Model.PhotoVM.SelectedPhotoAlbum != null)
         {
             @*Category Selected*@
             @if (@Model.PhotoVM.SelectedPhotoCategory != null)
             {
-                <div class="row mb-2">
-                    <a class="btn btn-block btn-primary"
-                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                       asp-page="/Owner/Photos/Album/Photo/Upsert">
-                        <i class="fas fa-plus"></i> Add Photo
-                    </a>
-                </div>
+                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-page="/Owner/Photos/Album/Photo/Upsert">
+                            <i class="fas fa-plus"></i> Add Photo
+                        </a>
+                    </div>
 
-                <div class="row mb-2">
-                    <a class="btn btn-block btn-warning"
-                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                       asp-page="/Owner/Photos/Album/Upsert">
-                        <i class="far fa-edit"></i> Edit Album
-                    </a>
-                </div>
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-warning"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-page="/Owner/Photos/Album/Upsert">
+                            <i class="far fa-edit"></i> Edit Album
+                        </a>
+                    </div>
+                }
 
                 <div class="row mb-2">
                     <a class="btn btn-block btn-secondary"
@@ -50,21 +53,24 @@
             @*No Category Selected*@
             else
             {
-                <div class="row mb-2">
-                    <a class="btn btn-block btn-primary"
-                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                       asp-page="/Owner/Photos/Album/Photo/Upsert">
-                        <i class="fas fa-plus"></i> Add Photo
-                    </a>
-                </div>
+                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-page="/Owner/Photos/Album/Photo/Upsert">
+                            <i class="fas fa-plus"></i> Add Photo
+                        </a>
+                    </div>
 
-                <div class="row mb-2">
-                    <a class="btn btn-block btn-warning"
-                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                       asp-page="/Owner/Photos/Album/Upsert">
-                        <i class="far fa-edit"></i> Edit Album
-                    </a>
-                </div>
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-warning"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-page="/Owner/Photos/Album/Upsert">
+                            <i class="far fa-edit"></i> Edit Album
+                        </a>
+                    </div>
+                }
 
                 <div class="row mb-2">
                     <a class="btn btn-block btn-secondary"
@@ -81,31 +87,41 @@
             @*Category Selected*@
             @if (@Model.PhotoVM.SelectedPhotoCategory != null)
             {
-                <div class="row mb-2">
-                    <a class="btn btn-block btn-primary"
-                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                       asp-page="/Owner/Photos/Album/Upsert">
-                        <i class="fas fa-plus"></i> Add Album
-                    </a>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                           asp-page="/Owner/Photos/Album/Upsert">
+                            <i class="fas fa-plus"></i> Add Album
+                        </a>
+                    </div>
+                }
             }
             @*No Category Selected*@
             else
             {
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-page="/Owner/Photos/Album/Upsert">
+                            <i class="fas fa-plus"></i> Add Album
+                        </a>
+                    </div>
+                }
+            }
+            @* ****ToDo **** This needs to actually point the the user's albums *@
+            @if (User.Identity.IsAuthenticated)
+            {
                 <div class="row mb-2">
-                    <a class="btn btn-block btn-primary"
-                       asp-page="/Owner/Photos/Album/Upsert">
-                        <i class="fas fa-plus"></i> Add Album
+                    <a class="btn btn-block btn-secondary"
+                       asp-route-myAlbums="True"
+                       asp-page="Index">
+                        <i class="far fa-images"></i> My Albums
                     </a>
                 </div>
             }
-
-            <div class="row mb-2">
-                <a class="btn btn-block btn-secondary"
-                   asp-page="Index">
-                    <i class="far fa-images"></i> My Albums
-                </a>
-            </div>
         }
 
 
@@ -113,7 +129,7 @@
         @*Only display the filters if an album isn't selected.*@
         @if (@Model.PhotoVM.SelectedPhotoAlbum == null)
         {
-            <h5 class="row">Select an Album Category</h5>
+            <h5 class="row justify-content-center">Select an Album Category</h5>
 
             @*Clear Photo Category Selection*@
             <div class="row mb-1">
@@ -174,7 +190,7 @@
 
 
     @*Display rest of the page here*@
-    <div class="col-8">
+    <div class="col-9">
 
         @*Display only albums for selected category*@
         @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
@@ -182,7 +198,9 @@
             <div class="row container">
                 <div class="col-12">
                     <div class="row">
-                        <h2 class="pl-1"><b>@Model.PhotoVM.SelectedPhotoCategory.Name</b></h2>
+
+                        @*Category Name*@
+                        <h2 class="col-12 border-bottom">@Model.PhotoVM.SelectedPhotoCategory.Name</h2>
 
                         @*Display all the albums for the selected category*@
                         <div class="col-12">
@@ -209,9 +227,13 @@
             <div class="row container">
 
                 @*Display Album Information Here*@
-                    <h2 class="col-12">@Model.PhotoVM.SelectedPhotoAlbum.Title</h2>
-                <div class="border col-12">                    
+                @*Album Title*@
+                <h2 class="col-12">@Model.PhotoVM.SelectedPhotoAlbum.Title</h2>
+
+                <div class="border col-12">       
+                    @*Category*@
                     <h4 class="col-12 mt-1 text-secondary">@Model.PhotoVM.SelectedPhotoAlbum.PhotoCategory.Name</h4>
+                    @*Description*@
                     <div class="col-12 mt-2">@Html.Raw(Model.PhotoVM.SelectedPhotoAlbum.Description)</div>
                 </div>
                
@@ -222,7 +244,7 @@
                         @*No photos added yet*@
                         @if (Model.PhotoVM.PhotoList.Count() == 0)
                         {
-                        <h2 class="col-12 ml-1 text-danger">Album Is Empty</h2>
+                        <h3 class="col-12 ml-1 text-danger">Album Is Empty</h3>
                         }
                         else
                         {
@@ -253,7 +275,8 @@
                             @*Only Display Categories with Albums in Them*@
                             @if (Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == photoCategory.Id).Count() > 0)
                             {
-                                <h2 class="pl-1"><b>@photoCategory.Name</b></h2>
+                                @*Category Name*@
+                                <h2 class="col-12 border-bottom">@photoCategory.Name</h2>
 
                                 @*Display all the albums for the selected category*@
                                 <div class="col-12">
@@ -262,6 +285,7 @@
                                         {
                                             //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
                                             Model.PhotoAlbum = photoAlbum;
+                                            //Model.AlbumCreator = Model.PhotoVM.AlbumCreatorList.Where(u => u.Id == Model.PhotoAlbum.ApplicationUserId).FirstOrDefault();
 
                                             <partial name="Home/Photos/Views/_PhotoAlbumCard" />
                                         }

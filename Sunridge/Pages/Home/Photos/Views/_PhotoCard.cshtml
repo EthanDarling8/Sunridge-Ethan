@@ -5,37 +5,52 @@
     @*Category Selected*@
     @if (@Model.PhotoVM.SelectedPhotoCategory != null)
     {
+        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+            <div class="text-center">
+                @*Title*@
+                <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
 
+                @*Display thumb*@
+                <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
 
+                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                {
+                    <a class="btn btn-warning m-1"
+                       asp-route-photoId="@Model.Photo.Id"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Photo/Upsert">
+                        <i class="far fa-edit"></i> Edit Photo
+                    </a>
+                }
+            </div>
+        </div>
     }
 
     @*No Category Selected*@
     else
     {
+        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+            <div class="text-center">
+                @*Title*@
+                <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
 
+                @*Display thumb*@
+                <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
 
+                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                {
+                    <a class="btn btn-warning m-1"
+                       asp-route-photoId="@Model.Photo.Id"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Photo/Upsert">
+                        <i class="far fa-edit"></i> Edit Photo
+                    </a>
+                }
+            </div>
+        </div>
     }
 
-
-    <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
-        <div class="text-center">
-            @*Title*@
-            <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
-
-            @*Display thumb*@
-            <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
-
-            @if (User.Identity.IsAuthenticated)
-            {
-                <a class="btn btn-warning m-1"
-                   asp-route-photoId="@Model.Photo.Id"
-                   asp-route-selectedAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                   asp-page="/Owner/Photos/Album/Photo/Upsert">
-                    <i class="far fa-edit"></i> Edit Photo
-                </a>
-            }
-        </div>
-    </div>
 </div>
 
 

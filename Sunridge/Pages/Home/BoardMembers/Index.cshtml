@@ -1,0 +1,32 @@
+﻿@page
+@model Sunridge.Pages.Home.BoardMembers.Index
+
+@{
+    ViewData["Title"] = "Board Members";
+}
+
+<!DOCTYPE html>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @{
+                System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
+                client.BaseAddress = new Uri("https://localhost:44318/");
+                var response = await client.GetAsync("api/User/GetImage/?username=" + User.Identity.Name);
+                string imagePath = "";
+                if (response.IsSuccessStatusCode) {
+                    using (System.Net.Http.HttpContent content = response.Content) {
+                        Task<string> result = content.ReadAsStringAsync();
+                        imagePath = result.Result;
+                        if (!imagePath.Equals("")) {
+                            <div class="">
+                                <img src="~/ProfilePictures/@imagePath" class="rounded-circle" height="80px" alt="path" style="vertical-align: unset">
+                            </div>
+                        }
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>

@@ -15,22 +15,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Sunridge.Models.Models;
+using Sunridge.Models;
 
 namespace Sunridge.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             IWebHostEnvironment webHostEnvironment)
@@ -101,25 +101,31 @@ namespace Sunridge.Areas.Identity.Pages.Account
             var fileName = "";
             var temp = "";
             
-            
-            if (ModelState.IsValid)
-            {
-                
+            if (ModelState.IsValid) {
+                // Get image from form
                 var files = HttpContext.Request.Form.Files;
                 foreach (var Image in files) {
                     var file = Image;
                     temp = file.FileName;
                     var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePictures");
-                    fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                     using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
                         await file.CopyToAsync(fileStream);
                     }
                 }
 
+                // Create application user
                 var user = new ApplicationUser {
+                    UserName = Input.Email, Email = Input.Email,
                     FirstName = Input.FirstName, LastName = Input.LastName,
                     Image = fileName, PhoneNumber = Input.PhoneNumber
                 };
+                
+                // Set to default image if empty
+                if (temp.Equals("")) {
+                    user.Image = "DefaultImage.png";
+                }
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

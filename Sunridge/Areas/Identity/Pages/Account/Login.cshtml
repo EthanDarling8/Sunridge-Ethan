@@ -1,5 +1,8 @@
 ﻿@page
+@using Sunridge.Models
+@using Sunridge.DataAccess.Data
 @model LoginModel
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
     ViewData["Title"] = "Log in";

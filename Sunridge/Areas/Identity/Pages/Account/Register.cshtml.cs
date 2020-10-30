@@ -118,7 +118,8 @@ namespace Sunridge.Areas.Identity.Pages.Account
                 var user = new ApplicationUser {
                     UserName = Input.Email, Email = Input.Email,
                     FirstName = Input.FirstName, LastName = Input.LastName,
-                    Image = fileName, PhoneNumber = Input.PhoneNumber
+                    Image = fileName, PhoneNumber = Input.PhoneNumber,
+                    BoardMember = false, Position = String.Empty
                 };
                 
                 // Set to default image if empty

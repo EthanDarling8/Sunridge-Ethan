@@ -14,10 +14,10 @@ namespace Sunridge.DataAccess.Data
 
         // **** DbSets go here ****
         public DbSet<Lot> Lot { get; set; }
-
         public DbSet<Banner> Banner { get; set; }
-
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<DocumentCategory> DocumentCategory { get; set; }
+        public DbSet<Document> Document { get; set; }
 
     }
 }

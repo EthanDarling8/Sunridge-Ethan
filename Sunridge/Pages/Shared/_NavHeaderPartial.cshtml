@@ -9,76 +9,76 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Home/BoardMembers">Board Members</a>
+                <a class="nav-link" asp-page="/Home/BoardMembers">Board Members</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" asp-page="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Classified Ads
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/Classifieds/Lots">Lots</a>
+                    <a class="dropdown-item" asp-page="/Classifieds/Lots">Lots</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/Classifieds/Cabins">Cabins</a>
+                    <a class="dropdown-item" asp-page="/Classifieds/Cabins">Cabins</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/Classifieds/Trailers">Trailers</a>
+                    <a class="dropdown-item" asp-page="/Classifieds/Trailers">Trailers</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/Classifieds/ATVs">ATVs</a>
+                    <a class="dropdown-item" asp-page="/Classifieds/ATVs">ATVs</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/Classifieds/Other">Other Services</a>
+                    <a class="dropdown-item" asp-page="/Classifieds/Other">Other Services</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" asp-page="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Documents
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/Home/Rules">Rules</a>
+                    <a class="dropdown-item" asp-page="/Home/Rules">Rules</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/Home/Maps">Maps</a>
+                    <a class="dropdown-item" asp-page="/Home/Maps">Maps</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/docs/Sunridge By-laws.doc">Bylaws</a>
+                    <a class="dropdown-item" asp-page="/docs/Sunridge By-laws.doc">Bylaws</a>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Home/Calendar">Event Calendar</a>
+                <a class="nav-link" asp-page="/Home/Calendar">Event Calendar</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Home/FireInfo">Fire Info</a>
+                <a class="nav-link" asp-page="/Home/FireInfo">Fire Info</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Home/News">News</a>
+                <a class="nav-link" asp-page="/Home/News">News</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Home/LostFound">Lost&Found</a>
+                <a class="nav-link" asp-page="/Home/LostFound">Lost&Found</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Photos">Photo Gallery</a>
+                <a class="nav-link" asp-page="/Photos">Photo Gallery</a>
             </li>
 
             <!-- This menu is hidden in bigger devices with d-sm-none.
             The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
             <li class="nav-item dropdown d-sm-block d-md-none">
-                <a class="nav-link dropdown-toggle" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" asp-page="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dashboard Menu
                 </a>
                 <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                    <a class="dropdown-item" href="/Owner/Lots/MyLots">My Lots</a>
-                    <a class="dropdown-item" href="/Owner/Classifieds/MyClassifieds">My Classifieds</a>
-                    <a class="dropdown-item" href="/OwnerPhotos/MyPhotos">My Photos</a>
-                    <a class="dropdown-item" href="/Home/Forms">Forms</a>
+                    <a class="dropdown-item" asp-page="/Owner/Lots/MyLots">My Lots</a>
+                    <a class="dropdown-item" asp-page="/Owner/Classifieds/MyClassifieds">My Classifieds</a>
+                    <a class="dropdown-item" asp-page="/OwnerPhotos/MyPhotos">My Photos</a>
+                    <a class="dropdown-item" asp-page="/Home/Forms">Forms</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/Admin/Owners">Owners</a>
-                    <a class="dropdown-item" href="/Admin/Keys">Keys</a>
-                    <a class="dropdown-item" href="/Admin/KeyHistory">Key History</a>
-                    <a class="dropdown-item" href="/Owner/Lots">HOA Lots</a>
-                    <a class="dropdown-item" href="/Owner/Forms">Reports</a>
-                    <a class="dropdown-item" href="/Admin/CommonAreaAssets">Common Area Assets</a>
-                    <a class="dropdown-item" href="/Owner/Classifieds">Classifieds</a>
-                    <a class="dropdown-item" href="/AdminPhotos/Index">Photos</a>
-                    <a class="dropdown-item" href="/Admin/Inventories">Inventory Items</a>
-                    <a class="dropdown-item" href="/Admin/Banner">Banner Items</a>
-                    <a class="dropdown-item" href="/NewsItem/Index">News Items</a>
-                    <a class="dropdown-item" href="/Admin/ScheduledEvents">Scheduled Events</a>
+                    <a class="dropdown-item" asp-page="/Admin/Owners">Owners</a>
+                    <a class="dropdown-item" asp-page="/Admin/Keys">Keys</a>
+                    <a class="dropdown-item" asp-page="/Admin/KeyHistory">Key History</a>
+                    <a class="dropdown-item" asp-page="/Owner/Lots">HOA Lots</a>
+                    <a class="dropdown-item" asp-page="/Owner/Forms">Reports</a>
+                    <a class="dropdown-item" asp-page="/Admin/CommonAreaAssets">Common Area Assets</a>
+                    <a class="dropdown-item" asp-page="/Owner/Classifieds">Classifieds</a>
+                    <a class="dropdown-item" asp-page="/AdminPhotos/Index">Photos</a>
+                    <a class="dropdown-item" asp-page="/Admin/Inventories">Inventory Items</a>
+                    <a class="dropdown-item" asp-page="/Admin/Banner">Banner Items</a>
+                    <a class="dropdown-item" asp-page="/NewsItem/Index">News Items</a>
+                    <a class="dropdown-item" asp-page="/Admin/ScheduledEvents">Scheduled Events</a>
 
                 </div>
             </li><!-- Smaller devices menu END -->

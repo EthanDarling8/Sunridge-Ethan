@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,8 +16,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
 
     <link rel="Stylesheet" href="~/css/General/dashboard.css" type="text/css" />
-    <link rel="Stylesheet" href="~/css/Admin/adminnavbar.css?version=51" type="text/css" />
+    <link rel="Stylesheet" href="~/css/Admin/content.css" type="text/css" />
     <link href="~/css/landing-page.css" rel="stylesheet">
+    <link rel="Stylesheet" href="~/css/Admin/adminnavbar.css?version=51" type="text/css" />
 </head>
 <body>
     <header>
@@ -128,45 +132,46 @@
         </div>
     </div>
 
-        <hr />
-        <footer class="footer bg-light">
-            <partial name="_FooterPartial" />
-        </footer>
+    <hr />
+    <footer class="footer bg-light">
+        <partial name="_FooterPartial" />
+    </footer>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?@Configuration.GetSection("APIKeys")["TinyMCE"]"></script>
 
-        <script>
-            // Hide submenus
-            $('#body-row .collapse').collapse('hide');
+    <script>
+        // Hide submenus
+        $('#body-row .collapse').collapse('hide');
+
+        // Collapse/Expand icon
+        $('#collapse-icon').addClass('fa-angle-double-left');
+
+        // Collapse click
+        $('[data-toggle=sidebar-collapse]').click(function () {
+            SidebarCollapse();
+        });
+
+        function SidebarCollapse() {
+            $('.menu-collapsed').toggleClass('d-none');
+            $('.sidebar-submenu').toggleClass('d-none');
+            $('.submenu-icon').toggleClass('d-none');
+            $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+
+            // Treating d-flex/d-none on separators with title
+            var SeparatorTitle = $('.sidebar-separator-title');
+            if (SeparatorTitle.hasClass('d-flex')) {
+                SeparatorTitle.removeClass('d-flex');
+            } else {
+                SeparatorTitle.addClass('d-flex');
+            }
 
             // Collapse/Expand icon
-            $('#collapse-icon').addClass('fa-angle-double-left');
-
-            // Collapse click
-            $('[data-toggle=sidebar-collapse]').click(function () {
-                SidebarCollapse();
-            });
-
-            function SidebarCollapse() {
-                $('.menu-collapsed').toggleClass('d-none');
-                $('.sidebar-submenu').toggleClass('d-none');
-                $('.submenu-icon').toggleClass('d-none');
-                $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
-
-                // Treating d-flex/d-none on separators with title
-                var SeparatorTitle = $('.sidebar-separator-title');
-                if (SeparatorTitle.hasClass('d-flex')) {
-                    SeparatorTitle.removeClass('d-flex');
-                } else {
-                    SeparatorTitle.addClass('d-flex');
-                }
-
-                // Collapse/Expand icon
-                $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
-            }
-        </script>
-        @RenderSection("Scripts", required: false)
+            $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

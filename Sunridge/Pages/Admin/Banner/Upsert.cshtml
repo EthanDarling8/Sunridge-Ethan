@@ -7,10 +7,10 @@
 <hr />
 <div class="row">
     <div class="col-md-8">
-        <form method="post" asp-action="Upsert" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             @if (Model.BannerObj.Id != 0)
             {
-                <input type="hidden" asp-for="@Model.BannerObj.Id;" />
+                <input type="hidden" asp-for="@Model.BannerObj.Id" />
             }
 
             <div class="col-8 pt-3">

@@ -19,5 +19,7 @@ namespace Sunridge.DataAccess.Data
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
+        public DbSet<FireInfo> FireInfo { get; set; }
+
     }
 }

@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 
 namespace Sunridge.Pages.Admin.PhotoCategory
 {
-    // **** ToDo **** [Authorize]
+    // **** ToDo **** [Authorize] only admins
+    [Authorize]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;

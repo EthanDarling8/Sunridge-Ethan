@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-6">
-        <a class="btn btn-primary btn-sm" href="/Admin/Banner/Upsert">Create New Banner Item</a>
+        <a class="btn btn-primary btn-sm" asp-page="/Admin/Banner/Upsert">Create New Banner Item</a>
     </div>
 </div>
 <div class="table-responsive-sm">
@@ -21,6 +21,9 @@
                 <th id="bannerBody">
                     Body
                 </th>
+                <th id="bannerBody">
+                    Archived
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -32,18 +35,21 @@
     {
             <tr>
                 <td style="width: 25%">
-                    @item.Header;
+                    @item.Header
                 </td>
                 <td style="width: 50%">
-                    @item.Body;
+                    @item.Body
+                </td>
+                <td>
+                    @item.Archived
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-info btn-sm" href="/Admin/Banner/Upsert/@item.Id;">
+                        <a class="btn btn-info btn-sm" asp-page="/Admin/Banner/Upsert" asp-route-id="@item.Id">
                             <span class="d-none d-lg-block">Edit</span>
                             <i class="fas fa-edit d-lg-none"></i>
                         </a>
-                        <a class="btn btn-danger btn-sm" href="/Admin/Banner/Delete/@item.Id;">
+                        <a class="btn btn-danger btn-sm" asp-page="/Admin/Banner/Delete" asp-route-id="@item.Id">
                             <span class="d-none d-lg-block">Delete</span>
                             <i class="fas fa-trash d-lg-none"></i>
                         </a>

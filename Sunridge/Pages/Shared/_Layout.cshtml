@@ -22,172 +22,18 @@
 </head>
 <body>
     <header>
-        <!-- Bootstrap NavBar -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/BoardMembers">Board Members</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Classified Ads
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/Classifieds/Lots">Lots</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/Cabins">Cabins</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/Trailers">Trailers</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/ATVs">ATVs</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/Other">Other Services</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Documents
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/Home/Rules">Rules</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Home/Maps">Maps</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/docs/Sunridge By-laws.doc">Bylaws</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/Calendar">Event Calendar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/FireInfo">Fire Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/News">News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/LostFound">Lost&Found</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/Photos">Photo Gallery</a>
-                    </li>
-
-                    <!-- This menu is hidden in bigger devices with d-sm-none.
-                    The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
-                    <li class="nav-item dropdown d-sm-block d-md-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dashboard Menu
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                            <a class="dropdown-item" href="/Owner/Lots/MyLots">My Lots</a>
-                            <a class="dropdown-item" href="/Owner/Classifieds/MyClassifieds">My Classifieds</a>
-                            <a class="dropdown-item" href="/OwnerPhotos/MyPhotos">My Photos</a>
-                            <a class="dropdown-item" href="/Home/Forms">Forms</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Admin/Owners">Owners</a>
-                            <a class="dropdown-item" href="/Admin/Keys">Keys</a>
-                            <a class="dropdown-item" href="/Admin/KeyHistory">Key History</a>
-                            <a class="dropdown-item" href="/Owner/Lots">HOA Lots</a>
-                            <a class="dropdown-item" href="/Owner/Forms">Reports</a>
-                            <a class="dropdown-item" href="/Admin/CommonAreaAssets">Common Area Assets</a>
-                            <a class="dropdown-item" href="/Owner/Classifieds">Classifieds</a>
-                            <a class="dropdown-item" href="/AdminPhotos/Index">Photos</a>
-                            <a class="dropdown-item" href="/Admin/Inventories">Inventory Items</a>
-                            <a class="dropdown-item" href="/Admin/Banner">Banner Items</a>
-                            <a class="dropdown-item" href="/NewsItem/Index">News Items</a>
-                            <a class="dropdown-item" href="/Admin/ScheduledEvents">Scheduled Events</a>
-
-                        </div>
-                    </li><!-- Smaller devices menu END -->
-
-                </ul>
-            </div>
-            <div>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item"><a class="nav-link" href="/Identity/Account/Login">Login</a></li>
-                </ul>
-
-            </div>
-        </nav><!-- NavBar END -->
+        <partial name="_NavHeaderPartial" />
     </header>
 
-    <!-- Wrapper -->
-    <div class="d-flex" id="wrapper">
-
-        <!-- Admin sidebar TODO: only make visible to admin role -->
-        <div class="bg-dark text-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Admin</div>
-            <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Keys</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Reports</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-dollar-sign"></i> Classifieds</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photos</a>
-                <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>
-                <div id="sidebarSubmenu" class="collapse">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Inventory Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Banner Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">News Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Events</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <button class="btn btn-primary ml-3 m-2" id="menu-toggle"><i class="fa fa-bars"></i></button>
-            <div class="container-fluid">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
-        </div>
-
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
-    <hr />
 
-    <!-- Footer -->
+    <hr />
     <footer class="footer bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-xs-4 h-100 text-center text-lg-left my-auto">
-                    <ul class="list-inline mb-2">
-                        <li class="list-inline-item">
-                            <a href="mailto:Webmaster@sunridge.info" target="_top">Contact</a>
-                        </li>
-                    </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">&copy; Sunridge 2019. All Rights Reserved.</p>
-                </div>
-                <div class="col-lg-4 col-xs-4 h-100 text-center my-auto">
-                    <ul class="list-inline mb-2">
-                        <li class="list-inline-item">
-                            <a class="link" href="/Home/About">About this site</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-xs-4 h-100 text-center text-lg-right my-auto">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item mr-3">
-                            <a href="https://www.facebook.com/SunridgePropertyOwnersAssociation/" target="_blank">
-                                <i class="fab fa-facebook-square fa-2x"></i>
-                                <p>Visit / Like us on Facebook</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <partial name="_FooterPartial" />
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -199,14 +45,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fmqs5qy5c1vp5qr53a8qz2bo3u04yll68273ote9ynk1dm4p"></script>
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fmqs5qy5c1vp5qr53a8qz2bo3u04yll68273ote9ynk1dm4p"></script>
 
     @RenderSection("Scripts", required: false)
-
 </body>
 </html>

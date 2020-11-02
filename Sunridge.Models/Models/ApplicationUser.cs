@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Sunridge.Models.Models
+namespace Sunridge.Models
 {
     public class ApplicationUser : IdentityUser
     {

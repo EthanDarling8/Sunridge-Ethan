@@ -24,12 +24,8 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
 
         [BindProperty]
-        public PhotoAlbumVM PhotoAlbumObj { get; set; }
-
-        [BindProperty]
-        public int SelectedPhotoCategoryId { get; set; }
-
-        [BindProperty]
+        public PhotoAlbumVM PhotoAlbumObj { get; set; }        
+        public int SelectedPhotoCategoryId { get; set; }        
         public string ApplicationUserId { get; set; }
 
 
@@ -50,8 +46,8 @@ namespace Sunridge.Pages.Owner.Photos.Album
             //Edit existing
             if (selectedPhotoAlbumId != null)
             {
-                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
-                SelectedPhotoCategoryId = selectedPhotoCategoryId;
+                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);                
+                //Maintain existing Id when editing as editing could be done by an admin.
                 ApplicationUserId = PhotoAlbumObj.PhotoAlbum.ApplicationUserId;
 
                 //Specified PhotoAlbumId does not exist or database fails
@@ -66,8 +62,9 @@ namespace Sunridge.Pages.Owner.Photos.Album
                 //Get Id of current user if making a new album
                 ApplicationUserId = _userManager.GetUserId(User);
             }
-            
 
+            //Always preserve selected category
+            SelectedPhotoCategoryId = selectedPhotoCategoryId;
             return Page();
         }
 

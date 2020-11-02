@@ -6,12 +6,16 @@
     @if (@Model.PhotoVM.SelectedPhotoCategory != null)
     {
         <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
-            <div class="text-center">
+            <div class="text-center p-2">
                 @*Title*@
                 <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
 
-                @*Display thumb*@
-                <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
+                @*Display thumb and setup for baguetteBox*@
+                <div class="gallery">
+                    <a href="@Model.Photo.Image" data-caption="@Model.Photo.Title" onclick="baguetteBox()">
+                        <img src="@Model.Photo.Thumb" class="card-img-top rounded" />
+                    </a>
+                </div>
 
                 @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
                 {
@@ -31,12 +35,16 @@
     else
     {
         <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
-            <div class="text-center">
+            <div class="text-center p-2">
                 @*Title*@
                 <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
 
-                @*Display thumb*@
-                <img src="@Model.Photo.Thumb" class="card-img-top p-2 rounded" />
+                @*Display thumb and setup for baguetteBox*@
+                <div class="gallery">
+                    <a href="@Model.Photo.Image" title="@Model.Photo.Title" data-caption="@Model.Photo.Description" onclick="baguetteBox.run('.gallery')">
+                        <img src="@Model.Photo.Thumb" class="card-img-top rounded" />
+                    </a>
+                </div>
 
                 @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
                 {

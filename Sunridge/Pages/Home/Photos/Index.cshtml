@@ -10,8 +10,8 @@
 
 <div class="row m-1 p-1">
 
-    @* **** ToDo **** Add authorization requirement to add and edit buttons.
-        make the buttons link to the user id *@
+    @* **** ToDo **** Allow admin/board member to edit ablums and photos
+        Should probably keep track of edits at some point in case of nefarious changes *@
 
     @*Display Add, Back, and Category buttons here*@
     <div class="col-3">
@@ -28,7 +28,7 @@
                            asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Photo/Upsert">
-                            <i class="fas fa-plus"></i> Add Photo
+                            <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Photo
                         </a>
                     </div>
 
@@ -37,7 +37,7 @@
                            asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Upsert">
-                            <i class="far fa-edit"></i> Edit Album
+                            <i class="far fa-edit"></i>&nbsp;Edit&nbsp;Album
                         </a>
                     </div>
                 }
@@ -46,7 +46,7 @@
                     <a class="btn btn-block btn-secondary"
                        asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
                        asp-page="Index">
-                        <i class="fas fa-arrow-left"></i> Back to Photo Gallery
+                        <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Photo&nbsp;Gallery
                     </a>
                 </div>
             }
@@ -59,7 +59,7 @@
                         <a class="btn btn-block btn-primary"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Photo/Upsert">
-                            <i class="fas fa-plus"></i> Add Photo
+                            <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Photo
                         </a>
                     </div>
 
@@ -67,7 +67,7 @@
                         <a class="btn btn-block btn-warning"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Upsert">
-                            <i class="far fa-edit"></i> Edit Album
+                            <i class="far fa-edit"></i>&nbsp;Edit&nbsp;Album
                         </a>
                     </div>
                 }
@@ -75,7 +75,7 @@
                 <div class="row mb-2">
                     <a class="btn btn-block btn-secondary"
                        asp-page="Index">
-                        <i class="fas fa-arrow-left"></i> Back to Photo Gallery
+                        <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Photo&nbsp;Gallery
                     </a>
                 </div>
             }
@@ -93,7 +93,7 @@
                         <a class="btn btn-block btn-primary"
                            asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
                            asp-page="/Owner/Photos/Album/Upsert">
-                            <i class="fas fa-plus"></i> Add Album
+                            <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Album
                         </a>
                     </div>
                 }
@@ -106,28 +106,52 @@
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"
                            asp-page="/Owner/Photos/Album/Upsert">
-                            <i class="fas fa-plus"></i> Add Album
+                            <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Album
                         </a>
                     </div>
                 }
             }
-            @* ****ToDo **** This needs to actually point the the user's albums *@
+
+            @*Display "My Albums" button only to logged in users.*@
             @if (User.Identity.IsAuthenticated)
             {
+                if (@Model.MyAlbums == false)
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-secondary"
+                           asp-route-myAlbums="True"
+                           asp-page="Index">
+                            <i class="far fa-images"></i>&nbsp;My&nbsp;Albums
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-secondary"
+                           asp-page="Index">
+                            <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Photo&nbsp;Gallery
+                        </a>
+                    </div>
+                }
+            }
+            @*Display "login to manage photos" if not logged in.*@
+            else
+            {
                 <div class="row mb-2">
-                    <a class="btn btn-block btn-secondary"
-                       asp-route-myAlbums="True"
-                       asp-page="Index">
-                        <i class="far fa-images"></i> My Albums
+                    <a class="btn btn-block btn-primary"
+                       asp-area="Identity"
+                       asp-page="/Account/Login">
+                        Login&nbsp;to&nbsp;Manage&nbsp;Photos
                     </a>
                 </div>
             }
         }
 
 
-        @*Display category filters here*@
+        @*Display category filters here, only if not displaying "My Albums" or a selected album.*@
         @*Only display the filters if an album isn't selected.*@
-        @if (@Model.PhotoVM.SelectedPhotoAlbum == null)
+        @if (@Model.PhotoVM.SelectedPhotoAlbum == null && @Model.MyAlbums == false)
         {
             <h5 class="row justify-content-center">Select an Album Category</h5>
 
@@ -207,9 +231,11 @@
                             <div class="row my-3">
                                 @foreach (var photoAlbum in Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @Model.PhotoVM.SelectedPhotoCategory.Id))
                                 {
-                                    //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
                                     Model.PhotoAlbum = photoAlbum;
+                                    //Get the name of the album creator for display
+                                    Model.PhotoVM.AlbumCreator = @Model._unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == photoAlbum.ApplicationUserId);
 
+                                    //Use a partial view as this code is repeated
                                     <partial name="Home/Photos/Views/_PhotoAlbumCard" />
                                 }
                             </div>
@@ -229,14 +255,15 @@
                 @*Display Album Information Here*@
                 @*Album Title*@
                 <h2 class="col-12">@Model.PhotoVM.SelectedPhotoAlbum.Title</h2>
+                <h4 class="text-primary">@Model.PhotoVM.AlbumCreator.FullName</h4>
 
-                <div class="border col-12">       
+                <div class="border col-12">
                     @*Category*@
                     <h4 class="col-12 mt-1 text-secondary">@Model.PhotoVM.SelectedPhotoAlbum.PhotoCategory.Name</h4>
                     @*Description*@
                     <div class="col-12 mt-2">@Html.Raw(Model.PhotoVM.SelectedPhotoAlbum.Description)</div>
                 </div>
-               
+
 
                 @*Display all the photos for the selected album*@
                 <div class="col-12">
@@ -244,7 +271,7 @@
                         @*No photos added yet*@
                         @if (Model.PhotoVM.PhotoList.Count() == 0)
                         {
-                        <h3 class="col-12 ml-1 text-danger">Album Is Empty</h3>
+                            <h3 class="col-12 ml-1 text-danger">Album Is Empty</h3>
                         }
                         else
                         {
@@ -255,7 +282,7 @@
 
                                 <partial name="Home/Photos/Views/_PhotoCard" />
                             }
-                        }                        
+                        }
                     </div>
                 </div>
 
@@ -278,15 +305,16 @@
                                 @*Category Name*@
                                 <h2 class="col-12 border-bottom">@photoCategory.Name</h2>
 
-                                @*Display all the albums for the selected category*@
+                                @*Display all the albums category*@
                                 <div class="col-12">
                                     <div class="row my-3">
                                         @foreach (var photoAlbum in Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @photoCategory.Id))
                                         {
-                                            //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
                                             Model.PhotoAlbum = photoAlbum;
-                                            //Model.AlbumCreator = Model.PhotoVM.AlbumCreatorList.Where(u => u.Id == Model.PhotoAlbum.ApplicationUserId).FirstOrDefault();
+                                            //Get the name of the album creator for display
+                                            Model.PhotoVM.AlbumCreator = @Model._unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == photoAlbum.ApplicationUserId);
 
+                                            //Use a partial view as this code is repeated
                                             <partial name="Home/Photos/Views/_PhotoAlbumCard" />
                                         }
                                     </div>
@@ -300,3 +328,17 @@
     </div>
 </div>
 
+
+@section Scripts {
+    @*
+        <script>
+            function baguetteBox() {
+                baguetteBox.run('.gallery');
+            }
+
+            window.addEventListener('load', function () {
+                baguetteBox.run('.gallery');
+            });
+        </script>
+    *@
+}

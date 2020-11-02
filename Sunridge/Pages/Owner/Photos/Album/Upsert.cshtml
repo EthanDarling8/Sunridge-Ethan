@@ -90,10 +90,9 @@
                                 </button>
                             </div>
 
-                            @* **** ToDo **** Make sure this returns to the correct place*@
+                            
                             <div class="col-6">
-                                @*Route back with the selected category maintained.*@
-
+                                @*Route back with the selected category and album maintained.*@
                                 <a asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
                                    asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
                                    asp-page="/Home/Photos/Index"

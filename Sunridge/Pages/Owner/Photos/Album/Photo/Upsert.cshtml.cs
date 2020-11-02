@@ -32,9 +32,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
         [BindProperty]
         public Models.Photo PhotoObj { get; set; }
-
         public int SelectedPhotoCategoryId { get; set; }
-
         public string ApplicationUserId { get; set; }
 
 
@@ -73,7 +71,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
             }
 
 
-            //Track selected category display
+            //Always preserve selected category
             SelectedPhotoCategoryId = selectedPhotoCategoryId;
 
             return Page();

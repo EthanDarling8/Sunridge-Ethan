@@ -15,11 +15,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="SendGrid" Version="9.21.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sunridge.DataAccess\Sunridge.DataAccess.csproj" />
     <ProjectReference Include="..\Sunridge.Utility\Sunridge.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Owner\" />
   </ItemGroup>
 
 </Project>

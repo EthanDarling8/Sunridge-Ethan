@@ -10,6 +10,12 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         IBannerRepository Banner { get; }
         IApplicationUserRepository ApplicationUser { get;  }
         IFireInfoRepository FireInfo { get; }
+        INewsRepository News { get; }
+
+        //Photo Gallery Repositories
+        IPhotoCategoryRepository PhotoCategory { get; }
+        IPhotoAlbumRepository PhotoAlbum { get; }
+        IPhotoRepository Photo { get; }
 
         void Save();
     }

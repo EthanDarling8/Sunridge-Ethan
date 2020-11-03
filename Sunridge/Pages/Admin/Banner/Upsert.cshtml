@@ -52,14 +52,26 @@
 </div>
 
 
-@section Scripts{ 
-<script>
-    function ValidateInput() {
-        if (document.getElementById("uploadBox").value == "") {
-            swal('Error', 'Please select an Image to upload', 'error')
-            return false;
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: "input.tinyMCE_Input",
+            plugins: 'lists textcolor colorpicker spellchecker code wordcount',
+            min_height: 20,
+            menubar: 'format tools'
+        });
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'lists textcolor colorpicker spellchecker code wordcount link',
+            menubar: 'format tools insert'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please select an Image to upload', 'error')
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
-</script>
+    </script>
 }

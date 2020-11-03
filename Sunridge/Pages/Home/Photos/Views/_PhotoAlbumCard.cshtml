@@ -1,0 +1,63 @@
+﻿@model Sunridge.Pages.Home.Photos.IndexModel
+
+<div class="col-xl-4 col-md-6">
+
+    @*Category Selected*@
+    @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+    {
+        <a asp-page="Index"
+            asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+            asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+            class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+
+            <div class="text-center p-2">
+                @*Title*@
+                <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+
+                @*Display an image if there is one*@
+                @if (Model.PhotoAlbum.Thumb != null)
+                {
+                    <img src="@Model.PhotoAlbum.Thumb" class="card-img-top rounded" />
+                }
+                else
+                {
+                    <p class="text-danger">Album is Empty</p>
+                }
+
+                @*Creator Name*@
+                <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>                
+            </div>
+
+        </a>
+    }
+
+    @*No Category Selected*@
+    else
+    {
+    <a asp-page="Index"
+        asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+        class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+        
+        <div class="text-center p-2">
+            @*Title*@
+            <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+
+            @*Display an image if there is one*@
+            @if (Model.PhotoAlbum.Thumb != null)
+            {
+                <img src="@Model.PhotoAlbum.Thumb" class="card-img-top rounded"  />
+            }
+            else
+            {
+                <p class="text-danger">Album is Empty</p>
+            }
+
+            @*Creator Name*@
+            <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>
+        </div>
+
+    </a>
+    }
+</div>
+
+

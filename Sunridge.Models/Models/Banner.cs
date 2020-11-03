@@ -12,5 +12,6 @@ namespace Sunridge.Models
         public string Header { get; set; }
         public string Body { get; set; }
         public string Image { get; set; }
+        public bool Archived { get; set; } = false;
     }
 }

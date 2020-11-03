@@ -10,7 +10,6 @@ namespace Sunridge.DataAccess.Data.Repository
 
 
         // **** Model IRepositories go here ****
-        public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
         public INewsRepository News { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
@@ -21,6 +20,7 @@ namespace Sunridge.DataAccess.Data.Repository
         public IPhotoRepository Photo { get; private set; }
 
         // Lot IRepositories
+        public ILotRepository Lot { get; private set; }
         public IInventoryRepository Inventory { get; private set; }
         public ILotFileRepository LotFile { get; private set; }
         public ILot_ApplicationUserRepository Lot_ApplicationUser { get; private set; }

@@ -6,7 +6,6 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
     public interface IUnitOfWork : IDisposable
     {
         // **** Model IRepositories go here ****
-        ILotRepository Lot { get; }
         IBannerRepository Banner { get; }
         IApplicationUserRepository ApplicationUser { get; }
         INewsRepository News { get; }
@@ -17,6 +16,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         IPhotoRepository Photo { get; }
 
         // Lot Repositories
+        ILotRepository Lot { get; }
         ILotFileRepository LotFile { get; }
         IInventoryRepository Inventory { get; }
         ILot_ApplicationUserRepository Lot_ApplicationUser { get; }

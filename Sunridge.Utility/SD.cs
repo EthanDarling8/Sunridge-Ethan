@@ -1,4 +1,4 @@
-﻿namespace Sunridge.Utility
+namespace Sunridge.Utility
 {
     //Storing strings here allows us to change the string in this 1 spot
     //rather than throughout the entire program

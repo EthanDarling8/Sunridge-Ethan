@@ -13,10 +13,10 @@ namespace Sunridge.Pages.Owner.Photos.Album
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public UpsertModel(IUnitOfWork unitOfWork,
-            UserManager<IdentityUser> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;

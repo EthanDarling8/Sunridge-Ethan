@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.Models;
+using Sunridge.Models.Models;
 
 namespace Sunridge.DataAccess.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -16,6 +17,9 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
+        // Fire Info
+        public DbSet<FireInfo> FireInfo { get; set; }
 
         //Photo Gallery DbSets
         public DbSet<PhotoCategory> PhotoCategory { get; set; }

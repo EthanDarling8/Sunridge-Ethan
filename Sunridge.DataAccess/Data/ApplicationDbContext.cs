@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.Models;
-using Sunridge.Models.Models;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -19,5 +18,9 @@ namespace Sunridge.DataAccess.Data
         public DbSet<DocumentCategory> DocumentCategory { get; set; }
         public DbSet<Document> Document { get; set; }
 
+        //Photo Gallery DbSets
+        public DbSet<PhotoCategory> PhotoCategory { get; set; }
+        public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
+        public DbSet<Photo> Photo { get; set; }
     }
 }

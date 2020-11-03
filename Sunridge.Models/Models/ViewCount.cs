@@ -16,11 +16,11 @@ namespace Sunridge.Models
 
         public int Count { get; set; }
 
-        public int ClassifiedsId { get; set; }
+        public int ClassifiedsItemId { get; set; }
 
         [NotMapped]
-        [ForeignKey("ClassifiedsId")]
-        public virtual Classifieds Classifieds { get; set; }
+        [ForeignKey("ClassifiedsItemId")]
+        public virtual ClassifiedsItem ClassifiedsItem { get; set; }
 
     }
 }

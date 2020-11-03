@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Sunridge</title>
+    <style>
+        .dropdown:hover .dropdown-menu{
+            display: block;
+            margin-top: 0;
+        }
+    </style>
 
     @*<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
@@ -36,19 +42,14 @@
                         <a class="nav-link" href="/Home/BoardMembers">Board Members</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" id="navbarDropdown" aria-haspopup="true" aria-expanded="false" asp-page="/Owner/Classifieds/ClassifiedsIndex">
                             Classified Ads
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/Classifieds/Lots">Lots</a>
+                            <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsIndex">My Listings</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/Cabins">Cabins</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/Trailers">Trailers</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/ATVs">ATVs</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Classifieds/Other">Other Services</a>
+                            <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsUpsert">Create Listing</a>
+                            
                         </div>
                     </li>
                     <li class="nav-item dropdown">

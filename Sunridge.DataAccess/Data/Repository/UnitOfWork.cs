@@ -12,8 +12,15 @@ namespace Sunridge.DataAccess.Data.Repository
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
-        public IClassifiedsRepository Classifieds { get; private set; }
         public IViewCountRepository ViewCount { get; private set; }
+        public IClassifiedsCategoryRepository ClassifiedsCategory { get; private set; }
+        public IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; private set; }
+
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+
+        public IClassifiedsItemRepository ClassifiedsItem { get; private set; }
+
+
 
 
 
@@ -25,8 +32,12 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****
             Lot = new LotRepository(_db);
             Banner = new BannerRepository(_db);
-            Classifieds = new ClassifiedsRepository(_db);
+            ClassifiedsItem = new ClassifiedsItemRepository(_db);
             ViewCount = new ViewCountRepository(_db);
+            ClassifiedsCategory = new ClassifiedsCategoryRepository(_db);
+            ClassifiedsSubcategory = new ClassifiedsSubcategoryRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+
         }
 
         public void Dispose()

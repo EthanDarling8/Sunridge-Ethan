@@ -8,11 +8,13 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         // **** Model IRepositories go here ****
         ILotRepository Lot { get; }
         IBannerRepository Banner { get; }
-        IClassifiedsRepository Classifieds { get; }
+        IClassifiedsItemRepository ClassifiedsItem { get; }
         IViewCountRepository ViewCount { get; }
         
 
         IApplicationUserRepository ApplicationUser { get;  }
+        IClassifiedsCategoryRepository ClassifiedsCategory { get;  }
+        IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get;  }
 
         void Save();
     }

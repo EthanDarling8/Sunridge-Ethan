@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Sunridge.DataAccess.Data.Repository.IRepository
 {
-    public interface IClassifiedsRepository : IRepository<Classifieds>
+    public interface IClassifiedsItemRepository : IRepository<ClassifiedsItem>
     {
-        void Update(Classifieds classifieds);
+        void Update(ClassifiedsItem classifieds);
     }
 }

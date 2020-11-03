@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace Sunridge.DataAccess.Data.Repository
 {
-    public class ClassifiedsRepository : Repository<Classifieds>, IClassifiedsRepository
+    public class ClassifiedsItemRepository : Repository<ClassifiedsItem>, IClassifiedsItemRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public ClassifiedsRepository(ApplicationDbContext db) : base(db)
+        public ClassifiedsItemRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(Classifieds classifieds)
+        public void Update(ClassifiedsItem classifieds)
         {
             var classifiedsFromDb = _db.Classifieds.FirstOrDefault(c => c.Id == classifieds.Id);
 

@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Home\" />
     <Folder Include="Pages\Owner\" />
   </ItemGroup>
 

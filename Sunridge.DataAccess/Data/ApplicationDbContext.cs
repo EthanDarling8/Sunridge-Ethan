@@ -17,6 +17,8 @@ namespace Sunridge.DataAccess.Data
 
         public DbSet<Banner> Banner { get; set; }
 
+        public DbSet<News> News { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
     }

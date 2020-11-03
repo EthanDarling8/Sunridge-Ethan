@@ -12,6 +12,7 @@ namespace Sunridge.DataAccess.Data.Repository
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
+        public INewsRepository News { get; private set; }
 
         public IApplicationUserRepository ApplicationUser { get; private set; }
 
@@ -23,6 +24,7 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****
             Lot = new LotRepository(_db);
             Banner = new BannerRepository(_db);
+            News = new NewsRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
         }
 

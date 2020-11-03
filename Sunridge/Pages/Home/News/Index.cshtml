@@ -1,0 +1,55 @@
+﻿@page
+@model Sunridge.Pages.Home.News.IndexModel
+@{
+}
+
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h2 class="text-primary ml-3">News History</h2>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Search"></label>
+        </div>
+        <div class="col-4">
+            <input class="form-control" asp-for="Search" />
+        </div>
+    </div>
+
+    <div class="list-group" id="newsListings"></div>
+</div>
+
+
+@section Scripts{
+    <script>$(document).ready(function () {
+            event.preventDefault();
+            $.ajax({
+                url: "api/Registration", type: "get",
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    if (result.courses) {
+                        var body = '';
+                        $.each(result.news, function (index, row) {
+                            body += '\r\n<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                                '<div class="d-flex w-100 justify-content-between">' +
+                                '    <h5 class="mb-1">' + row.title + '</h5>' +
+                                '    <small class="text-muted text-right">' + row.DateCreated + '</small > ' +
+                                '</div>' +
+                                '<p class="mb-1">' + row.content + '</p>' +
+                                //'<small class="text-muted"></small>' +
+                                '</a>';
+                        });
+
+                        $("#newsListings").html(body);
+                    }
+                    else {
+                        $("#newsListings").html("No Results");
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sunridge.DataAccess.Data;
 
 namespace Sunridge.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201103000215_news")]
+    partial class news
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,112 +259,29 @@ namespace Sunridge.DataAccess.Migrations
                     b.ToTable("Lot");
                 });
 
-            modelBuilder.Entity("Sunridge.Models.Photo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhotoAlbumId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Thumb")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PhotoAlbumId");
-
-                    b.ToTable("Photo");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.PhotoAlbum", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhotoCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Thumb")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("PhotoCategoryId");
-
-                    b.ToTable("PhotoAlbum");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.PhotoCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PhotoCategory");
-                });
-
             modelBuilder.Entity("Sunridge.Models.News", b =>
-            {
-                b.Property<int>("Id")
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                b.Property<bool>("Archived")
-                    .HasColumnType("bit");
+                    b.Property<bool>("Archived")
+                        .HasColumnType("bit");
 
-                b.Property<string>("Content")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<DateTime>("DisplayDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<string>("Title")
-
+                    b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                b.HasKey("Id");
+                    b.Property<DateTime>("DisplayDate")
+                        .HasColumnType("datetime2");
 
-                b.ToTable("News");
-            });
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
 
             modelBuilder.Entity("Sunridge.Models.ApplicationUser", b =>
                 {
@@ -424,30 +343,6 @@ namespace Sunridge.DataAccess.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.Photo", b =>
-                {
-                    b.HasOne("Sunridge.Models.PhotoAlbum", "PhotoAlbum")
-                        .WithMany()
-                        .HasForeignKey("PhotoAlbumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.PhotoAlbum", b =>
-                {
-                    b.HasOne("Sunridge.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sunridge.Models.PhotoCategory", "PhotoCategory")
-                        .WithMany()
-                        .HasForeignKey("PhotoCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

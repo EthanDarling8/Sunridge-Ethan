@@ -60,7 +60,7 @@ namespace Sunridge.Pages.Home.FireInfo {
                 if (files.Count > 0) {
                     // Upload and save image
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath,@"fireinfos");
+                    var uploads = Path.Combine(webRootPath,@"fireinfo");
                     var extension = Path.GetExtension(files[0].FileName);
 
                     var filePath = Path.Combine(webRootPath, objFromDb.File.TrimStart('\\'));

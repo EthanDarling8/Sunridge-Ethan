@@ -5,21 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 
 namespace Sunridge.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
+
+        public List<Banner> BannerList { get; set; }
 
         public void OnGet()
         {
-
+            BannerList = _unitOfWork.Banner.GetAll().ToList();
         }
     }
 }

@@ -5,24 +5,43 @@ namespace Sunridge.DataAccess.Data.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        //Inject an instance of our database service
-        //underscore (_db) is to indicate it is read only        
+        //Inject an instance of our database service      
         private readonly ApplicationDbContext _db;
+
 
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
+        public IBannerRepository Banner { get; private set; }
+        public INewsRepository News { get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+
+        //Photo Gallery IRepositories
+        public IPhotoCategoryRepository PhotoCategory { get; private set; }
+        public IPhotoAlbumRepository PhotoAlbum { get; private set; }
+        public IPhotoRepository Photo { get; private set; }
+
+        // Lot IRepositories
         public IInventoryRepository Inventory { get; private set; }
         public ILotFileRepository LotFile { get; private set; }
         public ILot_ApplicationUserRepository Lot_ApplicationUser { get; private set; }
         public ILot_InventoryRepository Lot_Inventory { get; private set; }
 
 
-        //ctor tab tab makes the constructor
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
 
-            // **** Models are instantiated here ****
+            // **** Models are instantiated here ****         
+            Banner = new BannerRepository(_db);
+            News = new NewsRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+
+            //Photo Gallery Models
+            PhotoCategory = new PhotoCategoryRepository(_db);
+            PhotoAlbum = new PhotoAlbumRepository(_db);
+            Photo = new PhotoRepository(_db);
+            
+            // Lot Models
             Lot = new LotRepository(_db);
             LotFile = new LotFileRepository(_db);
             Inventory = new InventoryRepository(_db);

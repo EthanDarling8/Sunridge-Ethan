@@ -1,0 +1,39 @@
+﻿@page
+@model Sunridge.Pages.Admin.PhotoCategory.IndexModel
+@{
+    ViewData["Title"] = "Photo Categories";
+}
+
+
+
+
+<h1>Photo Categories</h1>
+
+@*Create New Button*@
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-right">
+            <a asp-page="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+        </div>
+    </div>
+</div>
+
+@*id is required for datatables*@
+<table id="DT_load" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            @*The headers have to be hard coded in datatables*@
+            <th>
+                Photo Category Name
+            </th>
+            <th>
+                @*Edit and delete buttons will go under here*@
+            </th>
+        </tr>
+    </thead>
+</table>
+
+@*This section optionally is rendered in _Layout.html*@
+@section Scripts{
+    <script src="~/js/photoCategory.js"></script>
+}

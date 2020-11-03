@@ -1,0 +1,64 @@
+﻿@model Sunridge.Pages.Home.Photos.IndexModel
+
+<div class="col-xl-4 col-md-6">
+
+    @*Category Selected*@
+    @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+    {
+        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+            <div class="text-center p-2">
+                @*Title*@
+                <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
+
+                @*Display thumb and setup for baguetteBox*@
+                <div class="gallery">
+                    <a href="@Model.Photo.Image" data-caption="@Model.Photo.Title" onclick="baguetteBox()">
+                        <img src="@Model.Photo.Thumb" class="card-img-top rounded" />
+                    </a>
+                </div>
+
+                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                {
+                    <a class="btn btn-warning m-1"
+                       asp-route-photoId="@Model.Photo.Id"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Photo/Upsert">
+                        <i class="far fa-edit"></i> Edit Photo
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+    @*No Category Selected*@
+    else
+    {
+        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+            <div class="text-center p-2">
+                @*Title*@
+                <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
+
+                @*Display thumb and setup for baguetteBox*@
+                <div class="gallery">
+                    <a href="@Model.Photo.Image" title="@Model.Photo.Title" data-caption="@Model.Photo.Description" onclick="baguetteBox.run('.gallery')">
+                        <img src="@Model.Photo.Thumb" class="card-img-top rounded" />
+                    </a>
+                </div>
+
+                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                {
+                    <a class="btn btn-warning m-1"
+                       asp-route-photoId="@Model.Photo.Id"
+                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                       asp-page="/Owner/Photos/Album/Photo/Upsert">
+                        <i class="far fa-edit"></i> Edit Photo
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+

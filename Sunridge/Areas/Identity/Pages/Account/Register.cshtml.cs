@@ -127,20 +127,16 @@ namespace Sunridge.Areas.Identity.Pages.Account {
                 if (result.Succeeded) {
                     
                     // Create roles 
-                    if (!await _roleManager.RoleExistsAsync(SD.BoardMemberRole)) {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.BoardMemberRole));
+                    if (!await _roleManager.RoleExistsAsync(SD.AdministratorRole)) {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.AdministratorRole));
                     }
 
-                    if (!await _roleManager.RoleExistsAsync(SD.AdminRole)) {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.AdminRole));
-                    }
-
-                    if (!await _roleManager.RoleExistsAsync(SD.UserRole)) {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.UserRole));
+                    if (!await _roleManager.RoleExistsAsync(SD.OwnerRole)) {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.OwnerRole));
                     }
 
                     // Set new user to User Role by default
-                    await _userManager.AddToRoleAsync(user, SD.UserRole);
+                    await _userManager.AddToRoleAsync(user, SD.OwnerRole);
 
                     _logger.LogInformation("User created a new account with password.");
 

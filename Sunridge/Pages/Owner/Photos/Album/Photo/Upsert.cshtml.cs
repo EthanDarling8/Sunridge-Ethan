@@ -16,12 +16,12 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public UpsertModel(
             IUnitOfWork unitOfWork,
             IWebHostEnvironment hostingEnvironment,
-            UserManager<IdentityUser> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;

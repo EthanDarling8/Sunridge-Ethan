@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +39,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
         {
             PhotoObj = new Models.Photo();
 
-            // **** ToDo **** Ensure this can only be accessed the an admin or the user that owns this picture.
+            // **** ToDo **** Ensure this can only be accessed by an admin or the user that owns this picture.
             //Get Id of current user.
             ApplicationUserId = _userManager.GetUserId(User);
 

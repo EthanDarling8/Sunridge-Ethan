@@ -53,9 +53,8 @@ namespace Sunridge.Pages.Home.Photos
             PhotoVM = new PhotoGalleryVM();
             PhotoAlbum = new PhotoAlbum();
             MyAlbums = myAlbums;
-
-            // **** TODO **** Get UserId to display "Edit" button on Album if it is their album
-            //Get Id of current user.
+            
+            //Get Id of current user for displaying edit/add buttons
             CurrentApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
 
             //Category list should always include everything.

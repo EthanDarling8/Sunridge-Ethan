@@ -13,10 +13,10 @@ namespace Sunridge.Pages.Owner.Photos.Album
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<Models.Owner> _userManager;
 
         public UpsertModel(IUnitOfWork unitOfWork,
-            UserManager<ApplicationUser> userManager)
+            UserManager<Models.Owner> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -82,14 +82,14 @@ namespace Sunridge.Pages.Owner.Photos.Album
             if (PhotoAlbumObj.PhotoAlbum.Id == 0)
             {
                 //Store application user so their name can be displayed on the album.
-                PhotoAlbumObj.PhotoAlbum.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
+                PhotoAlbumObj.PhotoAlbum.Owner = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
 
                 _unitOfWork.PhotoAlbum.Add(PhotoAlbumObj.PhotoAlbum);
             }
             //Existing PhotoAlbum
             else
             {
-                PhotoAlbumObj.PhotoAlbum.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == PhotoAlbumObj.PhotoAlbum.ApplicationUserId);
+                PhotoAlbumObj.PhotoAlbum.Owner = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == PhotoAlbumObj.PhotoAlbum.ApplicationUserId);
 
                 _unitOfWork.PhotoAlbum.Update(PhotoAlbumObj.PhotoAlbum);
             }

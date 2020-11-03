@@ -18,13 +18,13 @@ namespace Sunridge.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<Owner> _userManager;
+        private readonly SignInManager<Owner> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, 
+        public LoginModel(SignInManager<Owner> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<Owner> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

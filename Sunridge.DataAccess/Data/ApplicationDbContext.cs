@@ -5,7 +5,7 @@ using Sunridge.Models.Models;
 
 namespace Sunridge.DataAccess.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<Owner>
     {
         public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -16,7 +16,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Lot> Lot { get; set; }
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<Owner> ApplicationUser { get; set; }
 
         // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }

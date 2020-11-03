@@ -21,7 +21,7 @@
             @*Category Selected*@
             @if (@Model.PhotoVM.SelectedPhotoCategory != null)
             {
-                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
                 {
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"
@@ -53,7 +53,7 @@
             @*No Category Selected*@
             else
             {
-                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
                 {
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"

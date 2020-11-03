@@ -37,7 +37,7 @@ namespace Sunridge
                 ));
 
             //identity framework
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<Owner, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             

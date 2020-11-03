@@ -17,7 +17,7 @@
                     </a>
                 </div>
 
-                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
                 {
                     <a class="btn btn-warning m-1"
                        asp-route-photoId="@Model.Photo.Id"
@@ -46,7 +46,7 @@
                     </a>
                 </div>
 
-                @if (User.Identity.IsAuthenticated && Model.CurrentApplicationUser.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
                 {
                     <a class="btn btn-warning m-1"
                        asp-route-photoId="@Model.Photo.Id"

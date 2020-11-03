@@ -15,9 +15,9 @@ namespace Sunridge.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<Owner> _userManager;
 
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
+        public ConfirmEmailModel(UserManager<Owner> userManager)
         {
             _userManager = userManager;
         }

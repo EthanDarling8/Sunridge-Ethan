@@ -27,7 +27,7 @@ namespace Sunridge.Models
         public string ApplicationUserId { get; set; }
 
         [ForeignKey("ApplicationUserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual Owner Owner { get; set; }
 
 
         //Link to PhotoCategory

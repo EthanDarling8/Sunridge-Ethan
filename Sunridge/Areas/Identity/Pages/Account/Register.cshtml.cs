@@ -22,16 +22,16 @@ namespace Sunridge.Areas.Identity.Pages.Account {
     [AllowAnonymous]
     public class RegisterModel : PageModel {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<Owner> _signInManager;
+        private readonly UserManager<Owner> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
             RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<Owner> userManager,
+            SignInManager<Owner> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             IWebHostEnvironment webHostEnvironment) {
@@ -111,7 +111,7 @@ namespace Sunridge.Areas.Identity.Pages.Account {
                 }
 
                 // Create application user
-                var user = new ApplicationUser {
+                var user = new Owner {
                     UserName = Input.Email, Email = Input.Email,
                     FirstName = Input.FirstName, LastName = Input.LastName,
                     Image = fileName, PhoneNumber = Input.PhoneNumber,

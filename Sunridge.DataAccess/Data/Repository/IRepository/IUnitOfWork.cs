@@ -12,6 +12,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         IViewCountRepository ViewCount { get; }
         
 
+        IApplicationUserRepository ApplicationUser { get;  }
 
         void Save();
     }

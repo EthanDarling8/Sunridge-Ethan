@@ -16,12 +16,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Sunridge.Models;
+using Sunridge.Utility;
 
-namespace Sunridge.Areas.Identity.Pages.Account
-{
+namespace Sunridge.Areas.Identity.Pages.Account {
     [AllowAnonymous]
-    public class RegisterModel : PageModel
-    {
+    public class RegisterModel : PageModel {
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -29,12 +29,13 @@ namespace Sunridge.Areas.Identity.Pages.Account
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
+            RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IWebHostEnvironment webHostEnvironment)
-        {
+            IWebHostEnvironment webHostEnvironment) {
+            _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -42,16 +43,13 @@ namespace Sunridge.Areas.Identity.Pages.Account
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class InputModel
-        {
-            
+        public class InputModel {
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "First Name")]
@@ -61,14 +59,15 @@ namespace Sunridge.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-            
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -77,30 +76,27 @@ namespace Sunridge.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            
+
             [Required]
             [Phone]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
-            
-            [Display(Name = "Image")]
-            public string Image { get; set; }
+
+            [Display(Name = "Image")] public string Image { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
-        {
+        public async Task OnGetAsync(string returnUrl = null) {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null) {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             var fileName = "";
             var temp = "";
-            
+
             if (ModelState.IsValid) {
                 // Get image from form
                 var files = HttpContext.Request.Form.Files;
@@ -121,15 +117,31 @@ namespace Sunridge.Areas.Identity.Pages.Account
                     Image = fileName, PhoneNumber = Input.PhoneNumber,
                     BoardMember = false, Position = String.Empty
                 };
-                
+
                 // Set to default image if empty
                 if (temp.Equals("")) {
                     user.Image = "DefaultImage.png";
                 }
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
-                {
+                if (result.Succeeded) {
+                    
+                    // Create roles 
+                    if (!await _roleManager.RoleExistsAsync(SD.BoardMemberRole)) {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.BoardMemberRole));
+                    }
+
+                    if (!await _roleManager.RoleExistsAsync(SD.AdminRole)) {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.AdminRole));
+                    }
+
+                    if (!await _roleManager.RoleExistsAsync(SD.UserRole)) {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.UserRole));
+                    }
+
+                    // Set new user to User Role by default
+                    await _userManager.AddToRoleAsync(user, SD.UserRole);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -137,24 +149,22 @@ namespace Sunridge.Areas.Identity.Pages.Account
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new {area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl},
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount) {
+                        return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
                     }
-                    else
-                    {
+                    else {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
+
+                foreach (var error in result.Errors) {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }

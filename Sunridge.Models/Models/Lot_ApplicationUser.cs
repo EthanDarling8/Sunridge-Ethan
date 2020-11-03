@@ -21,13 +21,10 @@ namespace Sunridge.Models
         public int LotId { get; set; }
         #endregion
 
-        #region Lot-ApplicationUserId (FK) [DISABLED]
+        #region Lot-ApplicationUserId (FK)
         //Lot-LotId: The ApplicationUserId Foreign Key to get info about ApplicationUser.
-        /*
-
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
-        */
         #endregion
         #region Lot_ApplicationUser-ApplicationUserId
         // Lot_ApplicationUser-LotId: The Primary Key of the ApplicationUser Table

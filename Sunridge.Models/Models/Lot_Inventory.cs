@@ -20,6 +20,7 @@ namespace Sunridge.Models
         [ForeignKey("LotId")]
         public virtual Lot Lot { get; set; }
         #endregion
+
         #region Lot_Inventory-InventoryId
         // Lot_Inventory-LotId: The Primary Key of the Inventory Table
         [Display(Name = "Inventory Id")]

@@ -12,7 +12,7 @@ namespace Sunridge.DataAccess.Data.Repository
         // **** Model IRepositories go here ****
         public IBannerRepository Banner { get; private set; }
         public INewsRepository News { get; private set; }
-        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IOwnerRepository Owner { get; private set; }
 
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
@@ -23,7 +23,8 @@ namespace Sunridge.DataAccess.Data.Repository
         public ILotRepository Lot { get; private set; }
         public IInventoryRepository Inventory { get; private set; }
         public ILotFileRepository LotFile { get; private set; }
-        public ILot_ApplicationUserRepository Lot_ApplicationUser { get; private set; }
+        public ILot_OwnerFileRepository Lot_OwnerFile { get; private set; }
+        public ILot_OwnerRepository Lot_Owner { get; private set; }
         public ILot_InventoryRepository Lot_Inventory { get; private set; }
 
 
@@ -34,7 +35,7 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****         
             Banner = new BannerRepository(_db);
             News = new NewsRepository(_db);
-            ApplicationUser = new ApplicationUserRepository(_db);
+            Owner = new OwnerRepository(_db);
 
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);
@@ -44,8 +45,9 @@ namespace Sunridge.DataAccess.Data.Repository
             // Lot Models
             Lot = new LotRepository(_db);
             LotFile = new LotFileRepository(_db);
+            Lot_OwnerFile = new Lot_OwnerFileRepository(_db);
             Inventory = new InventoryRepository(_db);
-            Lot_ApplicationUser = new Lot_ApplicationUserRepository(_db);
+            Lot_Owner = new Lot_OwnerRepository(_db);
             Lot_Inventory = new Lot_InventoryRepository(_db);
         }
 

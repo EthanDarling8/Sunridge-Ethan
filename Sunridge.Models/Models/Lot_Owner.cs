@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sunridge.Models
 {
-    public class Lot_ApplicationUser
+    public class Lot_Owner
     {
-        #region Lot_ApplicationUser-Id
-        //Lot_ApplicationUser-Id: The Id of the Lot_ApplicationUser Bridging Table.
+        #region Lot_Owner-Id
+        //Lot_Owner-Id: The Id of the Lot_Owner Bridging Table.
         public int Id { get; set; }
         #endregion
 
@@ -15,31 +15,31 @@ namespace Sunridge.Models
         [ForeignKey("LotId")]
         public virtual Lot Lot { get; set; }
         #endregion
-        #region Lot_ApplicationUser-LotId
-        // Lot_ApplicationUser-LotId: The Primary Key of the Lot Table
+        #region Lot_Owner-LotId
+        // Lot_Owner-LotId: The Primary Key of the Lot Table
         [Display(Name = "Lot Id")]
         public int LotId { get; set; }
         #endregion
 
-        #region Lot-ApplicationUserId (FK)
-        //Lot-LotId: The ApplicationUserId Foreign Key to get info about ApplicationUser.
-        [ForeignKey("ApplicationUserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        #region Lot-OwnerId (FK)
+        //Lot-LotId: The OwnerId Foreign Key to get info about Owner.
+        [ForeignKey("OwnerId")]
+        public virtual Owner Owner { get; set; }
         #endregion
-        #region Lot_ApplicationUser-ApplicationUserId
-        // Lot_ApplicationUser-LotId: The Primary Key of the ApplicationUser Table
+        #region Lot_Owner-OwnerId
+        // Lot_Owner-LotId: The Primary Key of the Owner Table
         [Display(Name = "User Id")]
-        public int ApplicationUserId { get; set; }
+        public int OwnerId { get; set; }
         #endregion
 
         #region Table Diagram
         // EXAMPLE:
         //  _____________________________
-        // | Lot Id | ApplicationUser Id |
+        // | Lot Id | Owner Id           |
         // |________|____________________|
         // | 1      | 1                  |
         // |--------|--------------------|
-        // | 1      | 2                  |  // Note how Lot 1 is shared between ApplicationUser 1 & 2.
+        // | 1      | 2                  |  // Note how Lot 1 is shared between Owner 1 & 2.
         // |--------|--------------------|
         // | 2      | 3                  |
         // |________|____________________|

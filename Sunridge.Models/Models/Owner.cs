@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sunridge.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class Owner : IdentityUser
     {
         public string FirstName { get; set; }
 

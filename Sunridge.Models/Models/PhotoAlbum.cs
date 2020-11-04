@@ -22,12 +22,12 @@ namespace Sunridge.Models
         public string Thumb { get; set; }
 
 
-        //Link to ApplicationUser
+        //Link to Owner
         [Required]
-        public string ApplicationUserId { get; set; }
+        public string OwnerId { get; set; }
 
-        [ForeignKey("ApplicationUserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        [ForeignKey("OwnerId")]
+        public virtual Owner Owner { get; set; }
 
 
         //Link to PhotoCategory

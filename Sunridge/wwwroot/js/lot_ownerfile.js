@@ -18,34 +18,33 @@ function loadList() {
                     data: "id", width: "16%"
                 },
                 {
-                    data: "lotnumber", width: "16%"
+                    data: "title", width: "16%"
                 },
                 {
-                    data: "taxid", width: "16%"
+                    data: "description", width: "16%"
                 },
                 {
-                    data: "address", width: "16%"
+                    data: "file", width: "16%"
                 },
-                {
-                    data: "id",
-                    "render": function (data) {
-                        return `
-                        <div class="text-center">
-                            <a href="/Admin/lot/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
-                                <i class="far fa-edit"></i>
-                                Edit 
-                            </a>
-                            <a onClick=Delete('/api/lot/'+${data})
-                               class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
-                                <i class="far fa-trash-alt"></i>
-                                Delete
-                            </a>
-                        </div>
+            {
+                data: "id",
+                "render": function (data) {
+                    return `
+                    <div class="text-center">
+                        <a href="/Admin/lot_ownerfile/Upsert?id=${data}"
+                           class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                            <i class="far fa-edit"></i>
+                            Edit
+                        </a>
+                        <a onClick=Delete('/api/lot_ownerfile/'+${data})
+                           class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
+                            <i class="far fa-trash-alt"></i>
+                            Delete
+                        </a>
+                    </div>
 `}, width: "16%"
 
-                }
-
+            }
             ],
         "language": {
             "emptyTable": "no data found."

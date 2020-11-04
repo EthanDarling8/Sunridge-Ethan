@@ -2,11 +2,11 @@
 
 namespace Sunridge.DataAccess.Data.Repository.IRepository
 {
-    internal class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
+    internal class OwnerRepository : Repository<Owner>, IOwnerRepository
     {
         private ApplicationDbContext _db;
 
-        public ApplicationUserRepository(ApplicationDbContext db) : base(db)
+        public OwnerRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

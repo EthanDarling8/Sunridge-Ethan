@@ -21,7 +21,7 @@ function loadList() {
                     data: "lot.id", width: "16%"
                 },
                 {
-                    data: "applicationuser.id", width: "16%"
+                    data: "owner.id", width: "16%"
                 }
             ],
         "language": {

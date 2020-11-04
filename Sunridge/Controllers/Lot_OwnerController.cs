@@ -6,11 +6,11 @@ namespace Sunridge.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class Lot_ApplicationUserController : Controller
+    public class Lot_OwnerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public Lot_ApplicationUserController(IUnitOfWork unitOfWork)
+        public Lot_OwnerController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

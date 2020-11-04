@@ -32,7 +32,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
         [BindProperty]
         public Models.Photo PhotoObj { get; set; }
         public int SelectedPhotoCategoryId { get; set; }
-        public string ApplicationUserId { get; set; }
+        public string OwnerId { get; set; }
 
 
         public IActionResult OnGet(int selectedPhotoAlbumId, int selectedPhotoCategoryId, int photoId)
@@ -41,7 +41,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
             // **** ToDo **** Ensure this can only be accessed by an admin or the user that owns this picture.
             //Get Id of current user.
-            ApplicationUserId = _userManager.GetUserId(User);
+            OwnerId = _userManager.GetUserId(User);
 
             //Existing Photo (edit)
             if (photoId != 0)

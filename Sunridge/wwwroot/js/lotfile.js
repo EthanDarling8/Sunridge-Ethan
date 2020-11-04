@@ -31,12 +31,12 @@ function loadList() {
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/lot/Upsert?id=${data}"
+                            <a href="/Admin/lotfile/Upsert?id=${data}"
                                class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
                             </a>
-                            <a onClick=Delete('/api/lot/'+${data})
+                            <a onClick=Delete('/api/lotfile/'+${data})
                                class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
                                 <i class="far fa-trash-alt"></i>
                                 Delete
@@ -45,7 +45,6 @@ function loadList() {
 `}, width: "16%"
 
                 }
-
             ],
         "language": {
             "emptyTable": "no data found."

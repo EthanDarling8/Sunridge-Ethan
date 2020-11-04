@@ -15,7 +15,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Lot> Lot { get; set; }
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<Owner> Owner { get; set; }
 
         //Photo Gallery DbSets
         public DbSet<PhotoCategory> PhotoCategory { get; set; }
@@ -24,8 +24,9 @@ namespace Sunridge.DataAccess.Data
 
         // Lot DbSets
         public DbSet<LotFile> LotFile { get; set; }
+        public DbSet<Lot_OwnerFile> Lot_OwnerFile { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
-        public DbSet<Lot_ApplicationUser> Lot_ApplicationUser { get; set; }
+        public DbSet<Lot_Owner> Lot_Owner { get; set; }
         public DbSet<Lot_Inventory> Lot_Inventory { get; set; }
        
     }

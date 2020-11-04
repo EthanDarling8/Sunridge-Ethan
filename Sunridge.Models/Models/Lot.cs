@@ -28,7 +28,7 @@ namespace Sunridge.Models
         #endregion
         // Primary Owner Id - By default this could just be an Owner Id foreign key, however Dr. Fry mentioned he wasn't sure this was even necessary...
         #region Bridging Tables Collections
-        public virtual ICollection<Lot_ApplicationUser> Lot_ApplicationUsers { get; set; }
+        public virtual ICollection<Lot_Owner> Lot_Owners { get; set; }
         public virtual ICollection<Lot_Inventory> Lot_Inventories { get; set; }
         #endregion
 

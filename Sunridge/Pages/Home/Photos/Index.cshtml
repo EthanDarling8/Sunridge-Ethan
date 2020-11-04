@@ -21,7 +21,7 @@
             @*Category Selected*@
             @if (@Model.PhotoVM.SelectedPhotoCategory != null)
             {
-                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.OwnerId)
                 {
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"
@@ -53,7 +53,7 @@
             @*No Category Selected*@
             else
             {
-                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.ApplicationUserId)
+                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.OwnerId)
                 {
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"
@@ -233,7 +233,7 @@
                                 {
                                     Model.PhotoAlbum = photoAlbum;
                                     //Get the name of the album creator for display
-                                    Model.PhotoVM.AlbumCreator = @Model._unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == photoAlbum.ApplicationUserId);
+                                    Model.PhotoVM.AlbumCreator = @Model._unitOfWork.Owner.GetFirstOrDefault(u => u.Id == photoAlbum.OwnerId);
 
                                     //Use a partial view as this code is repeated
                                     <partial name="Home/Photos/Views/_PhotoAlbumCard" />
@@ -312,7 +312,7 @@
                                         {
                                             Model.PhotoAlbum = photoAlbum;
                                             //Get the name of the album creator for display
-                                            Model.PhotoVM.AlbumCreator = @Model._unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == photoAlbum.ApplicationUserId);
+                                            Model.PhotoVM.AlbumCreator = @Model._unitOfWork.Owner.GetFirstOrDefault(u => u.Id == photoAlbum.OwnerId);
 
                                             //Use a partial view as this code is repeated
                                             <partial name="Home/Photos/Views/_PhotoAlbumCard" />

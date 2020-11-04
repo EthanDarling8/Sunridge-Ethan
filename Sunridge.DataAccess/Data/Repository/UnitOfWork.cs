@@ -8,12 +8,13 @@ namespace Sunridge.DataAccess.Data.Repository
         //Inject an instance of our database service      
         private readonly ApplicationDbContext _db;
 
+
         // **** Model IRepositories go here ****
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
-        public INewsRepository News { get; private set; }
-        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IOwnerRepository Owner { get; private set; }
         public IFireInfoRepository FireInfo { get; private set; }
+        public INewsRepository News { get; private set; }
 
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
@@ -28,16 +29,14 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****
             Lot = new LotRepository(_db);            
             Banner = new BannerRepository(_db);
+            Owner = new OwnerRepository(_db);
+            FireInfo = new FireInfoRepository(_db);
             News = new NewsRepository(_db);
-            ApplicationUser = new ApplicationUserRepository(_db);
 
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);
             PhotoAlbum = new PhotoAlbumRepository(_db);
-            Photo = new PhotoRepository(_db);
-            
-            // Fire Info
-            FireInfo = new FireInfoRepository(_db);
+            Photo = new PhotoRepository(_db);            
         }
 
         public void Dispose()

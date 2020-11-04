@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Sunridge.Models {
     public class Owner : IdentityUser {

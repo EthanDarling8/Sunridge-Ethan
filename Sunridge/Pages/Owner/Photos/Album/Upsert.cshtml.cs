@@ -26,7 +26,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
         [BindProperty]
         public PhotoAlbumVM PhotoAlbumObj { get; set; }        
         public int SelectedPhotoCategoryId { get; set; }        
-        public string ApplicationUserId { get; set; }
+        public string OwnerId { get; set; }
 
 
 
@@ -46,9 +46,9 @@ namespace Sunridge.Pages.Owner.Photos.Album
             //Edit existing
             if (selectedPhotoAlbumId != null)
             {
-                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);                
+                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
                 //Maintain existing Id when editing as editing could be done by an admin.
-                ApplicationUserId = PhotoAlbumObj.PhotoAlbum.ApplicationUserId;
+                OwnerId = PhotoAlbumObj.PhotoAlbum.OwnerId;
 
                 //Specified PhotoAlbumId does not exist or database fails
                 if (PhotoAlbumObj.PhotoAlbum == null)
@@ -60,7 +60,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
             else
             {
                 //Get Id of current user if making a new album
-                ApplicationUserId = _userManager.GetUserId(User);
+                OwnerId = _userManager.GetUserId(User);
             }
 
             //Always preserve selected category
@@ -82,14 +82,14 @@ namespace Sunridge.Pages.Owner.Photos.Album
             if (PhotoAlbumObj.PhotoAlbum.Id == 0)
             {
                 //Store application user so their name can be displayed on the album.
-                PhotoAlbumObj.PhotoAlbum.Owner = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
+                PhotoAlbumObj.PhotoAlbum.Owner = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
 
                 _unitOfWork.PhotoAlbum.Add(PhotoAlbumObj.PhotoAlbum);
             }
             //Existing PhotoAlbum
             else
             {
-                PhotoAlbumObj.PhotoAlbum.Owner = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == PhotoAlbumObj.PhotoAlbum.ApplicationUserId);
+                PhotoAlbumObj.PhotoAlbum.Owner = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoAlbumObj.PhotoAlbum.OwnerId);
 
                 _unitOfWork.PhotoAlbum.Update(PhotoAlbumObj.PhotoAlbum);
             }

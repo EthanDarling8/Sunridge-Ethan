@@ -21,7 +21,7 @@ namespace Sunridge.Pages.Home.BoardMembers {
         public List<Models.Owner> UserList { get; set; }
         
         public void OnGet() {
-            UserList = _unitOfWork.ApplicationUser.GetAll().ToList();
+            UserList = _unitOfWork.Owner.GetAll().ToList();
             
         }
     }

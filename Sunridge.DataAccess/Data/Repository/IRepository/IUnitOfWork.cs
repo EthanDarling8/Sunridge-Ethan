@@ -8,7 +8,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         // **** Model IRepositories go here ****
         ILotRepository Lot { get; }
         IBannerRepository Banner { get; }
-        IApplicationUserRepository ApplicationUser { get;  }
+        IOwnerRepository Owner { get; }
         IFireInfoRepository FireInfo { get; }
         INewsRepository News { get; }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.Models;
-using Sunridge.Models.Models;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -16,7 +15,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Lot> Lot { get; set; }
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<Owner> ApplicationUser { get; set; }
+        public DbSet<Owner> Owner { get; set; }
 
         // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }

@@ -12,6 +12,7 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models.Models;
 using Sunridge.Utility;
 using System;
+using Sunridge.Models;
 
 namespace Sunridge
 {
@@ -36,7 +37,7 @@ namespace Sunridge
                 ));
 
             //identity framework
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<Owner, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             

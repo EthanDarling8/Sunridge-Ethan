@@ -13,10 +13,10 @@ namespace Sunridge.Pages.Owner.Photos.Album
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Models.Owner> _userManager;
 
         public UpsertModel(IUnitOfWork unitOfWork,
-            UserManager<IdentityUser> userManager)
+            UserManager<Models.Owner> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -46,7 +46,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
             //Edit existing
             if (selectedPhotoAlbumId != null)
             {
-                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);                
+                PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
                 //Maintain existing Id when editing as editing could be done by an admin.
                 OwnerId = PhotoAlbumObj.PhotoAlbum.OwnerId;
 

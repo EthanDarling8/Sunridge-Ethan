@@ -7,16 +7,17 @@ using Sunridge.Models.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Sunridge.DataAccess.Data;
 
 namespace Sunridge.Pages.Home.Photos
 {
     public class IndexModel : PageModel
     {
         public readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Models.Owner> _userManager;
 
         public IndexModel(IUnitOfWork unitOfWork,
-            UserManager<IdentityUser> userManager)
+            UserManager<Models.Owner> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;

@@ -1,0 +1,104 @@
+﻿@page
+@model Sunridge.Pages.Home.FireInfo.Details
+
+<div class="container">
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <div class="col-12 px-3 border-bottom-1">
+            <h2 class="text-primary mt-3">
+                @(Model.FireInfoObj.Title)
+            </h2>
+        </div>
+
+        <div class="col-8 pt-3">
+
+        </div>
+
+        <div class="col-8 pt-3">
+            <div class="row mb-2">
+                <div class="col-3">
+                    <h5>Description</h5>
+                </div>
+                <div class="col-9">
+                    <textarea style="height: 200px">@Model.FireInfoObj.Description</textarea>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-3">
+                    <h5>Link 1</h5>
+                </div>
+                <div class="col-9">
+                    <h5>
+                        <a href="@Model.FireInfoObj.Link1" target="_blank">
+                            @Model.FireInfoObj.Link1
+                        </a>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-3">
+                    <h5>Link 2</h5>
+                </div>
+                <div class="col-9">
+                    <h5>
+                        <a href="@Model.FireInfoObj.Link2" target="_blank">
+                            @Model.FireInfoObj.Link2
+                        </a>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-3">
+                    <h5>Phone</h5>
+                </div>
+                <div class="col-9">
+                    <h5>@Model.FireInfoObj.Phone</h5>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-3">
+                    <h5>Email</h5>
+                </div>
+                <div class="col-9">
+                    <h5>@Model.FireInfoObj.Email</h5>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-3">
+                    <h5>PostDate</h5>
+                </div>
+                <div class="col-9">
+                    <h5>@Model.FireInfoObj.PostDate</h5>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select a File', 'error');
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

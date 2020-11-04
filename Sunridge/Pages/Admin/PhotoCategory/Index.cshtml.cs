@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.PhotoCategory
 {
-    // **** ToDo **** [Authorize] only admins
-    [Authorize]
+    [Authorize(Roles = SD.AdministratorRole)]
     public class IndexModel : PageModel
     {
         public void OnGet()

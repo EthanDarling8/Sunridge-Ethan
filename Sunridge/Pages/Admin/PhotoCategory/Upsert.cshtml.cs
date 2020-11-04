@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.PhotoCategory
 {
-    // **** ToDo **** [Authorize] only admins
-    [Authorize]
+    [Authorize(Roles = SD.AdministratorRole)]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -23,19 +23,18 @@ namespace Sunridge.Pages.Admin.PhotoCategory
 
 
 
-        public IActionResult OnGet(int? PhotoCategoryId)
+        public IActionResult OnGet(int PhotoCategoryId)
         {
             PhotoCategoryObj = new Models.PhotoCategory();
 
-            //Edit existing
-            if (PhotoCategoryId != null)
+            //Existing (edit)
+            if (PhotoCategoryId == 0)
             {
                 PhotoCategoryObj = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
 
                 if (PhotoCategoryObj == null)
                 {
-                    //Returns a 404 error page.
-                    return NotFound();
+                    return RedirectToPage("./Index");
                 }
             }
 

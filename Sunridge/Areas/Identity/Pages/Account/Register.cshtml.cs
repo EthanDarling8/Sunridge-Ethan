@@ -94,33 +94,13 @@ namespace Sunridge.Areas.Identity.Pages.Account {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            var fileName = "";
-            var temp = "";
-
             if (ModelState.IsValid) {
-                // Get image from form
-                var files = HttpContext.Request.Form.Files;
-                foreach (var Image in files) {
-                    var file = Image;
-                    temp = file.FileName;
-                    var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePictures");
-                    fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
-                        await file.CopyToAsync(fileStream);
-                    }
-                }
-
                 // Create application user
                 var user = new Owner {
                     UserName = Input.Email, Email = Input.Email,
                     FirstName = Input.FirstName, LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber
                 };
-
-                // TODO Set to default image if empty
-                /*if (temp.Equals("")) {
-                    user.Image = "DefaultImage.png";
-                }*/
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded) {

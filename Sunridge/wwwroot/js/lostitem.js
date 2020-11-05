@@ -17,14 +17,6 @@ function loadList() {
                 {
                     data: "image", width: "20%"
                 },
-                /*
-                {
-                    data: "user.name", width: "20%"
-                },
-                {
-                    data: "user.phone", width: "20%"
-                },
-                */
                 {
                     data: "date", width: "20%"
                 },
@@ -34,6 +26,18 @@ function loadList() {
                 {
                     data: "description", width: "20%"
                 },
+                // User Details for Lost and Found 'Details' Display.
+                /*
+                {
+                data: "user.fullname", width: "20%"
+                },
+                {
+                data: "owner.phone", width: "20%"
+                },
+                            {
+                data: "user.email", width: "20%"
+                },
+                */
                 {
                     data: "id",
                     "render": function (data) {

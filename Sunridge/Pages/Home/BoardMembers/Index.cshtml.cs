@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
+using Sunridge.Models.ViewModels;
 
 namespace Sunridge.Pages.Home.BoardMembers {
     public class Index : PageModel {
@@ -17,12 +18,25 @@ namespace Sunridge.Pages.Home.BoardMembers {
             _unitOfWork = unitOfWork;
         }
 
-        [BindProperty]
-        public List<Models.Owner> UserList { get; set; }
-        
-        public void OnGet() {
-            UserList = _unitOfWork.Owner.GetAll().ToList();
-            
+        [BindProperty] public List<Models.Owner> OwnerList { get; set; }
+        [BindProperty] public List<BoardMember> BoardMemberList { get; set; }
+        [BindProperty] public OwnerBoardMemberVM BoardMemberObj { get; set; }
+
+        public IActionResult OnGet(int? id) {
+            BoardMemberObj = new OwnerBoardMemberVM {
+                BoardMember = new BoardMember(),
+            };
+
+            if (id != null) {
+                BoardMemberObj.BoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
+                if (BoardMemberObj == null) {
+                    return NotFound();
+                }
+            }
+
+            OwnerList = _unitOfWork.Owner.GetAll().ToList();
+            BoardMemberList = _unitOfWork.BoardMember.GetAll().ToList();
+            return Page();
         }
     }
 }

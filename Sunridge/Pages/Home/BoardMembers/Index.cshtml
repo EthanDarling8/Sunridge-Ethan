@@ -9,28 +9,30 @@
 
 <div class="container">
     <div class="row">
-        @*@foreach (var user in Model.UserList) {
-            @if (user.BoardMember) {
-                <div class="col-lg-6">
-                    <div class="card mb-3 shadow" style="max-width: 540px;">
-                        <div class="row no-gutters">
-                            <div class="col-lg-4">
-                                <img src="~/ProfilePictures/@user.Image" class="card-img" height="200px" alt="@user.FullName"
-                                     style="width: 150px; height: 150px; object-fit: cover">
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="card-body">
-                                    <h3 class="card-title">@user.FullName</h3>
-                                    <h6>@user.Position - Lot Here</h6>
-                                    <h6>
-                                        <a href="mailto:@user.Email" target="_blank">@user.Email</a>
-                                    </h6>
+        @foreach (var owner in Model.OwnerList) {
+            @foreach (var bm in Model.BoardMemberList) {
+                @if (owner.Id == bm.Owner.Id) {
+                    <div class="col-lg-6">
+                        <div class="card mb-3 shadow" style="max-width: 540px;">
+                            <div class="row no-gutters">
+                                <div class="col-lg-4">
+                                    <img src="~/ProfilePictures/@bm.Image" class="card-img" height="200px" alt="@owner.FirstName"
+                                         style="width: 150px; height: 150px; object-fit: cover">
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="card-body">
+                                        <h3 class="card-title">@owner.FullName</h3>
+                                        <h6>@bm.Position - Lot Here</h6>
+                                        <h6>
+                                            <a href="mailto:@owner.Email" target="_blank">@owner.Email</a>
+                                        </h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-        }*@
+        }
     </div>
 </div>

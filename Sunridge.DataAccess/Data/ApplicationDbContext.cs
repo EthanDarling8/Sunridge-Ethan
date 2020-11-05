@@ -20,6 +20,7 @@ namespace Sunridge.DataAccess.Data
 
         // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }
+        public DbSet<BoardMember> BoardMember { get; set; }
 
         //Photo Gallery DbSets
         public DbSet<PhotoCategory> PhotoCategory { get; set; }

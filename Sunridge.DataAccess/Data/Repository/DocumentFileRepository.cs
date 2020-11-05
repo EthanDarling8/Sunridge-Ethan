@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace Sunridge.DataAccess.Data.Repository
 {
-    public class DocumentRepository : Repository<Document>, IDocumentRepository
+    public class DocumentFileRepository : Repository<DocumentFile>, IDocumentFileRepository
     {
         private readonly ApplicationDbContext _db;
 
         //Inherits the base options listed in services in startup.cs
-        public DocumentRepository(ApplicationDbContext db) : base(db)
+        public DocumentFileRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
@@ -17,14 +17,14 @@ namespace Sunridge.DataAccess.Data.Repository
 
 
 
-        public void Update(Document document)
+        public void Update(DocumentFile documentFile)
         {
             //Gets the first object from the table that has the same id as the one passed in
-            var objFromDb = _db.Document.FirstOrDefault(s => s.Id == document.Id);
+            var objFromDb = _db.DocumentFile.FirstOrDefault(s => s.Id == documentFile.Id);
 
-            objFromDb.Name = document.Name;
-            objFromDb.Text = document.Text;
-            objFromDb.File = document.File;
+            objFromDb.Name = documentFile.Name;
+            objFromDb.DisplayOrder = documentFile.DisplayOrder;
+            objFromDb.File = documentFile.File;
 
             _db.SaveChanges();
         }

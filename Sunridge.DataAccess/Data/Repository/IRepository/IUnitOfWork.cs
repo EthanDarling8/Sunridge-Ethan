@@ -12,7 +12,10 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
 
         //Documents Repositories
         IDocumentCategoryRepository DocumentCategory { get; }
-        IDocumentRepository Document { get; }
+        IDocumentFileRepository DocumentFile { get; }
+        IDocumentSectionRepository DocumentSection { get; }
+        IDocumentSectionTextRepository DocumentSectionText { get; }
+
 
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }

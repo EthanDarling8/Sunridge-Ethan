@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Sunridge.Models
 {
-    public class Document
+    public class DocumentFile
     {
         [Key]
         public int Id { get; set; }
@@ -14,9 +11,14 @@ namespace Sunridge.Models
         [Required]
         public string Name { get; set; }
 
-        public string Text { get; set; }
+        [Required]
+        public int DisplayOrder { get; set; }
 
+        [Required]
         public string File { get; set; }
+
+        //**** ToDo **** figure out keyword storage for search
+        public string Keywords { get; set; }
 
 
         //Link to Document Category

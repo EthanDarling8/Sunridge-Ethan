@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sunridge.DataAccess.Data;
 
 namespace Sunridge.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201105171357_DocumentsRebuild")]
+    partial class DocumentsRebuild
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,6 +199,33 @@ namespace Sunridge.DataAccess.Migrations
                     b.ToTable("BoardMember");
                 });
 
+            modelBuilder.Entity("Sunridge.Models.Document", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DocumentCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentCategoryId");
+
+                    b.ToTable("Document");
+                });
+
             modelBuilder.Entity("Sunridge.Models.DocumentCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -210,89 +239,6 @@ namespace Sunridge.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DocumentCategory");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentFile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DocumentCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("File")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Keywords")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentCategoryId");
-
-                    b.ToTable("DocumentFile");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DocumentCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentCategoryId");
-
-                    b.ToTable("DocumentSection");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentSectionText", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DocumentSectionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentSectionId");
-
-                    b.ToTable("DocumentSectionText");
                 });
 
             modelBuilder.Entity("Sunridge.Models.FireInfo", b =>
@@ -735,29 +681,11 @@ namespace Sunridge.DataAccess.Migrations
                         .HasForeignKey("OwnerId");
                 });
 
-            modelBuilder.Entity("Sunridge.Models.DocumentFile", b =>
+            modelBuilder.Entity("Sunridge.Models.Document", b =>
                 {
                     b.HasOne("Sunridge.Models.DocumentCategory", "DocumentCategory")
                         .WithMany()
                         .HasForeignKey("DocumentCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentSection", b =>
-                {
-                    b.HasOne("Sunridge.Models.DocumentCategory", "DocumentCategory")
-                        .WithMany()
-                        .HasForeignKey("DocumentCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentSectionText", b =>
-                {
-                    b.HasOne("Sunridge.Models.DocumentSection", "DocumentSection")
-                        .WithMany()
-                        .HasForeignKey("DocumentSectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

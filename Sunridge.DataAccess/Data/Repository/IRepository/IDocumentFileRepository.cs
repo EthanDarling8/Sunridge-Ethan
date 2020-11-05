@@ -3,11 +3,11 @@ using Sunridge.Models;
 
 namespace Sunridge.DataAccess.Data.Repository.IRepository
 {
-    public interface IDocumentRepository : IRepository<Document>
-    {        
+    public interface IDocumentFileRepository : IRepository<DocumentFile>
+    {
         //Update is done here rather than in the master IRepository
         //because there is no generic update.
         //Update is specific to the object/table being updated.
-        void Update(Document document);
+        void Update(DocumentFile documentFile);
     }
 }

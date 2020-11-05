@@ -1,27 +1,164 @@
 ﻿@page
 @model Sunridge.Pages.Home.Documents.IndexModel
+@using Sunridge.Utility
 @{
     ViewData["Title"] = "Documents";
 }
 
-@* Get the Selected Category
-    If no category selected, display list of categories*@
+
+@* Display management and category buttons *@
+<div class="row">
+
+    <div class="col-3">
+
+        @* Links to manage documents only visible to admin *@
+        @if (User.IsInRole(SD.AdministratorRole))
+        {
+            <div class="mb-3">
+                <h5 class="row mb-1">Manage Documents</h5>
+
+                <div class="row mb-1">
+                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/Category/Index">Categories</a>
+                </div>
+
+                <div class="row mb-1">
+                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/Section/Index">Sections</a>
+                </div>
+
+                <div class="row mb-1">
+                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/File/Index">Files</a>
+                </div>
+
+                <div class="row mb-1">
+                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/SectionText/Index">Section Text</a>
+                </div>
+            </div>
+        }
 
 
-@* Search box on the side
-    Search file tiles, keywords, section titles, and text *@
+        @* **** ToDo **** Category Selection Buttons *@
+        <h5 class="row mb-1">Select Document Category</h5>
+        @foreach (var category in Model.DocumentCategoryList)
+        {
+            <div class="row mb-1">
+
+                @*Highlight Selected Category*@
+                @if (Model.SelectedCategory != null && Model.SelectedCategory.Id == category.Id)
+                {
+                    <a asp-page="Index"
+                       class="btn btn-block btn-outline-primary"
+                       style="border-radius:2px;"
+                       asp-route-selectedCategoryId="@category.Id">
+                        @category.Name
+                    </a>
+                }
+                else
+                {
+                    <a asp-page="Index"
+                       class="btn btn-block btn-outline-secondary"
+                       style="border-radius:2px;"
+                       asp-route-selectedCategoryId="@category.Id">
+                        @category.Name
+                    </a>
+                }
+
+            </div>
+        }
 
 
-@* Display all the files for that category
-    File upload needs to allow keywords to be entered for search *@
+        @* If category selected, display search *@
+        @if (Model.SelectedCategory != null)
+        {
+            @*Search*@
+            <h5 class="row mb-1">Search</h5>
+
+            <form class="row mb-2" method="post" asp-page-handler="Search">
+                <input asp-for="Search" id="search" class="col-10" type="text" placeholder="Search..." />
+                <button class="col-2" type="submit" asp-page-handler="Search"><i class="fa fa-search"></i></button>
+            </form>
+        }
+    </div>
 
 
-@* Display all text entries for that category
-    This will be broken into sections
-    Sections will have a display order number so order can be changed
-    An admin can add a section then add a text entry within that section*@
+    @* If category selected, display files *@
+    @if (Model.SelectedCategory != null)
+    {
+        @* **** ToDo **** Display all the files for that category
+            File upload needs to allow keywords to be entered for search *@
+        <div class="col-9 mt-1">
 
-<button class="accordion">Section 1</button>
-<div class="panel">
-    <p>Lorem ipsum...</p>
+            <h6>FILES HERE</h6>
+
+            <a class="ml-1">FILE LINKS GO HERE</a>
+
+        </div>
+    }
 </div>
+
+
+@* If category selected, display text *@
+@if (Model.SelectedCategory != null)
+{
+    @* **** ToDo **** Display all text entries for that category
+        This will be broken into sections
+        Sections will have a display order number so order can be changed
+        An admin can add a section then add a text entry within that section
+        
+        Should display edit buttons directly on the sections / text *@
+
+    <div class="accordion" id="accordionExample">
+
+        @*Wrap in foreach
+            id=@sectionId
+            data-target=@sectionId
+            card body = @text*@
+
+
+
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-block collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Collapsible Group Item #2
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable.
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card z-depth-0 bordered">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-block collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Collapsible Group Item #3
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                    labore sustainable.
+                </div>
+            </div>
+        </div>
+    </div>
+}

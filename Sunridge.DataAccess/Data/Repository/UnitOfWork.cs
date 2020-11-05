@@ -18,7 +18,9 @@ namespace Sunridge.DataAccess.Data.Repository
 
         //Documents IRepositories
         public IDocumentCategoryRepository DocumentCategory { get; private set; }
-        public IDocumentRepository Document { get; private set; }
+        public IDocumentFileRepository DocumentFile { get; private set; }
+        public IDocumentSectionRepository DocumentSection { get; private set; }
+        public IDocumentSectionTextRepository DocumentSectionText { get; private set; }
 
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
@@ -48,11 +50,14 @@ namespace Sunridge.DataAccess.Data.Repository
             News = new NewsRepository(_db);
             BoardMember = new BoardMemberRepository(_db);
             FireInfo = new FireInfoRepository(_db);
-            
+
 
             //Documents Models
             DocumentCategory = new DocumentCategoryRepository(_db);
-            Document = new DocumentRepository(_db);
+            DocumentFile = new DocumentFileRepository(_db);
+            DocumentSection = new DocumentSectionRepository(_db);
+            DocumentSectionText = new DocumentSectionTextRepository(_db);
+
 
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);

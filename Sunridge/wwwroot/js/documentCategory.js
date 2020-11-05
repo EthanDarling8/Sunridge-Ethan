@@ -22,11 +22,11 @@ function loadList() {
                     return `
                     <div class="text-center">
                         <a href="/Admin/Document/DocumentCategory/Upsert?documentCategoryId=${data}"
-                            class="btn btn-secondary text-white" style="cursor:pointer; width:100px;">
+                            class="btn btn-warning text-white" style="cursor:pointer; width:100px;">
                                 <i class="far fa-edit"></i> Edit
                         </a>
                         <a onClick=Delete('/api/documentCategory/'+${data})
-                            class="btn btn-warning text-white style="cursor:pointer; width:100px;" )>
+                            class="btn btn-danger text-white style="cursor:pointer; width:100px;" )>
                                 <i class="far fa-trash-alt"></i> Delete
                         </a>
                     </div>`;

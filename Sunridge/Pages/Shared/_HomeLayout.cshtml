@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Sunridge.Utility;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,11 +26,11 @@
         <partial name="_NavHeaderPartial" />
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
 
     <hr />
     <footer class="footer bg-light">
@@ -43,7 +45,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fmqs5qy5c1vp5qr53a8qz2bo3u04yll68273ote9ynk1dm4p"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=@SD.TinyMCE"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.9.0/baguetteBox.js"></script>
 
     @RenderSection("Scripts", required: false)

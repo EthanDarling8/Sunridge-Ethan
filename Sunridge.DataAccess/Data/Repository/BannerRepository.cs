@@ -20,7 +20,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
             objFromDb.Header = updateObj.Header;
             objFromDb.Body = updateObj.Body;
-            objFromDb.Body = updateObj.Body;
+            objFromDb.Archived = updateObj.Archived;
             if (updateObj.Image != null)
             {
                 objFromDb.Image = updateObj.Image;

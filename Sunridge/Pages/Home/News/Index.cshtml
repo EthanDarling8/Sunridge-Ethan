@@ -1,0 +1,38 @@
+﻿@page
+@model Sunridge.Pages.Home.News.IndexModel
+@{
+}
+
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h1 class="text-primary ml-3">News History</h1>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col"></div>
+        <div class="col-3">
+            <input class="form-control" asp-for="Search" />
+        </div>
+        <div class="col col-2">
+            <button type="submit" class="btn btn-info form-control">Search</button>
+        </div>
+    </div>
+
+    <div class="list-group" id="newsListings">
+        @if (Model.NewsList.Count > 0)
+        {
+            @foreach (var item in Model.NewsList)
+            {
+                <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@Html.Raw(item.Title)</h5>
+                    <small class="text-muted text-right">@item.DisplayDate.Date.ToLongDateString()</small>
+                </div>
+                <p class="mb-1">@Html.Raw(item.Content)</p>
+                @*<small class="text-muted"></small>*@
+                </div>
+            }
+        }
+    </div>
+</div>

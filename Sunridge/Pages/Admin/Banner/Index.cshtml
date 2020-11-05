@@ -4,7 +4,7 @@
 }
 
 
-<h2>Banner Item Index</h2>
+<h2 class="mb-4">Banner Item Index</h2>
 
 <div class="row">
     <div class="col-lg-3 col-md-6">
@@ -21,7 +21,7 @@
                 <th id="bannerBody">
                     Body
                 </th>
-                <th id="bannerBody">
+                <th id="bannerArchived">
                     Archived
                 </th>
                 <th></th>
@@ -35,10 +35,10 @@
     {
             <tr>
                 <td style="width: 25%">
-                    @item.Header
+                    @Html.Raw(@item.Header)
                 </td>
                 <td style="width: 50%">
-                    @item.Body
+                    @Html.Raw(@item.Body)
                 </td>
                 <td>
                     @item.Archived

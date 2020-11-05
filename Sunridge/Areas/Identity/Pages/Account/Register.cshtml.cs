@@ -114,14 +114,13 @@ namespace Sunridge.Areas.Identity.Pages.Account {
                 var user = new Owner {
                     UserName = Input.Email, Email = Input.Email,
                     FirstName = Input.FirstName, LastName = Input.LastName,
-                    Image = fileName, PhoneNumber = Input.PhoneNumber,
-                    BoardMember = false, Position = String.Empty
+                    PhoneNumber = Input.PhoneNumber
                 };
 
-                // Set to default image if empty
-                if (temp.Equals("")) {
+                // TODO Set to default image if empty
+                /*if (temp.Equals("")) {
                     user.Image = "DefaultImage.png";
-                }
+                }*/
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded) {

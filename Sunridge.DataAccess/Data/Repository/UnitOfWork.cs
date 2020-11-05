@@ -13,8 +13,13 @@ namespace Sunridge.DataAccess.Data.Repository
         public ILotRepository Lot { get; private set; }
         public IBannerRepository Banner { get; private set; }
         public IOwnerRepository Owner { get; private set; }
-        public IFireInfoRepository FireInfo { get; private set; }
         public INewsRepository News { get; private set; }
+
+        // Board Member
+        public IBoardMemberRepository BoardMember { get; private set; }
+        
+        // Fire Info
+        public IFireInfoRepository FireInfo { get; private set; }
 
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }

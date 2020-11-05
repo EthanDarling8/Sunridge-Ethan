@@ -28,6 +28,10 @@ namespace Sunridge.DataAccess.Data.Repository
         public ILot_OwnerRepository Lot_Owner { get; private set; }
         public ILot_InventoryRepository Lot_Inventory { get; private set; }
 
+        // Lost & Found IRepositories
+        public ILostItemRepository LostItem { get; private set; }
+        
+
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -51,6 +55,10 @@ namespace Sunridge.DataAccess.Data.Repository
             Inventory = new InventoryRepository(_db);
             Lot_Owner = new Lot_OwnerRepository(_db);
             Lot_Inventory = new Lot_InventoryRepository(_db);
+         
+            // Lost & Found Models
+            LostItem = new LostItemRepository(_db);
+            
         }
 
         public void Dispose()

@@ -32,5 +32,10 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Lot_Owner> Lot_Owner { get; set; }
         public DbSet<Lot_Inventory> Lot_Inventory { get; set; }
        
+
+        // Lost & Found DBSets
+        public DbSet<LostItem> LostItem { get; set; }
+
+
     }
 }

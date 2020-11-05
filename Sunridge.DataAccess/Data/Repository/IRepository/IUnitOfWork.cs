@@ -24,6 +24,8 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         ILot_OwnerRepository Lot_Owner { get; }
         ILot_InventoryRepository Lot_Inventory { get; }
 
+        // Lost And Found Repositories
+        ILostItemRepository LostItem { get; }
         
         void Save();
     }

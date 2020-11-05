@@ -9,8 +9,11 @@ namespace Sunridge.Pages.Home.Documents
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        public int SelectedCategory { get; set; }
+
+        public void OnGet(int selectedCategory)
         {
+            SelectedCategory = selectedCategory;
         }
     }
 }

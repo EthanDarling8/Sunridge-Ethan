@@ -16,6 +16,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<News> News { get; set; }
         public DbSet<Owner> Owner { get; set; }
         public DbSet<Document> Document { get; set; }
+        public DbSet<DocumentCategory> DocumentCategory { get; set; }
 
         // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }

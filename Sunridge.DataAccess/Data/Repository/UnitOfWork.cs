@@ -12,8 +12,9 @@ namespace Sunridge.DataAccess.Data.Repository
         // **** Model IRepositories go here ****
         public IBannerRepository Banner { get; private set; }
         public IOwnerRepository Owner { get; private set; }
-        public IFireInfoRepository FireInfo { get; private set; }
         public INewsRepository News { get; private set; }
+        public IBoardMemberRepository BoardMember { get; private set; }
+        public IFireInfoRepository FireInfo { get; private set; }
 
         //Photo Gallery IRepositories
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
@@ -40,9 +41,10 @@ namespace Sunridge.DataAccess.Data.Repository
             // **** Models are instantiated here ****         
             Banner = new BannerRepository(_db);
             Owner = new OwnerRepository(_db);
-            FireInfo = new FireInfoRepository(_db);
             News = new NewsRepository(_db);
-
+            BoardMember = new BoardMemberRepository(_db);
+            FireInfo = new FireInfoRepository(_db);
+            
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);
             PhotoAlbum = new PhotoAlbumRepository(_db);

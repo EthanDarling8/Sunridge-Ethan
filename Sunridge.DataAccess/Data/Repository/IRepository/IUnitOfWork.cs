@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace Sunridge.DataAccess.Data.Repository.IRepository
-{
+namespace Sunridge.DataAccess.Data.Repository.IRepository {
     //Actually connects to the database for saving, updating, etc...
-    public interface IUnitOfWork : IDisposable
-    {
+    public interface IUnitOfWork : IDisposable {
         // **** Model IRepositories go here ****
         IBannerRepository Banner { get; }
         IOwnerRepository Owner { get; }
-        IFireInfoRepository FireInfo { get; }
         INewsRepository News { get; }
+        IBoardMemberRepository BoardMember { get; }
+        IFireInfoRepository FireInfo { get; }
 
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }
@@ -24,6 +23,8 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         ILot_OwnerRepository Lot_Owner { get; }
         ILot_InventoryRepository Lot_Inventory { get; }
 
+        // Lost And Found Repositories
+        ILostItemRepository LostItem { get; }
         
         void Save();
     }

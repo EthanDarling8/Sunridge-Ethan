@@ -29,7 +29,7 @@ namespace Sunridge.Models
         #region Lot_Owner-OwnerId
         // Lot_Owner-LotId: The Primary Key of the Owner Table
         [Display(Name = "User Id")]
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; }
         #endregion
 
         #region Table Diagram

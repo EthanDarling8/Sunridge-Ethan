@@ -12,5 +12,7 @@ namespace Sunridge.Models {
         
         [ForeignKey("OwnerId")]
         public virtual Owner Owner { get; set; }
+        [Display(Name = "Owner")]
+        public string OwnerId { get; set; }
     }
 }

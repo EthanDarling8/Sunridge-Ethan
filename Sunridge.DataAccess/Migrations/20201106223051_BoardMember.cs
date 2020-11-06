@@ -65,6 +65,19 @@ namespace Sunridge.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BoardMember",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Position = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoardMember", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FireInfo",
                 columns: table => new
                 {
@@ -248,27 +261,6 @@ namespace Sunridge.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BoardMember",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Position = table.Column<string>(nullable: true),
-                    Image = table.Column<string>(nullable: true),
-                    OwnerId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BoardMember", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BoardMember_AspNetUsers_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "LostItem",
                 columns: table => new
                 {
@@ -289,6 +281,32 @@ namespace Sunridge.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_LostItem_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OwnerBoardMember",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BoardMemberId = table.Column<string>(nullable: true),
+                    OwnerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OwnerBoardMember", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OwnerBoardMember_BoardMember_BoardMemberId",
+                        column: x => x.BoardMemberId,
+                        principalTable: "BoardMember",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OwnerBoardMember_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -482,11 +500,6 @@ namespace Sunridge.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BoardMember_OwnerId",
-                table: "BoardMember",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_LostItem_UserId",
                 table: "LostItem",
                 column: "UserId");
@@ -520,6 +533,16 @@ namespace Sunridge.DataAccess.Migrations
                 name: "IX_LotFile_LotId",
                 table: "LotFile",
                 column: "LotId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OwnerBoardMember_BoardMemberId",
+                table: "OwnerBoardMember",
+                column: "BoardMemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OwnerBoardMember_OwnerId",
+                table: "OwnerBoardMember",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Photo_PhotoAlbumId",
@@ -558,9 +581,6 @@ namespace Sunridge.DataAccess.Migrations
                 name: "Banner");
 
             migrationBuilder.DropTable(
-                name: "BoardMember");
-
-            migrationBuilder.DropTable(
                 name: "FireInfo");
 
             migrationBuilder.DropTable(
@@ -579,6 +599,9 @@ namespace Sunridge.DataAccess.Migrations
                 name: "News");
 
             migrationBuilder.DropTable(
+                name: "OwnerBoardMember");
+
+            migrationBuilder.DropTable(
                 name: "Photo");
 
             migrationBuilder.DropTable(
@@ -589,6 +612,9 @@ namespace Sunridge.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lot_Owner");
+
+            migrationBuilder.DropTable(
+                name: "BoardMember");
 
             migrationBuilder.DropTable(
                 name: "PhotoAlbum");

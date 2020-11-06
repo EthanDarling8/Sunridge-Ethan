@@ -9,12 +9,12 @@
 <h1>Board Members</h1>
 
 <div class="container">
+    @if (User.IsInRole(SD.AdministratorRole)) {
+        //TODO
+        <a asp-page="Upsert" class="btn btn-primary mt-4 mb-3"><i class="fas fa-plus"></i>&nbsp;Add Board Member</a>
+    }
     <div class="row">
-        @if (User.IsInRole(SD.AdministratorRole)) {
-            //TODO
-            @*<a asp-page="Upsert" class="btn btn-primary mt-4 mb-3"><i class="fas fa-plus"></i>&nbsp;Add Board Member</a>*@
-        }
-        @foreach (var owner in Model.OwnerList) {
+        @*@foreach (var owner in Model.OwnerList) {
             @foreach (var bm in Model.BoardMemberList) {
                 @if (owner.Id == bm.Owner.Id) {
                     <div class="col-lg-6">
@@ -38,6 +38,6 @@
                     </div>
                 }
             }
-        }
+        }*@
     </div>
 </div>

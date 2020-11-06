@@ -10,7 +10,7 @@ using Sunridge.DataAccess.Data;
 namespace Sunridge.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201106162751_BoardMember")]
+    [Migration("20201106223051_BoardMember")]
     partial class BoardMember
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,23 +178,16 @@ namespace Sunridge.DataAccess.Migrations
 
             modelBuilder.Entity("Sunridge.Models.BoardMember", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("BoardMember");
                 });
@@ -500,6 +493,28 @@ namespace Sunridge.DataAccess.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Sunridge.Models.OwnerBoardMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BoardMemberId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardMemberId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("OwnerBoardMember");
+                });
+
             modelBuilder.Entity("Sunridge.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -632,13 +647,6 @@ namespace Sunridge.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sunridge.Models.BoardMember", b =>
-                {
-                    b.HasOne("Sunridge.Models.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
-                });
-
             modelBuilder.Entity("Sunridge.Models.LostItem", b =>
                 {
                     b.HasOne("Sunridge.Models.Owner", "Owner")
@@ -690,6 +698,17 @@ namespace Sunridge.DataAccess.Migrations
                         .HasForeignKey("Lot_OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Sunridge.Models.OwnerBoardMember", b =>
+                {
+                    b.HasOne("Sunridge.Models.BoardMember", "BoardMember")
+                        .WithMany()
+                        .HasForeignKey("BoardMemberId");
+
+                    b.HasOne("Sunridge.Models.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("Sunridge.Models.Photo", b =>

@@ -18,13 +18,13 @@ namespace Sunridge.Pages.Home.BoardMembers {
             _unitOfWork = unitOfWork;
         }
 
-        [BindProperty] public List<BoardMember> BoardMemberList { get; set; }
+        [BindProperty] public List<OwnerBoardMember> BoardMemberList { get; set; }
         [BindProperty] public List<Models.Owner> OwnerList { get; set; }
         [BindProperty] public OwnerBoardMemberVM BoardMemberObj { get; set; }
 
         public IActionResult OnGet(int? id) {
-            BoardMemberObj = new OwnerBoardMemberVM {
-                BoardMember = new BoardMember(),
+            /*BoardMemberObj = new OwnerBoardMemberVM {
+                OwnerBoardMember = new OwnerBoardMember(),
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
 
@@ -32,11 +32,11 @@ namespace Sunridge.Pages.Home.BoardMembers {
             OwnerList = _unitOfWork.Owner.GetAll().ToList();
 
             if (id != null) {
-                BoardMemberObj.BoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
+                BoardMemberObj.OwnerBoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
                 if (BoardMemberObj == null) {
                     return NotFound();
                 }
-            }
+            }*/
 
             return Page();
         }

@@ -28,9 +28,13 @@ namespace Sunridge.Pages.Home.BoardMembers {
         }
 
         [BindProperty] public OwnerBoardMemberVM OwnerBoardObj { get; set; }
+        
 
-        public IActionResult OnGet(int? id) {
+        public IActionResult OnGet(string id) {
+            /*
             OwnerBoardObj = new OwnerBoardMemberVM {
+                OwnerBoardMember = new OwnerBoardMember(),
+                Owner = new Models.Owner(),
                 BoardMember = new BoardMember(),
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
@@ -50,47 +54,36 @@ namespace Sunridge.Pages.Home.BoardMembers {
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(int id) {
+        public async Task<IActionResult> OnPost(string id) {
             if (!ModelState.IsValid) {
                 return Page();
             }
 
-            if (OwnerBoardObj.BoardMember.Id == 0) {
-                var fileName = "";
-                var temp = "";
-                var files = HttpContext.Request.Form.Files;
-                foreach (var Image in files) {
-                    var file = Image;
-                    temp = file.FileName;
-                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, @"images\boardMembers");
-                    fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
-                        await file.CopyToAsync(fileStream);
-                    }
-
-                    if (temp.Equals("")) {
-                        OwnerBoardObj.BoardMember.Image = "/images/boardMembers/DefaultImage.png";
-                        await _db.SaveChangesAsync();
-                    }
-                    else {
-                        OwnerBoardObj.BoardMember.Image = fileName;
-                        _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
-                    }
+            var fileName = "";
+            var temp = "";
+            var files = HttpContext.Request.Form.Files;
+            foreach (var Image in files) {
+                var file = Image;
+                temp = file.FileName;
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, @"images\boardMembers");
+                fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                    await file.CopyToAsync(fileStream);
                 }
 
-                if (OwnerBoardObj.BoardMember.Id == 0) {
-                    OwnerBoardObj.BoardMember.Owner =
-                        _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == id.ToString());
-                    _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
+                if (temp.Equals("")) {
+                    OwnerBoardObj.OwnerBoardMember.Image = "/images/boardMembers/DefaultImage.png";
+                    await _db.SaveChangesAsync();
                 }
                 else {
-                    OwnerBoardObj.BoardMember.Owner =
-                        _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == OwnerBoardObj.BoardMember.OwnerId);
-                    _unitOfWork.BoardMember.Update(OwnerBoardObj.BoardMember);
+                    OwnerBoardObj.OwnerBoardMember.Image = fileName;
                 }
             }
 
-            _unitOfWork.Save();
+            // OwnerBoardObj.BoardMember.OwnerId = OwnerBoardObj.Owner.Id;
+            _unitOfWork.BoardMember.Add(OwnerBoardObj.OwnerBoardMember);
+            */
+            
             return RedirectToPage("./Index");
         }
     }

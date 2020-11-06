@@ -25,8 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Admin\Document\File\" />
-    <Folder Include="Pages\Admin\Document\SectionText\" />
-    <Folder Include="Pages\Admin\Document\Section\" />
     <Folder Include="Pages\Owner" />
     <Folder Include="wwwroot\fireinfo" />
   </ItemGroup>

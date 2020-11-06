@@ -8,24 +8,26 @@ $(document).ready(function () {
 function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/api/documentCategory/",
+            "url": "/api/documentSectionText/",
             "type": "GET",
             "datatype": "json"
         },
         //The column names use camel case from when they were converted to Json
         //the ` ` are necessary in the return to return html
         "columns": [
-            { data: "name", width: "70%" },
+            { data: "documentSection.name", width: "30%" },
+            { data: "name", width: "30%" },
+            { data: "displayOrder", width: "10%" },
             {
                 data: "id", width: "30%",
                 "render": function (data) {
                     return `
                     <div class="text-center">
-                        <a href="/Admin/Document/Category/Upsert?documentCategoryId=${data}"
+                        <a href="/Admin/Document/SectionText/Upsert?sectionId=${data}"
                             class="btn btn-warning text-white" style="cursor:pointer; width:100px;">
                                 <i class="far fa-edit"></i> Edit
                         </a>
-                        <a onClick=Delete('/api/documentCategory/'+${data})
+                        <a onClick=Delete('/api/documentSectionText/'+${data})
                             class="btn btn-danger text-white style="cursor:pointer; width:100px;" )>
                                 <i class="far fa-trash-alt"></i> Delete
                         </a>
@@ -45,7 +47,7 @@ function loadList() {
 function Delete(url) {
     swal({
         title: "Are you sure you want to Delete?",
-        text: "You will not be able to restore the data!",
+        text: "This will delete all associated section text as well. You will not be able to restore the data!",
         icon: "warning",
         buttons: true,
         dangerMode: true

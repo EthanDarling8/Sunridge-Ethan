@@ -21,12 +21,12 @@ namespace Sunridge.DataAccess.Data.Repository
 
         public IEnumerable<SelectListItem> GetListForDropDown()
         {
-            return _db.DocumentCategory.Select(i => new SelectListItem()
+            return _db.DocumentSection.Select(i => new SelectListItem()
             {
                 Text = i.Name,
                 //Id is used for url routing in the page
                 Value = i.Id.ToString()
-            }).OrderBy(c => c.Text);
+            }).OrderBy(s => s.Text);
         }
 
 
@@ -37,6 +37,7 @@ namespace Sunridge.DataAccess.Data.Repository
             //Gets the first object from the table that has the same id as the one passed in
             var objFromDb = _db.DocumentSection.FirstOrDefault(s => s.Id == documentSection.Id);
 
+            objFromDb.DocumentCategoryId = documentSection.DocumentCategoryId;
             objFromDb.Name = documentSection.Name; 
             objFromDb.DisplayOrder = documentSection.DisplayOrder;
 

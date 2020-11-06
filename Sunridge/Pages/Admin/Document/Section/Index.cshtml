@@ -1,13 +1,14 @@
 ﻿@page
-@model Sunridge.Pages.Admin.Document.Category.IndexModel
+@model Sunridge.Pages.Admin.Document.Section.IndexModel
 @{
-    ViewData["Title"] = "Document Categories";
+    ViewData["Title"] = "Document Sections";
 }
 
 
 
-
-<h1>Document Categories</h1>
+@* **** ToDo **** format this heading better? *@
+<h1>Document Sections</h1>
+<p>Used for grouping text together under a section.</p>
 
 @*Create New Button*@
 <div class="container">
@@ -24,7 +25,13 @@
         <tr>
             @*The headers have to be hard coded in datatables*@
             <th>
-                Document Category Name
+                Category Name
+            </th>
+            <th>
+                Section Name
+            </th>
+            <th>
+                Display Order
             </th>
             <th>
                 @*Edit and delete buttons will go under here*@
@@ -33,7 +40,7 @@
     </thead>
 </table>
 
-@*This section optionally is rendered in _Layout.html*@
+
 @section Scripts{
-    <script src="~/js/documentCategory.js"></script>
+    <script src="~/js/documentSection.js"></script>
 }

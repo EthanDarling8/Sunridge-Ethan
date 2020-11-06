@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sunridge.Pages.Admin.Document.Category
+namespace Sunridge.Pages.Admin.Document.SectionText
 {
     public class IndexModel : PageModel
     {
-        // **** ToDo **** admins only [Authorize] 
         public void OnGet()
         {
         }

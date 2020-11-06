@@ -48,7 +48,7 @@ namespace Sunridge.Pages.Home.Documents
         //Search        
         public IActionResult OnPostSearch()
         {
-            return RedirectToPage("./Index", new { selectedCategoryId = SelectedCategory.Id, search = Search });
+            return RedirectToPage("./Index", new { search = Search });
         }
     }
 }

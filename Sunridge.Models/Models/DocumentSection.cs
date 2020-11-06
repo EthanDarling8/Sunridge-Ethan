@@ -12,12 +12,15 @@ namespace Sunridge.Models
         public string Name { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid display order.")]
+        [Display(Name = "Display Order")]
         public int DisplayOrder { get; set; }
 
 
-        //Link to Document Category
+        //Link to DocumentCategory        
         public int DocumentCategoryId { get; set; }
 
+        [Display(Name = "Category")]
         [ForeignKey("DocumentCategoryId")]
         public virtual DocumentCategory DocumentCategory { get; set; }
     }

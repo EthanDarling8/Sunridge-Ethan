@@ -18,25 +18,49 @@
                 <h5 class="row mb-1">Manage Documents</h5>
 
                 <div class="row mb-1">
-                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/Category/Index">Categories</a>
+                    <a class="btn btn-block btn-primary" asp-page="/Admin/Document/Category/Index">Categories</a>
                 </div>
 
                 <div class="row mb-1">
-                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/Section/Index">Sections</a>
+                    <a class="btn btn-block btn-primary" asp-page="/Admin/Document/File/Index">Files</a>
                 </div>
 
                 <div class="row mb-1">
-                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/File/Index">Files</a>
-                </div>
+                    <a class="btn btn-block btn-primary" asp-page="/Admin/Document/Section/Index">Sections</a>
+                </div>                
 
                 <div class="row mb-1">
-                    <a class="btn btn-block btn-primary" asp-page="../../Admin/Document/SectionText/Index">Section Text</a>
+                    <a class="btn btn-block btn-primary" asp-page="/Admin/Document/SectionText/Index">Section Text</a>
                 </div>
+                
             </div>
         }
 
 
-        @* **** ToDo **** Category Selection Buttons *@
+        @*Clear filters (Search and Selected Category*@
+        <div class="row mb-1">
+            @*Highlight no filters*@
+            @if (Model.SelectedCategory == null && Model.Search == null)
+            {
+                <a asp-page="Index" class="btn btn-block btn-outline-primary" style="border-radius:2px;" asp-route-Id="">Clear&nbsp;Filters</a>
+            }
+            else
+            {
+                <a asp-page="Index" class="btn btn-block btn-outline-secondary" style="border-radius:2px;" asp-route-Id="">Clear&nbsp;Filters</a>
+            }
+        </div>
+
+
+        @*Search (Search all categories)*@
+        <h5 class="row mb-1">Search</h5>
+
+        <form class="row mb-2" method="post" asp-page-handler="Search">
+            <input asp-for="Search" id="search" class="col-10" type="text" placeholder="Search..." />
+            <button class="col-2" type="submit" asp-page-handler="Search"><i class="fa fa-search"></i></button>
+        </form>
+
+
+        @* Category Selection Buttons *@
         <h5 class="row mb-1">Select Document Category</h5>
         @foreach (var category in Model.DocumentCategoryList)
         {
@@ -64,26 +88,13 @@
 
             </div>
         }
-
-
-        @* If category selected, display search *@
-        @if (Model.SelectedCategory != null)
-        {
-            @*Search*@
-            <h5 class="row mb-1">Search</h5>
-
-            <form class="row mb-2" method="post" asp-page-handler="Search">
-                <input asp-for="Search" id="search" class="col-10" type="text" placeholder="Search..." />
-                <button class="col-2" type="submit" asp-page-handler="Search"><i class="fa fa-search"></i></button>
-            </form>
-        }
     </div>
 
 
     @* If category selected, display files *@
     @if (Model.SelectedCategory != null)
     {
-        @* **** ToDo **** Display all the files for that category
+        @* **** ToDo **** Display all the files for that category OR that match the search
             File upload needs to allow keywords to be entered for search *@
         <div class="col-9 mt-1">
 

@@ -19,6 +19,7 @@ namespace Sunridge.DataAccess.Data
         // Document DbSets
         public DbSet<DocumentCategory> DocumentCategory { get; set; }
         public DbSet<DocumentFile> DocumentFile { get; set; }
+        public DbSet<DocumentFileKeyword> DocumentFileKeyword { get; set; }
         public DbSet<DocumentSection> DocumentSection { get; set; }
         public DbSet<DocumentSectionText> DocumentSectionText { get; set; }
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 
-namespace Sunridge.Pages.Admin.Document.DocumentCategory
+namespace Sunridge.Pages.Admin.Document.Category
 {
     // **** ToDo **** [Authorize]
     public class UpsertModel : PageModel

@@ -1,16 +1,17 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
 
-    public class DocumentCategoryController : Controller
+    public class DocumentSectionTextController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public DocumentCategoryController(IUnitOfWork unitOfWork)
+        public DocumentSectionTextController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -21,7 +22,7 @@ namespace Sunridge.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(new { data = _unitOfWork.DocumentCategory.GetAll() });
+            return Json(new { data = _unitOfWork.DocumentSectionText.GetAll(null, null, "DocumentSection") });
         }
 
 
@@ -30,18 +31,14 @@ namespace Sunridge.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int Id)
         {
-
-            // **** To Do **** Delete needs to remove all files, sections, section text in that category
-
-
-            var objFromDb = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == Id);
+            var objFromDb = _unitOfWork.DocumentSectionText.GetFirstOrDefault(t => t.Id == Id);
 
             if (objFromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
 
-            _unitOfWork.DocumentCategory.Remove(objFromDb);
+            _unitOfWork.DocumentSectionText.Remove(objFromDb);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful." });
         }

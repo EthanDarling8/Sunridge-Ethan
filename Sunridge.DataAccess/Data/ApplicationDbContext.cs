@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sunridge.Models;
+using Sunridge.Models.Models;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -23,6 +25,10 @@ namespace Sunridge.DataAccess.Data
         public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
         public DbSet<Photo> Photo { get; set; }
 
+        // Key DbSets
+        public DbSet<Models.Models.Key> Key { get; set; }
+        public DbSet<KeyLot> KeyLot { get; set; }
+
         // Lot DbSets
         public DbSet<Lot> Lot { get; set; }
         public DbSet<LotFile> LotFile { get; set; }
@@ -35,6 +41,15 @@ namespace Sunridge.DataAccess.Data
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Models.Models.Key>()
+                .HasKey(c => new { c.Year, c.SerialNumber });
 
+            builder.Entity<KeyLot>()
+                .HasKey(c => new { c.Year, c.SerialNumber });
+
+            base.OnModelCreating(builder);
+        }
     }
 }

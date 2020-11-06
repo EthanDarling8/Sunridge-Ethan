@@ -15,6 +15,10 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IPhotoAlbumRepository PhotoAlbum { get; }
         IPhotoRepository Photo { get; }
 
+        // Key Repositories
+        IKeyRepository Key { get; }
+        IKeyLotRepository KeyLot { get; }
+
         // Lot Repositories
         ILotRepository Lot { get; }
         ILotFileRepository LotFile { get; }

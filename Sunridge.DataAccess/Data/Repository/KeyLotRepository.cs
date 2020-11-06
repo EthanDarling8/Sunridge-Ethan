@@ -18,7 +18,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
         public void Update(KeyLot keyLot)
         {
-            var objFromDb = _db.KeyLot.FirstOrDefault(q => q.Year == keyLot.Year && q.SerialNumber == keyLot.SerialNumber);
+            var objFromDb = _db.KeyLot.FirstOrDefault(q => q.Id == keyLot.Id);
 
             objFromDb.Issued = keyLot.Issued;
             objFromDb.IssueDate = keyLot.IssueDate;

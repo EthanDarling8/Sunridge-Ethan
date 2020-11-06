@@ -12,16 +12,17 @@ namespace Sunridge.Models.Models
     public class Key
     {
         #region Properties
+        [Key]
+        public int Id { get; set; }
+
         /// <summary>
         /// The year the Key was issued
         /// </summary>
-        [Key, Column(Order = 1)]
         public int Year { get; set; }
         
         /// <summary>
         /// The nth Key that was issued in a year
         /// </summary>
-        [Key, Column(Order = 2)]
         public int SerialNumber { get; set; }
         #endregion
     }

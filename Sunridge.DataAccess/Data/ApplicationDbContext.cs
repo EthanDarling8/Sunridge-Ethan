@@ -40,16 +40,5 @@ namespace Sunridge.DataAccess.Data
 
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<Models.Models.Key>()
-                .HasKey(c => new { c.Year, c.SerialNumber });
-
-            builder.Entity<KeyLot>()
-                .HasKey(c => new { c.Year, c.SerialNumber });
-
-            base.OnModelCreating(builder);
-        }
     }
 }

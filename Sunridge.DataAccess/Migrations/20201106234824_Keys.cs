@@ -39,12 +39,14 @@ namespace Sunridge.DataAccess.Migrations
                 name: "Key",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Year = table.Column<int>(nullable: false),
                     SerialNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Key", x => new { x.Year, x.SerialNumber });
+                    table.PrimaryKey("PK_Key", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,28 +153,29 @@ namespace Sunridge.DataAccess.Migrations
                 name: "KeyLot",
                 columns: table => new
                 {
-                    Year = table.Column<int>(nullable: false),
-                    SerialNumber = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KeyId = table.Column<int>(nullable: false),
                     LotId = table.Column<int>(nullable: false),
                     Issued = table.Column<bool>(nullable: false),
                     IssueDate = table.Column<DateTime>(nullable: false),
                     ReturnDate = table.Column<DateTime>(nullable: true),
-                    PaidAmount = table.Column<decimal>(nullable: false)
+                    PaidAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KeyLot", x => new { x.Year, x.SerialNumber });
+                    table.PrimaryKey("PK_KeyLot", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KeyLot_Key_KeyId",
+                        column: x => x.KeyId,
+                        principalTable: "Key",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_KeyLot_Lot_LotId",
                         column: x => x.LotId,
                         principalTable: "Lot",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_KeyLot_Key_Year_SerialNumber",
-                        columns: x => new { x.Year, x.SerialNumber },
-                        principalTable: "Key",
-                        principalColumns: new[] { "Year", "SerialNumber" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -197,6 +200,11 @@ namespace Sunridge.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KeyLot_KeyId",
+                table: "KeyLot",
+                column: "KeyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KeyLot_LotId",

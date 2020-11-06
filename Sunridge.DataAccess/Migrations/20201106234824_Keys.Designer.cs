@@ -10,7 +10,7 @@ using Sunridge.DataAccess.Data;
 namespace Sunridge.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201106221430_Keys")]
+    [Migration("20201106234824_Keys")]
     partial class Keys
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -407,30 +407,37 @@ namespace Sunridge.DataAccess.Migrations
 
             modelBuilder.Entity("Sunridge.Models.Models.Key", b =>
                 {
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
-                    b.HasKey("Year", "SerialNumber");
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Key");
                 });
 
             modelBuilder.Entity("Sunridge.Models.Models.KeyLot", b =>
                 {
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SerialNumber")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Issued")
                         .HasColumnType("bit");
+
+                    b.Property<int>("KeyId")
+                        .HasColumnType("int");
 
                     b.Property<int>("LotId")
                         .HasColumnType("int");
@@ -441,7 +448,9 @@ namespace Sunridge.DataAccess.Migrations
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Year", "SerialNumber");
+                    b.HasKey("Id");
+
+                    b.HasIndex("KeyId");
 
                     b.HasIndex("LotId");
 
@@ -737,15 +746,15 @@ namespace Sunridge.DataAccess.Migrations
 
             modelBuilder.Entity("Sunridge.Models.Models.KeyLot", b =>
                 {
-                    b.HasOne("Sunridge.Models.Lot", "Lot")
+                    b.HasOne("Sunridge.Models.Models.Key", "Key")
                         .WithMany()
-                        .HasForeignKey("LotId")
+                        .HasForeignKey("KeyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sunridge.Models.Models.Key", "Key")
+                    b.HasOne("Sunridge.Models.Lot", "Lot")
                         .WithMany()
-                        .HasForeignKey("Year", "SerialNumber")
+                        .HasForeignKey("LotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -13,16 +13,15 @@ namespace Sunridge.Models.Models
     {
         #region Keys
         /// <summary>
-        /// Foreign key to the Key table
+        /// Primary key to the KeyLot table
         /// </summary>
-        [Key, Column(Order = 0)]
-        public int Year { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         /// <summary>
         /// Foreign key to the Key table
         /// </summary>
-        [Key, Column(Order = 1)]
-        public int SerialNumber { get; set; }
+        public int KeyId { get; set; }
 
         /// <summary>
         /// Foreign key to the Lot table
@@ -49,6 +48,7 @@ namespace Sunridge.Models.Models
         /// <summary>
         /// The amount paid for the Key
         /// </summary>
+        [Column(TypeName = "decimal(18,2)")]
         public decimal PaidAmount { get; set; } 
         #endregion
 
@@ -56,7 +56,7 @@ namespace Sunridge.Models.Models
         /// <summary>
         /// Navigation property to the Key table
         /// </summary>
-        [ForeignKey("Year, SerialNumber")]
+        [ForeignKey("KeyId")]
         public virtual Key Key { get; set; }
 
         /// <summary>

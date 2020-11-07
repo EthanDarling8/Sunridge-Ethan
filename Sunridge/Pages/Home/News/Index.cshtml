@@ -16,7 +16,7 @@
             <input class="form-control" asp-for="Search" />
         </div>
         <div class="col col-2">
-            <button type="submit" id="Search" class="btn btn-info form-control">Search</button>
+            <button type="submit" id="SearchBtn" class="btn btn-info form-control">Search</button>
         </div>
     </div>
 
@@ -81,6 +81,33 @@
         }
                     });
     }
+            });
+        });
+        $(document).on("click", "#SearchBtn", function (event) {
+            var SearchString = $("#Search").val();
+            $.ajax({
+                url: "api/News/",
+                type: 'POST',
+                data: { "Search": SearchString },
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    if (result.NewsList) {
+                        var body = '';
+                        $.each(result.NewsList, function (index, item) {
+                            @* items need to be pre - formatted in the controller *@
+                            body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                                '<div class="d-flex w-100 justify-content-between">' +
+                                '<h5 class="mb-1">' + item.Title + '+</h5>' +
+                                '<small class="text-muted text-right">' + item.DisplayDate + '+</small>' +
+                                '</div>' +
+                                '<p class="mb-1">item.Content</p>';
+                            if (item.Attachment != null) {
+                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" asp-page="' + item.Attachment + '">' + item.Attachment + '</a></small>\r\n</div>';
+                            }
+                        });
+                    }
+                }
             });
         });
     </script>

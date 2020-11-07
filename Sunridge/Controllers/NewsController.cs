@@ -36,5 +36,16 @@ namespace Sunridge.Controllers
                 NewsList = _unitOfWork.News.GetAll(n => n.Archived == false && n.DisplayDate.Date.Year == year).OrderBy(d => d.DisplayDate).Reverse().ToList();
             return Json(new { NewsList });
         }
+
+        // POST api/<NewsController>
+        [HttpPost]
+        //public void Post([FromBody] string value)
+        public IActionResult Post(string Search)
+        {
+            var NewsList = new List<News>();
+            NewsList = _unitOfWork.News.GetAll(n => n.Archived == false && (n.Title.ToLower().Contains(Search.ToLower()) || n.Content.ToLower().Contains(Search.ToLower()))).OrderBy(d => d.DisplayDate).Reverse().ToList();
+            return Json(new { NewsList });
+        }
+
     }
 }

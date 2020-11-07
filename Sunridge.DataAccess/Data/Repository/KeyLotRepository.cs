@@ -21,9 +21,7 @@ namespace Sunridge.DataAccess.Data.Repository
             var objFromDb = _db.KeyLot.FirstOrDefault(q => q.Id == keyLot.Id);
 
             objFromDb.Issued = keyLot.Issued;
-            objFromDb.IssueDate = keyLot.IssueDate;
             objFromDb.ReturnDate = keyLot.ReturnDate;
-            objFromDb.PaidAmount = keyLot.PaidAmount;
 
             _db.SaveChanges();
         }

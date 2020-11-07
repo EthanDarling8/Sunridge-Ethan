@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Sunridge.DataAccess.IRepository;
+﻿using Sunridge.DataAccess.IRepository;
+using Sunridge.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

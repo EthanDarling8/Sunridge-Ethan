@@ -1,0 +1,102 @@
+﻿@page
+@model Sunridge.Pages.Admin.KeyHistory.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<p>Lot: @Model.Lot.LotNumber</p>
+
+<p>Lot Owner: @Model.Owner.FullName</p>
+
+<h3>Issued Keys</h3>
+
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Key</td>
+                <td>Lot</td>
+                <td>Issued</td>
+                <td>Issue Date</td>
+                <td>Return Date</td>
+                <td>Paid Amount</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var keyLot in Model.KeyLots.Where(kl => kl.Issued == true))
+            {
+                <tr>
+                    <td>
+                        <input name="KeyLots.Index" value="@keyLot.Id" hidden />
+                        <input asp-for="@keyLot.Id" name="KeyLots[@keyLot.Id].Id" hidden />
+                        @keyLot.Key.Year-@keyLot.Key.SerialNumber
+                    </td>
+                    <td>
+                        @keyLot.Lot.LotNumber
+                    </td>
+                    <td>
+                        <input class="form-check-input" type="checkbox" asp-for="@keyLot.Issued" name="KeyLots[@keyLot.Id].Issued" />
+                    </td>
+                    <td>
+                        @keyLot.IssueDate.ToString("MM/dd/yyyy")
+                    </td>
+                    <td>
+                        @keyLot.ReturnDate?.ToString("MM/dd/yyy")
+                    </td>
+                    <td>
+                        @keyLot.PaidAmount
+                    </td>
+                </tr>
+            }            
+        </tbody>
+    </table>
+    <button class="btn btn-primary mb-4" type="submit">Update</button>
+</form>
+
+<h3>Returned Keys</h3>
+
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Key</td>
+                <td>Lot</td>
+                <td>Issued</td>
+                <td>Issue Date</td>
+                <td>Return Date</td>
+                <td>Paid Amount</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var keyLot in Model.KeyLots.Where(kl => kl.Issued == false))
+            {
+                <tr>
+                    <td>
+                        <input name="KeyLots.Index" value="@keyLot.Id" hidden />
+                        <input asp-for="@keyLot.Id" name="KeyLots[@keyLot.Id].Id" hidden />
+                        @keyLot.Key.Year-@keyLot.Key.SerialNumber
+                    </td>
+                    <td>
+                        @keyLot.Lot.LotNumber
+                    </td>
+                    <td>
+                        <input class="form-check-input" type="checkbox" asp-for="@keyLot.Issued" name="KeyLots[@keyLot.Id].Issued" />
+                    </td>
+                    <td>
+                        @keyLot.IssueDate.ToString("MM/dd/yyyy")
+                    </td>
+                    <td>
+                        @keyLot.ReturnDate?.ToString("MM/dd/yyy")
+                    </td>
+                    <td>
+                        @keyLot.PaidAmount
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit">Update</button>
+</form>

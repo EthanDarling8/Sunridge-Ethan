@@ -25,8 +25,8 @@ namespace Sunridge.Pages.Admin.Document.SectionText
 
 
 
-
-        public IActionResult OnGet(int sectionTextId)
+        // **** ToDO **** Setup passing in sectionId to have that section as the only option
+        public IActionResult OnGet(int sectionTextId, int sectionId)
         {
             //Alwayas Initialize
             DocumentSectionTextObj = new Models.DocumentSectionText();

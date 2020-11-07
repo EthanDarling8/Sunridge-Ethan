@@ -25,8 +25,8 @@ namespace Sunridge.Pages.Admin.Document.Section
 
 
 
-
-        public IActionResult OnGet(int sectionId)
+        // **** ToDO **** Setup passing in categoryId to have that category as the only option
+        public IActionResult OnGet(int sectionId, int categoryId)
         {
             //Alwayas Initialize
             DocumentSectionObj = new Models.DocumentSection();

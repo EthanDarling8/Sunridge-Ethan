@@ -22,6 +22,8 @@ namespace Sunridge.Pages.Home.Documents
         public DocumentCategory SelectedCategory { get; set; }
 
         public IEnumerable<DocumentCategory> DocumentCategoryList { get; set; }
+        public IEnumerable<DocumentSection> DocumentSectionList { get; set; }
+        public IEnumerable<DocumentSectionText> DocumentSectionTextList { get; set; }
 
         [BindProperty]
         public string Search { get; set; }
@@ -35,6 +37,12 @@ namespace Sunridge.Pages.Home.Documents
             Search = search;
 
             DocumentCategoryList = _unitOfWork.DocumentCategory.GetAll(null, c => c.OrderBy(c => c.Name));
+
+            if(SelectedCategory != null)
+            {
+                DocumentSectionList = _unitOfWork.DocumentSection.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder));
+                DocumentSectionTextList = _unitOfWork.DocumentSectionText.GetAll(null, t => t.OrderBy(t => t.DisplayOrder));
+            }            
 
             if (Search != null)
             {

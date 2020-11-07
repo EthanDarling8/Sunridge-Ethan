@@ -1,6 +1,6 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Sunridge.DataAccess.Data;
 
 namespace Sunridge.Controllers
 {
@@ -10,14 +10,17 @@ namespace Sunridge.Controllers
     public class DocumentSectionTextController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
 
-        public DocumentSectionTextController(IUnitOfWork unitOfWork)
+        public DocumentSectionTextController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
         }
 
 
 
+        
 
         [HttpGet]
         public IActionResult Get()
@@ -25,7 +28,7 @@ namespace Sunridge.Controllers
             return Json(new { data = _unitOfWork.DocumentSectionText.GetAll(null, null, "DocumentSection") });
         }
 
-
+        
 
 
         [HttpDelete("{id}")]

@@ -15,8 +15,9 @@ function loadList() {
         //The column names use camel case from when they were converted to Json
         //the ` ` are necessary in the return to return html
         "columns": [
-            { data: "documentSection.name", width: "30%" },
-            { data: "name", width: "30%" },
+            { data: "documentSection.documentCategoryId", width: "20%" },
+            { data: "documentSection.name", width: "20%" },
+            { data: "name", width: "20%" },
             { data: "displayOrder", width: "10%" },
             {
                 data: "id", width: "30%",
@@ -47,7 +48,7 @@ function loadList() {
 function Delete(url) {
     swal({
         title: "Are you sure you want to Delete?",
-        text: "This will delete all associated section text as well. You will not be able to restore the data!",
+        text: "You will not be able to restore the data!",
         icon: "warning",
         buttons: true,
         dangerMode: true

@@ -41,20 +41,18 @@
                         <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.CategoryId"></span>
                     </div>
                 </div>
-
-                @*I want to hide this until a category is selected.  Once the category is selected, the proper subcategory choices will display to choose from*@
                 <div class="form-group row">
                     <div class="col-3">
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></label>
                     </div>
-                    @*<div class="col-9">
+                    <div class="col-9">
                             @Html.DropDownListFor(c => c.ClassifiedsItemObj.ClassifiedsItem.SubcategoryId,
                                                   Model.ClassifiedsItemObj.ClassifiedsSubcategoryList,
                                                   "- Please select a Subcategory - ",
                                                   new { @class = "form-control" })
 
                             <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></span>
-                        </div>*@
+                        </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-3">

@@ -22,14 +22,14 @@ namespace Sunridge.Pages.Owner.Classifieds
         [BindProperty]
         public ClassifiedsItemVM ClassifiedsItemObj { get; set; }
 
-        public IEnumerable<SelectListItem> ClassifiedsCategoryList { get; private set; }
+        //public IEnumerable<SelectListItem> ClassifiedsCategoryList { get; private set; }
 
         public IEnumerable<ClassifiedsItem> ClassifiedsItemList { get; set; }
         //public IEnumerable<ClassifiedsCategory> ClassifiedsCategoryList { get; set; }
         public void OnGet()
         {
-            //ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll(null, null, "ClassifiedsCategory,ClassifiedsSubcategory");
-            //ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll(null, null, null);
+            ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll();
+            //ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll().ToList();
         }
     }
 }

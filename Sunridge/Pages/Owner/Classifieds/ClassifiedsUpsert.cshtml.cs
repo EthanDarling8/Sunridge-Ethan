@@ -50,10 +50,72 @@ namespace Sunridge.Pages.Owner.Classifieds
 
             return Page();
         }
-        
-        //public IActionResult OnPost()
-        //{
-           
-        //}
+
+        public IActionResult OnPost()
+        {
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            if (ClassifiedsItemObj.ClassifiedsItem.Id == 0) //means a brand new menu item
+            {
+                //Physically upload and save image
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
+                var extension = Path.GetExtension(files[0].FileName);
+
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                //save the string data path
+                ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
+
+
+                _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
+            }
+
+            else //update
+            {
+                var objFromDb = _unitOfWork.ClassifiedsItem.Get(ClassifiedsItemObj.ClassifiedsItem.Id);
+                if (files.Count > 0)
+                {
+                    //Physically upload and save image
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+                    //save the string data path
+                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
+                }
+                else
+                {
+                    ClassifiedsItemObj.ClassifiedsItem.Images = objFromDb.Images;
+                }
+                _unitOfWork.ClassifiedsItem.Update(ClassifiedsItemObj.ClassifiedsItem);
+            }
+
+            _unitOfWork.Save();
+            return RedirectToPage("./ClassifiedsIndex");
+        }
+
+
+
     }
 }

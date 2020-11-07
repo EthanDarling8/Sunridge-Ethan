@@ -5,9 +5,9 @@
 }
 
 <h1 class="row col-sm-12 pb-4">Classified Listings</h1>
-<div class="row col-12">
-    <div class="btn-group-vertical col-sm-3" role="group">
-        <a href="/Owner/Classifieds/ClassifiedsUpsert" class="btn btn-outline-primary btn-lg" role="button" aria-pressed="true">Create New Listing</a>
+<div class="row col-12 pb-5">
+    <div class="btn-group col-sm-3" role="group">
+        <a href="/Owner/Classifieds/ClassifiedsUpsert" class="btn btn-outline-primary btn-lg" role="button" aria-pressed="true"><i class="far fa-plus-square"></i>Create New Listing</a>
 
         <div class="btn-group" role="group">
             <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,36 +23,41 @@
             </ul>
         </div>
     </div>
+    </div>
 
 
-
-    <div class="col-sm-9">
-        @if (!(Model.ClassifiedsItemList is null))
-        {
-            @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+<div class="col-12">
+    <div class="my-3 row">
+       
+            @if (!(Model.ClassifiedsItemList is null))
             {
+                
+                @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+                { 
 
-
-                <div class="card-deck">
-                    <div class="card">
-                        <img class="card-img-top" src="@classifiedsItem.Images" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">@classifiedsItem.Title</h5>
-                            <p class="card-text">@classifiedsItem.Description</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <div class="col-lg-3 col-xl-3 col-md-6 pb-4">
+                        <div class="card h-100" style="width: 18rem;">
+                            <img class="card-img-top img-fluid" src="@classifiedsItem.Images" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">@classifiedsItem.Title</h5>
+                                <h5 class="card-title">@classifiedsItem.Price.ToString("$0.00")</h5>
+                                <p class="card-text">@Html.Raw(classifiedsItem.Description)</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                
 
             }
-
         }
 
         else
         {
-            <div class="mt-5" style="text-align: center;">
-                <h3>No listings found. </h3>
-            </div>
+        <div class="mt-5" style="text-align: center;">
+            <h3>No listings found. </h3>
+        </div>
         }
     </div>
 </div>
+  

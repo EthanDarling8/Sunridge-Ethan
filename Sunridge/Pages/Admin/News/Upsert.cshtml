@@ -18,6 +18,10 @@
             <textarea class="form-control" asp-for="NewsObj.Content" id="bannerDesc" style="height:200px;"></textarea>
             <span class="text-danger" asp-validation-for="NewsObj.Content"></span>
         </div>
+        <div class="form-group">
+            <label asp-for="NewsObj.Attachment"></label>
+            <input type="file" class="form-control" id="uploadBox" name="files" />
+        </div>
     </div>
     <div class="col-4"></div>
     <div class="col-2">
@@ -62,19 +66,27 @@
 
 @section Scripts{
 <script>
-$(function () {
-    $("#datepicker").datepicker();
-});
-tinymce.init({
-    selector: "input.tinyMCE_Input",
-    plugins: 'lists textcolor colorpicker spellchecker code wordcount',
-    min_height: 20,
-    menubar: 'format tools'
-});
-tinymce.init({
-    selector: 'textarea',
-    plugins: 'lists textcolor colorpicker spellchecker code wordcount link',
-    menubar: 'format tools insert'
-});
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+    tinymce.init({
+        selector: "input.tinyMCE_Input",
+        plugins: 'lists textcolor colorpicker spellchecker code wordcount',
+        min_height: 20,
+        menubar: 'format tools'
+    });
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'lists textcolor colorpicker spellchecker code wordcount link',
+        menubar: 'format tools insert'
+    });
+
+    function ValidateInput() {
+        if (document.getElementById("uploadBox").value == "") {
+            swal('Error', 'Please select an Image to upload', 'error')
+            return false;
+        }
+        return true;
+    }
 </script>
 }

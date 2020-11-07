@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="Pages\Owner" />
     <Folder Include="wwwroot\fireinfo" />
+    <Folder Include="wwwroot\images\News\" />
   </ItemGroup>
 
 </Project>

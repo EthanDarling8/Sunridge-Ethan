@@ -14,30 +14,26 @@
         <a asp-page="Upsert" class="btn btn-primary mt-4 mb-3"><i class="fas fa-plus"></i>&nbsp;Add Board Member</a>
     }
     <div class="row">
-        @*@foreach (var owner in Model.OwnerList) {
-            @foreach (var bm in Model.BoardMemberList) {
-                @if (owner.Id == bm.Owner.Id) {
-                    <div class="col-lg-6">
-                        <div class="card mb-3 shadow" style="max-width: 540px;">
-                            <div class="row no-gutters">
-                                <div class="col-lg-4">
-                                    <img src="@bm.Image" class="card-img" height="200px" alt="@owner.FirstName"
-                                         style="width: 150px; height: 150px; object-fit: cover">
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="card-body">
-                                        <h3 class="card-title">@owner.FullName</h3>
-                                        <h6>@bm.Position - Lot Here</h6>
-                                        <h6>
-                                            <a href="mailto:@owner.Email" target="_blank">@owner.Email</a>
-                                        </h6>
-                                    </div>
-                                </div>
+        @foreach (var ob in Model.OwnerBoardMemberList) {
+            <div class="col-lg-6">
+                <div class="card mb-3 shadow" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-lg-4">
+                            <img src="@ob.BoardMember.Image" class="card-img" height="200px" alt="@ob.Owner.FirstName"
+                                 style="width: 150px; height: 150px; object-fit: cover">
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card-body">
+                                <h3 class="card-title">@ob.Owner.FullName</h3>
+                                <h6>@ob.BoardMember.Position - Lot Here</h6>
+                                <h6>
+                                    <a href="mailto:@ob.Owner.Email" target="_blank">@ob.Owner.Email</a>
+                                </h6>
                             </div>
                         </div>
                     </div>
-                }
-            }
-        }*@
+                </div>
+            </div>
+        }
     </div>
 </div>

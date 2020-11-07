@@ -68,7 +68,8 @@ namespace Sunridge.DataAccess.Migrations
                 name: "BoardMember",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Position = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true)
                 },
@@ -292,7 +293,7 @@ namespace Sunridge.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BoardMemberId = table.Column<string>(nullable: true),
+                    BoardMemberId = table.Column<int>(nullable: false),
                     OwnerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -303,7 +304,7 @@ namespace Sunridge.DataAccess.Migrations
                         column: x => x.BoardMemberId,
                         principalTable: "BoardMember",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OwnerBoardMember_AspNetUsers_OwnerId",
                         column: x => x.OwnerId,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
+using Sunridge.Pages.Admin.News;
 
 namespace Sunridge.Pages.Home.BoardMembers {
     public class UpsertModel : PageModel {
@@ -30,8 +32,7 @@ namespace Sunridge.Pages.Home.BoardMembers {
         [BindProperty] public OwnerBoardMemberVM OwnerBoardObj { get; set; }
         
 
-        public IActionResult OnGet(string id) {
-            /*
+        public IActionResult OnGet(int? id) {
             OwnerBoardObj = new OwnerBoardMemberVM {
                 OwnerBoardMember = new OwnerBoardMember(),
                 Owner = new Models.Owner(),
@@ -39,22 +40,10 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
 
-            if (id != null) {
-                OwnerBoardObj.BoardMember =
-                    _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
-
-                if (OwnerBoardObj.BoardMember == null) {
-                    return NotFound();
-                }
-            }
-            else {
-                OwnerBoardObj.BoardMember.OwnerId = id.ToString();
-            }
-
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(string id) {
+        public async Task<IActionResult> OnPost() {
             if (!ModelState.IsValid) {
                 return Page();
             }
@@ -66,23 +55,27 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 var file = Image;
                 temp = file.FileName;
                 var uploads = Path.Combine(_hostingEnvironment.WebRootPath, @"images\boardMembers");
-                fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
                     await file.CopyToAsync(fileStream);
                 }
 
                 if (temp.Equals("")) {
-                    OwnerBoardObj.OwnerBoardMember.Image = "/images/boardMembers/DefaultImage.png";
+                    OwnerBoardObj.BoardMember.Image = "/images/boardMembers/DefaultImage.png";
                     await _db.SaveChangesAsync();
                 }
                 else {
-                    OwnerBoardObj.OwnerBoardMember.Image = fileName;
+                    OwnerBoardObj.BoardMember.Image = "/images/boardMembers/" + fileName;
                 }
             }
 
-            // OwnerBoardObj.BoardMember.OwnerId = OwnerBoardObj.Owner.Id;
-            _unitOfWork.BoardMember.Add(OwnerBoardObj.OwnerBoardMember);
-            */
+            OwnerBoardObj.OwnerBoardMember.Owner = await _userManager.FindByIdAsync(OwnerBoardObj.OwnerBoardMember.Owner.Id);
+            _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
+            _unitOfWork.Save();
+
+            OwnerBoardObj.OwnerBoardMember.BoardMemberId = OwnerBoardObj.BoardMember.Id;
+            _unitOfWork.OwnerBoardMember.Add(OwnerBoardObj.OwnerBoardMember);
+            _unitOfWork.Save();
             
             return RedirectToPage("./Index");
         }

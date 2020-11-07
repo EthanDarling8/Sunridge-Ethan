@@ -18,25 +18,29 @@ namespace Sunridge.Pages.Home.BoardMembers {
             _unitOfWork = unitOfWork;
         }
 
-        [BindProperty] public List<OwnerBoardMember> BoardMemberList { get; set; }
+        [BindProperty] public List<BoardMember> BoardMemberList { get; set; }
         [BindProperty] public List<Models.Owner> OwnerList { get; set; }
-        [BindProperty] public OwnerBoardMemberVM BoardMemberObj { get; set; }
+        [BindProperty] public OwnerBoardMemberVM OwnerBoardObj { get; set; }
+        [BindProperty] public List<OwnerBoardMember> OwnerBoardMemberList { get; set; }
 
         public IActionResult OnGet(int? id) {
-            /*BoardMemberObj = new OwnerBoardMemberVM {
+            OwnerBoardObj = new OwnerBoardMemberVM {
                 OwnerBoardMember = new OwnerBoardMember(),
+                Owner = new Models.Owner(),
+                BoardMember = new BoardMember(),
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
 
             BoardMemberList = _unitOfWork.BoardMember.GetAll().ToList();
             OwnerList = _unitOfWork.Owner.GetAll().ToList();
+            OwnerBoardMemberList = _unitOfWork.OwnerBoardMember.GetAll().ToList();
 
             if (id != null) {
-                BoardMemberObj.OwnerBoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
-                if (BoardMemberObj == null) {
+                OwnerBoardObj.BoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
+                if (OwnerBoardObj == null) {
                     return NotFound();
                 }
-            }*/
+            }
 
             return Page();
         }

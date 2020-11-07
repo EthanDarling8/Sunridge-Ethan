@@ -176,8 +176,10 @@ namespace Sunridge.DataAccess.Migrations
 
             modelBuilder.Entity("Sunridge.Models.BoardMember", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -498,8 +500,8 @@ namespace Sunridge.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BoardMemberId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BoardMemberId")
+                        .HasColumnType("int");
 
                     b.Property<string>("OwnerId")
                         .HasColumnType("nvarchar(450)");
@@ -702,7 +704,9 @@ namespace Sunridge.DataAccess.Migrations
                 {
                     b.HasOne("Sunridge.Models.BoardMember", "BoardMember")
                         .WithMany()
-                        .HasForeignKey("BoardMemberId");
+                        .HasForeignKey("BoardMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Sunridge.Models.Owner", "Owner")
                         .WithMany()

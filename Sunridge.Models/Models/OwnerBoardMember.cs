@@ -10,12 +10,12 @@ namespace Sunridge.Models {
         
         [ForeignKey("BoardMemberId")]
         public virtual BoardMember BoardMember { get; set; }
-        [Display(Name = "Board Member")]
-        public string BoardMemberId { get; set; }
+        [Display(Name = "Board Member Id")]
+        public int BoardMemberId { get; set; }
         
         [ForeignKey("OwnerId")]
         public virtual Owner Owner { get; set; }
-        [Display(Name = "Owner")]
+        [Display(Name = "User Id")]
         public string OwnerId { get; set; }
 
     }

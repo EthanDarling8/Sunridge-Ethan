@@ -134,7 +134,7 @@
     }
 
     <div class="accordion">
-        @foreach (Models.DocumentSection documentSection in Model.DocumentSectionList)
+        @foreach (Models.DocumentSection documentSection in Model.DocumentSectionList.Where(s => s.DocumentCategoryId == Model.SelectedCategory.Id))
         {
             <div class="row mb-1 mt-1">
                 <h2 class="col">
@@ -151,53 +151,62 @@
                 </h2>
             </div>
 
-        foreach (Models.DocumentSectionText documentSectionText in Model.DocumentSectionTextList.Where(t => t.DocumentSectionId == documentSection.Id))
-        {
-            <div class="card z-depth-0 bordered">
+            foreach (Models.DocumentSectionText documentSectionText in Model.DocumentSectionTextList.Where(t => t.DocumentSectionId == documentSection.Id))
+            {
+                <div class="card z-depth-0 bordered">
 
-                <div class="card-header row" id="@("heading"+@documentSectionText.Id)">
-                    <h5 class="mb-0 col">
-                        <button class="col btn btn-block collapsed" type="button" data-toggle="collapse"
-                                data-target="#@("collapse"+@documentSectionText.Id)" aria-expanded="false" aria-controls="@("collapse"+@documentSectionText.Id)">
-                            @documentSectionText.Name
-                        </button>
-                    </h5>
+                    <div class="card-header row" id="@("heading"+@documentSectionText.Id)">
+                        <h5 class="mb-0 col">
+                            <button class="col btn btn-block collapsed" type="button" data-toggle="collapse"
+                                    data-target="#@("collapse"+@documentSectionText.Id)" aria-expanded="false" aria-controls="@("collapse"+@documentSectionText.Id)">
+                                @documentSectionText.Name
+                            </button>
+                        </h5>
 
-                    @if (User.IsInRole(SD.AdministratorRole))
-                    {
-                        <a class="col-1 btn btn-outline-warning text-dark"
-                           asp-route-sectionTextId="@documentSectionText.Id"
-                           asp-page="/Admin/Document/SectionText/Upsert">
-                            <i class=" far fa-edit"></i>
-                        </a>
-                    }
-                </div>
-
-
-
-                <div id="@("collapse"+@documentSectionText.Id)" class="collapse" aria-labelledby="@("heading"+@documentSectionText.Id)">
-                    <div class="card-body">
-                        @Html.Raw(documentSectionText.Text)
+                        @if (User.IsInRole(SD.AdministratorRole))
+                        {
+                            <a class="col-1 btn btn-outline-warning text-dark"
+                               asp-route-sectionTextId="@documentSectionText.Id"
+                               asp-page="/Admin/Document/SectionText/Upsert">
+                                <i class=" far fa-edit"></i>
+                            </a>
+                        }
                     </div>
+
+
+
+                    <div id="@("collapse"+@documentSectionText.Id)" class="collapse" aria-labelledby="@("heading"+@documentSectionText.Id)">
+                        <div class="card-body">
+                            @Html.Raw(documentSectionText.Text)
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>
+            }
 
+            @*Add SectionText *@
+            @if (User.IsInRole(SD.AdministratorRole))
+            {
+                <div class="container">
+                    <a class="col-1 btn btn-outline-primary text-dark"
+                       asp-page="/Admin/Document/SectionText/Upsert">
+                        <i class=" fas fa-plus"></i>
+                    </a>
+                </div>            
+            }
         }
-
-        @*Add SectionText *@
-        @if (User.IsInRole(SD.AdministratorRole))
-        {
-            <div class="container">
-                <a class="col-1 btn btn-outline-primary text-dark"
-                   asp-page="/Admin/Document/SectionText/Upsert">
-                    <i class=" fas fa-plus"></i>
-                </a>
-            </div>            
-        }
-    }
+    </div>
+}
 
 
+
+
+@* Display Search Results *@
+@if (Model.Search != null)
+{
+    <div class="container">
+        <h1>Search Results</h1>
 
     </div>
 }

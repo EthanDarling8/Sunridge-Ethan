@@ -18,11 +18,14 @@ namespace Sunridge.Models.Models
         /// <summary>
         /// The year the Key was issued
         /// </summary>
+        [Required]
         public int Year { get; set; }
-        
+
         /// <summary>
         /// The nth Key that was issued in a year
         /// </summary>
+        [Required]
+        [Display(Name = "Serial Number")]
         public int SerialNumber { get; set; }
         #endregion
     }

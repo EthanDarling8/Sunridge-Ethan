@@ -49,6 +49,7 @@ namespace Sunridge.Models.Models
         /// The amount paid for the Key
         /// </summary>
         [Column(TypeName = "decimal(18,2)")]
+        [Display(Name = "Paid Amount")]
         public decimal PaidAmount { get; set; } 
         #endregion
 

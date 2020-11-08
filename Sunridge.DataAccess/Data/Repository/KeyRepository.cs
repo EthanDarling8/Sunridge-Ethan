@@ -14,5 +14,6 @@ namespace Sunridge.DataAccess.Data.Repository
         {
             _db = db;
         }
+
     }
 }

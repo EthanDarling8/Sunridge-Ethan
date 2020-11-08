@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Sunridge.Models.Models
+namespace Sunridge.Models
 {
     /// <summary>
     /// The Key to a Lot

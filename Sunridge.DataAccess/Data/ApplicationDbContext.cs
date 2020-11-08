@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sunridge.Models;
-using Sunridge.Models.Models;
+using Key = Sunridge.Models.Key;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -26,7 +26,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Photo> Photo { get; set; }
 
         // Key DbSets
-        public DbSet<Models.Models.Key> Key { get; set; }
+        public DbSet<Key> Key { get; set; }
         public DbSet<KeyLot> KeyLot { get; set; }
 
         // Lot DbSets

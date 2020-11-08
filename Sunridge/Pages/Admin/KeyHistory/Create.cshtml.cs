@@ -8,7 +8,7 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.Models;
 
-namespace Sunridge
+namespace Sunridge.Pages.Admin.KeyHistory
 {
     public class CreateModel : PageModel
     {

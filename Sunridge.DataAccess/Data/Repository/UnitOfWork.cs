@@ -13,8 +13,12 @@ namespace Sunridge.DataAccess.Data.Repository
         public IBannerRepository Banner { get; private set; }
         public IOwnerRepository Owner { get; private set; }
         public INewsRepository News { get; private set; }
-        public IBoardMemberRepository BoardMember { get; private set; }
         public IFireInfoRepository FireInfo { get; private set; }
+        
+        // Board Member IRepositories
+        public IOwnerBoardMemberRepository OwnerBoardMember { get; private set; }
+        public IBoardMemberRepository BoardMember { get; private set; }
+
 
         //Documents IRepositories
         public IDocumentCategoryRepository DocumentCategory { get; private set; }
@@ -49,6 +53,9 @@ namespace Sunridge.DataAccess.Data.Repository
             Banner = new BannerRepository(_db);
             Owner = new OwnerRepository(_db);
             News = new NewsRepository(_db);
+            FireInfo = new FireInfoRepository(_db);
+            
+            // Board Member Models
             BoardMember = new BoardMemberRepository(_db);
             FireInfo = new FireInfoRepository(_db);
 
@@ -61,6 +68,8 @@ namespace Sunridge.DataAccess.Data.Repository
             DocumentSectionText = new DocumentSectionTextRepository(_db);
 
 
+            OwnerBoardMember = new OwnerBoardMemberRepository(_db);
+            
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);
             PhotoAlbum = new PhotoAlbumRepository(_db);

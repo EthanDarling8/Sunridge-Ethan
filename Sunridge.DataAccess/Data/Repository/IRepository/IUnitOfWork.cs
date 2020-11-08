@@ -7,8 +7,11 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IBannerRepository Banner { get; }
         IOwnerRepository Owner { get; }
         INewsRepository News { get; }
-        IBoardMemberRepository BoardMember { get; }
         IFireInfoRepository FireInfo { get; }
+        
+        // Board Member Repositories
+        IBoardMemberRepository BoardMember { get; }
+        IOwnerBoardMemberRepository OwnerBoardMember { get; }
 
         //Documents Repositories
         IDocumentCategoryRepository DocumentCategory { get; }

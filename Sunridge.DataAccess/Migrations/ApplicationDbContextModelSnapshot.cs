@@ -184,15 +184,10 @@ namespace Sunridge.DataAccess.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("BoardMember");
                 });
@@ -529,6 +524,9 @@ namespace Sunridge.DataAccess.Migrations
                     b.Property<bool>("Archived")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Attachment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
@@ -612,6 +610,28 @@ namespace Sunridge.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Sunridge.Models.OwnerBoardMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BoardMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardMemberId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("OwnerBoardMember");
                 });
 
             modelBuilder.Entity("Sunridge.Models.Photo", b =>
@@ -746,8 +766,67 @@ namespace Sunridge.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sunridge.Models.BoardMember", b =>
+            modelBuilder.Entity("Sunridge.Models.LostItem", b =>
                 {
+                    b.HasOne("Sunridge.Models.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Sunridge.Models.LotFile", b =>
+                {
+                    b.HasOne("Sunridge.Models.Lot", "Lot")
+                        .WithMany()
+                        .HasForeignKey("LotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sunridge.Models.Lot_Inventory", b =>
+                {
+                    b.HasOne("Sunridge.Models.Inventory", "Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sunridge.Models.Lot", "Lot")
+                        .WithMany("Lot_Inventories")
+                        .HasForeignKey("LotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sunridge.Models.Lot_Owner", b =>
+                {
+                    b.HasOne("Sunridge.Models.Lot", "Lot")
+                        .WithMany("Lot_Owners")
+                        .HasForeignKey("LotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sunridge.Models.Owner", "Owner")
+                        .WithMany("Lot_Owners")
+                        .HasForeignKey("OwnerId");
+                });
+
+            modelBuilder.Entity("Sunridge.Models.Lot_OwnerFile", b =>
+                {
+                    b.HasOne("Sunridge.Models.Lot_Owner", "Lot_Owner")
+                        .WithMany()
+                        .HasForeignKey("Lot_OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sunridge.Models.OwnerBoardMember", b =>
+                {
+                    b.HasOne("Sunridge.Models.BoardMember", "BoardMember")
+                        .WithMany()
+                        .HasForeignKey("BoardMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Sunridge.Models.Owner", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId");

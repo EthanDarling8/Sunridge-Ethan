@@ -12,6 +12,7 @@ namespace Sunridge.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime DisplayDate { get; set; }
+        public string Attachment { get; set; }
         public bool Archived { get; set; } = false;
     }
 }

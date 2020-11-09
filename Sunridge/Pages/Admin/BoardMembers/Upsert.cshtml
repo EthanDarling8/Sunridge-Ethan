@@ -1,0 +1,82 @@
+﻿@page
+@model Sunridge.Pages.Admin.BoardMembers.UpsertModel
+
+@{
+    ViewData["Title"] = "Board Members";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <input type="hidden" asp-for="OwnerBoardObj.OwnerBoardMember.Id"/>
+
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2>Edit Board Member</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="OwnerBoardObj.BoardMember.Image"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files"/>
+                    </div>
+                    <span asp-validation-for="OwnerBoardObj.BoardMember.Image" class="text-danger"></span>
+                    <span class="text-danger" asp-validation-for="OwnerBoardObj.BoardMember.Image"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="OwnerBoardObj.BoardMember.Position"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" id="uploadBox" asp-for="OwnerBoardObj.BoardMember.Position"/>
+                        <span class="text-danger" asp-validation-for="OwnerBoardObj.BoardMember.Position"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="@Model.OwnerBoardObj.OwnerBoardMember.Owner.Id"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(o => o.OwnerBoardObj.OwnerBoardMember.Owner.Id,
+                            Model.OwnerBoardObj.OwnerList,
+                            "- Select An Owner -",
+                            new {@class = "form-control"})
+                        <input type="hidden" asp-for="OwnerBoardObj.OwnerBoardMember.OwnerId"/>
+                        <span class="text-danger" asp-validation-for="@Model.OwnerBoardObj.OwnerBoardMember.Owner.Id"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @if (Model.OwnerBoardObj.OwnerBoardMember.Id != 0) {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else {
+                                    <button type="submit" class="btn btn-primary form-control">Add</button>
+                                }
+                            </div>
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-secondary form-control">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="Shared/_ValidationScriptsPartial"/>
+}

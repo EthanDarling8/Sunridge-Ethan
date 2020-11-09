@@ -51,5 +51,12 @@ namespace Sunridge.Controllers {
                 .OrderBy(d => d.DisplayDate).Reverse().ToList();
             return Json(new {FireList});
         }
+
+        public IActionResult Delete(int id) {
+            var objFromDb = _unitOfWork.FireInfo.GetFirstOrDefault(unitOfWork => unitOfWork.Id == id);
+            _unitOfWork.FireInfo.Remove(objFromDb);
+            _unitOfWork.Save();
+            return RedirectToPage("/Admin/FireInfo/Index");
+        }
     }
 }

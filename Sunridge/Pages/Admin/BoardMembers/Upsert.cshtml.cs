@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +9,8 @@ using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
-using Sunridge.Pages.Admin.News;
 
-namespace Sunridge.Pages.Home.BoardMembers {
+namespace Sunridge.Pages.Admin.BoardMembers {
     public class UpsertModel : PageModel {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -30,7 +28,7 @@ namespace Sunridge.Pages.Home.BoardMembers {
         }
 
         [BindProperty] public OwnerBoardMemberVM OwnerBoardObj { get; set; }
-        
+
 
         public IActionResult OnGet(int? id) {
             OwnerBoardObj = new OwnerBoardMemberVM {
@@ -40,7 +38,26 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
 
+            if (id != null) {
+                OwnerBoardObj.BoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
+                if (OwnerBoardObj == null) {
+                    return NotFound();
+                }
+            }
+
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id) {
+            var ob = await _db.OwnerBoardMember.FindAsync(id);
+            if (ob == null) {
+                return NotFound();
+            }
+
+            _db.OwnerBoardMember.Remove(ob);
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
 
         public async Task<IActionResult> OnPost() {
@@ -48,40 +65,37 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 return Page();
             }
 
-            await FileUpload(@"images/boardMembers");
-
-            OwnerBoardObj.OwnerBoardMember.Owner = await _userManager.FindByIdAsync(OwnerBoardObj.OwnerBoardMember.Owner.Id);
-            _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
-            _unitOfWork.Save();
-
-            OwnerBoardObj.OwnerBoardMember.BoardMemberId = OwnerBoardObj.BoardMember.Id;
-            _unitOfWork.OwnerBoardMember.Add(OwnerBoardObj.OwnerBoardMember);
-            _unitOfWork.Save();
-            
-            return RedirectToPage("./Index");
-        }
-
-        private async Task FileUpload(string path) {
             var fileName = "";
             var temp = "";
             var files = HttpContext.Request.Form.Files;
             foreach (var Image in files) {
                 var file = Image;
                 temp = file.FileName;
-                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, path);
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, @"images\boardMembers");
                 fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
                     await file.CopyToAsync(fileStream);
                 }
 
                 if (temp.Equals("")) {
-                    OwnerBoardObj.BoardMember.Image = "/" + path + "/DefaultImage.png";
+                    OwnerBoardObj.BoardMember.Image = "/images/boardMembers/DefaultImage.png";
                     await _db.SaveChangesAsync();
                 }
                 else {
-                    OwnerBoardObj.BoardMember.Image = "/" + path + "/" + fileName;
+                    OwnerBoardObj.BoardMember.Image = "/images/boardMembers/" + fileName;
                 }
             }
+
+            OwnerBoardObj.OwnerBoardMember.Owner =
+                await _userManager.FindByIdAsync(OwnerBoardObj.OwnerBoardMember.Owner.Id);
+            _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
+            _unitOfWork.Save();
+
+            OwnerBoardObj.OwnerBoardMember.BoardMemberId = OwnerBoardObj.BoardMember.Id;
+            _unitOfWork.OwnerBoardMember.Add(OwnerBoardObj.OwnerBoardMember);
+            _unitOfWork.Save();
+
+            return RedirectToPage("./Index");
         }
     }
 }

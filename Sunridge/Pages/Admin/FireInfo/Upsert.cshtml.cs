@@ -5,30 +5,24 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 using System;
 using System.IO;
 
-namespace Sunridge.Pages.Admin.FireInfo
-{
-    public class UpsertModel : PageModel
-    {
+namespace Sunridge.Pages.Admin.FireInfo {
+    public class UpsertModel : PageModel {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public UpsertModel(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
-        {
+
+        public UpsertModel(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment) {
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;
         }
 
-        [BindProperty]
-        public Models.FireInfo FireObj { get; set; }
+        [BindProperty] public Models.FireInfo FireObj { get; set; }
 
-        public IActionResult OnGet(int? id)
-        {
+        public IActionResult OnGet(int? id) {
             FireObj = new Models.FireInfo();
 
-            if (id != null)
-            {
+            if (id != null) {
                 FireObj = _unitOfWork.FireInfo.GetFirstOrDefault(u => u.Id == id);
-                if (FireObj == null)
-                {
+                if (FireObj == null) {
                     return NotFound();
                 }
             }
@@ -36,25 +30,20 @@ namespace Sunridge.Pages.Admin.FireInfo
             return Page();
         }
 
-        public IActionResult OnPost()
-        {
-
+        public IActionResult OnPost() {
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
-            if (FireObj.Id == 0)
-            {
+            if (FireObj.Id == 0) {
                 string fileName = Guid.NewGuid().ToString();
                 var uploads = Path.Combine(webRootPath, @"images\fireInfo");
                 var extension = Path.GetExtension(files[0].FileName);
 
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                {
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create)) {
                     files[0].CopyTo(fileStream);
                 }
 
@@ -63,31 +52,27 @@ namespace Sunridge.Pages.Admin.FireInfo
                 _unitOfWork.FireInfo.Add(FireObj);
                 _unitOfWork.Save();
             }
-            else
-            {
+            else {
                 var objFromDb = _unitOfWork.FireInfo.Get(FireObj.Id);
 
-                if (files.Count > 0)
-                {
+                if (files.Count > 0) {
                     string fileName = Guid.NewGuid().ToString();
                     var uploads = Path.Combine(webRootPath, @"images\fireInfo");
                     var extension = Path.GetExtension(files[0].FileName);
 
                     var imagePath = Path.Combine(webRootPath, objFromDb.Attachment.TrimStart('\\'));
-                    if (System.IO.File.Exists(imagePath))
-                    {
+                    if (System.IO.File.Exists(imagePath)) {
                         System.IO.File.Delete(imagePath);
                     }
 
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                    {
+                    using (var fileStream =
+                        new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create)) {
                         files[0].CopyTo(fileStream);
                     }
 
                     FireObj.Attachment = @"\images\fireInfo\" + fileName + extension;
                 }
-                else
-                {
+                else {
                     FireObj.Attachment = objFromDb.Attachment;
                 }
 
@@ -96,6 +81,5 @@ namespace Sunridge.Pages.Admin.FireInfo
 
             return RedirectToPage("./Index");
         }
-
     }
 }

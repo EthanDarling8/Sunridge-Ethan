@@ -43,7 +43,7 @@ namespace Sunridge.Pages.Home.Documents
             Search = search;
 
             DocumentCategoryList = _unitOfWork.DocumentCategory.GetAll(null, c => c.OrderBy(c => c.Name));
-            DocumentSectionList = _unitOfWork.DocumentSection.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder));
+            DocumentSectionList = _unitOfWork.DocumentSection.GetAll(null, s => s.OrderBy(s => s.DisplayOrder));
             DocumentSectionTextList = _unitOfWork.DocumentSectionText.GetAll(null, t => t.OrderBy(t => t.DisplayOrder));         
 
             if (Search != null)

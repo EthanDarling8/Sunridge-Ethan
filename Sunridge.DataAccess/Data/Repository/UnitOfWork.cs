@@ -57,18 +57,14 @@ namespace Sunridge.DataAccess.Data.Repository
             
             // Board Member Models
             BoardMember = new BoardMemberRepository(_db);
-            FireInfo = new FireInfoRepository(_db);
-
+            OwnerBoardMember = new OwnerBoardMemberRepository(_db);
 
             //Documents Models
             DocumentCategory = new DocumentCategoryRepository(_db);
             DocumentFile = new DocumentFileRepository(_db);
             DocumentFileKeyword = new DocumentFileKeywordRepository(_db);
             DocumentSection = new DocumentSectionRepository(_db);
-            DocumentSectionText = new DocumentSectionTextRepository(_db);
-
-
-            OwnerBoardMember = new OwnerBoardMemberRepository(_db);
+            DocumentSectionText = new DocumentSectionTextRepository(_db);           
             
             //Photo Gallery Models
             PhotoCategory = new PhotoCategoryRepository(_db);

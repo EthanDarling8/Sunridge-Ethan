@@ -766,72 +766,6 @@ namespace Sunridge.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sunridge.Models.LostItem", b =>
-                {
-                    b.HasOne("Sunridge.Models.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.LotFile", b =>
-                {
-                    b.HasOne("Sunridge.Models.Lot", "Lot")
-                        .WithMany()
-                        .HasForeignKey("LotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.Lot_Inventory", b =>
-                {
-                    b.HasOne("Sunridge.Models.Inventory", "Inventory")
-                        .WithMany()
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sunridge.Models.Lot", "Lot")
-                        .WithMany("Lot_Inventories")
-                        .HasForeignKey("LotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.Lot_Owner", b =>
-                {
-                    b.HasOne("Sunridge.Models.Lot", "Lot")
-                        .WithMany("Lot_Owners")
-                        .HasForeignKey("LotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sunridge.Models.Owner", "Owner")
-                        .WithMany("Lot_Owners")
-                        .HasForeignKey("OwnerId");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.Lot_OwnerFile", b =>
-                {
-                    b.HasOne("Sunridge.Models.Lot_Owner", "Lot_Owner")
-                        .WithMany()
-                        .HasForeignKey("Lot_OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.OwnerBoardMember", b =>
-                {
-                    b.HasOne("Sunridge.Models.BoardMember", "BoardMember")
-                        .WithMany()
-                        .HasForeignKey("BoardMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sunridge.Models.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
-                });
-
             modelBuilder.Entity("Sunridge.Models.DocumentFile", b =>
                 {
                     b.HasOne("Sunridge.Models.DocumentCategory", "DocumentCategory")
@@ -919,6 +853,19 @@ namespace Sunridge.DataAccess.Migrations
                         .HasForeignKey("Lot_OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Sunridge.Models.OwnerBoardMember", b =>
+                {
+                    b.HasOne("Sunridge.Models.BoardMember", "BoardMember")
+                        .WithMany()
+                        .HasForeignKey("BoardMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sunridge.Models.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("Sunridge.Models.Photo", b =>

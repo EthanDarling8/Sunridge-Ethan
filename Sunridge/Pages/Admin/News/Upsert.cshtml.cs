@@ -49,16 +49,19 @@ namespace Sunridge.Pages.Admin.News
 
             if (NewsObj.Id == 0)
             {
-                string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"images\News");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                if (files.Count > 0)
                 {
-                    files[0].CopyTo(fileStream);
-                }
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\News");
+                    var extension = Path.GetExtension(files[0].FileName);
 
-                NewsObj.Attachment = @"\images\News\" + fileName + extension;
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    NewsObj.Attachment = @"\images\News\" + fileName + extension;
+                }
 
                 _unitOfWork.News.Add(NewsObj);
                 _unitOfWork.Save();

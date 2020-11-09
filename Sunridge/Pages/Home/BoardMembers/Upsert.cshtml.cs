@@ -13,7 +13,7 @@ using Sunridge.Models.ViewModels;
 using Sunridge.Pages.Admin.News;
 
 namespace Sunridge.Pages.Home.BoardMembers {
-    public class UpsertModel : PageModel {
+    public class UpsertModel : FileUploadBase {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ApplicationDbContext _db;
@@ -48,7 +48,8 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 return Page();
             }
 
-            await FileUpload(@"images/boardMembers");
+            var files = HttpContext.Request.Form.Files;
+
 
             OwnerBoardObj.OwnerBoardMember.Owner = await _userManager.FindByIdAsync(OwnerBoardObj.OwnerBoardMember.Owner.Id);
             _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
@@ -57,31 +58,15 @@ namespace Sunridge.Pages.Home.BoardMembers {
             OwnerBoardObj.OwnerBoardMember.BoardMemberId = OwnerBoardObj.BoardMember.Id;
             _unitOfWork.OwnerBoardMember.Add(OwnerBoardObj.OwnerBoardMember);
             _unitOfWork.Save();
+
+            FileUploadBase upload = new FileUploadBase(_hostingEnvironment, _db);
+
+            await upload.FileUpload(@"images/boardMembers", OwnerBoardObj, files);
+            _unitOfWork.BoardMember.Update(OwnerBoardObj.BoardMember);
+            _unitOfWork.OwnerBoardMember.Update(OwnerBoardObj.OwnerBoardMember);
+            _unitOfWork.Save();
             
             return RedirectToPage("./Index");
-        }
-
-        private async Task FileUpload(string path) {
-            var fileName = "";
-            var temp = "";
-            var files = HttpContext.Request.Form.Files;
-            foreach (var Image in files) {
-                var file = Image;
-                temp = file.FileName;
-                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, path);
-                fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
-                    await file.CopyToAsync(fileStream);
-                }
-
-                if (temp.Equals("")) {
-                    OwnerBoardObj.BoardMember.Image = "/" + path + "/DefaultImage.png";
-                    await _db.SaveChangesAsync();
-                }
-                else {
-                    OwnerBoardObj.BoardMember.Image = "/" + path + "/" + fileName;
-                }
-            }
         }
     }
 }

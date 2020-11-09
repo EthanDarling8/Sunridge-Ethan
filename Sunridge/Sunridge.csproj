@@ -30,4 +30,12 @@
     <Folder Include="wwwroot\images\News" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\images\boardMembers\fa79dfcf-8206-4927-b948-57fc09e09d6c.png" />
+    <Content Remove="wwwroot\images\boardMembers\61d25f6a-c51f-4e8a-bd2e-4af6162d1b6d.jpg" />
+    <Content Remove="wwwroot\images\boardMembers\3a4181b4-5ccc-4054-b814-fa0bb69266cd.jpg" />
+    <Content Remove="wwwroot\images\boardMembers\16343f1d-c65f-4fb5-a727-315100c50301.png" />
+    <Content Remove="wwwroot\images\boardMembers\1528757b-427b-4309-bf70-af892d2ee5ef.png" />
+  </ItemGroup>
+
 </Project>

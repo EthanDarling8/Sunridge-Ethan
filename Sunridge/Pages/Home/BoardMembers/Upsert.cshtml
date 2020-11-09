@@ -75,13 +75,5 @@
 </form>
 
 @section Scripts{
-    <script>
-            function ValidateInput() {
-                if (document.getElementById("uploadBox").value == "") {
-                    swal('Error', 'Please fill all fields', 'error');
-                    return false;
-                }
-                return true;
-            }
-        </script>
+    <partial name="Shared/_ValidationScriptsPartial"/>
 }

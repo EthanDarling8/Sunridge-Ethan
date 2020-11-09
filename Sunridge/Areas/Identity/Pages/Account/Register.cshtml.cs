@@ -114,8 +114,8 @@ namespace Sunridge.Areas.Identity.Pages.Account {
                         await _roleManager.CreateAsync(new IdentityRole(SD.OwnerRole));
                     }
 
-                    // Set new user to User Role by default
-                    await _userManager.AddToRoleAsync(user, SD.OwnerRole);
+                    // Set new user to Admin Role by default
+                    await _userManager.AddToRoleAsync(user, SD.AdministratorRole);
 
                     _logger.LogInformation("User created a new account with password.");
 

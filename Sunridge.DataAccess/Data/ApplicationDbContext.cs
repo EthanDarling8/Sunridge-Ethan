@@ -38,7 +38,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Photo> Photo { get; set; }
 
         // Key DbSets
-        public DbSet<Key> Key { get; set; }
+        public DbSet<Models.Key> Key { get; set; }
         public DbSet<KeyLot> KeyLot { get; set; }
 
         // Lot DbSets

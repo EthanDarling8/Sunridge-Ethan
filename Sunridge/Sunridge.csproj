@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\Document\File\" />
     <Folder Include="Pages\Owner" />
     <Folder Include="wwwroot\fireinfo" />
     <Folder Include="wwwroot\images\News\" />

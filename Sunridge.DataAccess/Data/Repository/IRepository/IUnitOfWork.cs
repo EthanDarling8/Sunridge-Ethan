@@ -13,6 +13,14 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IBoardMemberRepository BoardMember { get; }
         IOwnerBoardMemberRepository OwnerBoardMember { get; }
 
+        //Documents Repositories
+        IDocumentCategoryRepository DocumentCategory { get; }
+        IDocumentFileRepository DocumentFile { get; }
+        IDocumentFileKeywordRepository DocumentFileKeyword { get; }
+        IDocumentSectionRepository DocumentSection { get; }
+        IDocumentSectionTextRepository DocumentSectionText { get; }
+
+
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }
         IPhotoAlbumRepository PhotoAlbum { get; }

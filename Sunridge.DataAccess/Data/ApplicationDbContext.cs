@@ -16,6 +16,16 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Owner> Owner { get; set; }
+        
+        // Document DbSets
+        public DbSet<DocumentCategory> DocumentCategory { get; set; }
+        public DbSet<DocumentFile> DocumentFile { get; set; }
+        public DbSet<DocumentFileKeyword> DocumentFileKeyword { get; set; }
+        public DbSet<DocumentSection> DocumentSection { get; set; }
+        public DbSet<DocumentSectionText> DocumentSectionText { get; set; }
+
+
+        // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }
         
         // Board Member DbSets

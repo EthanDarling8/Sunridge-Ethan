@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,6 +12,7 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
 using Sunridge.Pages.Admin.News;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Home.BoardMembers {
     public class UpsertModel : FileUploadBase {
@@ -30,7 +32,6 @@ namespace Sunridge.Pages.Home.BoardMembers {
         }
 
         [BindProperty] public OwnerBoardMemberVM OwnerBoardObj { get; set; }
-        
 
         public IActionResult OnGet(int? id) {
             OwnerBoardObj = new OwnerBoardMemberVM {
@@ -40,6 +41,13 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
 
+            if (id != null) {
+                OwnerBoardObj.BoardMember = _unitOfWork.BoardMember.GetFirstOrDefault(b => b.Id == id);
+                if (OwnerBoardObj == null) {
+                    return NotFound();
+                }
+            }
+
             return Page();
         }
 
@@ -48,10 +56,10 @@ namespace Sunridge.Pages.Home.BoardMembers {
                 return Page();
             }
 
-            var files = HttpContext.Request.Form.Files;
+            IFormFileCollection files = HttpContext.Request.Form.Files;
 
-
-            OwnerBoardObj.OwnerBoardMember.Owner = await _userManager.FindByIdAsync(OwnerBoardObj.OwnerBoardMember.Owner.Id);
+            OwnerBoardObj.OwnerBoardMember.Owner =
+                await _userManager.FindByIdAsync(OwnerBoardObj.OwnerBoardMember.Owner.Id);
             _unitOfWork.BoardMember.Add(OwnerBoardObj.BoardMember);
             _unitOfWork.Save();
 
@@ -59,13 +67,11 @@ namespace Sunridge.Pages.Home.BoardMembers {
             _unitOfWork.OwnerBoardMember.Add(OwnerBoardObj.OwnerBoardMember);
             _unitOfWork.Save();
 
-            FileUploadBase upload = new FileUploadBase(_hostingEnvironment, _db);
+            FileUploadBase fileUploader = new FileUploadBase(_hostingEnvironment, _unitOfWork, _db);
 
-            await upload.FileUpload(@"images/boardMembers", OwnerBoardObj, files);
-            _unitOfWork.BoardMember.Update(OwnerBoardObj.BoardMember);
-            _unitOfWork.OwnerBoardMember.Update(OwnerBoardObj.OwnerBoardMember);
+            await fileUploader.Upload(@"/images/boardMembers/", OwnerBoardObj, files);
             _unitOfWork.Save();
-            
+
             return RedirectToPage("./Index");
         }
     }

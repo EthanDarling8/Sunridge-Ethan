@@ -11,6 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sunridge.Models", "Sunridge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sunridge.Utility", "Sunridge.Utility\Sunridge.Utility.csproj", "{34864FC8-EE06-4481-BF76-24D74CDC881F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{402C1073-93D4-4285-90A0-DC268783ABEC}"
+	ProjectSection(SolutionItems) = preProject
+		Questions.txt = Questions.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

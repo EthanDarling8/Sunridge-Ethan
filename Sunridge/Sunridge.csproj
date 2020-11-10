@@ -24,8 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Home\" />
-    <Folder Include="wwwroot\img\classifiedsitems\" />
+    <Folder Include="Pages\Owner\" />
   </ItemGroup>
 
 </Project>

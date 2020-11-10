@@ -1,65 +1,84 @@
 ﻿@page
 @model Sunridge.Pages.Admin.Banner.UpsertModel
-@{
-}
+@{ }
 
 <h2>Edit Banner Item</h2>
 <hr />
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
 <div class="row">
-    <div class="col-md-8">
-        <form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <div class="col-8">
+            <div class="form-group">
+                <label asp-for="BannerObj.Header"></label>
+                <input class="form-control tinyMCE_Input" asp-for="BannerObj.Header" />
+                <span class="text-danger" asp-validation-for="BannerObj.Header"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BannerObj.Body"></label>
+                <textarea class="form-control" asp-for="BannerObj.Body" id="bannerDesc" style="height:200px;"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="BannerObj.Image"></label>
+                <input type="file" class="form-control" id="uploadBox" name="files" />
+            </div>
+    </div>
+    <div class="col-4">
+        @if (Model.BannerObj.Image != null)
+        {
+            <img src="@Model.BannerObj.Image" class="rounded mx-auto d-block img-fluid" style="border:1px solid #bbb9b9;" alt="...">
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-1">
+        <div class="form-group">
             @if (Model.BannerObj.Id != 0)
             {
                 <input type="hidden" asp-for="@Model.BannerObj.Id;" />
+                <button type="submit" class="btn btn-primary form-control">Update</button>
             }
-
-            <div class="col-8 pt-3">
-                <div class="form-group">
-                    <label asp-for="BannerObj.Header"></label>
-                    <input class="form-control" asp-for="BannerObj.Header" />
-                    <span class="text-danger" asp-validation-for="BannerObj.Header"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BannerObj.Body"></label>
-                    <textarea class="form-control" asp-for="BannerObj.Body" id="bannerDesc" style="height:200px;"></textarea>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BannerObj.Image"></label>
-                    <input type="file" class="form-control" id="uploadBox" name="files" />
-                </div>
-                <div class="form-group">
-                    @if (Model.BannerObj.Id != 0)
-                    {
-                        <button type="submit" class="btn btn-default form-control">Update</button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-default form-control" onclick="return ValidateInput()">Create</button>
-                    }
-                </div>
-            </div>
-        @if (Model.BannerObj != null)
-        {
-            <div class="col-8 pt-3">
-                <img src="@Model.BannerObj.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
-            </div>
-        }
-        </form>
+            else
+            {
+                <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+            }
+        </div>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-1">
+        <div class="form-check">
+            @if (Model.BannerObj.Id != 0)
+            {
+                <input class="form-check-input" type="checkbox" asp-for="BannerObj.Archived">
+                <label class="form-check-label" asp-for="BannerObj.Archived"></label>
+            }
+        </div>
     </div>
 </div>
+</form>
 <div>
-    <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+    <a asp-page="./Index">Back to List</a>
 </div>
 
 
-@section Scripts{ 
-<script>
-    function ValidateInput() {
-        if (document.getElementById("uploadBox").value == "") {
-            swal('Error', 'Please select an Image to upload', 'error')
-            return false;
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: "input.tinyMCE_Input",
+            plugins: 'lists textcolor colorpicker spellchecker code wordcount',
+            min_height: 20,
+            menubar: 'format tools'
+        });
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'lists textcolor colorpicker spellchecker code wordcount link',
+            menubar: 'format tools insert'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please select an Image to upload', 'error')
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
-</script>
+    </script>
 }

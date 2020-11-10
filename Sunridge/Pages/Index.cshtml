@@ -2,32 +2,29 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Sunridge - Home";
+    Layout = "_HomeLayout";
     int BannerCount = 0;
 }
-
 
 @if (Model.BannerList.Count > 0)
 {
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="7000">
     <div class="carousel-inner">
-
-
     @foreach (var item in Model.BannerList)
     {
         <div class="carousel-item @(BannerCount == 0 ? "active" : "")">
-            <img class="masthead9 bg-primary" src="@item.Image;" />
-            <header class="text-white text-center">
-                <div id="carouselTextBox" class="container w-4 p-4">
-                    <h1>@item.Header;</h1>
-                    <p style="font-size: 18pt;">
-                        @item.Body;
+            <img class="masthead9 bg-primary" src="@item.Image" />
+            <div class="text-white text-center masthead">
+                <div class="container w-4 p-4 d-inline-block text-wrap text-truncate carouselTextBox">
+                    <h1>@Html.Raw(@item.Header)</h1>
+                    <p class="text-white text-center">
+                        @Html.Raw(@item.Body)
                     </p>
                 </div>
-            </header>
+            </div>
         </div>
         BannerCount++;
     }
-
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -41,7 +38,6 @@
 }
 
 <a class="weatherwidget-io" href="https://forecast7.com/en/41d30n111d81/eden/?unit=us" data-label_1="Sunridge" data-label_2="WEATHER" data-theme="original" style="display: block; position: relative; height: 98px; padding: 0px; overflow: hidden; text-align: left; text-indent: -299rem;">EDEN WEATHER<iframe id="weatherwidget-io-0" class="weatherwidget-io-frame" scrolling="no" frameborder="0" width="100%" src="https://weatherwidget.io/w/" style="display: block; position: absolute; top: 0px; height: 98px;"></iframe></a>
-
 
 <!-- Icons Grid -->
 <section class="features-icons  text-center">
@@ -80,7 +76,6 @@
         </div>
     </div>
 </section>
-
 
 @section Scripts{
     <script id="weatherwidget-io-js" src="https://weatherwidget.io/js/widget.min.js"></script>

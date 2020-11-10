@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sunridge.Models;
-using Sunridge.Models.ViewModels;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -16,6 +16,16 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Owner> Owner { get; set; }
+        
+        // Document DbSets
+        public DbSet<DocumentCategory> DocumentCategory { get; set; }
+        public DbSet<DocumentFile> DocumentFile { get; set; }
+        public DbSet<DocumentFileKeyword> DocumentFileKeyword { get; set; }
+        public DbSet<DocumentSection> DocumentSection { get; set; }
+        public DbSet<DocumentSectionText> DocumentSectionText { get; set; }
+
+
+        // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }
         
         // Board Member DbSets
@@ -26,6 +36,10 @@ namespace Sunridge.DataAccess.Data
         public DbSet<PhotoCategory> PhotoCategory { get; set; }
         public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
         public DbSet<Photo> Photo { get; set; }
+
+        // Key DbSets
+        public DbSet<Models.Key> Key { get; set; }
+        public DbSet<KeyLot> KeyLot { get; set; }
 
         // Lot DbSets
         public DbSet<Lot> Lot { get; set; }
@@ -38,7 +52,5 @@ namespace Sunridge.DataAccess.Data
 
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
-
-
     }
 }

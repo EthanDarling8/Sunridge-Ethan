@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sunridge.DataAccess.Migrations
 {
-    public partial class BoardMember : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,6 +79,19 @@ namespace Sunridge.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DocumentCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FireInfo",
                 columns: table => new
                 {
@@ -112,6 +125,20 @@ namespace Sunridge.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Key",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Year = table.Column<int>(nullable: false),
+                    SerialNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Key", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lot",
                 columns: table => new
                 {
@@ -135,6 +162,7 @@ namespace Sunridge.DataAccess.Migrations
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     DisplayDate = table.Column<DateTime>(nullable: false),
+                    Attachment = table.Column<string>(nullable: true),
                     Archived = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -314,6 +342,79 @@ namespace Sunridge.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DocumentFile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    DisplayOrder = table.Column<int>(nullable: false),
+                    File = table.Column<string>(nullable: false),
+                    DocumentCategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentFile", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DocumentFile_DocumentCategory_DocumentCategoryId",
+                        column: x => x.DocumentCategoryId,
+                        principalTable: "DocumentCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DocumentSection",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    DisplayOrder = table.Column<int>(nullable: false),
+                    DocumentCategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentSection", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DocumentSection_DocumentCategory_DocumentCategoryId",
+                        column: x => x.DocumentCategoryId,
+                        principalTable: "DocumentCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KeyLot",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KeyId = table.Column<int>(nullable: false),
+                    LotId = table.Column<int>(nullable: false),
+                    Issued = table.Column<bool>(nullable: false),
+                    IssueDate = table.Column<DateTime>(nullable: false),
+                    ReturnDate = table.Column<DateTime>(nullable: true),
+                    PaidAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KeyLot", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KeyLot_Key_KeyId",
+                        column: x => x.KeyId,
+                        principalTable: "Key",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_KeyLot_Lot_LotId",
+                        column: x => x.LotId,
+                        principalTable: "Lot",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lot_Inventory",
                 columns: table => new
                 {
@@ -417,6 +518,48 @@ namespace Sunridge.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DocumentFileKeyword",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Keyword = table.Column<string>(nullable: false),
+                    DocumentFileId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentFileKeyword", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DocumentFileKeyword_DocumentFile_DocumentFileId",
+                        column: x => x.DocumentFileId,
+                        principalTable: "DocumentFile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DocumentSectionText",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    DisplayOrder = table.Column<int>(nullable: false),
+                    Text = table.Column<string>(nullable: true),
+                    DocumentSectionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentSectionText", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DocumentSectionText_DocumentSection_DocumentSectionId",
+                        column: x => x.DocumentSectionId,
+                        principalTable: "DocumentSection",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lot_OwnerFile",
                 columns: table => new
                 {
@@ -501,6 +644,36 @@ namespace Sunridge.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DocumentFile_DocumentCategoryId",
+                table: "DocumentFile",
+                column: "DocumentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentFileKeyword_DocumentFileId",
+                table: "DocumentFileKeyword",
+                column: "DocumentFileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentSection_DocumentCategoryId",
+                table: "DocumentSection",
+                column: "DocumentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentSectionText_DocumentSectionId",
+                table: "DocumentSectionText",
+                column: "DocumentSectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KeyLot_KeyId",
+                table: "KeyLot",
+                column: "KeyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KeyLot_LotId",
+                table: "KeyLot",
+                column: "LotId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LostItem_UserId",
                 table: "LostItem",
                 column: "UserId");
@@ -582,7 +755,16 @@ namespace Sunridge.DataAccess.Migrations
                 name: "Banner");
 
             migrationBuilder.DropTable(
+                name: "DocumentFileKeyword");
+
+            migrationBuilder.DropTable(
+                name: "DocumentSectionText");
+
+            migrationBuilder.DropTable(
                 name: "FireInfo");
+
+            migrationBuilder.DropTable(
+                name: "KeyLot");
 
             migrationBuilder.DropTable(
                 name: "LostItem");
@@ -609,6 +791,15 @@ namespace Sunridge.DataAccess.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "DocumentFile");
+
+            migrationBuilder.DropTable(
+                name: "DocumentSection");
+
+            migrationBuilder.DropTable(
+                name: "Key");
+
+            migrationBuilder.DropTable(
                 name: "Inventory");
 
             migrationBuilder.DropTable(
@@ -619,6 +810,9 @@ namespace Sunridge.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "PhotoAlbum");
+
+            migrationBuilder.DropTable(
+                name: "DocumentCategory");
 
             migrationBuilder.DropTable(
                 name: "Lot");

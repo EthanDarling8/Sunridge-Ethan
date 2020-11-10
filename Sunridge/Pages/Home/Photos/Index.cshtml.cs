@@ -7,16 +7,17 @@ using Sunridge.Models.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Sunridge.DataAccess.Data;
 
 namespace Sunridge.Pages.Home.Photos
 {
     public class IndexModel : PageModel
     {
         public readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Models.Owner> _userManager;
 
         public IndexModel(IUnitOfWork unitOfWork,
-            UserManager<IdentityUser> userManager)
+            UserManager<Models.Owner> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -33,7 +34,7 @@ namespace Sunridge.Pages.Home.Photos
 
         public Photo Photo { get; set; }
 
-        public ApplicationUser CurrentApplicationUser { get; set; }
+        public Models.Owner CurrentOwner { get; set; }
 
 
 
@@ -55,7 +56,7 @@ namespace Sunridge.Pages.Home.Photos
             MyAlbums = myAlbums;
             
             //Get Id of current user for displaying edit/add buttons
-            CurrentApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
+            CurrentOwner = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == _userManager.GetUserId(User));
 
             //Category list should always include everything.
             //Use where in the html to display what is needed.
@@ -65,7 +66,7 @@ namespace Sunridge.Pages.Home.Photos
             //1
             if (myAlbums == true)
             {
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.ApplicationUserId == CurrentApplicationUser.Id, a => a.OrderBy(a => a.Title));                
+                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.OwnerId == CurrentOwner.Id, a => a.OrderBy(a => a.Title));                
             }
             else
             {
@@ -84,7 +85,7 @@ namespace Sunridge.Pages.Home.Photos
                 PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId);
                 PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
                 PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
-                PhotoVM.AlbumCreator = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == PhotoVM.SelectedPhotoAlbum.ApplicationUserId);
+                PhotoVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoVM.SelectedPhotoAlbum.OwnerId);
             }
             //4
             else if (selectedPhotoCategoryId == 0 && selectedPhotoAlbumId != 0)
@@ -92,7 +93,7 @@ namespace Sunridge.Pages.Home.Photos
                 PhotoVM.SelectedPhotoCategory = null;
                 PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
                 PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
-                PhotoVM.AlbumCreator = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == PhotoVM.SelectedPhotoAlbum.ApplicationUserId);
+                PhotoVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoVM.SelectedPhotoAlbum.OwnerId);
             }
             //5
             else

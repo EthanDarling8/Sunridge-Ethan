@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Sunridge.Models
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<Owner> SignInManager
+@inject UserManager<Owner> UserManager
 
 <ul class="nav navbar-nav navbar-right login">
 @if (SignInManager.IsSignedIn(User))

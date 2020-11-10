@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Owner.Photos.Album.Photo
 {
@@ -16,12 +17,12 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Models.Owner> _userManager;
 
         public UpsertModel(
             IUnitOfWork unitOfWork,
             IWebHostEnvironment hostingEnvironment,
-            UserManager<IdentityUser> userManager)
+            UserManager<Models.Owner> userManager)
         {
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;
@@ -31,49 +32,71 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
         [BindProperty]
         public Models.Photo PhotoObj { get; set; }
+        public PhotoAlbum SelectedPhotoAlbum { get; set; }
         public int SelectedPhotoCategoryId { get; set; }
-        public string ApplicationUserId { get; set; }
+        public string OwnerId { get; set; }
 
 
         public IActionResult OnGet(int selectedPhotoAlbumId, int selectedPhotoCategoryId, int photoId)
         {
+            //Always preserve selected category
+            SelectedPhotoCategoryId = selectedPhotoCategoryId;                       
+
+            //Get Id of current user.
+            OwnerId = _userManager.GetUserId(User);
+
             PhotoObj = new Models.Photo();
 
-            // **** ToDo **** Ensure this can only be accessed by an admin or the user that owns this picture.
-            //Get Id of current user.
-            ApplicationUserId = _userManager.GetUserId(User);
 
             //Existing Photo (edit)
+            //Ignores selectedPhotoAlbumId, uses existing database entry.
             if (photoId != 0)
             {
-                PhotoObj = _unitOfWork.Photo.GetFirstOrDefault(p => p.Id == photoId);
+                PhotoObj = _unitOfWork.Photo.GetFirstOrDefault(p => p.Id == photoId);                
 
                 if (PhotoObj == null)
                 {
-                    //Returns a 404 error page.
-                    return NotFound();
+                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
                 }
+
+                SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoObj.PhotoAlbumId);
             }
 
 
-            //New photo, add it to the specified album
+            //New photo, add it to the selected album
             if (photoId == 0)
             {
-                //No PhotoAlbumId entered and new photo: invalid
+                //No selectedPhotoAlbumId entered: invalid
                 if (selectedPhotoAlbumId == 0)
                 {
-                    return NotFound();
-                }            
-            
-                //Pass the album in
-                PhotoObj.PhotoAlbumId = selectedPhotoAlbumId;
+                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                }
+
+
+                SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
+
+                //Ensure selectedPhotoAlbumId is an existing album
+                if (SelectedPhotoAlbum != null)
+                {
+                    //Pass the album in
+                    PhotoObj.PhotoAlbumId = selectedPhotoAlbumId;
+                }
+                else
+                {
+                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                }                
+            }            
+
+
+            //Only allow admins and creator to access            
+            if (User.IsInRole(SD.AdministratorRole) || SelectedPhotoAlbum.OwnerId == OwnerId)
+            {
+                return Page();
             }
-
-
-            //Always preserve selected category
-            SelectedPhotoCategoryId = selectedPhotoCategoryId;
-
-            return Page();
+            else
+            {
+                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+            }
         }
 
 

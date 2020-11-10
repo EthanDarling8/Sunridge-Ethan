@@ -26,18 +26,20 @@
 
 
             <div class="col-8 pt-3">
-                @* Section Dropdown List*@
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="DocumentSectionTextObj.DocumentSection"></label>
+                @* Section Dropdown List. Don't show if adding to specific section from documents page. *@
+
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <label asp-for="DocumentSectionTextObj.DocumentSection"></label>
+                        </div>
+                        <div class="col-9">
+                            @Html.DropDownListFor(m => m.DocumentSectionTextObj.DocumentSectionId,
+                                           Model.SectionList,
+                                           new { @class = "form-control" })                            
+
+                            <span class="text-danger" asp-validation-for="DocumentSectionTextObj.DocumentSectionId"></span>
+                        </div>
                     </div>
-                    <div class="col-9">
-                        @Html.DropDownListFor(m => m.DocumentSectionTextObj.DocumentSectionId,
-                                              Model.SectionList,
-                                              new { @class = "form-control" })
-                        <span class="text-danger" asp-validation-for="DocumentSectionTextObj.DocumentSectionId"></span>
-                    </div>
-                </div>
 
 
                 @*Name*@
@@ -77,7 +79,7 @@
 
 
                 @*Buttons. offset-3 shifts the buttons 3 columns right
-                The Back to List "button" isn't actually a button. Just a link. *@
+        The Back to List "button" isn't actually a button. Just a link. *@
                 <div class="form-group row">
                     <div class="col-9 offset-3">
                         <div class="row">

@@ -28,7 +28,7 @@ namespace Sunridge.Pages.Admin.PhotoCategory
             PhotoCategoryObj = new Models.PhotoCategory();
 
             //Existing (edit)
-            if (PhotoCategoryId == 0)
+            if (PhotoCategoryId != 0)
             {
                 PhotoCategoryObj = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == PhotoCategoryId);
 

@@ -1,12 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 using System.Collections.Generic;
 
 namespace Sunridge.Pages.Admin.Document.SectionText
 {
-    // **** ToDo **** [Authorize]
+    [Authorize(Roles = SD.AdministratorRole)]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;

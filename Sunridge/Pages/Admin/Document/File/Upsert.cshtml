@@ -1,27 +1,27 @@
 ﻿@page
-@model Sunridge.Pages.Admin.Document.Section.UpsertModel
+@model Sunridge.Pages.Admin.Document.File.UpsertModel
 @{
-    ViewData["Title"] = "Document Section";
+    ViewData["Title"] = "Document File";
 }
 
 
 
 
-<form method="post" asp-action="Upsert">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="container">
         <div class="row px-2 mx-2 backgroundWhite border">
             @*Display any validation/error messages here.*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             @*Keep track of Id if editing existing.*@
-            @if (Model.DocumentSectionObj.Id != 0)
+            @if (Model.DocumentFileObj.Id != 0)
             {
-                <input type="hidden" asp-for="@Model.DocumentSectionObj.Id" value="@Model.DocumentSectionObj.Id" />                
+                <input type="hidden" asp-for="@Model.DocumentFileObj.Id" value="@Model.DocumentFileObj.Id" />                
             }
 
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
                 @*Displays "Update" if their is an Id, "Create" if there is not*@
-                <h2>@(Model.DocumentSectionObj.Id !=0 ? "Update" : "Create") Document Section</h2>
+                <h2>@(Model.DocumentFileObj.Id !=0 ? "Update" : "Create") Document File</h2>
             </div>
 
 
@@ -29,48 +29,59 @@
                 @* Category Dropdown List*@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="DocumentSectionObj.DocumentCategoryId"></label>
+                        <label asp-for="DocumentFileObj.DocumentCategoryId"></label>
                     </div>
                     <div class="col-9">
-                        @Html.DropDownListFor(m => m.DocumentSectionObj.DocumentCategoryId,
+                        @Html.DropDownListFor(m => m.DocumentFileObj.DocumentCategoryId,
                                               Model.CategoryList,
                                               new { @class = "form-control" })
-                        <span class="text-danger" asp-validation-for="DocumentSectionObj.DocumentCategoryId"></span>
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.DocumentCategoryId"></span>
                     </div>
                 </div>
 
 
-                @*Name*@
+                @* Name *@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="DocumentSectionObj.Name"></label>
+                        <label asp-for="DocumentFileObj.Name"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="DocumentSectionObj.Name" />
-                        <span class="text-danger" asp-validation-for="DocumentSectionObj.Name"></span>
+                        <input class="form-control" asp-for="DocumentFileObj.Name" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.Name"></span>
                     </div>
                 </div>
 
 
-                @*Display Order*@
+                @* Display Order *@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="DocumentSectionObj.DisplayOrder"></label>
+                        <label asp-for="DocumentFileObj.DisplayOrder"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="DocumentSectionObj.DisplayOrder" />
-                        <span class="text-danger" asp-validation-for="DocumentSectionObj.DisplayOrder"></span>
+                        <input class="form-control" asp-for="DocumentFileObj.DisplayOrder" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.DisplayOrder"></span>
+                    </div>
+                </div>
+
+
+                @* File Upload *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.File"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" />
                     </div>
                 </div>
 
 
                 @*Buttons. offset-3 shifts the buttons 3 columns right
-        The Back to List "button" isn't actually a button. Just a link. *@
+                The Back to List "button" isn't actually a button. Just a link. *@
                 <div class="form-group row">
                     <div class="col-9 offset-3">
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary form-control">@(Model.DocumentSectionObj.Id !=0 ? "Update" : "Create")</button>
+                                <button type="submit" class="btn btn-primary form-control">@(Model.DocumentFileObj.Id !=0 ? "Update" : "Create")</button>
                             </div>
 
                             @* **** ToDo **** Make sure this returns to the correct place *@

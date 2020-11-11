@@ -1,12 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 using System.Collections.Generic;
 
 namespace Sunridge.Pages.Admin.Document.Section
 {
-    // **** ToDo **** [Authorize]
+    [Authorize(Roles = SD.AdministratorRole)]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -31,7 +33,7 @@ namespace Sunridge.Pages.Admin.Document.Section
             //Alwayas Initialize
             DocumentSectionObj = new Models.DocumentSection();
             CategoryList = _unitOfWork.DocumentCategory.GetListForDropDown();
-            
+
 
             //Existing (edit)
             if (sectionId != 0)
@@ -42,7 +44,7 @@ namespace Sunridge.Pages.Admin.Document.Section
                 if (DocumentSectionObj == null)
                 {
                     return RedirectToPage("/Home/Documents/Index");
-                }                
+                }
             }
 
             return Page();
@@ -55,7 +57,7 @@ namespace Sunridge.Pages.Admin.Document.Section
         {
             //New
             if (DocumentSectionObj.Id == 0)
-            {                
+            {
                 _unitOfWork.DocumentSection.Add(DocumentSectionObj);
             }
             //Existing
@@ -65,7 +67,7 @@ namespace Sunridge.Pages.Admin.Document.Section
             }
 
             _unitOfWork.Save();
-            
+
             return RedirectToPage("Index");
         }
     }

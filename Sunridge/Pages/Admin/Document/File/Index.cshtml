@@ -1,14 +1,14 @@
 ﻿@page
-@model Sunridge.Pages.Admin.Document.Section.IndexModel
+@model Sunridge.Pages.Admin.Document.File.IndexModel
 @{
-    ViewData["Title"] = "Document Section";
+    ViewData["Title"] = "Document File";
 }
 
 
 
 @* **** ToDo **** format this heading better? *@
-<h1 class="row pl-3">Document Section</h1>
-<p class="row  pl-3">Used for grouping text together under a section within a category.</p>
+<h1 class="row pl-3">Document File</h1>
+<p class="row  pl-3">Used for uploading files within a category.</p>
 
 @*Create New Button*@
 <div class="container">
@@ -28,7 +28,7 @@
                 Category Name
             </th>
             <th>
-                Section Name
+                File Name
             </th>
             <th>
                 Display Order
@@ -42,5 +42,5 @@
 
 
 @section Scripts{
-    <script src="~/js/documentSection.js"></script>
+    <script src="~/js/documentFile.js"></script>
 }

@@ -45,7 +45,8 @@ namespace Sunridge.Pages.Home.Documents
 
 
             if (SelectedCategory != null)
-            {                
+            {
+                DocumentFileList = _unitOfWork.DocumentFile.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder));
                 DocumentSectionList = _unitOfWork.DocumentSection.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder));
                 //Must initialize
                 DocumentSectionTextList = new List<DocumentSectionText>();
@@ -67,11 +68,20 @@ namespace Sunridge.Pages.Home.Documents
             if (search != null)
             {
                 Search = search.ToLower();
-                //**** ToDo **** Searched File Keyword
+                
 
                 //Initialize
+                SearchedDocumentFileList = new List<DocumentFile>();
                 SearchedDocumentSectionList = new List<DocumentSection>();
                 SearchedDocumentSectionTextList = new List<DocumentSectionText>();
+
+                //Add DocumentFile Name Results
+                foreach (DocumentFile documentFile in DocumentFileList.Where(s => s.Name.ToLower().Contains(Search)))
+                {
+                    SearchedDocumentFileList.Add(documentFile);
+                }
+
+                //**** ToDo **** Searched File Keyword results
 
                 //Add DocumentSection Name Results
                 foreach (DocumentSection documentSection in DocumentSectionList.Where(s => s.Name.ToLower().Contains(Search)))

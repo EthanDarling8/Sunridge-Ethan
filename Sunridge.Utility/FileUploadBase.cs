@@ -47,11 +47,11 @@ namespace Sunridge.Utility {
                 if (type == typeof(OwnerBoardMemberVM)) {
                     OwnerBoardMemberVM obvm = (OwnerBoardMemberVM) obj;
                     if (temp.Equals("")) {
-                        obvm.BoardMember.Image = path + "DefaultImage.png";
+                        obvm.BoardMember.Image = "/" + path + "/" + "DefaultImage.png";
                         await _db.SaveChangesAsync();
                     }
                     else {
-                        obvm.BoardMember.Image = path + fileName;
+                        obvm.BoardMember.Image = "/" + path + "/" + fileName;
                         await _db.SaveChangesAsync();
                     }
                     _unitOfWork.BoardMember.Update(obvm.BoardMember);

@@ -5,6 +5,8 @@
     ViewData["Title"] = "Board Members";
 }
 
+
+
 <form method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="row px-2 mx-2 backgroundWhite border">
@@ -14,7 +16,7 @@
 
 
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
-                <h2>Edit Board Member</h2>
+                <h2>Add Board Member</h2>
             </div>
 
 
@@ -42,13 +44,14 @@
 
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="@Model.OwnerBoardObj.OwnerBoardMember.Owner.Id"></label>
+                        @Html.LabelFor(model => model.OwnerBoardObj.OwnerBoardMember.Owner.Id, "Owner", new {@class = "control-lable"})
                     </div>
                     <div class="col-9">
                         @Html.DropDownListFor(o => o.OwnerBoardObj.OwnerBoardMember.Owner.Id,
                             Model.OwnerBoardObj.OwnerList,
-                            "- Select An Owner -",
-                            new {@class = "form-control"})
+                            new {
+                                @class = "form-control selectpicker"
+                            })
                         <input type="hidden" asp-for="OwnerBoardObj.OwnerBoardMember.OwnerId"/>
                         <span class="text-danger" asp-validation-for="@Model.OwnerBoardObj.OwnerBoardMember.Owner.Id"></span>
                     </div>
@@ -77,6 +80,9 @@
     </div>
 </form>
 
+
 @section Scripts{
     <partial name="Shared/_ValidationScriptsPartial"/>
+    <partial name="Shared/_Scripts"/>
+    
 }

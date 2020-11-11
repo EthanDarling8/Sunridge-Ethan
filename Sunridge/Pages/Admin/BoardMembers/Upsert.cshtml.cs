@@ -68,7 +68,7 @@ namespace Sunridge.Pages.Admin.BoardMembers {
 
             FileUploadBase fileUploader = new FileUploadBase(_hostingEnvironment, _unitOfWork, _db);
 
-            await fileUploader.Upload(@"/images/boardMembers/", OwnerBoardObj, files);
+            await fileUploader.Upload(@"images/boardMembers", OwnerBoardObj, files);
             _unitOfWork.Save();
 
             return RedirectToPage("./Index");

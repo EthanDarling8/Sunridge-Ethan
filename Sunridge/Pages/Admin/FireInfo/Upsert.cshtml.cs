@@ -1,29 +1,28 @@
-﻿using System;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using System;
+using System.IO;
 
-namespace Sunridge.Pages.Home.FireInfo {
-    public class Upsert : PageModel {
+namespace Sunridge.Pages.Admin.FireInfo {
+    public class UpsertModel : PageModel {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public Upsert(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment) {
+        public UpsertModel(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment) {
             _unitOfWork = unitOfWork;
-            _hostingEnvironment = hostEnvironment;
+            _hostingEnvironment = hostingEnvironment;
         }
 
-        [BindProperty] public Models.FireInfo FireInfoObj { get; set; }
+        [BindProperty] public Models.FireInfo FireObj { get; set; }
 
         public IActionResult OnGet(int? id) {
-            FireInfoObj = new Models.FireInfo();
+            FireObj = new Models.FireInfo();
 
             if (id != null) {
-                FireInfoObj = _unitOfWork.FireInfo.GetFirstOrDefault(f => f.Id == id);
-                if (FireInfoObj == null) {
+                FireObj = _unitOfWork.FireInfo.GetFirstOrDefault(u => u.Id == id);
+                if (FireObj == null) {
                     return NotFound();
                 }
             }
@@ -34,39 +33,36 @@ namespace Sunridge.Pages.Home.FireInfo {
         public IActionResult OnPost() {
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
-            FireInfoObj.PostDate = DateTime.Today.ToString("d");
 
             if (!ModelState.IsValid) {
                 return Page();
             }
 
-            if (FireInfoObj.Id == 0) {
-                // Upload and save image
+            if (FireObj.Id == 0) {
                 string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"fireinfo");
+                var uploads = Path.Combine(webRootPath, @"images\fireInfo");
                 var extension = Path.GetExtension(files[0].FileName);
 
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create)) {
                     files[0].CopyTo(fileStream);
                 }
 
-                FireInfoObj.File = fileName + extension;
+                FireObj.Attachment = @"\images\fireInfo\" + fileName + extension;
 
-                _unitOfWork.FireInfo.Add(FireInfoObj);
+                _unitOfWork.FireInfo.Add(FireObj);
+                _unitOfWork.Save();
             }
             else {
-                // Update
-                var objFromDb = _unitOfWork.FireInfo.Get(FireInfoObj.Id);
+                var objFromDb = _unitOfWork.FireInfo.Get(FireObj.Id);
+
                 if (files.Count > 0) {
-                    // Upload and save image
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath,@"fireinfo");
+                    var uploads = Path.Combine(webRootPath, @"images\fireInfo");
                     var extension = Path.GetExtension(files[0].FileName);
 
-                    var filePath = Path.Combine(webRootPath, objFromDb.File.TrimStart('\\'));
-
-                    if (System.IO.File.Exists(filePath)) {
-                        System.IO.File.Delete(filePath);
+                    var imagePath = Path.Combine(webRootPath, objFromDb.Attachment.TrimStart('\\'));
+                    if (System.IO.File.Exists(imagePath)) {
+                        System.IO.File.Delete(imagePath);
                     }
 
                     using (var fileStream =
@@ -74,16 +70,15 @@ namespace Sunridge.Pages.Home.FireInfo {
                         files[0].CopyTo(fileStream);
                     }
 
-                    FireInfoObj.File = fileName + extension;
+                    FireObj.Attachment = @"\images\fireInfo\" + fileName + extension;
                 }
                 else {
-                    FireInfoObj.File = objFromDb.File;
+                    FireObj.Attachment = objFromDb.Attachment;
                 }
 
-                _unitOfWork.FireInfo.Update(FireInfoObj);
+                _unitOfWork.FireInfo.Update(FireObj);
             }
 
-            _unitOfWork.Save();
             return RedirectToPage("./Index");
         }
     }

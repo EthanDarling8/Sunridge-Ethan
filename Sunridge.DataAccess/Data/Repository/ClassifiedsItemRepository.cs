@@ -15,7 +15,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
         public void Update(ClassifiedsItem classifieds)
         {
-            var classifiedsFromDb = _db.Classifieds.FirstOrDefault(c => c.Id == classifieds.Id);
+            var classifiedsFromDb = _db.ClassifiedsItem.FirstOrDefault(c => c.Id == classifieds.Id);
 
             classifiedsFromDb.Category = classifieds.Category;
             classifiedsFromDb.Subcategory = classifieds.Subcategory;
@@ -26,6 +26,8 @@ namespace Sunridge.DataAccess.Data.Repository
             classifiedsFromDb.Email = classifieds.Email;
             classifiedsFromDb.Website = classifieds.Website;
             classifiedsFromDb.Images = classifieds.Images;
+            classifiedsFromDb.TimeAdded = classifieds.TimeAdded;
+            classifiedsFromDb.Name = classifieds.Name;
         }
 
     }

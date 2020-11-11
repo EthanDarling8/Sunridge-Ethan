@@ -10,10 +10,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Pages.Admin.Banner;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sunridge.Pages.Owner.Classifieds
 {
+    [Authorize]
     public class ClassifiedsUpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -65,20 +66,23 @@ namespace Sunridge.Pages.Owner.Classifieds
 
             if (ClassifiedsItemObj.ClassifiedsItem.Id == 0) //means a brand new menu item
             {
-                //Physically upload and save image
-                string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                for (int i = 0; i < files.Count; i++)
                 {
-                    files[0].CopyTo(fileStream);
+                    //Physically upload and save image
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
+                    var extension = Path.GetExtension(files[i].FileName);
+
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[i].CopyTo(fileStream);
+                    }
+                    //save the string data path
+                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
+
+
+                    _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
                 }
-                //save the string data path
-                ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
-
-
-                _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
             }
 
             else //update
@@ -86,23 +90,26 @@ namespace Sunridge.Pages.Owner.Classifieds
                 var objFromDb = _unitOfWork.ClassifiedsItem.Get(ClassifiedsItemObj.ClassifiedsItem.Id);
                 if (files.Count > 0)
                 {
-                    //Physically upload and save image
-                    string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
-                    var extension = Path.GetExtension(files[0].FileName);
-
-                    var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
-
-                    if (System.IO.File.Exists(imagePath))
+                    for (int i = 0; i < files.Count; i++)
                     {
-                        System.IO.File.Delete(imagePath);
+                        //Physically upload and save image
+                        string fileName = Guid.NewGuid().ToString();
+                        var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
+                        var extension = Path.GetExtension(files[i].FileName);
+
+                        var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                        {
+                            files[i].CopyTo(fileStream);
+                        }
+                        //save the string data path
+                        ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
                     }
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                    {
-                        files[0].CopyTo(fileStream);
-                    }
-                    //save the string data path
-                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
                 }
                 else
                 {

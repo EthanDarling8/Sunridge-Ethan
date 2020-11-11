@@ -4,60 +4,91 @@
     ViewData["Title"] = "ClassifiedsIndex";
 }
 
-<h1 class="row col-sm-12 pb-4">Classified Listings</h1>
-<div class="row col-12 pb-5">
-    <div class="btn-group col-sm-3" role="group">
-        <a href="/Owner/Classifieds/ClassifiedsUpsert" class="btn btn-outline-primary btn-lg" role="button" aria-pressed="true"><i class="far fa-plus-square"></i>Create New Listing</a>
+<h1 class="row col-sm-12 pb-4">My Listings</h1>
+<div class="row m-1 p-1">
 
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+    <div class="col-3">
+
+        <div class="row mb-2">
+            <a class="btn btn-block btn-primary" asp-page="/Owner/Classifieds/ClassifiedsUpsert">
+
+                <i class="fas fa-plus"></i>&nbsp;Create Listing
+            </a>
+        </div>
+
+
+
+        <div class="row mb-2 dropright">
+            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
                 Categories
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassfiedsIndex" asp-route-id="">Properties</a>
+                <a class="dropdown-item" href="#">Recreational Vehicles</a>
+                <a class="dropdown-item" href="#">Services</a>
+            </div>
+        </div>
 
+        <div class="row mb-2 dropright">
+            <a id="btnGroupDrop2" class="btn btn-block btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
+                Subcategories
+            </a>
 
-                <li><a class="dropdown-item" href="#">Recreational Vehicles</a></li>
-                <li><a class="dropdown-item" href="#">Properties</a></li>
-                <li><a class="dropdown-item" href="#">Services</a></li>
-
-            </ul>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                <a class="dropdown-item" href="#">Dropdown link</a>
+                <a class="dropdown-item" href="#">Dropdown link</a>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ClassifiedsIndex">
+                <i class="far fa-images"></i>&nbsp;My Listings
+            </a>
         </div>
     </div>
-    </div>
+    <div class="col-9">
+        <div class="row container">
+            <div class="col-12">
+                <div class="row">
 
+                    @if (!(Model.ClassifiedsItemList is null))
+                    {
 
-<div class="col-12">
-    <div class="my-3 row">
-       
-            @if (!(Model.ClassifiedsItemList is null))
-            {
-                
-                @foreach (var classifiedsItem in Model.ClassifiedsItemList)
-                { 
+                        @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+                        {
 
-                    <div class="col-lg-3 col-xl-3 col-md-6 pb-4">
-                        <div class="card h-100" style="width: 18rem;">
-                            <img class="card-img-top img-fluid" src="@classifiedsItem.Images" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">@classifiedsItem.Title</h5>
-                                <h5 class="card-title">@classifiedsItem.Price.ToString("$0.00")</h5>
-                                <p class="card-text">@Html.Raw(classifiedsItem.Description)</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <div class="col-lg-3 col-xl-3 col-md-6 pb-4">
+                                <div class="card h-100">
+                                    <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
+                                    <img class="card-img-top img-fluid img-thumbnail" style="width: 100%; height: 30vh; object-fit: contain;" src="@classifiedsItem.Images" alt="Card image cap">
+                                    </a>
+                                        <div class="card-body">
+                                        <h5 class="card-title">@classifiedsItem.Title</h5>
+                                        <h5 class="card-title">@classifiedsItem.Price.ToString("$0.00")</h5>
+                                        <p class="card-text">@Html.Raw(classifiedsItem.Description)</p>
+                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                
 
-            }
-        }
 
-        else
-        {
-        <div class="mt-5" style="text-align: center;">
-            <h3>No listings found. </h3>
+                        }
+                    }
+
+                    else
+                    {
+
+
+                        <h2 class="col-12 text-center mt-5">There are no listings to display.</h2>
+
+                    }
+
+                </div>
+            </div>
         </div>
-        }
     </div>
+
 </div>
-  
+
+

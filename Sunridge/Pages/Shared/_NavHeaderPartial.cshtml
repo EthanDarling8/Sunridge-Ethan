@@ -1,4 +1,10 @@
 ﻿        <!-- Bootstrap NavBar -->
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+</style>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,21 +16,17 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/BoardMembers/Index">Board Members</a>
+
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" asp-page="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle dropdown-content" asp-page="/Home/Classifieds/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
                     Classified Ads
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" asp-page="/Classifieds/Lots/Index">Lots</a>
+                    <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsIndex">My Listings</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/Cabins/Index">Cabins</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/Trailers/Index">Trailers</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/ATVs/Index">ATVs</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/Other/Index">Other Services</a>
+                    <a class="dropdown-item" asp-page="#">Create New Listing</a>
+                    
                 </div>
             </li>
             <li class="nav-item dropdown">

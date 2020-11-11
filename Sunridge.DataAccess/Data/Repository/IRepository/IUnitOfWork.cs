@@ -29,7 +29,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         //Classifieds Repositories
         IClassifiedsItemRepository ClassifiedsItem { get; }
         IClassifiedsCategoryRepository ClassifiedsCategory { get; }
-        IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; }
+        //IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; }
 
         // Key Repositories
         IKeyRepository Key { get; }

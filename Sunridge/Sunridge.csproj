@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Admin\Classifieds\Subcategory\**" />
+    <Content Remove="Pages\Admin\Classifieds\Subcategory\**" />
+    <EmbeddedResource Remove="Pages\Admin\Classifieds\Subcategory\**" />
+    <None Remove="Pages\Admin\Classifieds\Subcategory\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
@@ -29,8 +36,6 @@
     <Folder Include="wwwroot\fireinfo" />
     <Folder Include="wwwroot\images\News\" />
     <Folder Include="wwwroot\images\photoGallery\" />
-    <Folder Include="Pages\Admin\Classifieds\Items\" />
-    <Folder Include="Pages\Admin\Classifieds\Subcategory\" />
     <Folder Include="wwwroot\images\classifiedsitems\" />
   </ItemGroup>
 

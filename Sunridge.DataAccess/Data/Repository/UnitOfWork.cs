@@ -35,7 +35,7 @@ namespace Sunridge.DataAccess.Data.Repository
         //Classifieds IRepositories
         public IClassifiedsItemRepository ClassifiedsItem { get; private set; }
         public IClassifiedsCategoryRepository ClassifiedsCategory { get; private set; }
-        public IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; private set; }
+       // public IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; private set; }
 
         // Key IRepositories
         public IKeyRepository Key { get; private set; }
@@ -82,7 +82,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
             //Classifieds Models
             ClassifiedsCategory = new ClassifiedsCategoryRepository(_db);
-            ClassifiedsSubcategory = new ClassifiedsSubcategoryRepository(_db);
+            //ClassifiedsSubcategory = new ClassifiedsSubcategoryRepository(_db);
             ClassifiedsItem = new ClassifiedsItemRepository(_db);
 
             // Key Models

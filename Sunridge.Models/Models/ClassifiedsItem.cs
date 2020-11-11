@@ -15,7 +15,7 @@ namespace Sunridge.Models
         public int Id { get; set; }
         [Display(Name = "Category")]
         public int CategoryId { get; set; } //Cabins, Lots, Recreational Vehicles, Services, etc.
-        
+
         public string Name { get; set; }
 
         public string Title { get; set; }
@@ -42,6 +42,8 @@ namespace Sunridge.Models
 
         [ForeignKey("OwnerId")]
         public virtual Owner Owner { get; set; }
+       
+
 
 
 

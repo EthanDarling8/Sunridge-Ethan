@@ -30,6 +30,7 @@ namespace Sunridge.Pages.Owner.Classifieds
         public ClassifiedsItemVM ClassifiedsItemObj { get; set; }
 
         public IEnumerable<SelectListItem> ClassifiedsCategoryList { get; private set; }
+        //public IEnumerable<SelectListItem> ClassifiedsSubcategoryList { get; private set; }
 
         public IActionResult OnGet(int? id)
         {
@@ -37,7 +38,7 @@ namespace Sunridge.Pages.Owner.Classifieds
             {
                 ClassifiedsItem = new Models.ClassifiedsItem(),
                 ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetClassifiedsCategoryListForDropDown(),
-                ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetClassifiedsSubcategoryListForDropDown()
+                //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetClassifiedsSubcategoryListForDropDown()
             };
         if (id != null)
             {

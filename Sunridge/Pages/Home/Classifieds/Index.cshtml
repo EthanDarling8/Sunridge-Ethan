@@ -32,19 +32,19 @@
                 </div>
         </div>
 
-        <div class="row mb-2 dropright" id="subCat">
+        @*<div class="row mb-2 dropright" id="subCat">
             <a id="btnGroupDrop2" class="btn btn-block btn-secondary dropdown-toggle" 
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Subcategories
             </a>
 
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                @foreach (var subcategoryItem in Model.ClassifiedsSubcategoryList)
+                @foreach (var subcategoryItem in Model.//ClassifiedsSubcategoryList)
                 { 
                 <a class="dropdown-item" asp-route-subcatid="@subcategoryItem.Id" asp-page="Home/Classifieds/Index">@subcategoryItem.Name</a>
                 }
             </div>
-        </div>
+        </div>*@
         <div class="row mb-2">
             <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ClassifiedsIndex">
                 <i class="far fa-images"></i>&nbsp;My Listings

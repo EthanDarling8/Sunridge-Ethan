@@ -28,7 +28,7 @@ namespace Sunridge.Pages.Home.Classifieds
 
         public IEnumerable<ClassifiedsItem> ClassifiedsItemList { get; set; }
         public IEnumerable<ClassifiedsCategory> ClassifiedsCategoryList { get; set; }
-        public IEnumerable<ClassifiedsSubcategory> ClassifiedsSubcategoryList { get; set; }
+       // public IEnumerable<ClassifiedsSubcategory> ClassifiedsSubcategoryList { get; set; }
         public int CategoryId { get; set; }
         public int SubcategoryId { get; set; }
         
@@ -52,7 +52,7 @@ namespace Sunridge.Pages.Home.Classifieds
             }
 
             ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll();
-            ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetAll();
+            //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetAll();
         }
     }
 }

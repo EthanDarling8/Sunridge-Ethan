@@ -28,32 +28,39 @@ namespace Sunridge.Pages.Owner.Classifieds
 
         public IEnumerable<ClassifiedsItem> ClassifiedsItemList { get; set; }
         public IEnumerable<ClassifiedsCategory> ClassifiedsCategoryList { get; set; }
-        public IEnumerable<ClassifiedsSubcategory> ClassifiedsSubcategoryList { get; set; }
+        //public IEnumerable<ClassifiedsSubcategory> ClassifiedsSubcategoryList { get; set; }
         public int CategoryId { get; set; }
         public int SubcategoryId { get; set; }
 
         public void OnGet(string catid, string subcatid)
         {
+            //if (ownerid != null)
+            //{
+            //    ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.OwnerId == ownerid);
+            //}
+            //else
+            //{
+                ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll();
+            //}
 
             if (catid != null)
             {
                 CategoryId = int.Parse(catid);
-                ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.CategoryId == CategoryId);
+                ClassifiedsItemList = ClassifiedsItemList.Where(x => x.CategoryId == CategoryId);
 
                 //if (subcatid != null)
                 //{
                 //    SubcategoryId = int.Parse(subcatid);
-                //    ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where
-                //        (x => x.CategoryId == CategoryId && x.SubcategoryId == SubcategoryId);
+                //    ClassifiedsItemList = ClassifiedsItemList.Where(x => x.Category != null && x.SubcategoryId == SubcategoryId);
+                //    //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetAll().Where(x => x.CategoryId == CategoryId);
                 //}
             }
-            else
-            {
-                ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll();
-            }
+            //else
+            //{
+            //    ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetAll();
+            //}
 
             ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll();
-            ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetAll();
         }
     }
 }

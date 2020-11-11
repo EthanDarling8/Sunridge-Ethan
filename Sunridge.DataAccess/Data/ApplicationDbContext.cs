@@ -40,7 +40,7 @@ namespace Sunridge.DataAccess.Data
         //Classifieds DbSets
         public DbSet<ClassifiedsCategory> ClassifiedsCategory { get; set; }
         public DbSet<ClassifiedsItem> ClassifiedsItem { get; set; }
-        public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
+        //public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
 
         // Key DbSets
         public DbSet<Models.Key> Key { get; set; }

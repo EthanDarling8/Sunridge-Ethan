@@ -24,6 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\Document\File\" />
+    <Folder Include="Pages\Owner" />
+    <Folder Include="wwwroot\fireinfo" />
+    <Folder Include="wwwroot\images\News\" />
+    <Folder Include="wwwroot\images\photoGallery\" />
     <Folder Include="Pages\Admin\Classifieds\Items\" />
     <Folder Include="Pages\Admin\Classifieds\Subcategory\" />
     <Folder Include="wwwroot\images\classifiedsitems\" />

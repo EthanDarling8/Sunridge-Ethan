@@ -45,7 +45,7 @@ function loadList() {
 function Delete(url) {
     swal({
         title: "Are you sure you want to Delete?",
-        text: "You will not be able to restore the data!",
+        text: "This will also delete all associated files, sections, and text! You will not be able to restore the data!",
         icon: "warning",
         buttons: true,
         dangerMode: true

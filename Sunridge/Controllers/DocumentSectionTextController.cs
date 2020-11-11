@@ -1,6 +1,5 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
-using Sunridge.DataAccess.Data;
 
 namespace Sunridge.Controllers
 {
@@ -10,17 +9,14 @@ namespace Sunridge.Controllers
     public class DocumentSectionTextController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ApplicationDbContext _db;
 
-        public DocumentSectionTextController(IUnitOfWork unitOfWork, ApplicationDbContext db)
+        public DocumentSectionTextController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _db = db;
         }
 
 
 
-        
 
         [HttpGet]
         public IActionResult Get()

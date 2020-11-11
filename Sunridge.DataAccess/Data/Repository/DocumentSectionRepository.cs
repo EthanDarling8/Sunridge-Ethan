@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using System.Collections.Generic;
@@ -21,9 +23,10 @@ namespace Sunridge.DataAccess.Data.Repository
 
         public IEnumerable<SelectListItem> GetListForDropDown()
         {
-            return _db.DocumentSection.Select(i => new SelectListItem()
+            return _db.DocumentSection.Include("DocumentCategory")
+                .Select(i => new SelectListItem()
             {
-                Text = i.Name,
+                Text = i.DocumentCategory.Name + " - " + i.Name,
                 //Id is used for url routing in the page
                 Value = i.Id.ToString()
             }).OrderBy(s => s.Text);

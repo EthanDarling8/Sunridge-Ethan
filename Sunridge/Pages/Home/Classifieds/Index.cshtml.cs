@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 
-namespace Sunridge.Pages.Owner.Classifieds
+namespace Sunridge.Pages.Home.Classifieds
 {
-    [Authorize]
-    public class ClassifiedsIndexModel : PageModel
+    
+    public class IndexModel : PageModel
     {
         public readonly IUnitOfWork _unitOfWork;
 
-        public ClassifiedsIndexModel(IUnitOfWork unitOfWork)
+        public IndexModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -31,10 +31,9 @@ namespace Sunridge.Pages.Owner.Classifieds
         public IEnumerable<ClassifiedsSubcategory> ClassifiedsSubcategoryList { get; set; }
         public int CategoryId { get; set; }
         public int SubcategoryId { get; set; }
-
+        
         public void OnGet(string catid, string subcatid)
         {
-
             if (catid != null)
             {
                 CategoryId = int.Parse(catid);
@@ -57,3 +56,4 @@ namespace Sunridge.Pages.Owner.Classifieds
         }
     }
 }
+

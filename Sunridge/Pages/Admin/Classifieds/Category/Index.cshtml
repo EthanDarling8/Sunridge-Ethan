@@ -1,0 +1,27 @@
+﻿@page
+
+<h1>Classifieds Categories</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-right">
+            <a asp-page="Upsert" class="btn btn-primary text-dark"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+        </div>
+    </div>
+</div>
+<table id="DT_load" class="table table-bordered text-white">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Id
+            </th>
+        </tr>
+    </thead>
+</table>
+@section Scripts{
+    <script src="~/js/classifiedCategory.js"></script>
+}
+
+

@@ -1,0 +1,47 @@
+﻿@page
+@model Sunridge.Pages.Owner.Classifieds.Details.DetailsModel
+@{
+}
+
+    <div>
+        <h2 class="row col-sm-12 pb-4">@Model.ClassifiedsItemObj.ClassifiedsItem.Title</h2>
+    </div>
+    <div>
+        5 days
+    </div>
+    <div class="row m-3 p-1">
+
+        <div class="card mb-3 col-9">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-3">
+            <a class="btn btn-block btn-primary" href="#" onclick="location.href = document.referrer; return false;">
+
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp;Back to Listings
+            </a>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-block btn-warning" href="#">
+
+                <i class="far fa-edit"></i>&nbsp;Edit Listing
+            </a>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-block btn-danger" href="#">
+
+                <i class="fas fa-trash-alt"></i>&nbsp;Delete Listing
+            </a>
+        </div>
+    </div>
+
+
+
+
+

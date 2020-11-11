@@ -15,8 +15,6 @@ namespace Sunridge.Models
         public int Id { get; set; }
         [Display(Name = "Category")]
         public int CategoryId { get; set; } //Cabins, Lots, Recreational Vehicles, Services, etc.
-        [Display(Name = "Subcategory"), AllowNull]
-        public int SubcategoryId { get; set; } //ATVs, Motorcycles, UTVs, Boats, Trailers, Plumbing, RealEstate, etc.
         
         public string Name { get; set; }
 
@@ -38,10 +36,17 @@ namespace Sunridge.Models
         [ForeignKey("CategoryId")]
         public virtual ClassifiedsCategory Category { get; set; }
 
-        [ForeignKey("SubcategoryId")]
-        public virtual ClassifiedsSubcategory Subcategory { get; set; }
+        //Link to Owner
+        [Required]
+        public string OwnerId { get; set; }
 
-        
-        
+        [ForeignKey("OwnerId")]
+        public virtual Owner Owner { get; set; }
+
+
+
+
+
+
     }
 }

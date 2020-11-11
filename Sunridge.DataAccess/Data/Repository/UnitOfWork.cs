@@ -32,6 +32,11 @@ namespace Sunridge.DataAccess.Data.Repository
         public IPhotoAlbumRepository PhotoAlbum { get; private set; }
         public IPhotoRepository Photo { get; private set; }
 
+        //Classifieds IRepositories
+        public IClassifiedsItemRepository ClassifiedsItem { get; private set; }
+        public IClassifiedsCategoryRepository ClassifiedsCategory { get; private set; }
+        public IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; private set; }
+
         // Key IRepositories
         public IKeyRepository Key { get; private set; }
         public IKeyLotRepository KeyLot { get; private set; }
@@ -74,6 +79,11 @@ namespace Sunridge.DataAccess.Data.Repository
             PhotoCategory = new PhotoCategoryRepository(_db);
             PhotoAlbum = new PhotoAlbumRepository(_db);
             Photo = new PhotoRepository(_db);
+
+            //Classifieds Models
+            ClassifiedsCategory = new ClassifiedsCategoryRepository(_db);
+            ClassifiedsSubcategory = new ClassifiedsSubcategoryRepository(_db);
+            ClassifiedsItem = new ClassifiedsItemRepository(_db);
 
             // Key Models
             Key = new KeyRepository(_db);

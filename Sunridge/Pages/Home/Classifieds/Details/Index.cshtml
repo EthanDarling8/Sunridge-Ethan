@@ -1,0 +1,73 @@
+﻿@page
+@model Sunridge.Pages.Home.Classifieds.Details.IndexModel
+@{
+}
+
+@foreach (var item in Model.ClassifiedsItemList)
+{
+    <div>
+
+        <h2 class="row col-sm-12 pb-4">@item.Title</h2>
+
+    </div>
+    <div>
+       <h5> *** this will be total time elapsed since ad was posted ***</h5>
+    </div>
+    <div>
+    <h3>@item.Price.ToString("c")</h3>
+    </div>
+    <div class="row m-3 p-1">
+
+        <div class="card mb-3 col-9">
+
+            <div id="carouselExampleControls" class="carousel slide card-img-top" data-ride="carousel">
+                
+                @for(int i = 0; i < (@item.Images.ToArray().Length) - 1; i++)
+                {
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="@item.Images[i]" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                }
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            @*<img src="@item.Images" class="card-img-top" alt="...">*@
+            <div class="card-body">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">@item.Description</p>
+                <h5>Contact Information</h5>
+
+                <p class="card-text">
+                    @item.Name
+                <br>@item.Phone
+                <br><a href="mailto:@item.Email">@item.Email</a>
+                <br><a href="https://@item.Website">@item.Website</a>
+
+            </p>
+
+            <p class="card-text"><small class="text-muted">@item.TimeAdded</small></p>
+        </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-3 text-center">
+            <a class="btn btn-block btn-primary" href="#" onclick="location.href = document.referrer; return false;">
+
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp;Back to Listings
+            </a>
+        </div>
+
+    </div>
+}
+
+
+

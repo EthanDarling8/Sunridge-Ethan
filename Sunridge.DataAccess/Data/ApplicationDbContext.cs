@@ -37,6 +37,11 @@ namespace Sunridge.DataAccess.Data
         public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
         public DbSet<Photo> Photo { get; set; }
 
+        //Classifieds DbSets
+        public DbSet<ClassifiedsCategory> ClassifiedsCategory { get; set; }
+        public DbSet<ClassifiedsItem> ClassifiedsItem { get; set; }
+        public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
+
         // Key DbSets
         public DbSet<Models.Key> Key { get; set; }
         public DbSet<KeyLot> KeyLot { get; set; }

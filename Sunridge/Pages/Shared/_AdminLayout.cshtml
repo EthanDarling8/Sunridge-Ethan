@@ -82,12 +82,25 @@
                         <span class="menu-collapsed">Common Area Assets</span>
                     </div>
                 </a>
-                <a class="list-group-item list-group-item-action" href="/Owner/Classifieds">
+                <a href="#submenuClass" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fa fa-dollar-sign fa-fw mr-3"></span>
                         <span class="menu-collapsed">Classifieds</span>
+                        <span class="fa fa-caret-down ml-auto"></span>
                     </div>
                 </a>
+                <!-- Classifieds Submenu content -->
+                <div id='submenuClass' class="collapse sidebar-submenu">
+                    <a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Category">
+                        <span class="menu-collapsed">Categories</span>
+                    </a>
+                    <a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Subcategory">
+                        <span class="menu-collapsed">Subcategories</span>
+                    </a>
+                    <a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Items">
+                        <span class="menu-collapsed">Items</span>
+                    </a>
+                </div>
                 <a class="list-group-item list-group-item-action" href="/Owner/Photos">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fa fa-camera fa-fw mr-3"></span>

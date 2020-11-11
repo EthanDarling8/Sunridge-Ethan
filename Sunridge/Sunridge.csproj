@@ -23,4 +23,10 @@
     <ProjectReference Include="..\Sunridge.Utility\Sunridge.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Admin\Classifieds\Items\" />
+    <Folder Include="Pages\Admin\Classifieds\Subcategory\" />
+    <Folder Include="wwwroot\images\classifiedsitems\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,98 @@
+﻿@page
+@model Sunridge.Pages.Home.Classifieds.IndexModel
+@{
+    ViewData["Title"] = "Classifieds";
+}
+
+<h1 class="row col-sm-12 pb-4">Classified Listings</h1>
+<div class="row m-1 p-1">
+
+
+    <div class="col-3">
+
+        <div class="row mb-2">
+            <a class="btn btn-block btn-primary" asp-page="/Owner/Classifieds/ClassifiedsUpsert">
+
+                <i class="fas fa-plus"></i>&nbsp;Create Listing
+            </a>
+        </div>
+
+
+
+        <div class="row mb-2 dropright">
+            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+            </a>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                @foreach (var categoryItem in Model.ClassifiedsCategoryList)
+                {
+                    <a id="cat" class="dropdown-item" onclick="catFunction()" asp-route-catid="@categoryItem.Id" asp-page="/Home/Classifieds/Index">@categoryItem.Name</a>
+                }
+                </div>
+        </div>
+
+        <div class="row mb-2 dropright" id="subCat">
+            <a id="btnGroupDrop2" class="btn btn-block btn-secondary dropdown-toggle" 
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Subcategories
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                @foreach (var subcategoryItem in Model.ClassifiedsSubcategoryList)
+                { 
+                <a class="dropdown-item" asp-route-subcatid="@subcategoryItem.Id" asp-page="Home/Classifieds/Index">@subcategoryItem.Name</a>
+                }
+            </div>
+        </div>
+        <div class="row mb-2">
+            <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ClassifiedsIndex">
+                <i class="far fa-images"></i>&nbsp;My Listings
+            </a>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="row container">
+            <div class="col-12">
+                <div class="row">
+
+                @if (!(Model.ClassifiedsItemList is null))
+                {
+
+                    @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+                    {
+
+                        <div class="col-lg-3 col-xl-3 col-md-3 pb-2">
+                            <div class="card h-100 border-0" style="width: 250px">
+                                <a asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
+                                    <img class="card-img-top img-fluid" style="width: 250px; height: 200px; object-fit: contain" src="@classifiedsItem.Images" alt="Card image cap">
+                                </a>
+                                <hr>
+                                <div class="card-body">
+                                    <h5 class="card-title">@classifiedsItem.Title</h5>
+                                    <h5 class="card-title">@classifiedsItem.Price.ToString("$0.00")</h5>
+                                    <p class="card-text">@Html.Raw(classifiedsItem.Description)</p>
+                                    <p class="card-text"><small class="text-muted">@classifiedsItem.TimeAdded</small></p>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    }
+                }
+
+                    @if (Model.ClassifiedsItemList.Count() == 0)
+                    {
+                        <h2 class="col-12 text-center mt-5">There are no listings to display.</h2>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

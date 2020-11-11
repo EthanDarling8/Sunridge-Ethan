@@ -96,9 +96,12 @@
                 <h5 class="row mb-1">Search</h5>
 
                 <form class="row mb-1" method="post" asp-page-handler="Search">
-                    <input asp-for="Search" id="search" class="col-10" type="text" placeholder="@("Search "+@Model.SelectedCategory.Name)" />
+                    <input asp-for="Search" id="search" class="col-10" type="text" placeholder="@("Search "+@Model.SelectedCategory.Name)" />                    
                     <button class="col-2" type="submit" asp-route-selectedCategoryId="@Model.SelectedCategory.Id" asp-page-handler="Search"><i class="fa fa-search"></i></button>
                 </form>
+
+                @* Clear Search *@
+                <a class="col-12 btn btn-block btn-outline-secondary" asp-route-selectedCategoryId="@Model.SelectedCategory.Id" asp-page="Index"><i class="far fa-times-circle"></i> Clear Search</a>
             </div>
         }
     </div>
@@ -178,7 +181,7 @@
     @if (Model.SelectedCategory != null && Model.Search == null)
     {
         <div class="col-8 border-left ml-3">
-            <h1 class="row ml-1">@Model.SelectedCategory.Name</h1>
+            <h1 class="row ml-1 border-bottom">@Model.SelectedCategory.Name</h1>
         </div>
     }
 </div>

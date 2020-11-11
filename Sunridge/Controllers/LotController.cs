@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
+using Sunridge.Models.ViewModels;
 
 namespace Sunridge.Controllers
 {
@@ -19,10 +22,25 @@ namespace Sunridge.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
+        public LotOwnerInvVM LotOwnerInvObj { get; set; }
+
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(new { data = _unitOfWork.Lot.GetAll() });
+
+            //Lot_Owners and Lot_Inventory
+            IEnumerable<Lot_Owner> lowner = _unitOfWork.Lot_Owner.GetAll(includeProperties: "Lot");
+            IEnumerable<Lot_Inventory> linv = _unitOfWork.Lot_Inventory.GetAll(includeProperties: "Lot");
+
+
+            LotOwnerInvObj = new LotOwnerInvVM
+            {
+                LotInventory = linv,
+                LotOwners = lowner
+            };
+
+
+            return Json(new { LotOwnerInvObj });
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

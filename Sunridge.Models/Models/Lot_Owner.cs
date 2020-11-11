@@ -5,6 +5,9 @@ namespace Sunridge.Models
 {
     public class Lot_Owner
     {
+        [Key]
+        public int ID { get; set; }
+
         #region Lot (Foreign Key)
         #region Lot-Model
         //Lot-LotId: The LotId Foreign Key to get info about Lot.

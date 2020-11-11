@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
@@ -8,21 +10,26 @@ namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LostItemController : Controller
+    public class OwnerLostItemController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public LostItemController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
+        public OwnerLostItemController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
         {
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;
         }
-
+        public string OwnerId { get; set; }
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(new { data = _unitOfWork.LostItem.GetAll() });
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+            {
+                OwnerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            }
+            return Json(new { data = _unitOfWork.LostItem.GetAll().Where(d => d.OwnerId == OwnerId) });
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

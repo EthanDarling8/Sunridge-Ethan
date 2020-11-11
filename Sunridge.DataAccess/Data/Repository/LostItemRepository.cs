@@ -22,13 +22,18 @@ namespace Sunridge.DataAccess.Data.Repository
             {
                 objFromDb.Image = LostItem.Image;
             }
-            objFromDb.Date = LostItem.Date;
-            objFromDb.Image = LostItem.Image;
             objFromDb.Name = LostItem.Name;
+            objFromDb.Date = LostItem.Date;
+            objFromDb.ExpirationDate = LostItem.Date.AddDays(30);
+            objFromDb.Status = LostItem.Status;
             objFromDb.Description = LostItem.Description;
-            //objFromDb.UserId = LostItem.UserId;
+            objFromDb.Image = LostItem.Image;
+            objFromDb.DisplayEmail = LostItem.DisplayEmail;
+            objFromDb.DisplayPhone = LostItem.DisplayPhone;
+            objFromDb.DisplayAddress = LostItem.DisplayAddress;
+            objFromDb.OwnerId = LostItem.OwnerId;
 
-            _db.SaveChanges();                                                      
+            _db.SaveChanges();
         }
     }
 }

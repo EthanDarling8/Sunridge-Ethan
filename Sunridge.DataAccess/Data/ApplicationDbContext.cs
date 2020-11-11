@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.Models;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -35,6 +36,17 @@ namespace Sunridge.DataAccess.Data
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
 
+        // Many to Many relationship handling
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Lot_Owner>()
+                .HasKey(lo => new { lo.LotId, lo.OwnerId }); //Create a Composite Key for the Lot_Owner table based on their foreign keys.
 
+            builder.Entity<Lot_Inventory>()
+                .HasKey(li => new { li.LotId, li.InventoryId }); //Create a Composite Key for the Lot_Inventory table based on their foreign keys.
+        }
+        
     }
+
 }

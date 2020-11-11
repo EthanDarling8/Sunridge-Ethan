@@ -1,0 +1,57 @@
+﻿@page
+@model Sunridge.Pages.Home.LostAndFound.Details
+<div class="container">
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <div class="mx-auto w-100 d-block">
+            <h2 class="text-primary text-center">@Model.LostItemObj.LostItem.Name</h2>
+            <hr />
+        </div>
+        <div class="mx-auto w-50 d-block">
+            <img src="\images\lostItems\@Model.LostItemObj.LostItem.Image" style="width:100%" class="rounded" />
+        </div>
+        <div class=" mx-auto w-100 d-block">
+            <div class="ml-3">
+                <hr />
+                <h5>@Model.LostItemObj.LostItem.Status On:</h5>
+                <p> @Model.formattedDate</p>
+                <h5>Description: </h5>
+                @Html.Raw(Model.LostItemObj.LostItem.Description)
+            </div>
+            <hr />
+            <h4>Contact Info:</h4>
+            <div class=" ml-3">
+                <h5>Contact Name:</h5>
+                <p>@Model.OwnerObj.FullName</p>
+                <h5>Phone:</h5>
+                <p>@Model.phoneNumber</p>
+                <h5>Email:</h5>
+                <a href="mailto: @Html.Raw(Model.OwnerObj.Email)">@Model.OwnerObj.Email</a>
+                <hr />
+            </div>
+            <div class="col-12 ">
+                <a asp-page="/Home/LostAndFound/Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px; margin-bottom: 10px;">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select an Image', 'error');
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

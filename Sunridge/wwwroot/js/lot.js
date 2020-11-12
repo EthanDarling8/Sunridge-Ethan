@@ -3,34 +3,43 @@
 $(document).ready(function () {
     loadList();
 });
-
+// LOSTITEM TABLE
 function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax":
         {
-            "url": "/api/lotfile",
+            "url": "/api/lot",
             "type": "GET",
             "datatype": "json"
         },
         "columns":
             [
                 {
-                    data: "id", width: "16%"
-                },
-                {
-                    data: "lotnumber", width: "16%"
-                },
-                {
-                    data: "taxid", width: "16%"
+                    data: "lotNumber", width: "16%"
                 },
                 {
                     data: "address", width: "16%"
                 },
                 {
+                    data: "lot_Owners", width: "16%"
+                },
+                {
+                    data: "taxId", width: "16%"
+                },
+                {
+                    data: "lot_Inventories", width: "16%"
+                },
+
+                {
                     data: "id",
                     "render": function (data) {
                         return `
                         <div class="text-center">
+                            <a href="/Admin/lot/Details?id=${data}"
+                               class="btn btn-info text-white" style="cursor: pointer; width: 100px;">
+                                <i class="fas fa-book-open"></i>
+                                Read 
+                            </a>
                             <a href="/Admin/lot/Upsert?id=${data}"
                                class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
@@ -42,17 +51,18 @@ function loadList() {
                                 Delete
                             </a>
                         </div>
-`}, width: "16%"
+                        `}, width: "16%"
 
                 }
-
             ],
+        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
         "language": {
             "emptyTable": "no data found."
         },
         "width": "100%"
     });
 }
+//DELETE FUNCTION
 function Delete(url) {
     swal({
         title: "Are you sure you want to delete?",

@@ -26,15 +26,19 @@ namespace Sunridge.Models
         public string File { get; set; }
         #endregion
 
-        #region Lot_OwnerFile-Lot_OwnerId
-        // Lot_OwnerFile-LotId: The Primary Key of the Lot Table
-        [Display(Name = "Lot_Owner Id")]
-        public int Lot_OwnerId { get; set; }
+        #region Lot_Owner (Foreign Key)
+        #region Lot_OwnerFile-Lot_Owner (Composite FK)
+        // Lot_OwnerFile-LotId: The Composite Foreign Key of the Lot_Owner Table
+
+        [ForeignKey("Lot_OwnerId"), Column(Order = 0)]
+        public int LotId { get; set; }
+        [ForeignKey("Lot_OwnerId"), Column(Order = 1)]
+        public string OwnerId { get; set; }
         #endregion
-        #region Lot_Owner-Id (FK)
-        //Lot-Id: The LotId Foreign Key to get info about Lot.
-        [ForeignKey("Lot_OwnerId")]
+        #region Lot_Owner-Model
+        //Lot-Id: The Lot_Owner Model.
         public virtual Lot_Owner Lot_Owner { get; set; }
+        #endregion
         #endregion
 
         #region Table Diagram

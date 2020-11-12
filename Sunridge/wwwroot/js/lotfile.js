@@ -15,9 +15,6 @@ function loadList() {
         "columns":
             [
                 {
-                    data: "id", width: "16%"
-                },
-                {
                     data: "title", width: "16%"
                 },
                 {

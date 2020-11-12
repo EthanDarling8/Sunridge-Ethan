@@ -1,0 +1,236 @@
+﻿@page
+@model Sunridge.Pages.Owner.Classifieds.ClassifiedsUpsertModel
+@{
+    ViewData["Title"] = "ClassifiedsUpsert";
+}
+<form method="post" asp-action="ClassifiedsUpsert" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+
+            </div>
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2 class="text-primary">@(Model.ClassifiedsItemObj.ClassifiedsItem.Id != 0 ? "Update" : "Create") Listing</h2>
+            </div>
+            <div class="col-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Title"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Title" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Title"></span>
+                    </div>
+                    @if (Model.ClassifiedsItemObj.ClassifiedsItem.Id != 0)
+                    {
+                        <input type="hidden" asp-for="ClassifiedsItemObj.ClassifiedsItem.Id" />
+                    }
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.CategoryId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(c => c.ClassifiedsItemObj.ClassifiedsItem.CategoryId,
+                                              Model.ClassifiedsItemObj.ClassifiedsCategoryList,
+                                              "- Please select a category - ",
+                                              new { @class = "form-control" })
+
+
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.CategoryId"></span>
+                    </div>
+                </div>
+                @*<div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></label>
+                </div>
+                <div class="col-9">
+                    @Html.DropDownListFor(c => c.ClassifiedsItemObj.ClassifiedsItem.SubcategoryId,
+                                          Model.ClassifiedsItemObj.ClassifiedsSubcategoryList,
+                                          "- Please select a Subcategory - ",
+                                          new { @class = "form-control" })
+
+                    <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></span>
+                </div>
+            </div>*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Description" id="txtDesc" style="height: 200px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Price"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Price" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Price"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Images"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" accept="image/x-png,image/gif,image/jpeg" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Name" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Name"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone" placeholder="(123) 456-7890"/>
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Phone"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Email"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Email" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Email"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Website"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Website" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Website"></span>
+                    </div>
+                </div>
+                <div class="form-group row" hidden>
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.TimeAdded"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.TimeAdded" id="time" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.TimeAdded"></span>
+                    </div>
+                </div>
+                <div class="form-group row" hidden>
+                    <div class="col-3">
+                        <label asp-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId" id="ownerId" />
+                        <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @if (Model.ClassifiedsItemObj.ClassifiedsItem.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update Listing</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput();">Create Listing</button>
+                                }
+
+                            </div>
+                            <div class="col-6">
+                                <a href="./ItemsTable" class="btn btn-success form-control">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*@if (Model.MenuItemObj.MenuItem != null)
+        {
+            <div class="col-4 p-4">
+                <img src="@Model.MenuItemObj.MenuItem.Image" style="border-radius: 5px; width:100%; border: 1px solid #bbb9b9" />
+            </div>
+        }*@
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+    section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script>
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        
+
+
+
+
+
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select an Image', 'error')
+                return false;
+            }
+            return true;
+        }
+        var x = timeSince();
+        document.getElementById("time").innerHTML = x;
+
+        function timeSince(date) {
+
+            var seconds = Math.floor((new Date().getTime() / 1000) - date);
+
+            var interval = seconds / 31536000;
+
+            if (interval >= 1) {
+                return Math.floor(interval) + " years";
+            }
+            interval = seconds / 2592000;
+            if (interval >= 1) {
+                return Math.floor(interval) + " months";
+            }
+            interval = seconds / 86400;
+            if (interval >= 1) {
+                return Math.floor(interval) + " days";
+            }
+            interval = seconds / 3600;
+            if (interval >= 1) {
+                return Math.floor(interval) + " hours";
+            }
+            interval = seconds / 60;
+            if (interval >= 1) {
+                return Math.floor(interval) + " minutes";
+            }
+            return Math.floor(seconds) + " seconds";
+        }
+        var aDay = 24 * 60 * 60 * 1000;
+        console.log(timeSince(new Date(Date.now() - aDay)));
+        console.log(timeSince(new Date(Date.now() - aDay * 2)));
+
+        
+    </script>
+
+}
+
+

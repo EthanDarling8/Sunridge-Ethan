@@ -1,0 +1,113 @@
+﻿@page
+@model Sunridge.Pages.Owner.Classifieds.ClassifiedsIndexModel
+@{
+    ViewData["Title"] = "ClassifiedsIndex";
+}
+
+<h1 class="row col-sm-12 pb-4">My Listings</h1>
+<div class="row m-1 p-1">
+
+
+    <div class="col-2">
+
+        <div class="row mb-2">
+            <a class="btn btn-block btn-primary" asp-page="/Owner/Classifieds/ClassifiedsUpsert">
+
+                <i class="fas fa-plus"></i>&nbsp;Create Listing
+            </a>
+        </div>
+
+
+
+        <div class="row mb-2 dropright">
+            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle" 
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
+                Categories
+            </a>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                @foreach (var categoryItem in Model.ClassifiedsCategoryList)
+                {
+                    <a class="dropdown-item" asp-route-catid="@categoryItem.Id" asp-page="/Owner/Classifieds/ClassifiedsIndex">@categoryItem.Name</a>
+                }
+            </div>
+        </div>
+
+        @*<div class="row mb-2 dropright">
+                <a id="btnGroupDrop2" class="btn btn-block btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
+                    Subcategories
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                    <a class="dropdown-item" href="#">Dropdown link</a>
+                    <a class="dropdown-item" href="#">Dropdown link</a>
+                </div>
+            </div>*@
+        <div class="row mb-2">
+            <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ItemsTable">
+                <i class="far fa-images"></i>&nbsp;My Listings Details
+            </a>
+        </div>
+        <div class="row mb-2">
+            <a class="btn btn-block btn-secondary" asp-page="/Home/Classifieds/Index">
+                <i class="far fa-images"></i>&nbsp;All Listings
+            </a>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="row container">
+            <div class="col-12">
+                <div class="row">
+
+                    @if (!(Model.ClassifiedsItemList is null))
+                    {
+
+                        @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+                        {
+                            <div class="card-deck">
+                                <div class="col-lg-3 col-xl-3 col-md-3 pb-2 m-2">
+                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 250px">
+                                        <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
+                                            <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h5 class="card-title text-primary">@classifiedsItem.Title</h5>
+                                            <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
+                                            <div class="card-text">
+
+                                                <p class="card-text d-inline-block text-truncate" style="max-width: 250px;">
+
+
+                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                                </p>
+
+                                            </div>
+                                            <p class="card-footer bg-transparent text-right"><small class="text-muted">@*@classifiedsItem.TimeAdded*@</small><i class="far fa-eye text-right"></i>&nbsp;5</p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+                    @if (Model.ClassifiedsItemList.Count() == 0)
+                    {
+                        <h2 class="col-12 text-center mt-5">There are no listings to display.</h2>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/js/expandlisting.js"></script>
+}
+
+
+

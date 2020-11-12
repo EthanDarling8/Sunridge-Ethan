@@ -55,6 +55,12 @@ namespace Sunridge.DataAccess.Data
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
 
+        //Classifieds DbSets
+        public DbSet<ClassifiedsCategory> ClassifiedsCategory { get; set; }
+        public DbSet<ClassifiedsItem> ClassifiedsItem { get; set; }
+        //public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
+        public DbSet<ViewCount> ViewCount { get; set; }
+
         // Many to Many relationship handling
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -24,11 +24,14 @@ namespace Sunridge.Pages.Owner.Classifieds.Details
         //public IEnumerable<SelectListItem> ClassifiedsCategoryList { get; private set; }
 
         public IEnumerable<ClassifiedsItem> ClassifiedsItemList { get; set; }
-        //public IEnumerable<ClassifiedsCategory> ClassifiedsCategoryList { get; set; }
-        public void OnGet()
+        public IEnumerable<ClassifiedsCategory> ClassifiedsCategoryList { get; set; }
+
+        public int ClassifiedsItemId { get; set; }
+        public void OnGet(int id)
         {
-            ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll();
-            //ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll().ToList();
+            
+            ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.Id == id);
+            ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll().ToList();
         }
     }
 }

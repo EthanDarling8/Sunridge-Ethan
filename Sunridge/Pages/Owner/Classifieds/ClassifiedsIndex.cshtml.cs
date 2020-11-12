@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,19 +35,22 @@ namespace Sunridge.Pages.Owner.Classifieds
 
         public void OnGet(string catid, string subcatid)
         {
-            //if (ownerid != null)
-            //{
-            //    ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.OwnerId == ownerid);
-            //}
-            //else
-            //{
+            string ownerId = User.Identity != null && User.Identity.IsAuthenticated && User.Claims.ToList().Count > 0 ? User.Claims.ToList()[0].Value : null;
+
+            if (ownerId != null)
+            {
+                ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.OwnerId == ownerId);
+
+                }
+                else
+            {
                 ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll();
-            //}
+            }
 
             if (catid != null)
             {
                 CategoryId = int.Parse(catid);
-                ClassifiedsItemList = ClassifiedsItemList.Where(x => x.CategoryId == CategoryId);
+                ClassifiedsItemList = ClassifiedsItemList.Where(x => x.CategoryId == CategoryId && x.OwnerId == ownerId);
 
                 //if (subcatid != null)
                 //{

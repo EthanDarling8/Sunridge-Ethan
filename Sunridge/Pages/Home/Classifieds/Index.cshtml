@@ -56,29 +56,37 @@
             <div class="col-12">
                 <div class="row">
 
-                @if (!(Model.ClassifiedsItemList is null))
-                {
-
-                    @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+                    @if (!(Model.ClassifiedsItemList is null))
                     {
 
-                        <div class="col-lg-3 col-xl-3 col-md-3 pb-2">
-                            <div class="card h-100 border-0" style="width: 250px">
-                                <a asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
-                                    <img class="card-img-top img-fluid" style="width: 250px; height: 200px; object-fit: contain" src="@classifiedsItem.Images" alt="Card image cap">
-                                </a>
-                                <hr>
-                                <div class="card-body">
-                                    <h5 class="card-title">@classifiedsItem.Title</h5>
-                                    <h5 class="card-title">@classifiedsItem.Price.ToString("$0.00")</h5>
-                                    <p class="card-text">@Html.Raw(classifiedsItem.Description)</p>
-                                    <p class="card-text"><small class="text-muted">@classifiedsItem.TimeAdded</small></p>
+                        @foreach (var classifiedsItem in Model.ClassifiedsItemList)
+                        {
+                            <div class="row-cols-1 col-lg-4 col-xl-3 col-md-4 pb-2">
+                                <div class="card h-100" style="width: 250px">
+                                    <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
+                                        <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
+                                    </a>
+
+                                    <div class="card-body">
+                                        <h3 class="card-title text-primary">@classifiedsItem.Title</h3>
+                                        <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
+                                        <div class="item card-text">
+                                           
+                                            <div class="d-inline-block text-truncate" style="max-width: 130px;">
+
+
+                                                @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                            </div>
+                                               
+                                        </div>
+                                        <p class="card-text"><small class="text-muted">@classifiedsItem.TimeAdded</small></p>
+                                    </div>
+
                                 </div>
-                                <hr>
                             </div>
-                        </div>
+
+                        }
                     }
-                }
 
                     @if (Model.ClassifiedsItemList.Count() == 0)
                     {

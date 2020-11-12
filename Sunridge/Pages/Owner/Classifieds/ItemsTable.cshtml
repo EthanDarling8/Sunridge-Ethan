@@ -1,14 +1,13 @@
 ﻿@page
-
-<h1>Classified Listings</h1>
+<h1>Classified Listings Details</h1>
 <div class="container">
     <div class="row">
         <div class="col-12 text-right">
-            <a asp-page="Upsert" class="btn btn-primary text-dark"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+            <a asp-page="ClassifiedsUpsert" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Create New</a>
         </div>
     </div>
 </div>
-<table id="DT_load" class="table table-bordered text-white">
+<table id="DT_load" class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>
@@ -24,7 +23,7 @@
                 Price
             </th>
             <th>
-                Name
+                Contact
             </th>
             <th>
                 Phone
@@ -38,12 +37,11 @@
             <th>
                 Time Added
             </th>
-            
+            <th></th>
         </tr>
     </thead>
 </table>
 @section Scripts{
     <script src="~/js/classifiedsItem.js"></script>
 }
-
 

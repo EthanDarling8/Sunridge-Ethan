@@ -57,5 +57,7 @@ namespace Sunridge.DataAccess.Data
 
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
+
+        public DbSet<ViewCount> ViewCount { get; set; }
     }
 }

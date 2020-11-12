@@ -12,8 +12,8 @@ function loadList() {
             "datatype": "json"
         },
         "columns": [
-            { data: "id", width: "50%" },
-            { data: "name", width: "50%" },
+            { data: "id", width: "25%" },
+            { data: "name", width: "25%" },
             {
                 data: "id",
                 "render": function (data) {
@@ -30,7 +30,7 @@ function loadList() {
                             Delete
                             </a>
                         </div>`;
-                }
+                }, width: "50%"
             }
         ],
         "language": {

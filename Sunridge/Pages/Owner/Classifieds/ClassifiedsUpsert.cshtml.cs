@@ -34,13 +34,16 @@ namespace Sunridge.Pages.Owner.Classifieds
 
         public IActionResult OnGet(int? id)
         {
+            
+
             ClassifiedsItemObj = new ClassifiedsItemVM
-            {
-                ClassifiedsItem = new Models.ClassifiedsItem(),
-                ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetClassifiedsCategoryListForDropDown(),
-                //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetClassifiedsSubcategoryListForDropDown()
-            };
-        if (id != null)
+                {
+                    ClassifiedsItem = new Models.ClassifiedsItem(),
+                    ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetClassifiedsCategoryListForDropDown(),
+                    //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetClassifiedsSubcategoryListForDropDown()
+                };
+
+            if (id != null)
             {
                 ClassifiedsItemObj.ClassifiedsItem = _unitOfWork.ClassifiedsItem.GetFirstOrDefault(u => u.Id == id);
 
@@ -60,30 +63,30 @@ namespace Sunridge.Pages.Owner.Classifieds
 
 
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            ClassifiedsItemObj.ClassifiedsItem.OwnerId = User.Claims.ToList()[0].Value;
 
             if (ClassifiedsItemObj.ClassifiedsItem.Id == 0) //means a brand new menu item
             {
-                for (int i = 0; i < files.Count; i++)
-                {
                     //Physically upload and save image
                     string fileName = Guid.NewGuid().ToString();
                     var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
-                    var extension = Path.GetExtension(files[i].FileName);
+                    var extension = Path.GetExtension(files[0].FileName);
 
                     using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
-                        files[i].CopyTo(fileStream);
+                        files[0].CopyTo(fileStream);
                     }
                     //save the string data path
                     ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
 
 
                     _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
-                }
+                
             }
 
             else //update
@@ -91,12 +94,11 @@ namespace Sunridge.Pages.Owner.Classifieds
                 var objFromDb = _unitOfWork.ClassifiedsItem.Get(ClassifiedsItemObj.ClassifiedsItem.Id);
                 if (files.Count > 0)
                 {
-                    for (int i = 0; i < files.Count; i++)
-                    {
+                    
                         //Physically upload and save image
                         string fileName = Guid.NewGuid().ToString();
                         var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
-                        var extension = Path.GetExtension(files[i].FileName);
+                        var extension = Path.GetExtension(files[0].FileName);
 
                         var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
 
@@ -106,11 +108,11 @@ namespace Sunridge.Pages.Owner.Classifieds
                         }
                         using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                         {
-                            files[i].CopyTo(fileStream);
+                            files[0].CopyTo(fileStream);
                         }
                         //save the string data path
                         ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
-                    }
+                    
                 }
                 else
                 {

@@ -27,8 +27,9 @@ namespace Sunridge.Controllers
         [HttpGet]
             public IActionResult Get()
             {
-                return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll(null, null, "ClassifiedsCategory,ClassifiedsSubCategory") });
-            }
+                //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll(null, null, "ClassifiedsCategory,ClassifiedsSubCategory") });
+                return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
+        }
 
             [HttpDelete("{id}")]
             public IActionResult Delete(int id)

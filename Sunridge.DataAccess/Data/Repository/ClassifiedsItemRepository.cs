@@ -28,6 +28,7 @@ namespace Sunridge.DataAccess.Data.Repository
             classifiedsFromDb.Images = classifieds.Images;
             classifiedsFromDb.TimeAdded = classifieds.TimeAdded;
             classifiedsFromDb.Name = classifieds.Name;
+            classifiedsFromDb.Owner = classifieds.Owner;
             
         }
 

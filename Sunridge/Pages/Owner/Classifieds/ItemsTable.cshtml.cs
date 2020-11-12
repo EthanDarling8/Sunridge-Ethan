@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sunridge.Pages.Admin.Classifieds.Items
+namespace Sunridge.Pages.Owner.Classifieds
 {
-    public class IndexModel : PageModel
+    public class ItemsTableModel : PageModel
     {
         public void OnGet()
         {

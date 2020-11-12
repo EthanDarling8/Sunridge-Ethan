@@ -18,7 +18,7 @@ namespace Sunridge.DataAccess.Data.Repository
         public void Update(Lot_Owner Lot_Owner)
         {
             //Gets the first object from the table that has the same id as the one passed in
-            var objFromDb = _db.Lot_Owner.FirstOrDefault(s => s.Id == Lot_Owner.Id);
+            var objFromDb = _db.Lot_Owner.FirstOrDefault(s => s.LotId == Lot_Owner.LotId);
 
             // **** ToDo ****
 

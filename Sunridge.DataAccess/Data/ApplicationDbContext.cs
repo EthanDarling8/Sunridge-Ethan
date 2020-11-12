@@ -37,6 +37,10 @@ namespace Sunridge.DataAccess.Data
         public DbSet<OwnerBoardMember> OwnerBoardMember { get; set; }
         public DbSet<BoardMember> BoardMember { get; set; }
 
+        // Common Area Asset DbSet
+        public DbSet<Asset> Asset { get; set; }
+        public DbSet<MaintenanceRecord> MaintenanceRecord { get; set; }
+
         //Photo Gallery DbSets
         public DbSet<PhotoCategory> PhotoCategory { get; set; }
         public DbSet<PhotoAlbum> PhotoAlbum { get; set; }

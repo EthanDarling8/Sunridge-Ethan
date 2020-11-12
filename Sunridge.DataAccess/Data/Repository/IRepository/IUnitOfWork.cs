@@ -8,6 +8,10 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IOwnerRepository Owner { get; }
         INewsRepository News { get; }
         IFireInfoRepository FireInfo { get; }
+        
+        // Common Area Asset Repositories
+        IAssetRepository Asset { get; }
+        IMaintenanceRecordRepository MaintenanceRecord { get; }
         IFormsRepository Forms { get; }
 
         // Board Member Repositories

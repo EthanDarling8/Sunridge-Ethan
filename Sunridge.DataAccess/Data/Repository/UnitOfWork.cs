@@ -14,6 +14,11 @@ namespace Sunridge.DataAccess.Data.Repository
         public IOwnerRepository Owner { get; private set; }
         public INewsRepository News { get; private set; }
         public IFireInfoRepository FireInfo { get; private set; }
+        
+        // Common Area Asset Repositories
+        public IAssetRepository Asset { get; private set; }
+        public IMaintenanceRecordRepository MaintenanceRecord { get; private set; }
+        
         public IFormsRepository Forms { get; private set; }
 
         // Board Member IRepositories
@@ -69,6 +74,11 @@ namespace Sunridge.DataAccess.Data.Repository
             Owner = new OwnerRepository(_db);
             News = new NewsRepository(_db);
             FireInfo = new FireInfoRepository(_db);
+
+            // Common Area Asset Models
+            Asset = new AssetRepository(_db);
+            MaintenanceRecord = new MaintenanceRecordRepository(_db);
+
             Forms = new FormsRepository(_db);
 
             // Board Member Models

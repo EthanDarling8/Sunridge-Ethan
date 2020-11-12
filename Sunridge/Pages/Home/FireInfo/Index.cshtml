@@ -55,9 +55,8 @@
                             </div>
                             <p class="mb-1">@Html.Raw(item.Content)</p>
                             @if (item.Attachment != null) {
-                                <small class="text-muted">
-                                    <a class="nav-link" id="1900" asp-page="@item.Attachment">@item.Attachment</a>
-                                </small>
+                                <a class="nav-link" id="1900" href="@item.Attachment">Open Attachment</a>
+                                <iframe src="@item.Attachment"></iframe>
                             }
                         </div>
                     }

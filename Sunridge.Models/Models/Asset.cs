@@ -18,12 +18,14 @@ namespace Sunridge.Models
         /// <summary>
         /// Name of the asset
         /// </summary>
+        [Required]
         [Display(Name = "Asset Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Purchase price of the asset
         /// </summary>
+        [Required]
         [Column(TypeName = "decimal(18,2)")]
         [Display(Name = "Purchase Price")]
         public decimal Price { get; set; }
@@ -31,16 +33,19 @@ namespace Sunridge.Models
         /// <summary>
         /// Description of the asset
         /// </summary>
+        [Required]
         public string Description { get; set; }
 
         /// <summary>
         /// Status of the asset
         /// </summary>
+        [Required]
         public string Status { get; set; }
 
         /// <summary>
         /// Date the asset was purchased
         /// </summary>
+        [Required]
         public DateTime Date { get; set; }
         #endregion
     }

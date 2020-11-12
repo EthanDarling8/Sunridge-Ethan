@@ -8,7 +8,8 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IOwnerRepository Owner { get; }
         INewsRepository News { get; }
         IFireInfoRepository FireInfo { get; }
-        
+        IFormsRepository Forms { get; }
+
         // Board Member Repositories
         IBoardMemberRepository BoardMember { get; }
         IOwnerBoardMemberRepository OwnerBoardMember { get; }
@@ -40,7 +41,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
 
         // Lost And Found Repositories
         ILostItemRepository LostItem { get; }
-        
+
         void Save();
     }
 }

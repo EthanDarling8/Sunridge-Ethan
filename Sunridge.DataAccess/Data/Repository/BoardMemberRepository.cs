@@ -1,25 +1,23 @@
-using System.Linq;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 
 namespace Sunridge.DataAccess.Data.Repository {
     public class BoardMemberRepository : Repository<BoardMember>, IBoardMemberRepository {
         private readonly ApplicationDbContext _db;
-
+        
         public BoardMemberRepository(ApplicationDbContext db) : base(db) {
             _db = db;
         }
 
         public void Update(BoardMember updateObj) {
-            var objFromDb = _db.BoardMember.FirstOrDefault(b => b.Id == updateObj.Id);
+            var objFromDb = _db.BoardMember.FirstOrDefault(s => s.Id == updateObj.Id);
 
+            objFromDb.Image = updateObj.Image;
             objFromDb.Position = updateObj.Position;
-            
-            if (updateObj.Image != null) {
-                objFromDb.Image = updateObj.Image;
-            }
 
-            _db.SaveChanges();
+            _db.SaveChanges(); 
         }
     }
 }

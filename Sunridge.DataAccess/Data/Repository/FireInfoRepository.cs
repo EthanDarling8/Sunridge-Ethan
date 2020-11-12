@@ -16,17 +16,9 @@ namespace Sunridge.DataAccess.Data.Repository {
             var objFromDb = _db.FireInfo.FirstOrDefault(f => f.Id == updateObj.Id);
 
             objFromDb.Title = updateObj.Title;
-            objFromDb.Description = updateObj.Description;
-            objFromDb.Link1 = updateObj.Link1;
-            objFromDb.Link2 = updateObj.Link2;
-            objFromDb.Phone = updateObj.Phone;
-            objFromDb.Email = updateObj.Email;
-            objFromDb.PostDate = updateObj.PostDate;
-            
-            if (updateObj.File != null) {
-                objFromDb.File = updateObj.File;
-            }
-
+            objFromDb.Content = updateObj.Content;
+            objFromDb.DisplayDate = updateObj.DisplayDate;
+            objFromDb.Archived = updateObj.Archived;
             _db.SaveChanges();
         }
     }

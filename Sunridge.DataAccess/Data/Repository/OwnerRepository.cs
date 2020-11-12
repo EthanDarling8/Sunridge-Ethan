@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,10 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
         {
             _db = db;
         }
-
-        // Method to get a list of Owners.
-        public IEnumerable<SelectListItem> GetOwnerListForDropDown()
-        {
-            return _db.Owner.Select(i => new SelectListItem()
-            {
+        
+        
+        public IEnumerable<SelectListItem> GetOwnerListForDropdown() {
+            return _db.Owner.Select(i => new SelectListItem() {
                 Text = i.FullName,
                 Value = i.Id.ToString()
             });

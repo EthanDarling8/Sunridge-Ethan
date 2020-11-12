@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.IRepository;
 using Sunridge.Models;
 using System.Collections.Generic;
 
-namespace Sunridge.DataAccess.Data.Repository.IRepository
-{
-    public interface IOwnerRepository : IRepository<Owner>
-    {
-        IEnumerable<SelectListItem> GetOwnerListForDropDown();
+namespace Sunridge.DataAccess.Data.Repository.IRepository {
+    public interface IOwnerRepository : IRepository<Owner> {
+        IEnumerable<SelectListItem> GetOwnerListForDropdown();
     }
 }

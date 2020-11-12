@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Owner.Photos.Album
-{
-    // **** ToDo **** setup user id check so only admin and creator can edit
+{    
     [Authorize]
     public class UpsertModel : PageModel
     {
@@ -33,38 +33,45 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
         public IActionResult OnGet(int? selectedPhotoAlbumId, int selectedPhotoCategoryId)
         {
+            //Always preserve selected category
+            SelectedPhotoCategoryId = selectedPhotoCategoryId;
+
+            //Get Id of current user.
+            OwnerId = _userManager.GetUserId(User);
+
             PhotoAlbumObj = new PhotoAlbumVM()
             {
                 PhotoAlbum = new PhotoAlbum(),
                 PhotoCategoryList = _unitOfWork.PhotoCategory.GetListForDropDown()
-            };
+            };           
 
 
-            
-
-
-            //Edit existing
+            //Existing (edit)
             if (selectedPhotoAlbumId != null)
             {
                 PhotoAlbumObj.PhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
-                //Maintain existing Id when editing as editing could be done by an admin.
-                OwnerId = PhotoAlbumObj.PhotoAlbum.OwnerId;
 
-                //Specified PhotoAlbumId does not exist or database fails
+                //selectedPhotoAlbumId does not exist or database fails
                 if (PhotoAlbumObj.PhotoAlbum == null)
                 {
-                    //Returns a 404 error page.
-                    return NotFound();
+                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
                 }
-            }
-            else
-            {
-                //Get Id of current user if making a new album
-                OwnerId = _userManager.GetUserId(User);
+
+
+                //Only allow admins and creator to access            
+                if (User.IsInRole(SD.AdministratorRole) || PhotoAlbumObj.PhotoAlbum.OwnerId == OwnerId)
+                {
+                    //Maintain existing Id when editing as editing could be done by an admin.
+                    OwnerId = PhotoAlbumObj.PhotoAlbum.OwnerId;
+                }
+                else
+                {
+                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                }                              
             }
 
-            //Always preserve selected category
-            SelectedPhotoCategoryId = selectedPhotoCategoryId;
+
+            //New ( [Authorize] already ensures an owner is accessing this page. ) 
             return Page();
         }
 

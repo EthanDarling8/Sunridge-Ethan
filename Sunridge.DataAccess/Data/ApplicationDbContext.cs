@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sunridge.Models;
 using System.Runtime.InteropServices.ComTypes;
 
@@ -16,13 +17,30 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Owner> Owner { get; set; }
+        
+        // Document DbSets
+        public DbSet<DocumentCategory> DocumentCategory { get; set; }
+        public DbSet<DocumentFile> DocumentFile { get; set; }
+        public DbSet<DocumentFileKeyword> DocumentFileKeyword { get; set; }
+        public DbSet<DocumentSection> DocumentSection { get; set; }
+        public DbSet<DocumentSectionText> DocumentSectionText { get; set; }
+
+
+        // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }
+        
+        // Board Member DbSets
+        public DbSet<OwnerBoardMember> OwnerBoardMember { get; set; }
         public DbSet<BoardMember> BoardMember { get; set; }
 
         //Photo Gallery DbSets
         public DbSet<PhotoCategory> PhotoCategory { get; set; }
         public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
         public DbSet<Photo> Photo { get; set; }
+
+        // Key DbSets
+        public DbSet<Models.Key> Key { get; set; }
+        public DbSet<KeyLot> KeyLot { get; set; }
 
         // Lot DbSets
         public DbSet<Lot> Lot { get; set; }

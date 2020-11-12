@@ -7,13 +7,28 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IBannerRepository Banner { get; }
         IOwnerRepository Owner { get; }
         INewsRepository News { get; }
-        IBoardMemberRepository BoardMember { get; }
         IFireInfoRepository FireInfo { get; }
+        
+        // Board Member Repositories
+        IBoardMemberRepository BoardMember { get; }
+        IOwnerBoardMemberRepository OwnerBoardMember { get; }
+
+        //Documents Repositories
+        IDocumentCategoryRepository DocumentCategory { get; }
+        IDocumentFileRepository DocumentFile { get; }
+        IDocumentFileKeywordRepository DocumentFileKeyword { get; }
+        IDocumentSectionRepository DocumentSection { get; }
+        IDocumentSectionTextRepository DocumentSectionText { get; }
+
 
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }
         IPhotoAlbumRepository PhotoAlbum { get; }
         IPhotoRepository Photo { get; }
+
+        // Key Repositories
+        IKeyRepository Key { get; }
+        IKeyLotRepository KeyLot { get; }
 
         // Lot Repositories
         ILotRepository Lot { get; }

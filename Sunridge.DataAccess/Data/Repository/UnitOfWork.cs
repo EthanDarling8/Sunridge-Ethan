@@ -14,7 +14,8 @@ namespace Sunridge.DataAccess.Data.Repository
         public IOwnerRepository Owner { get; private set; }
         public INewsRepository News { get; private set; }
         public IFireInfoRepository FireInfo { get; private set; }
-        
+        public IFormsRepository Forms { get; private set; }
+
         // Board Member IRepositories
         public IOwnerBoardMemberRepository OwnerBoardMember { get; private set; }
         public IBoardMemberRepository BoardMember { get; private set; }

@@ -51,7 +51,7 @@
                 <p class="mb-1">@Html.Raw(item.Content)</p>
         @if (item.Attachment != null)
         {
-                <small class="text-muted"><a class="nav-link" id="1900" asp-page="@item.Attachment">@item.Attachment</a></small>
+                <small class="text-muted"><a class="nav-link" id="1900" href="@item.Attachment" target="_blank">@item.DisplayName</a></small>
         }
             </div>
     }
@@ -74,15 +74,18 @@
                     var body = '';
                     if (result.newsList) {
                         $.each(result.newsList, function (index, item) {
+                            item.content = item.content == null ? "" : item.content;
                             body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
                                 '<div class="d-flex w-100 justify-content-between">' +
                                 '<h5 class="mb-1">' + item.title + '</h5>' +
                                 '<small class="text-muted text-right">' + item.formatDate + '</small>' +
                                 '</div>' +
                                 '<p class="mb-1">' + item.content+'</p>';
-                            if (item.Attachment != null) {
-                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" asp-page="' + item.attachment + '">' + item.attachment + '</a></small>\r\n</div>';
+                            if (item.displayName != "") {
+                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" href="' + item.attachment + '" target="_blank">' + item.displayName + '</a></small>';
                             }
+                            body += '\r\n</div >';
+
                         });
                         $("#newsListings").html(body);
                     } else {
@@ -95,25 +98,25 @@
             event.preventDefault(); 
             var SearchString = $("#Search").val();
             $.ajax({
-                url: "/api/News/",
+                url: "/api/News/?Search=" + encodeURIComponent(SearchString),
                 type: 'post',
-                data: { "Search": SearchString },
+                //data: { "Search": SearchString },
                 contentType: 'application/json',
-                dataType: "json",
-                async: false,
                 success: function (result) {
                     var body = '';
                     if (result.newsList) {
                         $.each(result.newsList, function (index, item) {
+                            item.content = item.content == null ? "" : item.content;
                             body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
                                 '<div class="d-flex w-100 justify-content-between">' +
                                 '<h5 class="mb-1">' + item.title + '</h5>' +
                                 '<small class="text-muted text-right">' + item.formatDate + '</small>' +
                                 '</div>' +
                                 '<p class="mb-1">'+item.content+'</p>';
-                            if (item.attachment != null) {
-                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" asp-page="' + item.attachment + '">' + item.attachment + '</a></small>\r\n</div>';
+                            if (item.displayName != "") {
+                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" href="' + item.attachment + '" target="_blank">' + item.displayName + '</a></small>';
                             }
+                            body += '\r\n</div >';
                         });
                         $("#newsListings").html(body);
                     }

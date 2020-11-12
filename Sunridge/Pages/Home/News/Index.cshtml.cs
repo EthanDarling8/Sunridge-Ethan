@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,6 +24,15 @@ namespace Sunridge.Pages.Home.News
         public void OnGet()
         {
             NewsList = _unitOfWork.News.GetAll(n => n.Archived == false && DateTime.Compare(n.DisplayDate.Date, DateTime.Now.Date) <= 0).OrderBy(d => d.DisplayDate).Reverse().ToList();
+            int i = 0;
+            foreach(var item in NewsList)
+            {
+                if(item.Attachment != null)
+                {
+                    NewsList[i].DisplayName = Path.GetFileName(item.Attachment);
+                }
+                i++;
+            }
         }
     }
 }

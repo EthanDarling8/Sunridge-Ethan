@@ -6,13 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Admin\Classifieds\Subcategory\**" />
-    <Content Remove="Pages\Admin\Classifieds\Subcategory\**" />
-    <EmbeddedResource Remove="Pages\Admin\Classifieds\Subcategory\**" />
-    <None Remove="Pages\Admin\Classifieds\Subcategory\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
@@ -31,11 +24,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admin\Document\File\" />
-    <Folder Include="wwwroot\fireinfo" />
-    <Folder Include="wwwroot\images\News\" />
+    <Folder Include="wwwroot\images\fireInfo" />
+    <Folder Include="wwwroot\images\News" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\images\boardMembers\fa79dfcf-8206-4927-b948-57fc09e09d6c.png" />
+    <Content Remove="wwwroot\images\boardMembers\61d25f6a-c51f-4e8a-bd2e-4af6162d1b6d.jpg" />
+    <Content Remove="wwwroot\images\boardMembers\3a4181b4-5ccc-4054-b814-fa0bb69266cd.jpg" />
+    <Content Remove="wwwroot\images\boardMembers\16343f1d-c65f-4fb5-a727-315100c50301.png" />
+    <Content Remove="wwwroot\images\boardMembers\1528757b-427b-4309-bf70-af892d2ee5ef.png" />
     <Folder Include="wwwroot\images\photoGallery\" />
-    <Folder Include="wwwroot\images\classifiedsitems\" />
+    <Folder Include="Pages\Owner\Lot\" />
+    <Folder Include="wwwroot\files\lot_owner\" />
+    <Folder Include="wwwroot\files\lot\" />
+    <Folder Include="wwwroot\fireinfo" />
+    <Folder Include="wwwroot\images\lostItems\" />
   </ItemGroup>
 
 </Project>

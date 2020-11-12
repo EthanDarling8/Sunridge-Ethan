@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sunridge.Models;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Sunridge.DataAccess.Data
 {
@@ -16,7 +17,8 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Banner> Banner { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Owner> Owner { get; set; }
-        
+        public DbSet<Forms> Forms { get; set; }
+
         // Document DbSets
         public DbSet<DocumentCategory> DocumentCategory { get; set; }
         public DbSet<DocumentFile> DocumentFile { get; set; }
@@ -37,11 +39,6 @@ namespace Sunridge.DataAccess.Data
         public DbSet<PhotoAlbum> PhotoAlbum { get; set; }
         public DbSet<Photo> Photo { get; set; }
 
-        //Classifieds DbSets
-        public DbSet<ClassifiedsCategory> ClassifiedsCategory { get; set; }
-        public DbSet<ClassifiedsItem> ClassifiedsItem { get; set; }
-        //public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
-
         // Key DbSets
         public DbSet<Models.Key> Key { get; set; }
         public DbSet<KeyLot> KeyLot { get; set; }
@@ -58,6 +55,17 @@ namespace Sunridge.DataAccess.Data
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
 
-        public DbSet<ViewCount> ViewCount { get; set; }
+        // Many to Many relationship handling
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Lot_Owner>()
+                .HasKey(lo => new { lo.LotId, lo.OwnerId }); //Create a Composite Key for the Lot_Owner table based on their foreign keys.
+
+            builder.Entity<Lot_Inventory>()
+                .HasKey(li => new { li.LotId, li.InventoryId }); //Create a Composite Key for the Lot_Inventory table based on their foreign keys.
+        }
+        
     }
+
 }

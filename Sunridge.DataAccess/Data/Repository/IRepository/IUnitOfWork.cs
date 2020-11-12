@@ -8,7 +8,8 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IOwnerRepository Owner { get; }
         INewsRepository News { get; }
         IFireInfoRepository FireInfo { get; }
-        
+        IFormsRepository Forms { get; }
+
         // Board Member Repositories
         IBoardMemberRepository BoardMember { get; }
         IOwnerBoardMemberRepository OwnerBoardMember { get; }
@@ -26,11 +27,6 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IPhotoAlbumRepository PhotoAlbum { get; }
         IPhotoRepository Photo { get; }
 
-        //Classifieds Repositories
-        IClassifiedsItemRepository ClassifiedsItem { get; }
-        IClassifiedsCategoryRepository ClassifiedsCategory { get; }
-        //IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; }
-
         // Key Repositories
         IKeyRepository Key { get; }
         IKeyLotRepository KeyLot { get; }
@@ -46,8 +42,6 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         // Lost And Found Repositories
         ILostItemRepository LostItem { get; }
 
-        IViewCountRepository ViewCount { get; }
-        
         void Save();
     }
 }

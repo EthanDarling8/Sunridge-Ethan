@@ -14,7 +14,7 @@ namespace Sunridge.Pages.Admin.KeyHistory
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public Lot Lot { get; set; }
+        public Models.Lot Lot { get; set; }
 
         public Lot_Owner LotOwner { get; set; }
 

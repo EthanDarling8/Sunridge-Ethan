@@ -1,0 +1,127 @@
+﻿@page
+@model Sunridge.Pages.Owner.LostItem.Upsert
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+
+            </div>
+            <div class="col-12 px-3 border-bottom-1 mt-3">
+                <h2 class="text-primary">@(Model.LostItemObj.LostItem.Id != 0 ? "Update" : "Create") Lost & Found Listing</h2>
+            </div>
+            <div class="col-8 pt-3">
+                <!-- Name -->
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="LostItemObj.LostItem.Name" />
+                        <span class="text-danger" asp-validation-for="LostItemObj.LostItem.Name"></span>
+                    </div>
+                    @if (Model.LostItemObj.LostItem.Id != 0)
+                    {
+                        <input type="hidden" asp-for="LostItemObj.LostItem.Id" />
+                    }
+                </div>
+                <!-- Date -->
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Date"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="LostItemObj.LostItem.Date" />
+                        <span class="text-danger" asp-validation-for="LostItemObj.LostItem.Date"></span>
+                    </div>
+                </div>
+                <!-- Status -->
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Status"></label>
+                    </div>
+                    <div class="col-9">
+                        <label><input asp-for="LostItemObj.LostItem.Status" value="Lost" type="radio">Lost</label> <br />
+                        <label><input asp-for="LostItemObj.LostItem.Status" value="Found" type="radio">Found</label> <br />
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="LostItemObj.LostItem.Description" id="txtDesc" style="height: 200px"></textarea>
+                    </div>
+                </div>
+                <!-- Image -->
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Image"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" accept=".png,.jpg,.jpeg" />
+                    </div>
+                </div>
+                <!-- Contact Information -->
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Contact</label>
+                    </div>
+                    <div class="col-9">
+                        <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayEmail">Email <br />
+                        <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayPhone">Phone <br />
+                        <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayAddress">Address <br />
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="form-group row" style="display: none;">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.OwnerId"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="LostItemObj.LostItem.OwnerId" value="@Model.OwnerId" />
+                        <span class="text-danger" asp-validation-for="LostItemObj.LostItem.OwnerId"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @if (Model.LostItemObj.LostItem.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+                                }
+                            </div>
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select an Image', 'error');
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

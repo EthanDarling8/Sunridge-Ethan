@@ -49,16 +49,19 @@ namespace Sunridge.Pages.Admin.News
 
             if (NewsObj.Id == 0)
             {
-                string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"images\News");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                if (files.Count > 0)
                 {
-                    files[0].CopyTo(fileStream);
-                }
+                    string fileName = files[0].FileName;
+                    var uploads = Path.Combine(webRootPath, @"images\News");
+                    //var extension = Path.GetExtension(files[0].FileName);
 
-                NewsObj.Attachment = @"\images\News\" + fileName + extension;
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    NewsObj.Attachment = @"\images\News\" + fileName;
+                }
 
                 _unitOfWork.News.Add(NewsObj);
                 _unitOfWork.Save();
@@ -69,9 +72,8 @@ namespace Sunridge.Pages.Admin.News
 
                 if (files.Count > 0)
                 {
-                    string fileName = Guid.NewGuid().ToString();
+                    string fileName = files[0].FileName;
                     var uploads = Path.Combine(webRootPath, @"images\News");
-                    var extension = Path.GetExtension(files[0].FileName);
 
                     var imagePath = Path.Combine(webRootPath, objFromDb.Attachment.TrimStart('\\'));
                     if (System.IO.File.Exists(imagePath))
@@ -79,12 +81,12 @@ namespace Sunridge.Pages.Admin.News
                         System.IO.File.Delete(imagePath);
                     }
 
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
                     {
                         files[0].CopyTo(fileStream);
                     }
 
-                    NewsObj.Attachment = @"\images\News\" + fileName + extension;
+                    NewsObj.Attachment = @"\images\News\" + fileName;
                 }
                 else
                 {

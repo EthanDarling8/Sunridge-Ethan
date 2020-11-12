@@ -21,6 +21,7 @@ namespace Sunridge.Models
 
 
         //Link to Document Section
+        [Display(Name = "Section")]
         public int DocumentSectionId { get; set; }
 
         [Display(Name = "Section")]

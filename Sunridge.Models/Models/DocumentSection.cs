@@ -18,6 +18,7 @@ namespace Sunridge.Models
 
 
         //Link to DocumentCategory        
+        [Display(Name = "Category")]
         public int DocumentCategoryId { get; set; }
 
         [Display(Name = "Category")]

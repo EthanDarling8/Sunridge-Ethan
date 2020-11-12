@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
+using Microsoft.AspNetCore.Razor.Language;
+using System.Web;
+using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,6 +37,22 @@ namespace Sunridge.Controllers
             }
             else
                 NewsList = _unitOfWork.News.GetAll(n => n.Archived == false && n.DisplayDate.Date.Year == year).OrderBy(d => d.DisplayDate).Reverse().ToList();
+
+            if(NewsList.Count() > 0)
+            {
+                int i = 0;
+                foreach(var item in NewsList)
+                {
+                    NewsList[i].FormatDate = item.DisplayDate.Date.ToLongDateString();
+                    NewsList[i].DisplayName = "";
+                    if (item.Attachment != null)
+                    {
+                        NewsList[i].DisplayName = Path.GetFileName(item.Attachment);
+                    }
+                    i++;
+                }
+            }
+
             return Json(new { NewsList });
         }
 
@@ -44,8 +63,23 @@ namespace Sunridge.Controllers
         {
             var NewsList = new List<News>();
             NewsList = _unitOfWork.News.GetAll(n => n.Archived == false && (n.Title.ToLower().Contains(Search.ToLower()) || n.Content.ToLower().Contains(Search.ToLower()))).OrderBy(d => d.DisplayDate).Reverse().ToList();
+
+            if (NewsList.Count() > 0)
+            {
+                int i = 0;
+                foreach (var item in NewsList)
+                {
+                    NewsList[i].FormatDate = item.DisplayDate.Date.ToLongDateString();
+                    NewsList[i].DisplayName = "";
+                    if (item.Attachment != null)
+                    {
+                        NewsList[i].DisplayName = Path.GetFileName(item.Attachment);
+                    }
+                    i++;
+                }
+            }
+
             return Json(new { NewsList });
         }
-
     }
 }

@@ -1,4 +1,10 @@
-﻿<!-- Bootstrap NavBar -->
+﻿        <!-- Bootstrap NavBar -->
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+</style>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,21 +16,17 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/BoardMembers/Index">Board Members</a>
+
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" asp-page="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle dropdown-content" asp-page="/Home/Classifieds/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
                     Classified Ads
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" asp-page="/Classifieds/Lots/Index">Lots</a>
+                    <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsIndex">My Listings</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/Cabins/Index">Cabins</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/Trailers/Index">Trailers</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/ATVs/Index">ATVs</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Classifieds/Other/Index">Other Services</a>
+                    <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsUpsert">Create New Listing</a>
+                    
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -63,7 +65,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
                     <a class="dropdown-item" asp-page="/Owner/Lots/MyLots/Index">My Lots</a>
-                    <a class="dropdown-item" asp-page="/Owner/Classifieds/MyClassifieds/Index">My Classifieds</a>
+                    <a class="dropdown-item" asp-page="/Home/Classifieds/Index">My Classifieds</a>
                     <a class="dropdown-item" asp-page="/OwnerPhotos/MyPhotos/Index">My Photos</a>
                     <a class="dropdown-item" asp-page="/Home/Forms/Index">Forms</a>
                     <div class="dropdown-divider"></div>
@@ -73,22 +75,19 @@
                     <a class="dropdown-item" asp-page="/Owner/Lots/Index">HOA Lots</a>
                     <a class="dropdown-item" asp-page="/Owner/Forms/Index">Reports</a>
                     <a class="dropdown-item" asp-page="/Admin/CommonAreaAssets/Index">Common Area Assets</a>
-                    <a class="dropdown-item" asp-page="/Owner/Classifieds/Index">Classifieds</a>
+                    <a class="dropdown-item" asp-page="/Home/Classifieds/Index">Classifieds</a>
                     <a class="dropdown-item" asp-page="/AdminPhotos/Index/Index">Photos</a>
                     <a class="dropdown-item" asp-page="/Admin/Inventories/Index">Inventory Items</a>
                     <a class="dropdown-item" asp-page="/Admin/Banner/Index">Banner Items</a>
                     <a class="dropdown-item" asp-page="/NewsItem/Index/Index">News Items</a>
-                    <a class="dropdown-item" asp-page="/Admin/FireInfo/Index">Fire Info Items</a>
-                    <a class="dropdown-item" asp-page="/Admin/BoardMembers/Index">Board Members</a>
                     <a class="dropdown-item" asp-page="/Admin/ScheduledEvents/Index">Scheduled Events</a>
 
                 </div>
             </li><!-- Smaller devices menu END -->
 
         </ul>
-            <div>
-                <partial name="_LoginPartial"/>
-            </div>
     </div>
-
+    <div>
+        <partial name="_LoginPartial" />
+    </div>
 </nav><!-- NavBar END -->

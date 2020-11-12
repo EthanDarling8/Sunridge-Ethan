@@ -5,37 +5,37 @@ namespace Sunridge.Models
 {
     public class Lot_Inventory
     {
-        #region Lot_Inventory-Id
-        //Lot_Inventory-Id: The Id of the Lot_Inventory Bridging Table.
-        public int Id { get; set; }
-        #endregion
 
-        #region Lot_Inventory-LotId
+        #region Lot (Foreign Key)
+        #region Lot_Inventory-LotId (FK)
         // Lot_Inventory-LotId: The Primary Key of the Lot Table
         [Display(Name = "Lot Id")]
         public int LotId { get; set; }
         #endregion
-        #region Lot-LotId (FK)
+        #region Lot-Model
         //Lot-LotId: The LotId Foreign Key to get info about Lot.
         [ForeignKey("LotId")]
         public virtual Lot Lot { get; set; }
         #endregion
+        #endregion
 
-        #region Lot_Inventory-InventoryId
+        #region Inventory (Foreign Key)
+        #region Lot_Inventory-InventoryId (FK)
         // Lot_Inventory-LotId: The Primary Key of the Inventory Table
         [Display(Name = "Inventory Id")]
         public int InventoryId { get; set; }
         #endregion
-        #region Lot-InventoryId (FK)
+        #region Lot-Model
         //Inventory-InventoryId: The InventoryId Foreign Key to get info about Inventory.
         [ForeignKey("InventoryId")]
         public virtual Inventory Inventory { get; set; }
         #endregion
+        #endregion 
 
         #region Table Diagram
         // EXAMPLE:
         //  _______________________
-        // | Lot Id | Invenotry Id |
+        // | Lot Id | Inventory Id |
         // |________|______________|
         // | 1      | 1            |
         // |--------|--------------|

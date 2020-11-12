@@ -37,7 +37,7 @@ namespace Sunridge.Pages.Admin.LostItem
             LostItemObj = new LostItemVM()
             {
                 LostItem = new Models.LostItem(),
-                OwnerList = _unitOfWork.Owner.GetOwnerListForDropDown()
+                OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
             if (id != null)
             {

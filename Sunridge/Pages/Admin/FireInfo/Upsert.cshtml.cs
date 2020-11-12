@@ -40,14 +40,14 @@ namespace Sunridge.Pages.Admin.FireInfo {
 
             if (FireObj.Id == 0) {
                 string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"images\fireInfo");
+                var uploads = Path.Combine(webRootPath, @"images/fireInfo");
                 var extension = Path.GetExtension(files[0].FileName);
 
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create)) {
                     files[0].CopyTo(fileStream);
                 }
 
-                FireObj.Attachment = @"\images\fireInfo\" + fileName + extension;
+                FireObj.Attachment = @"/images/fireInfo/" + fileName + extension;
 
                 _unitOfWork.FireInfo.Add(FireObj);
                 _unitOfWork.Save();

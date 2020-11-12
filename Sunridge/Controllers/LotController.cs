@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 
 namespace Sunridge.Controllers
 {
@@ -22,6 +24,10 @@ namespace Sunridge.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            /* Alden's Suggestion
+            Lot lot = new Lot();
+            IEnumerable<Lot_Owner> lot_Owners = _unitOfWork.Lot_Owner.GetAll(c => c.LotId == lot.Id, includeProperties: "Lot");
+            */
             return Json(new { data = _unitOfWork.Lot.GetAll() });
         }
         [HttpDelete("{id}")]

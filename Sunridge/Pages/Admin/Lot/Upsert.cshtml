@@ -44,7 +44,16 @@
                     </div>
                 </div>
                 <!-- Lot Transfer -->
-                    <!-- TODO: Make lot transfer Interface-->
+                <!-- TODO: Make lot transfer Interface-->
+                <select class="mdb-select md-form" multiple searchable="Search here..">
+                    <option value="" disabled selected>Choose your country</option>
+                    <option value="1">USA</option>
+                    <option value="2">Germany</option>
+                    <option value="3">France</option>
+                    <option value="3">Poland</option>
+                    <option value="3">Japan</option>
+                </select>
+                <button class="btn-save btn btn-primary btn-sm">Save</button>
                 <!-- Inventory -->
                 <div class="form-group row">
                     <div class="col-3">
@@ -95,4 +104,18 @@
             return true;
         }
     </script>
+    <script>
+        // Material Select Initialization
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+        });
+    </script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 }

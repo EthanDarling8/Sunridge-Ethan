@@ -7,7 +7,11 @@ namespace Sunridge.Models.ViewModels
     {
         public Lot Lot { get; set; }
 
-        //All the categories for a drop down list
-        public IEnumerable<SelectListItem> InventoryList { get; set; } // I need to get a List of Inventory Items so I can make checkboxes in the Upsert... Not sure how right now.
+        // The Fields needed to display the Lot Index Page.
+        public string LotNumber { get; set; }
+        public string Address { get; set; }
+        public IList<Owner> Owners { get; set; }
+        public string TaxId { get; set; }
+        public IList<Inventory> Inventories { get; set; }
     }
 }

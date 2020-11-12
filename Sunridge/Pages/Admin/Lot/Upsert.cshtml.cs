@@ -37,7 +37,6 @@ namespace Sunridge.Pages.Admin.Lot
             LotObj = new LotVM()
             {
                 Lot = new Models.Lot(),
-                InventoryList = _unitOfWork.Inventory.GetInventoryList() // Inventory List to create Inventory Checkboxes dynamically.
             };
             if (id != null)
             {

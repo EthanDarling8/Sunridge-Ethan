@@ -59,7 +59,8 @@ namespace Sunridge.DataAccess.Data.Repository
             Owner = new OwnerRepository(_db);
             News = new NewsRepository(_db);
             FireInfo = new FireInfoRepository(_db);
-            
+            Forms = new FormsRepository(_db);
+
             // Board Member Models
             BoardMember = new BoardMemberRepository(_db);
             OwnerBoardMember = new OwnerBoardMemberRepository(_db);

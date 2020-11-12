@@ -17,6 +17,7 @@ namespace Sunridge.DataAccess.Data.Repository
         
         // Common Area Asset Repositories
         public IAssetRepository Asset { get; private set; }
+        public IMaintenanceRecordRepository MaintenanceRecord { get; private set; }
 
         // Board Member IRepositories
         public IOwnerBoardMemberRepository OwnerBoardMember { get; private set; }
@@ -63,6 +64,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
             // Common Area Asset Models
             Asset = new AssetRepository(_db);
+            MaintenanceRecord = new MaintenanceRecordRepository(_db);
 
             // Board Member Models
             BoardMember = new BoardMemberRepository(_db);

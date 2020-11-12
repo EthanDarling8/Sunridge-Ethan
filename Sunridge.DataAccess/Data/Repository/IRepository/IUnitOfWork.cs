@@ -11,6 +11,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         
         // Common Area Asset Repositories
         IAssetRepository Asset { get; }
+        IMaintenanceRecordRepository MaintenanceRecord { get; }
 
         // Board Member Repositories
         IBoardMemberRepository BoardMember { get; }

@@ -34,6 +34,7 @@ namespace Sunridge.DataAccess.Data
 
         // Common Area Asset DbSet
         public DbSet<Asset> Asset { get; set; }
+        public DbSet<MaintenanceRecord> MaintenanceRecord { get; set; }
 
         //Photo Gallery DbSets
         public DbSet<PhotoCategory> PhotoCategory { get; set; }

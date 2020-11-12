@@ -21,6 +21,8 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IDocumentSectionRepository DocumentSection { get; }
         IDocumentSectionTextRepository DocumentSectionText { get; }
 
+        IClassifiedsCategoryRepository ClassifiedsCategory { get; }
+        IClassifiedsItemRepository ClassifiedsItem{ get; }
 
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }

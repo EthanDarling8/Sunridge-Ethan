@@ -20,7 +20,10 @@ namespace Sunridge.DataAccess.Data.Repository
         public IOwnerBoardMemberRepository OwnerBoardMember { get; private set; }
         public IBoardMemberRepository BoardMember { get; private set; }
 
-
+        // Classifieds IRepositories
+        public IClassifiedsCategoryRepository CategoryRepository { get; private set; }
+        public IClassifiedsItemRepository ClassifiedsItemRepository { get; private set; }
+        
         //Documents IRepositories
         public IDocumentCategoryRepository DocumentCategory { get; private set; }
         public IDocumentFileRepository DocumentFile { get; private set; }

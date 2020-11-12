@@ -26,6 +26,9 @@ namespace Sunridge.DataAccess.Data
         public DbSet<DocumentSection> DocumentSection { get; set; }
         public DbSet<DocumentSectionText> DocumentSectionText { get; set; }
 
+        // Classifieds
+        public DbSet<ClassifiedsCategory> ClassifiedsCategory { get; set; }
+        public DbSet<ClassifiedsItem> ClassifiedsItem { get; set; }
 
         // Fire Info
         public DbSet<FireInfo> FireInfo { get; set; }

@@ -23,6 +23,7 @@ namespace Sunridge.DataAccess.Data.Repository
             objFromDb.Description = maintenanceRecord.Description;
             objFromDb.Cost = maintenanceRecord.Cost;
             objFromDb.DateCompleted = maintenanceRecord.DateCompleted;
+            objFromDb.AssetId = maintenanceRecord.AssetId;
 
             _db.SaveChanges();
         }

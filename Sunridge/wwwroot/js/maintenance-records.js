@@ -1,30 +1,27 @@
-﻿var dataTable;
+﻿var id = getUrlParameter('id');
+
+var dataTable;
 
 $(document).ready(function () {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/api/asset",
+            "url": "/api/maintenanceRecord/" + id,
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { data: "name", width: "15%" },
-            { data: "price", width: "15%" },
-            { data: "description", width: "15%" },
-            { data: "status", width: "15%" },
-            { data: "date", width: "15%", render: function (data) { return moment(data).format('MMMM Do YYYY'); } },
+            { data: "dateCompleted", width: "25%", render: function (data) { return moment(data).format('MMMM Do YYYY'); } },
+            { data: "description", width: "25%" },
+            { data: "cost", width: "25%" },
             {
                 data: "id", width: "25%",
                 "render": function (data) {
                     return `<div class="text-center">
-                                <a href="/Admin/CommonAreaAssets/Upsert?id=${data}" class="btn btn-success text-white" style="cursor: pointer; width: 100px">
+                                <a href="/Admin/CommonAreaAssets/MaintenanceRecords/Upsert?id=${data}" class="btn btn-success text-white" style="cursor: pointer; width: 100px">
                                     <i class="far fa-edit"></i> Edit
                                 </a>
-                                <a onClick=Delete('/api/asset/'+${data}) class="btn btn-danger text-white" style="cursor: pointer; width: 100px">
+                                <a onClick=Delete('/api/maintenanceRecord/'+${data}) class="btn btn-danger text-white" style="cursor: pointer; width: 100px">
                                     <i class="far fa-trash-alt"></i> Delete
-                                </a>
-                                <a href="/Admin/CommonAreaAssets/MaintenanceRecords/Index?id=${data}" class="btn btn-dark text-white" style="cursor: pointer">
-                                    <i class="far fa-trash-alt"></i> Maintenance Records
                                 </a>
                             </div>`;
                 }
@@ -64,3 +61,19 @@ function Delete(url) {
         }
     });
 }
+
+// Function courtesy of StackOverflow: https://stackoverflow.com/questions/19491336/how-to-get-url-parameter-using-jquery-or-plain-javascript
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};

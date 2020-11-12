@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 
-namespace Sunridge.Pages.Admin.CommonAreaAssets
+namespace Sunridge.Pages.Admin.CommonAreaAssets.MaintenanceRecords
 {
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
 
         [BindProperty]
-        public Asset Asset { get; set; }
+        public MaintenanceRecord MaintenanceRecord { get; set; }
 
         public UpsertModel(IUnitOfWork unitOfWork)
         {
@@ -23,13 +23,13 @@ namespace Sunridge.Pages.Admin.CommonAreaAssets
 
         public IActionResult OnGet(int? id)
         {
-            Asset = new Asset();
+            MaintenanceRecord = new MaintenanceRecord();
 
             if (id != null)
             {
-                Asset = _unitOfWork.Asset.GetFirstOrDefault(a => a.Id == id);
+                MaintenanceRecord = _unitOfWork.MaintenanceRecord.GetFirstOrDefault(mr => mr.Id == id);
 
-                if (Asset == null)
+                if (MaintenanceRecord == null)
                 {
                     return NotFound();
                 }
@@ -47,19 +47,18 @@ namespace Sunridge.Pages.Admin.CommonAreaAssets
                 return Page();
             }
 
-            if (Asset.Id == 0) // check if brand new Asset
+            if (MaintenanceRecord.Id == 0) // check if brand new MaintenanceRecord
             {
-                _unitOfWork.Asset.Add(Asset);
+                _unitOfWork.MaintenanceRecord.Add(MaintenanceRecord);
             }
             else
             {
-                _unitOfWork.Asset.Update(Asset);
+                _unitOfWork.MaintenanceRecord.Update(MaintenanceRecord);
             }
 
             _unitOfWork.Save();
 
-            return RedirectToPage("./Index");
+            return Redirect("Index?id=" + MaintenanceRecord.AssetId);
         }
-
     }
 }

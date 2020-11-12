@@ -25,16 +25,19 @@ namespace Sunridge.Models
         /// <summary>
         /// The date the maintenance was completed
         /// </summary>
+        [Required]
         public DateTime DateCompleted { get; set; }
 
         /// <summary>
         /// Description of the maintenance
         /// </summary>
+        [Required]
         public string Description { get; set; }
 
         /// <summary>
         /// The amount paid for the maintenance
         /// </summary>
+        [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Cost { get; set; }
         #endregion

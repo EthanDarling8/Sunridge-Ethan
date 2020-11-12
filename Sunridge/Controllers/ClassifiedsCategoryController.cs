@@ -24,6 +24,7 @@ namespace Sunridge.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+
             return Json(new { data = _unitOfWork.ClassifiedsCategory.GetAll() });
         }
 

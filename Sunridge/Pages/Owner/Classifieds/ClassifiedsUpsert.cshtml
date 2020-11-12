@@ -76,8 +76,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Images"></label>
                     </div>
                     <div class="col-9">
-                        <input type="file" class="form-control" id="uploadBox" name="files" accept="image/x-png,image/gif,image/jpeg" multiple="multiple" />
-
+                        <input type="file" class="form-control" id="uploadBox" name="files" accept="image/x-png,image/gif,image/jpeg" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -94,8 +93,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone" id="bar" placeholder="(123) 456-7890"
-                               type="text" name="txtInput" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone" placeholder="(123) 456-7890"/>
                         <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Phone"></span>
                     </div>
                 </div>
@@ -152,7 +150,7 @@
 
                             </div>
                             <div class="col-6">
-                                <a href="./ClassifiedsIndex" class="btn btn-success form-control">Back</a>
+                                <a href="./ItemsTable" class="btn btn-success form-control">Back</a>
                             </div>
                         </div>
                     </div>

@@ -29,22 +29,22 @@
                 {
                     <a id="cat" class="dropdown-item" onclick="catFunction()" asp-route-catid="@categoryItem.Id" asp-page="/Home/Classifieds/Index">@categoryItem.Name</a>
                 }
-                </div>
+            </div>
         </div>
 
         @*<div class="row mb-2 dropright" id="subCat">
-            <a id="btnGroupDrop2" class="btn btn-block btn-secondary dropdown-toggle" 
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Subcategories
-            </a>
+                <a id="btnGroupDrop2" class="btn btn-block btn-secondary dropdown-toggle"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Subcategories
+                </a>
 
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                @foreach (var subcategoryItem in Model.//ClassifiedsSubcategoryList)
-                { 
-                <a class="dropdown-item" asp-route-subcatid="@subcategoryItem.Id" asp-page="Home/Classifieds/Index">@subcategoryItem.Name</a>
-                }
-            </div>
-        </div>*@
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                    @foreach (var subcategoryItem in Model.//ClassifiedsSubcategoryList)
+                    {
+                    <a class="dropdown-item" asp-route-subcatid="@subcategoryItem.Id" asp-page="Home/Classifieds/Index">@subcategoryItem.Name</a>
+                    }
+                </div>
+            </div>*@
         <div class="row mb-2">
             <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ClassifiedsIndex">
                 <i class="far fa-images"></i>&nbsp;My Listings
@@ -61,27 +61,31 @@
 
                         @foreach (var classifiedsItem in Model.ClassifiedsItemList)
                         {
-                            <div class="row-cols-1 col-lg-4 col-xl-3 col-md-4 pb-2">
-                                <div class="card h-100" style="width: 250px">
-                                    <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
-                                        <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
-                                    </a>
+                            <div class="card-deck">
+                                <div class="col-lg-3 col-xl-3 col-md-3 pb-2 m-2">
+                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 250px">
+                                        <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
+                                            <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
+                                        </a>
 
-                                    <div class="card-body">
-                                        <h3 class="card-title text-primary">@classifiedsItem.Title</h3>
-                                        <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
-                                        <div class="item card-text">
-                                           
-                                            <div class="d-inline-block text-truncate" style="max-width: 130px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-primary">@classifiedsItem.Title</h5>
+                                            <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
+                                            <div class="card-text">
+
+                                                <p class="card-text d-inline-block text-truncate" style="max-width: 250px;">
 
 
-                                                @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                                </p>
+
                                             </div>
-                                               
+                                            <div class="card-footer bg-transparent text-right">
+                                            <p><small class="text-muted">@*@classifiedsItem.TimeAdded*@</small><i class="far fa-eye text-right"></i>&nbsp;5</p>
+                                                </div>
                                         </div>
-                                        <p class="card-text"><small class="text-muted">@classifiedsItem.TimeAdded</small></p>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
 

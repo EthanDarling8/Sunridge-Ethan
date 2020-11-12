@@ -91,14 +91,14 @@
                 </a>
                 <!-- Classifieds Submenu content -->
                 <div id='submenuClass' class="collapse sidebar-submenu">
-                    <a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Category">
+                    <a class="list-group-item list-group-item-action" asp-page="/Admin/Classifieds/Category">
                         <span class="menu-collapsed">Categories</span>
                     </a>
-                    <a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Subcategory">
-                        <span class="menu-collapsed">Subcategories</span>
-                    </a>
-                    <a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Items">
-                        <span class="menu-collapsed">Items</span>
+                    @*<a class="list-group-item list-group-item-action" href="/Admin/Classifieds/Subcategory">
+                            <span class="menu-collapsed">Subcategories</span>
+                        </a>*@
+                    <a class="list-group-item list-group-item-action" asp-page="/Owner/Classifieds/ItemsTable">
+                        <span class="menu-collapsed">Listings</span>
                     </a>
                 </div>
                 <a class="list-group-item list-group-item-action" href="/Owner/Photos">

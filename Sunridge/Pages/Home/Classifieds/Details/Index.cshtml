@@ -5,21 +5,21 @@
 
 @foreach (var item in Model.ClassifiedsItemList)
 {
-    
+    <div>
+
+        <h2 class="row col-sm-12 pb-4">@item.Title</h2>
+
+    </div>
+    @*<div>
+            //<h5> *** this will be total time elapsed since ad was posted ***</h5>
+        </div>*@
+    <div>
+        <h3>@item.Price.ToString("c")</h3>
+    </div>
+
     <div class="row m-3 p-1">
 
-        <div class="card mb-3 col-9">
-            <div>
-
-                <h2 class="row col-sm-12 pb-4">@item.Title</h2>
-
-            </div>
-            @*<div>
-           //<h5> *** this will be total time elapsed since ad was posted ***</h5>
-        </div>*@
-            <div>
-                <h3>@item.Price.ToString("c")</h3>
-            </div>
+        <div class="card mb-3 col-sm-12">
 
             <div id="carouselExampleControls" class="carousel slide card-img-top" data-ride="carousel">
 
@@ -27,7 +27,7 @@
                 @*//{*@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="@item.Images" class="d-block w-100" alt="..." style="height: 500px; width: 700px; object-fit: contain">
+                        <img src="@item.Images" class="d-block w-100 img-responsive" alt="..." style="height: 500px; width: 700px; object-fit: contain">
                     </div>
                 </div>
                 @*//}*@
@@ -60,13 +60,12 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-3 text-center">
+        <div class="col-12 text-center">
             <a class="btn btn-block btn-primary" href="#" onclick="location.href = document.referrer; return false;">
 
                 <i class="fas fa-arrow-alt-circle-left"></i>&nbsp;Back to Listings
             </a>
         </div>
-
     </div>
 }
 

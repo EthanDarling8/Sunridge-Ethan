@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
+using Sunridge.Pages.Owner.Classifieds;
 
 namespace Sunridge.Controllers
 {
@@ -25,10 +27,20 @@ namespace Sunridge.Controllers
         }
 
         [HttpGet]
-            public IActionResult Get()
+            public IActionResult Get(int id)
             {
+
+            string adminName = User.Identity.Name;
+            string ownerId = User.Identity != null && User.Identity.IsAuthenticated && User.Claims.ToList().Count > 0 ? User.Claims.ToList()[0].Value : null;
+            //if (roleName == true)
+            //{
+            //    return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
+            //}
+            //else
+            //{
                 //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll(null, null, "ClassifiedsCategory,ClassifiedsSubCategory") });
-                return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
+                return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.OwnerId == ownerId) });
+            //}
         }
 
             [HttpDelete("{id}")]

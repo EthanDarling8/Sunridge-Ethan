@@ -15,15 +15,15 @@ function loadList() {
         },
         
         "columns": [
-            { data: "categoryId", width: "5%" },
+            { data: "id", width: "5%" },
             { data: "title", width: "5%" },
-            { data: "description", width: "40%" },
+            { data: "description", width: "35%" },
             { data: "price", render: $.fn.dataTable.render.number(',', '.', 2, '$'), width: "5%" },
             { data: "name", width: "5%" },
             { data: "phone", width: "5%" },
             { data: "email", width: "5%" },
             { data: "website", width: "5%" },
-            //{ data: "timeadded", width: "5%" },
+            { data: "images", width: "5%" },
             {
                 data: "id",
                 "render": function (data) {
@@ -46,7 +46,7 @@ function loadList() {
         "language": {
             "emptyTable": "no data found."
         },
-        "width": "80%",
+        "width": "66%",
         "order": [[2, "asc"]]
     });
 }

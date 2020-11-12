@@ -8,7 +8,7 @@
 <div class="row m-1 p-1">
 
 
-    <div class="col-3">
+    <div class="col-2">
 
         <div class="row mb-2">
             <a class="btn btn-block btn-primary" asp-page="/Owner/Classifieds/ClassifiedsUpsert">
@@ -20,7 +20,8 @@
 
 
         <div class="row mb-2 dropright">
-            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
+            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle" 
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
                 Categories
             </a>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -42,10 +43,10 @@
                 </div>
             </div>*@
         <div class="row mb-2">
-                <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ItemsTable">
-                    <i class="far fa-images"></i>&nbsp;My Listings Details
-                </a>
-            </div>
+            <a class="btn btn-block btn-secondary" asp-page="/Owner/Classifieds/ItemsTable">
+                <i class="far fa-images"></i>&nbsp;My Listings Details
+            </a>
+        </div>
         <div class="row mb-2">
             <a class="btn btn-block btn-secondary" asp-page="/Home/Classifieds/Index">
                 <i class="far fa-images"></i>&nbsp;All Listings
@@ -62,40 +63,39 @@
 
                         @foreach (var classifiedsItem in Model.ClassifiedsItemList)
                         {
+                            <div class="card-deck">
+                                <div class="col-lg-3 col-xl-3 col-md-3 pb-2 m-2">
+                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 250px">
+                                        <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
+                                            <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
+                                        </a>
 
-                            <div class="row-cols-1 col-lg-3 col-xl-3 col-md-3 pb-2 m-2">
-                                <div class="card h-100" style="width: 250px">
-                                    <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
-                                        <img class="card-img-top img-fluid" style="width: 250px; height: 200px;" src="@classifiedsItem.Images" alt="Card image cap">
-                                    </a>
-                                    
-                                    <div class="card-body">
-                                        <h5 class="card-title text-primary">@classifiedsItem.Title</h5>
-                                        <h5 class="card-title">@classifiedsItem.Price.ToString("c")</h5>
-                                        <div class="item card-text">
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                
-                                            
-                                            @Html.Raw(classifiedsItem.Description)<a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
-                                                </span>
+                                        <div class="card-body">
+                                            <h5 class="card-title text-primary">@classifiedsItem.Title</h5>
+                                            <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
+                                            <div class="card-text">
+
+                                                <p class="card-text d-inline-block text-truncate" style="max-width: 250px;">
+
+
+                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                                </p>
+
+                                            </div>
+                                            <p class="card-footer bg-transparent text-right"><small class="text-muted">@*@classifiedsItem.TimeAdded*@</small><i class="far fa-eye text-right"></i>&nbsp;5</p>
+
                                         </div>
-                                        <p class="card-text"><small class="text-muted">@classifiedsItem.TimeAdded</small></p>
+
                                     </div>
-                                    
                                 </div>
                             </div>
-
-
 
                         }
                     }
 
                     @if (Model.ClassifiedsItemList.Count() == 0)
                     {
-
-
-                        <h2 class="col-12 text-center mt-5">You have no listings to display.</h2>
-
+                        <h2 class="col-12 text-center mt-5">There are no listings to display.</h2>
                     }
 
                 </div>
@@ -105,8 +105,8 @@
 
 </div>
 
-@section Scripts{ 
-<script src="~/js/expandlisiting.js"></script>
+@section Scripts{
+    <script src="~/js/expandlisting.js"></script>
 }
 
 

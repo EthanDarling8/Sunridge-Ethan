@@ -1,0 +1,40 @@
+﻿@page
+@model Sunridge.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<Models.Owner> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<h1>Dashboard</h1>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Information</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Full Name:</strong> @user.FullName</p>
+                <p class="card-text"><strong>Email:</strong> @user.Email</p>
+                <p class="card-text"><strong>Phone Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(user.PhoneNumber))</p>
+            </div>
+            <div class="card-footer">
+                <a class="card-link" href="~/Identity/Account/Manage/ChangePassword">Change Password</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+
+    </div>
+    <div class="col-lg-4">
+
+    </div>
+    <div class="col-lg-4">
+
+    </div>
+</div>

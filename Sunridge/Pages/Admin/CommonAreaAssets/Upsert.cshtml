@@ -5,47 +5,43 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-<form method="post" asp-action="Upsert">
-    <div class="form-group">
-        <label asp-for="Asset.Name"></label>
-        <input class="form-control" asp-for="Asset.Name" />
-        <span class="text-danger" asp-validation-for="Asset.Name"></span>
+<div class="row">
+    <div class="col-lg-9">
+        <form method="post" asp-action="Upsert">
+            <div class="form-group">
+                <label asp-for="Asset.Name"></label>
+                <input class="form-control" asp-for="Asset.Name" />
+                <span class="text-danger" asp-validation-for="Asset.Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Asset.Price"></label>
+                <input class="form-control" asp-for="Asset.Price" />
+                <span class="text-danger" asp-validation-for="Asset.Price"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Asset.Description"></label>
+                <input class="form-control" asp-for="Asset.Description" />
+                <span class="text-danger" asp-validation-for="Asset.Description"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Asset.Status"></label>
+                <input class="form-control" asp-for="Asset.Status" />
+                <span class="text-danger" asp-validation-for="Asset.Status"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Asset.Date"></label>
+                <input class="form-control" asp-for="Asset.Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span class="text-danger" asp-validation-for="Asset.Date"></span>
+            </div>
+            @if (Model.Asset.Id != 0)
+            {
+                <input type="hidden" asp-for="Asset.Id" />
+                <button type="submit" class="btn btn-primary">Update</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary">Add</button>
+            }
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="Asset.Price"></label>
-        <input class="form-control" asp-for="Asset.Price" />
-        <span class="text-danger" asp-validation-for="Asset.Price"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Asset.Description"></label>
-        <input class="form-control" asp-for="Asset.Description" />
-        <span class="text-danger" asp-validation-for="Asset.Description"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Asset.Status"></label>
-        <input class="form-control" asp-for="Asset.Status" />
-        <span class="text-danger" asp-validation-for="Asset.Status"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Asset.Date"></label>
-        <input id="datepicker" class="form-control" asp-for="Asset.Date" />
-        <span class="text-danger" asp-validation-for="Asset.Date"></span>
-    </div>
-    @if (Model.Asset.Id != 0)
-    {
-        <input type="hidden" asp-for="Asset.Id" />
-        <button type="submit" class="btn btn-primary">Update</button>
-    }
-    else
-    {
-        <button type="submit" class="btn btn-primary">Add</button>
-    }
-</form>
-
-@section Scripts{
-    <script>
-        $(function () {
-            $("#datepicker").datepicker({ minDate: 1, maxDate: "+1W" });
-        });
-    </script>
-}
+</div>

@@ -24,7 +24,7 @@ $(document).ready(function () {
                                     <i class="far fa-trash-alt"></i> Delete
                                 </a>
                                 <a href="/Admin/CommonAreaAssets/MaintenanceRecords/Index?id=${data}" class="btn btn-dark text-white" style="cursor: pointer">
-                                    <i class="far fa-trash-alt"></i> Maintenance Records
+                                    <i class="far fa-clipboard"></i> Maintenance Records
                                 </a>
                             </div>`;
                 }

@@ -26,6 +26,7 @@ namespace Sunridge.Models
         /// The date the maintenance was completed
         /// </summary>
         [Required]
+        [DataType(DataType.Date)]
         public DateTime DateCompleted { get; set; }
 
         /// <summary>

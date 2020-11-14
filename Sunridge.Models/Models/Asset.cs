@@ -46,6 +46,7 @@ namespace Sunridge.Models
         /// Date the asset was purchased
         /// </summary>
         [Required]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         #endregion
     }

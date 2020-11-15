@@ -4,11 +4,6 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<Models.Owner> UserManager
-@{
-    var user = await UserManager.GetUserAsync(User);
-}
 
 <h1>Dashboard</h1>
 
@@ -19,9 +14,9 @@
                 <h3 class="card-title">Information</h3>
             </div>
             <div class="card-body">
-                <p class="card-text"><strong>Full Name:</strong> @user.FullName</p>
-                <p class="card-text"><strong>Email:</strong> @user.Email</p>
-                <p class="card-text"><strong>Phone Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(user.PhoneNumber))</p>
+                <p class="card-text"><strong>Full Name:</strong> @Model.Owner.FullName</p>
+                <p class="card-text"><strong>Email:</strong> @Model.Owner.Email</p>
+                <p class="card-text"><strong>Phone Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(@Model.Owner.PhoneNumber))</p>
             </div>
             <div class="card-footer">
                 <a class="card-link" href="~/Identity/Account/Manage/ChangePassword">Change Password</a>
@@ -29,12 +24,75 @@
         </div>
     </div>
     <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Lots</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Lot
+                            </th>
+                            <th>
+                                Tax Id
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lotOwner in Model.LotOwners)
+                        {
+                            <tr>
+                                <td>
+                                    @lotOwner.Lot.LotNumber
+                                </td>
+                                <td>
+                                    @lotOwner.Lot.TaxId
+                                </td>
+                            </tr>
 
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="col-lg-4">
-
-    </div>
-    <div class="col-lg-4">
-
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Keys</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Lot
+                            </th>
+                            <th>
+                                Serial Number
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var keyLot in Model.KeyLots)
+                        {
+                            @if (Model.LotOwners.Any(t => t.LotId == keyLot.LotId))
+                            {
+                                <tr>
+                                    <td>
+                                        @keyLot.Lot.LotNumber
+                                    </td>
+                                    <td>
+                                        @keyLot.Key.Year-@keyLot.Key.SerialNumber
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

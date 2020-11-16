@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sunridge.DataAccess\Sunridge.DataAccess.csproj" />
     <ProjectReference Include="..\Sunridge.Models\Sunridge.Models.csproj" />
   </ItemGroup>
 

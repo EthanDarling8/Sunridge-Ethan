@@ -13,6 +13,9 @@ namespace Sunridge.DataAccess.Data.Repository {
         public void Update(OwnerBoardMember ownerBoardMember) {
             var objFromDb = _db.OwnerBoardMember.FirstOrDefault(s => s.Id == ownerBoardMember.Id);
 
+            objFromDb.Owner = ownerBoardMember.Owner;
+            objFromDb.BoardMember = ownerBoardMember.BoardMember;
+            
             _db.SaveChanges();
         }
     }

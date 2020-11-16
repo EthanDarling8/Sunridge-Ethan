@@ -8,12 +8,12 @@ namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewController : Controller
+    public class LostItemController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ReviewController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
+        public LostItemController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
         {
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;

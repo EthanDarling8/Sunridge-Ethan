@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 
@@ -11,7 +12,12 @@ namespace Sunridge.DataAccess.Data.Repository {
         }
 
         public void Update(BoardMember updateObj) {
-            throw new System.NotImplementedException();
+            var objFromDb = _db.BoardMember.FirstOrDefault(s => s.Id == updateObj.Id);
+
+            objFromDb.Image = updateObj.Image;
+            objFromDb.Position = updateObj.Position;
+
+            _db.SaveChanges(); 
         }
     }
 }

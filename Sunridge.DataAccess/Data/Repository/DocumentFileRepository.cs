@@ -22,6 +22,7 @@ namespace Sunridge.DataAccess.Data.Repository
             //Gets the first object from the table that has the same id as the one passed in
             var objFromDb = _db.DocumentFile.FirstOrDefault(s => s.Id == documentFile.Id);
 
+            objFromDb.DocumentCategoryId = documentFile.DocumentCategoryId;
             objFromDb.Name = documentFile.Name;
             objFromDb.DisplayOrder = documentFile.DisplayOrder;
             objFromDb.File = documentFile.File;

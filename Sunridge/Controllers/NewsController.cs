@@ -7,6 +7,7 @@ using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Microsoft.AspNetCore.Razor.Language;
 using System.Web;
+using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,6 +44,11 @@ namespace Sunridge.Controllers
                 foreach(var item in NewsList)
                 {
                     NewsList[i].FormatDate = item.DisplayDate.Date.ToLongDateString();
+                    NewsList[i].DisplayName = "";
+                    if (item.Attachment != null)
+                    {
+                        NewsList[i].DisplayName = Path.GetFileName(item.Attachment);
+                    }
                     i++;
                 }
             }
@@ -64,6 +70,11 @@ namespace Sunridge.Controllers
                 foreach (var item in NewsList)
                 {
                     NewsList[i].FormatDate = item.DisplayDate.Date.ToLongDateString();
+                    NewsList[i].DisplayName = "";
+                    if (item.Attachment != null)
+                    {
+                        NewsList[i].DisplayName = Path.GetFileName(item.Attachment);
+                    }
                     i++;
                 }
             }

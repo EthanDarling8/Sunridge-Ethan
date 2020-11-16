@@ -1,63 +1,115 @@
 ﻿@model Sunridge.Pages.Home.Photos.IndexModel
+@using Sunridge.Utility
 
-<div class="col-xl-4 col-md-6">
+<div class="col-xl-4 col-md-6 mb-3">
 
     @*Category Selected*@
     @if (@Model.PhotoVM.SelectedPhotoCategory != null)
     {
-        <a asp-page="Index"
-            asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-            asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
-            class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+        <div class="card">
 
             <div class="text-center p-2">
-                @*Title*@
-                <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+                @*Display an image if there is one and link to the album page*@
+                <a asp-page="Index"
+                   asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                   asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id">
 
-                @*Display an image if there is one*@
-                @if (Model.PhotoAlbum.Thumb != null)
-                {
-                    <img src="@Model.PhotoAlbum.Thumb" class="card-img-top rounded" />
-                }
-                else
-                {
-                    <p class="text-danger">Album is Empty</p>
-                }
+                    @*Title*@
+                    <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+
+                    @if (Model.PhotoAlbum.Thumb != null)
+                    {
+                        <img src="@Model.PhotoAlbum.Thumb" class="card-img-top rounded" />
+                    }
+                    else
+                    {
+                        <p class="text-danger">Album is Empty</p>
+                    }
+                </a>
+
 
                 @*Creator Name*@
-                <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>                
+                <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>
+
+
+                @* Edit / Delete Buttons *@
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoAlbum.OwnerId) ||
+                 User.IsInRole(SD.AdministratorRole))
+                {
+                    <div class="row justify-content-center">
+                        @*Edit*@
+                        <a class="col-5 mr-1 btn btn-warning"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-page="/Owner/Photos/Album/Upsert">
+                            <i class="far fa-edit"></i>&nbsp;Edit
+                        </a>
+
+                        @*Delete*@
+                        <a onClick=Delete('/api/photoAlbum/'+@Model.PhotoAlbum.Id)
+                            class="col-5 ml-1 btn btn-danger text-white">
+                                <i class="far fa-trash-alt"></i>&nbsp;Delete
+                        </a>
+                    </div>
+                }
             </div>
 
-        </a>
+        </div>
     }
 
     @*No Category Selected*@
     else
     {
-    <a asp-page="Index"
-        asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
-        class="card" style="border:2px solid #008cba; border-radius: 5px; ">
-        
-        <div class="text-center p-2">
-            @*Title*@
-            <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+        <div class="card">
 
-            @*Display an image if there is one*@
-            @if (Model.PhotoAlbum.Thumb != null)
-            {
-                <img src="@Model.PhotoAlbum.Thumb" class="card-img-top rounded"  />
-            }
-            else
-            {
-                <p class="text-danger">Album is Empty</p>
-            }
+            <div class="text-center p-2">
+                @*Display an image if there is one and link to the album page*@
+                <a asp-page="Index"
+                   asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id">
 
-            @*Creator Name*@
-            <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>
+                    @*Title*@
+                    <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
+
+                    @if (Model.PhotoAlbum.Thumb != null)
+                    {
+                        <img src="@Model.PhotoAlbum.Thumb" class="card-img-top rounded" />
+                    }
+                    else
+                    {
+                        <p class="text-danger">Album is Empty</p>
+                    }
+                </a>
+
+
+                @*Creator Name*@
+                <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>
+
+
+                @* Edit / Delete Buttons *@
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoAlbum.OwnerId) ||
+                User.IsInRole(SD.AdministratorRole))
+                {
+                    <div class="row justify-content-center">
+                        @*Edit*@
+                        <a class="col-5 mr-1 btn btn-warning"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-page="/Owner/Photos/Album/Upsert">
+                            <i class="far fa-edit"></i>&nbsp;Edit
+                        </a>
+
+                        @*Delete*@
+                        <a onClick=Delete('/api/photoAlbum/'+@Model.PhotoAlbum.Id)
+                           class="col-5 ml-1 btn btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete
+                        </a>
+                    </div>
+                }
+            </div>
         </div>
-
-    </a>
     }
 </div>
+
+
+
 
 

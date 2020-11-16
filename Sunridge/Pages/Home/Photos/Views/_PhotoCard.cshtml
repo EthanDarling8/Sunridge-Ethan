@@ -1,11 +1,12 @@
 ﻿@model Sunridge.Pages.Home.Photos.IndexModel
+@using Sunridge.Utility
 
-<div class="col-xl-4 col-md-6">
+<div class="col-xl-4 col-md-6 mb-3">
 
     @*Category Selected*@
     @if (@Model.PhotoVM.SelectedPhotoCategory != null)
     {
-        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+        <div class="card">
             <div class="text-center p-2">
                 @*Title*@
                 <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
@@ -17,15 +18,27 @@
                     </a>
                 </div>
 
-                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.OwnerId)
+
+                @* Edit / Delete Buttons *@
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoAlbum.OwnerId) ||
+                    User.IsInRole(SD.AdministratorRole))
                 {
-                    <a class="btn btn-warning m-1"
-                       asp-route-photoId="@Model.Photo.Id"
-                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                       asp-page="/Owner/Photos/Album/Photo/Upsert">
-                        <i class="far fa-edit"></i> Edit Photo
-                    </a>
+                    <div class="row mt-2 justify-content-center">
+                        @*Edit*@
+                        <a class="col-5 mr-1 btn btn-warning"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-route-photoId="@Model.Photo.Id"
+                           asp-page="/Owner/Photos/Album/Photo/Upsert">
+                            <i class="far fa-edit"></i>&nbsp;Edit
+                        </a>
+
+                        @*Delete*@
+                        <a onClick=Delete('/api/photo/'+@Model.Photo.Id)
+                           class="col-5 ml-1 btn btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete
+                        </a>
+                    </div>
                 }
             </div>
         </div>
@@ -34,7 +47,7 @@
     @*No Category Selected*@
     else
     {
-        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
+        <div class="card">
             <div class="text-center p-2">
                 @*Title*@
                 <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
@@ -46,14 +59,26 @@
                     </a>
                 </div>
 
-                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.OwnerId)
+
+                @* Edit / Delete Buttons *@
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoAlbum.OwnerId) ||
+                   User.IsInRole(SD.AdministratorRole))
                 {
-                    <a class="btn btn-warning m-1"
-                       asp-route-photoId="@Model.Photo.Id"
-                       asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
-                       asp-page="/Owner/Photos/Album/Photo/Upsert">
-                        <i class="far fa-edit"></i> Edit Photo
-                    </a>
+                    <div class="row mt-2 justify-content-center">
+                        @*Edit*@
+                        <a class="col-5 mr-1 btn btn-warning"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-route-photoId="@Model.Photo.Id"
+                           asp-page="/Owner/Photos/Album/Photo/Upsert">
+                            <i class="far fa-edit"></i>&nbsp;Edit
+                        </a>
+
+                        @*Delete*@
+                        <a onClick=Delete('/api/photo/'+@Model.Photo.Id)
+                           class="col-5 ml-1 btn btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete
+                        </a>
+                    </div>
                 }
             </div>
         </div>

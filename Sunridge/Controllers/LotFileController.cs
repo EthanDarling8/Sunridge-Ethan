@@ -21,6 +21,17 @@ namespace Sunridge.Controllers
             return Json(new { data = _unitOfWork.LotFile.GetAll() });
         }
 
-        // **** ToDo Setup Post Method? ****
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var objFromDb = _unitOfWork.LotFile.GetFirstOrDefault(u => u.Id == id);
+            if (objFromDb == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _unitOfWork.LotFile.Remove(objFromDb);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete succcessful" });
+        }
     }
 }

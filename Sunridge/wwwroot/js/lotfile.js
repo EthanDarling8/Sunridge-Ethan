@@ -28,7 +28,7 @@ function loadList() {
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/lotfile/Upsert?id=${data}"
+                            <a href="/Admin/Lot/Files/Upsert?id=${data}"
                                class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 

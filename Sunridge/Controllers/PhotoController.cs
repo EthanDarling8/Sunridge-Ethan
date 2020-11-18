@@ -56,6 +56,35 @@ namespace Sunridge.Controllers
 
                 //Delete photo from database
                 _unitOfWork.Photo.Remove(objFromDb);
+                //MUST save before doing the thumb check!
+                _unitOfWork.Save();
+
+
+                //Update album thumb if this photo was the thumbnail
+                var albumFromDb = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == objFromDb.PhotoAlbumId);
+
+                //Check album exists
+                if (albumFromDb == null)
+                {
+                    return Json(new { success = false, message = "Error while deleting." });
+                }
+
+                //Check if photo thumb matches album thumb
+                if (objFromDb.Thumb == albumFromDb.Thumb)
+                {
+                    var photo = _unitOfWork.Photo.GetFirstOrDefault(p => p.PhotoAlbumId == albumFromDb.Id);
+
+                    //No photos left in the album
+                    if(photo == null)
+                    {
+                        albumFromDb.Thumb = null;
+                    }
+                    else
+                    {
+                        albumFromDb.Thumb = photo.Thumb;
+                    }
+                }
+
 
                 _unitOfWork.Save();
             }

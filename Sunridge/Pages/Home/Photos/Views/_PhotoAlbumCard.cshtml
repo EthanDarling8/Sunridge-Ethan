@@ -4,14 +4,14 @@
 <div class="col-xl-4 col-md-6 mb-3">
 
     @*Category Selected*@
-    @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+    @if (@Model.PhotoGalleryVM.SelectedPhotoCategory != null)
     {
         <div class="card">
 
             <div class="text-center p-2">
                 @*Display an image if there is one and link to the album page*@
                 <a asp-page="Index"
-                   asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                   asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
                    asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id">
 
                     @*Title*@
@@ -29,7 +29,7 @@
 
 
                 @*Creator Name*@
-                <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>
+                <p class="text-secondary">@Model.PhotoGalleryVM.AlbumCreator.FullName</p>
 
 
                 @* Edit / Delete Buttons *@
@@ -39,7 +39,7 @@
                     <div class="row justify-content-center">
                         @*Edit*@
                         <a class="col-5 mr-1 btn btn-warning"
-                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Upsert">
                             <i class="far fa-edit"></i>&nbsp;Edit
@@ -82,7 +82,7 @@
 
 
                 @*Creator Name*@
-                <p class="text-secondary">@Model.PhotoVM.AlbumCreator.FullName</p>
+                <p class="text-secondary">@Model.PhotoGalleryVM.AlbumCreator.FullName</p>
 
 
                 @* Edit / Delete Buttons *@

@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using Sunridge.DataAccess.Data;
 
 namespace Sunridge.Pages.Home.Photos
 {
@@ -25,7 +22,7 @@ namespace Sunridge.Pages.Home.Photos
 
 
         [BindProperty]
-        public PhotoGalleryVM PhotoVM { get; set; }
+        public PhotoGalleryVM PhotoGalleryVM { get; set; }
 
         //This is used by a partial view to generate cards for display based on selected category.
         public PhotoAlbum PhotoAlbum { get; set; }
@@ -48,10 +45,10 @@ namespace Sunridge.Pages.Home.Photos
          *      "Back" button returns to gallery with no category selected. 
          * 5. None: displays a list of categories to filter by and all photo albums
          */
-        public void OnGet(int selectedPhotoCategoryId, int selectedPhotoAlbumId, bool myAlbums = false)
+        public IActionResult OnGet(int selectedPhotoCategoryId, int selectedPhotoAlbumId, bool myAlbums = false)
         {
             // View initilization is required.
-            PhotoVM = new PhotoGalleryVM();
+            PhotoGalleryVM = new PhotoGalleryVM();
             PhotoAlbum = new PhotoAlbum();
             MyAlbums = myAlbums;
             
@@ -60,46 +57,67 @@ namespace Sunridge.Pages.Home.Photos
 
             //Category list should always include everything.
             //Use where in the html to display what is needed.
-            PhotoVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
+            PhotoGalleryVM.PhotoCategoryList = _unitOfWork.PhotoCategory.GetAll(null, c => c.OrderBy(c => c.Name));
 
 
             //1
             if (myAlbums == true)
             {
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.OwnerId == CurrentOwner.Id, a => a.OrderBy(a => a.Title));                
+                PhotoGalleryVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.OwnerId == CurrentOwner.Id, a => a.OrderBy(a => a.Title));                
             }
             else
             {
-                PhotoVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title));
+                PhotoGalleryVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title));
             }
             
             //Category selection does NOT display if myAlbums == true.
             //2
             if (selectedPhotoCategoryId != 0 && selectedPhotoAlbumId == 0)
             {
-                PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId);               
+                //Prevent invalid id's from being manually entered into URL                
+                if (_unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId) == null)
+                {
+                    return RedirectToPage("Index");
+                }             
+
+                PhotoGalleryVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId);               
             }
             //3
             else if (selectedPhotoCategoryId != 0 && selectedPhotoAlbumId != 0)
             {
-                PhotoVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId);
-                PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
-                PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
-                PhotoVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoVM.SelectedPhotoAlbum.OwnerId);
+                //Prevent invalid id's from being manually entered into URL
+                if (_unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId) == null ||
+                    _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId) == null)
+                {
+                    return RedirectToPage("Index");
+                }
+
+                PhotoGalleryVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId);
+                PhotoGalleryVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
+                PhotoGalleryVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
+                PhotoGalleryVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoGalleryVM.SelectedPhotoAlbum.OwnerId);
             }
             //4
             else if (selectedPhotoCategoryId == 0 && selectedPhotoAlbumId != 0)
             {
-                PhotoVM.SelectedPhotoCategory = null;
-                PhotoVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
-                PhotoVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
-                PhotoVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoVM.SelectedPhotoAlbum.OwnerId);
+                //Prevent invalid id's from being manually entered into URL
+                if(_unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId) == null)
+                {
+                    return RedirectToPage("Index");
+                }    
+
+                PhotoGalleryVM.SelectedPhotoCategory = null;
+                PhotoGalleryVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId);
+                PhotoGalleryVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
+                PhotoGalleryVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoGalleryVM.SelectedPhotoAlbum.OwnerId);
             }
             //5
             else
             {
-                PhotoVM.SelectedPhotoCategory = null;
+                PhotoGalleryVM.SelectedPhotoCategory = null;
             }
+
+            return Page();
         }
     }    
 }

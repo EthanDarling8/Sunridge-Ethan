@@ -6,12 +6,11 @@ namespace Sunridge.Models.ViewModels
     public class LotVM
     {
         public Lot Lot { get; set; }
+        public Lot_Owner Lot_Owner { get; set; }
+        public Lot_Inventory Lot_Inventory { get; set; }
 
-        // The Fields needed to display the Lot Index Page.
-        public string LotNumber { get; set; }
-        public string Address { get; set; }
-        public IList<Owner> Owners { get; set; }
-        public string TaxId { get; set; }
-        public IList<Inventory> Inventories { get; set; }
+        // The Drop Down Lists.
+        public IEnumerable<SelectListItem> Owners { get; set; }
+        public IEnumerable<SelectListItem> Inventories { get; set; }
     }
 }

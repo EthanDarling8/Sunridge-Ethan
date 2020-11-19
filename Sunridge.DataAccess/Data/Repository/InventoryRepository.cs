@@ -26,7 +26,7 @@ namespace Sunridge.DataAccess.Data.Repository
 
             _db.SaveChanges();
         }
-        public IEnumerable<SelectListItem> GetInventoryList()
+        public IEnumerable<SelectListItem> GetInventoryListForDropDown()
         {
             return _db.Inventory.Select(i => new SelectListItem()
             {

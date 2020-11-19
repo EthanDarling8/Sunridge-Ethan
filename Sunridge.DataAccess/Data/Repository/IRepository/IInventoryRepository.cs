@@ -7,6 +7,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
 {
     public interface IInventoryRepository : IRepository<Inventory>
     {
-        IEnumerable<SelectListItem> GetInventoryList();
+        void Update(Inventory inventory);
+        IEnumerable<SelectListItem> GetInventoryListForDropDown();
     }
 }

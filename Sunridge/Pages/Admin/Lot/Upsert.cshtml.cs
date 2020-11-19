@@ -37,6 +37,10 @@ namespace Sunridge.Pages.Admin.Lot
             LotObj = new LotVM()
             {
                 Lot = new Models.Lot(),
+                Lot_Owner = new Models.Lot_Owner(),
+                Lot_Inventory = new Models.Lot_Inventory(),
+                Owners = _unitOfWork.Owner.GetOwnerListForDropdown(),
+                Inventories = _unitOfWork.Inventory.GetInventoryListForDropDown()
             };
             if (id != null)
             {

@@ -8,6 +8,7 @@ namespace Sunridge.Models
         [Key]
         public int Id { get; set; }
 
+        [StringLength(60, MinimumLength = 1)]
         [Required]
         public string Keyword { get; set; }
 

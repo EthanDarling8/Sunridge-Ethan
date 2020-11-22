@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualBasic;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Home.Documents
 {
@@ -28,7 +29,7 @@ namespace Sunridge.Pages.Home.Documents
         public IEnumerable<DocumentCategory> DocumentCategoryList { get; set; }
         public IEnumerable<DocumentSection> DocumentSectionList { get; set; }
         public IEnumerable<DocumentFile> DocumentFileList { get; set; }
-        public ICollection<DocumentSectionText> DocumentSectionTextList { get; set; }
+        public IEnumerable<DocumentSectionText> DocumentSectionTextList { get; set; }
 
         //Search results storage
         public ICollection<DocumentFile> SearchedDocumentFileList { get; set; }
@@ -38,43 +39,49 @@ namespace Sunridge.Pages.Home.Documents
 
 
 
-        public void OnGet(int selectedCategoryId, string search)
+        public IActionResult OnGet(int selectedCategoryId, string search)
         {
+            //Track selected category
+            SelectedCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == selectedCategoryId);
+
+            //Get all the categories, files, sections, and section text
             DocumentCategoryList = _unitOfWork.DocumentCategory.GetAll(null, c => c.OrderBy(c => c.Name));
-            SelectedCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == selectedCategoryId);           
-
-
+            //Category Selected
             if (SelectedCategory != null)
-            {
-                DocumentFileList = _unitOfWork.DocumentFile.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder));
-                DocumentSectionList = _unitOfWork.DocumentSection.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder));
-                //Must initialize
-                DocumentSectionTextList = new List<DocumentSectionText>();
+            {                
+                DocumentFileList = _unitOfWork.DocumentFile.GetAll(f => f.DocumentCategoryId == SelectedCategory.Id, f => f.OrderBy(f => f.DisplayOrder), "DocumentCategory");
+                DocumentSectionList = _unitOfWork.DocumentSection.GetAll(s => s.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder), "DocumentCategory");
+                DocumentSectionTextList = _unitOfWork.DocumentSectionText.GetAll(s => s.DocumentSection.DocumentCategoryId == SelectedCategory.Id, s => s.OrderBy(s => s.DisplayOrder), "DocumentSection");
 
-                //Add DocumentSectionText
-                foreach (DocumentSection documentSection in DocumentSectionList)
-                {
-                    IEnumerable<DocumentSectionText> tempText = new List<DocumentSectionText>();
-                    tempText = _unitOfWork.DocumentSectionText.GetAll(t => t.DocumentSectionId == documentSection.Id, t => t.OrderBy(t => t.DisplayOrder));
-
-                    foreach (DocumentSectionText documentSectionText in tempText)
-                    {
-                        DocumentSectionTextList.Add(documentSectionText);
-                    }
+                //Prevent manually entering empty Category ID in URL
+                if (DocumentSectionList.Where(s => s.DocumentCategoryId == SelectedCategory.Id).Count() == 0 &&
+                    DocumentFileList.Where(f => f.DocumentCategoryId == SelectedCategory.Id).Count() == 0 &&
+                    !User.IsInRole(SD.AdministratorRole))
+                {     
+                    return RedirectToPage("Index");                    
                 }
+            }
+            //No Category Selected
+            else
+            {
+                DocumentFileList = _unitOfWork.DocumentFile.GetAll(null, s => s.OrderBy(s => s.DisplayOrder), "DocumentCategory");
+                DocumentSectionList = _unitOfWork.DocumentSection.GetAll(null, s => s.OrderBy(s => s.DisplayOrder), "DocumentCategory");
+                DocumentSectionTextList = _unitOfWork.DocumentSectionText.GetAll(null, s => s.OrderBy(s => s.DisplayOrder), "DocumentSection");
             }
 
 
+            //Search
             if (search != null)
             {
-                Search = search.ToLower();
-                
+                //Ignore case
+                Search = search.ToLower();                
 
                 //Initialize
                 SearchedDocumentFileList = new List<DocumentFile>();
                 SearchedDocumentSectionList = new List<DocumentSection>();
                 SearchedDocumentSectionTextList = new List<DocumentSectionText>();
 
+                
                 //Add DocumentFile Name Results
                 foreach (DocumentFile documentFile in DocumentFileList.Where(s => s.Name.ToLower().Contains(Search)))
                 {
@@ -99,12 +106,14 @@ namespace Sunridge.Pages.Home.Documents
                 foreach (DocumentSectionText documentSectionText in DocumentSectionTextList.Where(t => t.Text.ToLower().Contains(Search)))
                 {
                     //Only add the section if it wasn't already added
-                    if(SearchedDocumentSectionTextList.Where(t => t.Id == documentSectionText.Id).Count() == 0)
+                    if (SearchedDocumentSectionTextList.Where(t => t.Id == documentSectionText.Id).Count() == 0)
                     {
                         SearchedDocumentSectionTextList.Add(documentSectionText);
-                    }                    
-                }
+                    }
+                }                
             }
+
+            return Page();
         }
 
 
@@ -113,7 +122,7 @@ namespace Sunridge.Pages.Home.Documents
         //Search        
         public IActionResult OnPostSearch(int selectedCategoryId)
         {
-            return RedirectToPage("./Index", new { selectedCategoryId = selectedCategoryId, search = Search });
+            return RedirectToPage("Index", new { selectedCategoryId = selectedCategoryId, search = Search });
         }
     }
 }

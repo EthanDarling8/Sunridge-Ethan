@@ -31,10 +31,9 @@ namespace Sunridge.Pages.Admin.Document.File
         [BindProperty]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
 
-        public Models.DocumentCategory DocumentCategory { get; set; }
 
 
-        // **** ToDO **** Setup passing in categoryId to have that category as the only option
+        
         public IActionResult OnGet(int fileId, int documentCategoryId)
         {
             //Alwayas Initialize
@@ -42,19 +41,28 @@ namespace Sunridge.Pages.Admin.Document.File
             CategoryList = _unitOfWork.DocumentCategory.GetListForDropDown();
 
 
-            //Adding to a specified category from documents page, preserve category selection.
-            DocumentCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(s => s.Id == documentCategoryId);
-            if (DocumentCategory != null)
-            {
-                DocumentFileObj.DocumentCategoryId = DocumentCategory.Id;
-            }
-
-
-            //Existing (edit)
-            if (fileId != 0)
+            //Adding new from documents page (selected category preserved)
+            if (documentCategoryId != 0)
             {
                 //Get existing
-                DocumentFileObj = _unitOfWork.DocumentFile.GetFirstOrDefault(s => s.Id == fileId);
+                DocumentFileObj.DocumentCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == documentCategoryId);
+
+                if (DocumentFileObj.DocumentCategory == null)
+                {
+                    return RedirectToPage("/Home/Documents/Index");
+                }
+                else
+                {
+                    DocumentFileObj.DocumentCategoryId = DocumentFileObj.DocumentCategory.Id;
+                    //Default to today's date
+                    DocumentFileObj.PublishedDate = DateTime.Today;
+                }
+            }
+            //Existing (edit)
+            else if (fileId != 0)
+            {
+                //Get existing
+                DocumentFileObj = _unitOfWork.DocumentFile.GetFirstOrDefault(f => f.Id == fileId);
 
                 if (DocumentFileObj == null)
                 {
@@ -101,6 +109,8 @@ namespace Sunridge.Pages.Admin.Document.File
 
                 //Save string Path to file to database
                 DocumentFileObj.File = @"\files\documents\" + fileName + extension;
+                //Save extension to database
+                DocumentFileObj.Extension = extension;
 
                 //Queue for database
                 _unitOfWork.DocumentFile.Add(DocumentFileObj);
@@ -148,11 +158,14 @@ namespace Sunridge.Pages.Admin.Document.File
 
                     //Save string Path to file to database
                     DocumentFileObj.File = @"\files\documents\" + fileName + extension;
+                    //Save extension to database
+                    DocumentFileObj.Extension = extension;
                 }
-                //Keep existing file
+                //Keep existing file + extension
                 else
                 {
                     DocumentFileObj.File = objFromDb.File;
+                    DocumentFileObj.Extension = objFromDb.Extension;
                 }
 
                 //Add fileId here because it is passed in via the route

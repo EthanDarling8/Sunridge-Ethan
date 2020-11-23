@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sunridge.Models
@@ -11,6 +12,15 @@ namespace Sunridge.Models
         [StringLength(120, MinimumLength = 1)]
         [Required]
         public string Name { get; set; }
+
+        //Store the extension for displaying file type information and icon
+        [Required]
+        public string Extension { get; set; }
+
+        public string Description { get; set; }
+        
+        [Display(Name = "Published Date")]
+        public DateTime PublishedDate { get; set; }
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Invalid display order.")]

@@ -27,8 +27,9 @@ namespace Sunridge.Pages.Home.Documents
 
         //Lists for displaying everything
         public IEnumerable<DocumentCategory> DocumentCategoryList { get; set; }
-        public IEnumerable<DocumentSection> DocumentSectionList { get; set; }
         public IEnumerable<DocumentFile> DocumentFileList { get; set; }
+        public IEnumerable<DocumentFileKeyword> DocumentFileKeywordList { get; set; }
+        public IEnumerable<DocumentSection> DocumentSectionList { get; set; }        
         public IEnumerable<DocumentSectionText> DocumentSectionTextList { get; set; }
 
         //Search results storage
@@ -81,14 +82,45 @@ namespace Sunridge.Pages.Home.Documents
                 SearchedDocumentSectionList = new List<DocumentSection>();
                 SearchedDocumentSectionTextList = new List<DocumentSectionText>();
 
+
+
                 
-                //Add DocumentFile Name Results
-                foreach (DocumentFile documentFile in DocumentFileList.Where(s => s.Name.ToLower().Contains(Search)))
+                //Add DocumentFile Name, Description, and Keyword Results
+                foreach (DocumentFile documentFile in DocumentFileList)
                 {
-                    SearchedDocumentFileList.Add(documentFile);
+                    //Add Name Results
+                    if (documentFile.Name.ToLower().Contains(Search))
+                    {
+                        SearchedDocumentFileList.Add(documentFile);
+                    }
+
+
+                    //Add Description Results
+                    if (documentFile.Description.ToLower().Contains(Search))
+                    { 
+                        //Only add if it wasn't already added
+                        if (SearchedDocumentFileList.Where(f => f.Id == documentFile.Id).Count() == 0)
+                        {
+                            SearchedDocumentFileList.Add(documentFile);
+                        }
+                    }
+
+
+                    //Add Keyword Results
+                    DocumentFileKeywordList = _unitOfWork.DocumentFileKeyword.GetAll(k => k.DocumentFileId == documentFile.Id);
+
+                    foreach (DocumentFileKeyword documentFileKeyword in DocumentFileKeywordList.Where(k => k.Keyword.ToLower().Contains(Search)))
+                    { 
+                        //Only add it wasn't already added
+                        if (SearchedDocumentFileList.Where(f => f.Id == documentFile.Id).Count() == 0)
+                        {
+                            SearchedDocumentFileList.Add(documentFile);
+                        }
+                    }
                 }
 
-                //**** ToDo **** Searched File Keyword results
+
+
 
                 //Add DocumentSection Name Results
                 foreach (DocumentSection documentSection in DocumentSectionList.Where(s => s.Name.ToLower().Contains(Search)))
@@ -96,21 +128,23 @@ namespace Sunridge.Pages.Home.Documents
                     SearchedDocumentSectionList.Add(documentSection);
                 }
 
-                //Add DocumentSectionText Name Results
+                //Add DocumentSectionText Name and Text Results
                 foreach (DocumentSectionText documentSectionText in DocumentSectionTextList.Where(t => t.Name.ToLower().Contains(Search)))
                 {
+                    //Add Name Results
                     SearchedDocumentSectionTextList.Add(documentSectionText);
-                }
 
-                //Add DocumentSectionText Text Results
-                foreach (DocumentSectionText documentSectionText in DocumentSectionTextList.Where(t => t.Text.ToLower().Contains(Search)))
-                {
-                    //Only add the section if it wasn't already added
-                    if (SearchedDocumentSectionTextList.Where(t => t.Id == documentSectionText.Id).Count() == 0)
-                    {
-                        SearchedDocumentSectionTextList.Add(documentSectionText);
+
+                    //Add Text Results
+                    if (documentSectionText.Text.ToLower().Contains(Search))
+                    { 
+                        //Only add if it wasn't already added
+                        if (SearchedDocumentSectionTextList.Where(t => t.Id == documentSectionText.Id).Count() == 0)
+                        {
+                            SearchedDocumentSectionTextList.Add(documentSectionText);
+                        }
                     }
-                }                
+                }            
             }
 
             return Page();

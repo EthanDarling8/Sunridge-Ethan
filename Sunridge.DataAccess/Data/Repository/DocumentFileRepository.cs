@@ -24,6 +24,9 @@ namespace Sunridge.DataAccess.Data.Repository
 
             objFromDb.DocumentCategoryId = documentFile.DocumentCategoryId;
             objFromDb.Name = documentFile.Name;
+            objFromDb.Extension = documentFile.Extension;
+            objFromDb.Description = documentFile.Description;
+            objFromDb.PublishedDate = documentFile.PublishedDate;
             objFromDb.DisplayOrder = documentFile.DisplayOrder;
             objFromDb.File = documentFile.File;
 

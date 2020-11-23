@@ -15,8 +15,15 @@ function loadList() {
         //The column names use camel case from when they were converted to Json
         //the ` ` are necessary in the return to return html
         "columns": [
-            { data: "documentCategory.name", width: "30%" },
-            { data: "name", width: "30%" },
+            { data: "documentCategory.name", width: "20%" },
+            { data: "name", width: "20%" },
+            {
+                data: "publishedDate",
+                "render": function (data, type) {
+                    return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+                    width: "20%"
+                },
+            },
             { data: "displayOrder", width: "10%" },
             {
                 data: "id", width: "30%",

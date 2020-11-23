@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Sunridge.Models;
+using Sunridge.Models.ViewModels;
 using System.Runtime.InteropServices.ComTypes;
 
 namespace Sunridge.DataAccess.Data
@@ -51,6 +52,7 @@ namespace Sunridge.DataAccess.Data
         public DbSet<KeyLot> KeyLot { get; set; }
 
         // Lot DbSets
+        public DbSet<LotOwnerInvVM> LotOwnerInvVM { get; set; }
         public DbSet<Lot> Lot { get; set; }
         public DbSet<LotFile> LotFile { get; set; }
         public DbSet<Lot_OwnerFile> Lot_OwnerFile { get; set; }
@@ -66,6 +68,9 @@ namespace Sunridge.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<LotOwnerInvVM>().HasNoKey().ToView(null);
+
             builder.Entity<Lot_Owner>()
                 .HasKey(lo => new { lo.LotId, lo.OwnerId }); //Create a Composite Key for the Lot_Owner table based on their foreign keys.
 

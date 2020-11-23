@@ -12,6 +12,6 @@ namespace Sunridge.Models.ViewModels
         public string Address { get; set; }
         public IList<Owner> Owners { get; set; }
         public string TaxId { get; set; }
-        public IList<Inventory> Inventories { get; set; }
+        public IList<Inventory> Lot_Inventory { get; set; }
     }
 }

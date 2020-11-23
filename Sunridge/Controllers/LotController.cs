@@ -32,7 +32,7 @@ namespace Sunridge.Controllers
             IEnumerable<object> RawSqlResult = null;
             using (var context = _context)
             {
-                RawSqlResult = context.Lot.FromSqlRaw("SELECT Lot.Id, Lot.LotNumber, Lot.Address, Lot.Taxid, Query1.Lot_Inventory as [Lot_Inventory], Query2.Lot_Owner as [Lot_Owner] " +
+                RawSqlResult = context.LotOwnerInvVM.FromSqlRaw("SELECT Lot.Id, Lot.LotNumber, Lot.Address, Lot.Taxid, Query1.Lot_Inventory as Lot_Inventory, Query2.Lot_Owner as Lot_Owner " +
 "FROM Lot " +
 "LEFT JOIN(SELECT LotNumber, STRING_AGG(ItemName, ', ') AS Lot_Inventory " +
             "FROM Lot " +

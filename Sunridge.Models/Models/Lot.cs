@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sunridge.Models
 {
@@ -31,6 +32,11 @@ namespace Sunridge.Models
         public virtual ICollection<Lot_Owner> Lot_Owners { get; set; } // The Collection to hold the relationships between Lot and Owner
         public virtual ICollection<Lot_Inventory> Lot_Inventories { get; set; } // The Ecollection to hold the relationships between Lot and Inventory
         #endregion
+
+        [NotMapped]
+        public string Lot_Inventory { get; set; }
+        [NotMapped]
+        public string Lot_Owner { get; set; }
 
         #region Table Diagram
         // EXAMPLE:

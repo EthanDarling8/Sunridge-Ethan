@@ -8,6 +8,10 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IOwnerRepository Owner { get; }
         INewsRepository News { get; }
         IFireInfoRepository FireInfo { get; }
+        
+        // Common Area Asset Repositories
+        IAssetRepository Asset { get; }
+        IMaintenanceRecordRepository MaintenanceRecord { get; }
         IFormsRepository Forms { get; }
 
         // Board Member Repositories
@@ -21,6 +25,8 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IDocumentSectionRepository DocumentSection { get; }
         IDocumentSectionTextRepository DocumentSectionText { get; }
 
+        IClassifiedsCategoryRepository ClassifiedsCategory { get; }
+        IClassifiedsItemRepository ClassifiedsItem{ get; }
 
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }

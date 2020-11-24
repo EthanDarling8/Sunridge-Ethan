@@ -14,13 +14,21 @@ namespace Sunridge.DataAccess.Data.Repository
         public IOwnerRepository Owner { get; private set; }
         public INewsRepository News { get; private set; }
         public IFireInfoRepository FireInfo { get; private set; }
+        
+        // Common Area Asset Repositories
+        public IAssetRepository Asset { get; private set; }
+        public IMaintenanceRecordRepository MaintenanceRecord { get; private set; }
+        
         public IFormsRepository Forms { get; private set; }
 
         // Board Member IRepositories
         public IOwnerBoardMemberRepository OwnerBoardMember { get; private set; }
         public IBoardMemberRepository BoardMember { get; private set; }
 
-
+        // Classifieds IRepositories
+        public IClassifiedsCategoryRepository CategoryRepository { get; private set; }
+        public IClassifiedsItemRepository ClassifiedsItemRepository { get; private set; }
+        
         //Documents IRepositories
         public IDocumentCategoryRepository DocumentCategory { get; private set; }
         public IDocumentFileRepository DocumentFile { get; private set; }
@@ -32,6 +40,11 @@ namespace Sunridge.DataAccess.Data.Repository
         public IPhotoCategoryRepository PhotoCategory { get; private set; }
         public IPhotoAlbumRepository PhotoAlbum { get; private set; }
         public IPhotoRepository Photo { get; private set; }
+
+        //Classifieds IRepositories
+        public IClassifiedsItemRepository ClassifiedsItem { get; private set; }
+        public IClassifiedsCategoryRepository ClassifiedsCategory { get; private set; }
+       // public IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; private set; }
 
         // Key IRepositories
         public IKeyRepository Key { get; private set; }
@@ -47,6 +60,8 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // Lost & Found IRepositories
         public ILostItemRepository LostItem { get; private set; }
+
+        public IViewCountRepository ViewCount { get; private set; }
         
 
 
@@ -59,6 +74,11 @@ namespace Sunridge.DataAccess.Data.Repository
             Owner = new OwnerRepository(_db);
             News = new NewsRepository(_db);
             FireInfo = new FireInfoRepository(_db);
+
+            // Common Area Asset Models
+            Asset = new AssetRepository(_db);
+            MaintenanceRecord = new MaintenanceRecordRepository(_db);
+
             Forms = new FormsRepository(_db);
 
             // Board Member Models
@@ -76,6 +96,11 @@ namespace Sunridge.DataAccess.Data.Repository
             PhotoCategory = new PhotoCategoryRepository(_db);
             PhotoAlbum = new PhotoAlbumRepository(_db);
             Photo = new PhotoRepository(_db);
+
+            //Classifieds Models
+            ClassifiedsCategory = new ClassifiedsCategoryRepository(_db);
+            //ClassifiedsSubcategory = new ClassifiedsSubcategoryRepository(_db);
+            ClassifiedsItem = new ClassifiedsItemRepository(_db);
 
             // Key Models
             Key = new KeyRepository(_db);

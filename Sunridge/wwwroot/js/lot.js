@@ -21,13 +21,13 @@ function loadList() {
                     data: "address", width: "16%"
                 },
                 {
-                    data: "taxId", width: "16%"
+                    data: "lot_Owner", width: "16%"
                 },
                 {
                     data: "lot_Owners", width: "16%"
                 },
                 {
-                    data: "lot_Inventories", width: "16%"
+                    data: "lot_Inventory", width: "16%"
                 },
                 {
                     data: "id",

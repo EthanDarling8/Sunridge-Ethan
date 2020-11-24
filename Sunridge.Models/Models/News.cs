@@ -16,6 +16,8 @@ namespace Sunridge.Models
         [NotMapped]
         public string FormatDate { get; set; }
         public string Attachment { get; set; }
+        [NotMapped]
+        public string DisplayName { get; set; }
         public bool Archived { get; set; } = false;
     }
 }

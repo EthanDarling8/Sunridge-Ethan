@@ -1,120 +1,152 @@
 ﻿@page
 @model Sunridge.Pages.Home.Photos.IndexModel
+@using Sunridge.Utility
 @{
     ViewData["Title"] = "Photo Gallery";
 }
 
-@*TEMPORARY TEST LINKS*@
-<a class="row" asp-page="../../Admin/PhotoCategory/Index">PhotoCategory Index</a>
-<a class="row" asp-page="../../Admin/PhotoCategory/Upsert">PhotoCategory Upsert</a>
-
 <div class="row m-1 p-1">
-
-    @* **** ToDo **** Allow admin/board member to edit ablums and photos
-        Should probably keep track of edits at some point in case of nefarious changes *@
 
     @*Display Add, Back, and Category buttons here*@
     <div class="col-3">
         @*Album selected*@
-        @if (@Model.PhotoVM.SelectedPhotoAlbum != null)
+        @if (@Model.PhotoGalleryVM.SelectedPhotoAlbum != null)
         {
             @*Category Selected*@
-            @if (@Model.PhotoVM.SelectedPhotoCategory != null)
+            @if (@Model.PhotoGalleryVM.SelectedPhotoCategory != null)
             {
-                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.OwnerId)
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoGalleryVM.SelectedPhotoAlbum.OwnerId) ||
+            User.IsInRole(SD.AdministratorRole))
                 {
+                    @*Add Photo*@
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"
-                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Photo/Upsert">
                             <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Photo
                         </a>
                     </div>
 
+                    @*Edit Album*@
                     <div class="row mb-2">
                         <a class="btn btn-block btn-warning"
-                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Upsert">
                             <i class="far fa-edit"></i>&nbsp;Edit&nbsp;Album
                         </a>
                     </div>
+
+                    @*Delete Album*@
+                    <div class="row mb-2">
+                        <a onClick=Delete('/api/photoAlbum/'+@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id)
+                           class="btn btn-block btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete&nbsp;Album
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    @*Display "login to manage photos" if not logged in.*@
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-area="Identity"
+                           asp-page="/Account/Login">
+                            Login&nbsp;to&nbsp;Manage&nbsp;Photos
+                        </a>
+                    </div>
                 }
 
+
+                @* "Back To Gallery" Button *@
                 <div class="row mb-2">
                     <a class="btn btn-block btn-secondary"
-                       asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
+                       asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
                        asp-page="Index">
-                        <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Photo&nbsp;Gallery
+                        <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Gallery
                     </a>
                 </div>
             }
             @*No Category Selected*@
             else
             {
-                @if (User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoVM.SelectedPhotoAlbum.OwnerId)
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoGalleryVM.SelectedPhotoAlbum.OwnerId) ||
+             User.IsInRole(SD.AdministratorRole))
                 {
+                    @*Add Photo*@
                     <div class="row mb-2">
                         <a class="btn btn-block btn-primary"
-                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Photo/Upsert">
                             <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Photo
                         </a>
                     </div>
 
+                    @*Edit Album*@
                     <div class="row mb-2">
                         <a class="btn btn-block btn-warning"
-                           asp-route-selectedPhotoAlbumId="@Model.PhotoVM.SelectedPhotoAlbum.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id"
                            asp-page="/Owner/Photos/Album/Upsert">
                             <i class="far fa-edit"></i>&nbsp;Edit&nbsp;Album
                         </a>
                     </div>
+
+                    @*Delete Album*@
+                    <div class="row mb-2">
+                        <a onClick=Delete('/api/photoAlbum/'+@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id)
+                           class="btn btn-block btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete&nbsp;Album
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    @*Display "login to manage photos" if not logged in.*@
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-area="Identity"
+                           asp-page="/Account/Login">
+                            Login&nbsp;to&nbsp;Manage&nbsp;Photos
+                        </a>
+                    </div>
                 }
 
+                @* "Back To Gallery" Button *@
                 <div class="row mb-2">
                     <a class="btn btn-block btn-secondary"
                        asp-page="Index">
-                        <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Photo&nbsp;Gallery
+                        <i class="fas fa-arrow-left"></i>&nbsp;Back&nbsp;to&nbsp;Gallery
                     </a>
                 </div>
             }
         }
 
-        @*No album selected*@
+
+        @*No album selected. Display management buttons to logged in owners. *@
         else
         {
-            @*Category Selected*@
-            @if (@Model.PhotoVM.SelectedPhotoCategory != null)
-            {
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div class="row mb-2">
-                        <a class="btn btn-block btn-primary"
-                           asp-route-selectedPhotoCategoryId="@Model.PhotoVM.SelectedPhotoCategory.Id"
-                           asp-page="/Owner/Photos/Album/Upsert">
-                            <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Album
-                        </a>
-                    </div>
-                }
-            }
-            @*No Category Selected*@
-            else
-            {
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div class="row mb-2">
-                        <a class="btn btn-block btn-primary"
-                           asp-page="/Owner/Photos/Album/Upsert">
-                            <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Album
-                        </a>
-                    </div>
-                }
-            }
-
-            @*Display "My Albums" button only to logged in users.*@
             @if (User.Identity.IsAuthenticated)
             {
+                @* Display "Manage Categories" to admins (board members) *@
+                @if (User.IsInRole(SD.AdministratorRole))
+                {
+                    <div class="row mb-2">
+                        <a class="btn btn-block btn-primary"
+                           asp-page="/Admin/PhotoCategory/Index">
+                            Manage Categories
+                        </a>
+                    </div>
+                }
+
+                @* Ignore selected category when adding new album *@
+                <div class="row mb-2">
+                    <a class="btn btn-block btn-primary"
+                       asp-page="/Owner/Photos/Album/Upsert">
+                        <i class="fas fa-plus"></i>&nbsp;Add&nbsp;Album
+                    </a>
+                </div>
+
                 if (@Model.MyAlbums == false)
                 {
                     <div class="row mb-2">
@@ -135,6 +167,7 @@
                     </div>
                 }
             }
+
             @*Display "login to manage photos" if not logged in.*@
             else
             {
@@ -149,16 +182,19 @@
         }
 
 
+
+
+
         @*Display category filters here, only if not displaying "My Albums" or a selected album.*@
         @*Only display the filters if an album isn't selected.*@
-        @if (@Model.PhotoVM.SelectedPhotoAlbum == null && @Model.MyAlbums == false)
+        @if (@Model.PhotoGalleryVM.SelectedPhotoAlbum == null && @Model.MyAlbums == false)
         {
-            <h5 class="row justify-content-center">Select an Album Category</h5>
+            <h5 class="row justify-content-center">Album Categories</h5>
 
             @*Clear Photo Category Selection*@
             <div class="row mb-1">
                 @*Highlight no filters*@
-                @if (Model.PhotoVM.SelectedPhotoCategory == null)
+                @if (Model.PhotoGalleryVM.SelectedPhotoCategory == null)
                 {
                     <a asp-page="Index"
                        class="btn btn-block btn-outline-primary"
@@ -179,14 +215,14 @@
             </div>
 
             @*Photo Category Selection*@
-            @foreach (var photoCategory in Model.PhotoVM.PhotoCategoryList)
+            @foreach (var photoCategory in Model.PhotoGalleryVM.PhotoCategoryList)
             {
                 @*Only display categories that have albums in them.*@
-                @if (Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == photoCategory.Id).Count() > 0)
+                @if (Model.PhotoGalleryVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == photoCategory.Id).Count() > 0)
                 {
                     <div class="row mb-1">
                         @*Highlight Selected Category*@
-                        @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoCategory.Id == photoCategory.Id)
+                        @if (Model.PhotoGalleryVM.SelectedPhotoCategory != null && Model.PhotoGalleryVM.SelectedPhotoCategory.Id == photoCategory.Id)
                         {
                             <a asp-page="Index"
                                class="btn btn-block btn-outline-primary"
@@ -217,23 +253,21 @@
     <div class="col-9">
 
         @*Display only albums for selected category*@
-        @if (Model.PhotoVM.SelectedPhotoCategory != null && Model.PhotoVM.SelectedPhotoAlbum == null)
+        @if (Model.PhotoGalleryVM.SelectedPhotoCategory != null && Model.PhotoGalleryVM.SelectedPhotoAlbum == null)
         {
             <div class="row container">
                 <div class="col-12">
                     <div class="row">
 
                         @*Category Name*@
-                        <h2 class="col-12 border-bottom">@Model.PhotoVM.SelectedPhotoCategory.Name</h2>
+                        <h2 class="col-12 border-bottom">@Model.PhotoGalleryVM.SelectedPhotoCategory.Name</h2>
 
                         @*Display all the albums for the selected category*@
                         <div class="col-12">
                             <div class="row my-3">
-                                @foreach (var photoAlbum in Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @Model.PhotoVM.SelectedPhotoCategory.Id))
+                                @foreach (var photoAlbum in Model.PhotoGalleryVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @Model.PhotoGalleryVM.SelectedPhotoCategory.Id))
                                 {
-                                    Model.PhotoAlbum = photoAlbum;
-                                    //Get the name of the album creator for display
-                                    Model.PhotoVM.AlbumCreator = @Model._unitOfWork.Owner.GetFirstOrDefault(u => u.Id == photoAlbum.OwnerId);
+                                    Model.PhotoAlbum = photoAlbum;                                    
 
                                     //Use a partial view as this code is repeated
                                     <partial name="Home/Photos/Views/_PhotoAlbumCard" />
@@ -248,34 +282,50 @@
 
 
         @*Display all photos for the selected album*@
-        else if (Model.PhotoVM.SelectedPhotoAlbum != null)
+        else if (Model.PhotoGalleryVM.SelectedPhotoAlbum != null)
         {
-            <div class="row container">
+            @*Display Album Information Here*@
+            <div class="ml-1">
 
-                @*Display Album Information Here*@
                 @*Album Title*@
-                <h2 class="col-12">@Model.PhotoVM.SelectedPhotoAlbum.Title</h2>
-                <h4 class="text-primary">@Model.PhotoVM.AlbumCreator.FullName</h4>
-
-                <div class="border col-12">
-                    @*Category*@
-                    <h4 class="col-12 mt-1 text-secondary">@Model.PhotoVM.SelectedPhotoAlbum.PhotoCategory.Name</h4>
-                    @*Description*@
-                    <div class="col-12 mt-2">@Html.Raw(Model.PhotoVM.SelectedPhotoAlbum.Description)</div>
+                <div class="row ml-1">
+                    <h2 class="">@Model.PhotoGalleryVM.SelectedPhotoAlbum.Title</h2>
                 </div>
 
+                <div class="pl-3 pt-2 border text-secondary">
+                    @*Creator*@
+                    <div class="row">
+                        <h5 class="col-2">Creator:</h5>
+                    </div>
+                    <div class="col-12">@Model.PhotoGalleryVM.SelectedPhotoAlbum.Owner.FullName</div>
 
-                @*Display all the photos for the selected album*@
+                    @*Category*@
+                    <div class="row">
+                        <h5 class="col-2">Category:</h5>
+                    </div>
+                    <div class="col-12">@Model.PhotoGalleryVM.SelectedPhotoAlbum.PhotoCategory.Name</div>
+
+                    @*Description*@
+                    <div class="row">
+                        <h5 class="col-2">Description:</h5>
+                    </div>
+                    <div class="col-12">@Html.Raw(Model.PhotoGalleryVM.SelectedPhotoAlbum.Description)</div>
+                </div>
+            </div>
+
+
+            @*Display all the photos for the selected album*@
+            <div class="container">
                 <div class="col-12">
-                    <div class="row my-3">
+                    <div class="row my-3 gallery">
                         @*No photos added yet*@
-                        @if (Model.PhotoVM.PhotoList.Count() == 0)
+                        @if (Model.PhotoGalleryVM.PhotoList.Count() == 0)
                         {
                             <h3 class="col-12 ml-1 text-danger">Album Is Empty</h3>
                         }
                         else
                         {
-                            @foreach (var photo in Model.PhotoVM.PhotoList)
+                            @foreach (var photo in Model.PhotoGalleryVM.PhotoList)
                             {
                                 //Use a partial view to generate the shoe card as this code is repeated frequently based on the filters set.
                                 Model.Photo = photo;
@@ -285,7 +335,6 @@
                         }
                     </div>
                 </div>
-
             </div>
         }
 
@@ -296,23 +345,20 @@
             <div class="row container">
                 <div class="col-12">
                     <div class="row">
-
-                        @foreach (var photoCategory in Model.PhotoVM.PhotoCategoryList)
+                        @foreach (var photoCategory in Model.PhotoGalleryVM.PhotoCategoryList)
                         {
                             @*Only Display Categories with Albums in Them*@
-                            @if (Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == photoCategory.Id).Count() > 0)
+                            @if (Model.PhotoGalleryVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == photoCategory.Id).Count() > 0)
                             {
                                 @*Category Name*@
                                 <h2 class="col-12 border-bottom">@photoCategory.Name</h2>
 
                                 @*Display all the albums category*@
                                 <div class="col-12">
-                                    <div class="row my-3">
-                                        @foreach (var photoAlbum in Model.PhotoVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @photoCategory.Id))
+                                    <div class="row mb-3">
+                                        @foreach (var photoAlbum in Model.PhotoGalleryVM.PhotoAlbumList.Where(a => a.PhotoCategoryId == @photoCategory.Id))
                                         {
-                                            Model.PhotoAlbum = photoAlbum;
-                                            //Get the name of the album creator for display
-                                            Model.PhotoVM.AlbumCreator = @Model._unitOfWork.Owner.GetFirstOrDefault(u => u.Id == photoAlbum.OwnerId);
+                                            Model.PhotoAlbum = photoAlbum;                                            
 
                                             //Use a partial view as this code is repeated
                                             <partial name="Home/Photos/Views/_PhotoAlbumCard" />
@@ -329,16 +375,49 @@
 </div>
 
 
-@section Scripts {
-    @*
-        <script>
-            function baguetteBox() {
-                baguetteBox.run('.gallery');
-            }
 
-            window.addEventListener('load', function () {
-                baguetteBox.run('.gallery');
+
+@section Scripts{
+    <link rel="Stylesheet" href="~/css/general/photos.css" type="text/css" />
+
+    <script>
+        function Delete(url) {
+            swal({
+                title: "Are you sure you want to Delete?",
+                text: "This will also delete all associated photos! You will not be able to restore the data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: url,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                window.location.href("Home/Photos/Index");
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
             });
-        </script>
-    *@
+        }
+    </script>
+
+
+
+
+    <script>
+        window.addEventListener('load', function () {
+            baguetteBox.run('.gallery', {
+                // Custom options
+                captions: true,
+                titleTag: true
+            });
+        });
+    </script>
 }

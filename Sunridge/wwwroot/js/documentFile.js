@@ -28,7 +28,7 @@ function loadList() {
                                 <i class="far fa-edit"></i> Edit
                         </a>
                         <a onClick=Delete('/api/documentFile/'+${data})
-                            class="btn btn-danger text-white style="cursor:pointer; width:100px;" )>
+                            class="btn btn-danger text-white" style="cursor:pointer; width:100px;" )>
                                 <i class="far fa-trash-alt"></i> Delete
                         </a>
                     </div>`;

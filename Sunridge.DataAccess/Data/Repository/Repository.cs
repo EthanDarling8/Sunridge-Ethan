@@ -33,17 +33,7 @@ namespace Sunridge.DataAccess.Data.Repository
             //Allows you to make changes without altering the master input
             IQueryable<T> query = dbset;
 
-            if(filter != null)
-            {
-                //Pass in the Where clause if there is one.
-                query = query.Where(filter);
-            }
-
-            if(orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-
+            //Should do include BEFORE anything else.
             //include properties are comma seperated. We need to remove the commas.
             if (includeProperties != null)
             {
@@ -55,6 +45,17 @@ namespace Sunridge.DataAccess.Data.Repository
                     query = query.Include(includeProperty);
                 }
             }
+
+            if (filter != null)
+            {
+                //Pass in the Where clause if there is one.
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }            
 
             return query.ToList();
         }

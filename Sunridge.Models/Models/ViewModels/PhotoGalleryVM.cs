@@ -9,9 +9,6 @@ namespace Sunridge.Models.ViewModels
 
         public PhotoCategory SelectedPhotoCategory { get; set; }
 
-        //Creator of an album
-        public Owner AlbumCreator { get; set; }
-
         //All the albums for the selected category (if no category selected, display all albums)
         public IEnumerable<PhotoAlbum> PhotoAlbumList { get; set; }
 

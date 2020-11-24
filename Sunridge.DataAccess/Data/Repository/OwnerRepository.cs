@@ -2,8 +2,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.Models;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sunridge.DataAccess.Data.Repository.IRepository
 {

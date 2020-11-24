@@ -35,20 +35,15 @@ function loadList() {
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/lot/Details?id=${data}"
-                               class="btn btn-info text-white" style="cursor: pointer; width: 100px;">
-                                <i class="fas fa-book-open"></i>
-                                Read 
+                            <a href="/Admin/lot/Files/Index?id=${data}"
+                               class="btn btn-secondary text-white" style="cursor: pointer; width: 100px;">
+                                <i class="fas fa-folder"></i>
+                                Files 
                             </a>
                             <a href="/Admin/lot/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                               class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
-                            </a>
-                            <a onClick=Delete('/api/lot/'+${data})
-                               class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
-                                <i class="far fa-trash-alt"></i>
-                                Delete
                             </a>
                         </div>
                         `}, width: "16%"

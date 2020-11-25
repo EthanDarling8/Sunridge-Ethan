@@ -39,6 +39,7 @@ namespace Sunridge.Pages.Admin.LostItem
                 LostItem = new Models.LostItem(),
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
+            LostItemObj.LostItem.Date = DateTime.Now; // Default a NEW Lost and Found Item's Date to the current DateTime.
             if (id != null)
             {
                 LostItemObj.LostItem = _unitOfWork.LostItem.GetFirstOrDefault(u => u.Id == id);

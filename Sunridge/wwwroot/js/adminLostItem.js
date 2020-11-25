@@ -25,7 +25,8 @@ function loadList() {
                     data: "name", width: "20%"
                 },
                 {
-                    data: "date", width: "20%"
+                    data: "date", "aTargets": [0], "render": function (data) { return formatDate(data); }
+                    , width: "30%"
                 },
                 {
                     data: "id",
@@ -38,7 +39,7 @@ function loadList() {
                                 Read 
                             </a>
                             <a href="/Admin/lostandfound/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                               class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
                             </a>
@@ -126,4 +127,10 @@ function addSearchControl(json) {
         }
 
     });
+}
+// Date Formatting
+function formatDate(myDate) {
+    var date = new Date(myDate);
+    return '' + (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear() + '';
+
 }

@@ -15,14 +15,12 @@ namespace Sunridge.Controllers
     [ApiController]
     public class LotController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ApplicationDbContext _context;
 
         public LotController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment, ApplicationDbContext context)
         {
-            _context = context;
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;
             _context = context;

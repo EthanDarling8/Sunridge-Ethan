@@ -15,13 +15,24 @@ function loadList() {
         "columns":
             [
                 {
-                    data: "title", width: "16%"
+                    data: "title", width: "20%"
                 },
                 {
-                    data: "description", width: "16%"
+                    data: "description", width: "60%"
                 },
                 {
-                    data: "file", width: "16%"
+                    data: "file", width: "5%",
+                    "render": function (data) {
+                        return `
+                        <div class="text-center">
+                            <a href="${data}" download
+                                class="btn btn-primary text-white"
+                                style="cursor:pointer; width=100px;">
+                                <i class="fas fa-file-download"></i>
+                            </a>
+                        </div>
+                    `
+                    }
                 },
                 {
                     data: "id",
@@ -39,7 +50,7 @@ function loadList() {
                                 Delete
                             </a>
                         </div>
-`}, width: "16%"
+`}, width: "15%"
 
                 }
             ],

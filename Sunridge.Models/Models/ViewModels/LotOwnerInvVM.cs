@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Sunridge.Models.Models.ViewModels
+namespace Sunridge.Models.ViewModels
 {
-    class LotOwnerInvVM
+    public class LotOwnerInvVM
     {
+        // The Fields needed to display the Lot Index Page.
+        public int id { get; set; }
+        public string LotNumber { get; set; }
+        public string Address { get; set; }
+        public string Lot_Owner { get; set; }
+        public string TaxId { get; set; }
+        public string Lot_Inventory { get; set; }
     }
 }

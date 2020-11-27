@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 using Sunridge.Models.ViewModels;
 using Sunridge.Utility;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -70,7 +72,7 @@ namespace Sunridge.Pages.Admin.Lot
             {
                 LotOwners[c] = LotOwnerIds[c].OwnerId.ToString();
             }
-            LotObj.OwnersList = new MultiSelectList(OwnerList, "OwnerId", "OwnerName", LotOwners); //LotObj.Lot.Lot_Owner.Split(',').Select(Int32.Parse).ToList()
+            LotObj.OwnersList = new MultiSelectList(OwnerList, "OwnerId", "OwnerName", LotOwners);
 
             var InventoryIds = (from li in _unitOfWork.Lot_Inventory.GetAll(l => l.LotId == LotObj.Lot.Id) select new { li.InventoryId }).ToList();
             LotObj.InventoryList = _unitOfWork.Inventory.GetAll().ToList();
@@ -99,7 +101,93 @@ namespace Sunridge.Pages.Admin.Lot
                 return Page();
             }
 
+            IList<Lot_Owner> newOwners = new List<Lot_Owner>();
+            IList<Lot_Owner> RemovedOwners = new List<Lot_Owner>();
+
+            IList<Lot_Inventory> NewInventory = new List<Lot_Inventory>();
+            IList<Lot_Inventory> RemovedInventory = new List<Lot_Inventory>();
+
+            // create initial list of new Owners
+            if(LotObj.Owners != null)
+            {
+                foreach (var selOwnerID in LotObj.Owners)
+                {
+                    newOwners.Add(new Lot_Owner() { OwnerId = selOwnerID });
+                }
+            }
+            // create initial list of new Inventory
+            if (LotObj.Inventory != null)
+            {
+                foreach (var selInvID in LotObj.Inventory)
+                {
+                    NewInventory.Add(new Lot_Inventory() { InventoryId = selInvID });
+                }
+            }
+
+            if (LotObj.Lot.Id != 0)
+            {
+                var objFromDb = _unitOfWork.Lot.Get(LotObj.Lot.Id);
+                _unitOfWork.Lot.Update(LotObj.Lot);
+
+                // find removed owners
+                var LotOwners = _unitOfWork.Lot_Owner.GetAll(o => o.LotId == LotObj.Lot.Id).ToList();
+                if (LotObj.Owners == null)
+                {
+                    RemovedOwners = LotOwners;
+                }
+                else
+                {
+                    foreach (var selOwnerID in LotObj.Owners)
+                    {
+                        RemovedOwners = LotOwners.Where(lo => lo.OwnerId != selOwnerID).ToList();
+                    }
+                }
+                _unitOfWork.Lot_Owner.RemoveRange(RemovedOwners);
+                // find new owners
+                foreach (var ownerObj in LotOwners)
+                {
+                    newOwners = newOwners.Where(lo => lo.OwnerId != ownerObj.OwnerId).ToList();
+                }
+
+                // find removed inventory
+                var LotInventory = _unitOfWork.Lot_Inventory.GetAll(o => o.LotId == LotObj.Lot.Id).ToList();
+                if (LotObj.Inventory == null)
+                {
+                    RemovedInventory = LotInventory;
+                }
+                else
+                {
+                    foreach (var selInvID in LotObj.Inventory)
+                    {
+                        RemovedInventory = LotInventory.Where(li => li.InventoryId != selInvID).ToList();
+                    }
+                }
+                _unitOfWork.Lot_Owner.RemoveRange(RemovedOwners);
+                // find new inventory
+                foreach (var invObj in LotInventory)
+                {
+                    NewInventory = NewInventory.Where(li => li.InventoryId != invObj.InventoryId).ToList();
+                }
+            }
+            else
+            {
+                _unitOfWork.Lot.Add(LotObj.Lot);
+            }
             _unitOfWork.Save();
+
+            foreach (var item in newOwners)
+            {
+                item.LotId = LotObj.Lot.Id;
+                _unitOfWork.Lot_Owner.Add(item);
+            }
+
+            foreach (var item in NewInventory)
+            {
+                item.LotId = LotObj.Lot.Id;
+                _unitOfWork.Lot_Inventory.Add(item);
+            }
+            _unitOfWork.Save();
+
             return RedirectToPage("./Index");
         }
         #endregion

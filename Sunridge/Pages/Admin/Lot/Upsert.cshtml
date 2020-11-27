@@ -4,14 +4,14 @@
 <h2>Edit Lot 200ACRES</h2>
 
 <hr />
-<form action="/Owner/Lots/Edit/1" method="post">
+<form method="post">
     <div class="row">
 
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <input type="hidden" data-val="true" data-val-required="The LotId field is required." id="Lot_LotId" name="Lot.LotId" value="1" />
-            <input type="hidden" data-val="true" data-val-required="The Id field is required." id="Address_Id" name="Address.Id" value="352" />
+            @if (Model.LotObj.Lot.Id != 0) {
+                <input type="hidden" asp-for="LotObj.Lot.Id" />
+            }
 
             <div class="form-group">
                 <label asp-for="LotObj.Lot.LotNumber"></label>
@@ -33,7 +33,7 @@
         <div class="col-md-5">
             <div class="form-group">
                 <label asp-for="LotObj.OwnersList"></label>
-                @Html.DropDownList("OwnerIds", (MultiSelectList)Model.LotObj.OwnersList, new { multiple = "multiple" })
+                @Html.DropDownList("LotObj.Owners", (MultiSelectList)Model.LotObj.OwnersList, new { multiple = "multiple" })
 
                 @*<label class="control-label" for="OwnerIds">Owner(s)</label>
             <br />
@@ -43,8 +43,8 @@
             @foreach (var item in Model.LotObj.InventoryList)
             {
                 <div class="form-group">
-                    <input name="InventoryList" type="checkbox" value="@item.Id" @(item.IsChecked == true ? "checked" : "") /> @item.ItemName
-                    <input name="InventoryList" type="hidden" value="@item.Id">
+                    <input name="LotObj.Inventory" type="checkbox" value="@item.Id" @(item.IsChecked == true ? "checked" : "") /> @item.ItemName
+                    @*<input name="LotObj.InventoryList" type="hidden" value="@item.Id">*@
                     @*<input name="InventoryList" type="checkbox" value="1" />
                     <label class="control-label">Septic System</label>*@
                 </div>
@@ -67,7 +67,7 @@
 @section Scripts {
 <script>
     $(document).ready(function () {
-        $('#OwnerIds').select2({
+        $('#LotObj_Owners').select2({
             placeholder: "Select an Owner",
             allowClear: true,
             ajax: {

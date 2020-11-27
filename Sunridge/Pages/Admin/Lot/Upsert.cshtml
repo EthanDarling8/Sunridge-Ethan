@@ -36,8 +36,8 @@
                 @Html.DropDownList("OwnerIds", (MultiSelectList)Model.LotObj.OwnersList, new { multiple = "multiple" })
 
                 @*<label class="control-label" for="OwnerIds">Owner(s)</label>
-            <br />
-            <select id="OwnerIds" name="OwnerIds" multiple="multiple" class="form-control"></select>*@
+                    <br />
+                    <select id="OwnerIds" name="OwnerIds" multiple="multiple" class="form-control"></select>*@
             </div>
             <h5>Items Present on Lot</h5>
             @foreach (var item in Model.LotObj.InventoryList)
@@ -46,7 +46,7 @@
                     <input name="InventoryList" type="checkbox" value="@item.Id" @(item.IsChecked == true ? "checked" : "") /> @item.ItemName
                     <input name="InventoryList" type="hidden" value="@item.Id">
                     @*<input name="InventoryList" type="checkbox" value="1" />
-                    <label class="control-label">Septic System</label>*@
+                        <label class="control-label">Septic System</label>*@
                 </div>
             }
         </div>
@@ -60,42 +60,42 @@
         </div>
     </div>
 </form>
-    <div>
-        <a href="/Owner/Lots">Back to List</a>
-    </div>
+<div>
+    <a href="/Owner/Lots">Back to List</a>
+</div>
 
 @section Scripts {
-<script>
-    $(document).ready(function () {
-        $('#OwnerIds').select2({
-            placeholder: "Select an Owner",
-            allowClear: true,
-            ajax: {
-                url: "/api/Lot/GetOwners",
-                type: 'get',
-                contentType: 'application/json',
-                dataType: "json",
-                delay: 250, // pause x milli seconds until after users stops typing before sending request
-                contentType: "application/json; charset=utf-8",
-                data: function (params) {
-                    var query =
-                    {
-                        term: params.term,
-                    };
-                    return query;
-                },
-                processResults: function (r) {
-                    return {
-                        results: $.map(r.data, function (item) {
-                            return {
-                                id: item.id,
-                                text: item.fullName
-                            };
-                        }),
-                    };
+    <script>
+        $(document).ready(function () {
+            $('#OwnerIds').select2({
+                placeholder: "Select an Owner",
+                allowClear: true,
+                ajax: {
+                    url: "/api/Lot/GetOwners",
+                    type: 'get',
+                    contentType: 'application/json',
+                    dataType: "json",
+                    delay: 250, // pause x milli seconds until after users stops typing before sending request
+                    contentType: "application/json; charset=utf-8",
+                    data: function (params) {
+                        var query =
+                        {
+                            term: params.term,
+                        };
+                        return query;
+                    },
+                    processResults: function (r) {
+                        return {
+                            results: $.map(r.data, function (item) {
+                                return {
+                                    id: item.id,
+                                    text: item.fullName
+                                };
+                            }),
+                        };
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 }

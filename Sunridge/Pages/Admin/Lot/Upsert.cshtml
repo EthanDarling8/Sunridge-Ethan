@@ -1,121 +1,101 @@
 ﻿@page
 @model Sunridge.Pages.Admin.Lot.Upsert
 
-<form method="post" enctype="multipart/form-data">
-    <div class="container">
-        <div class="row px-2 mx-2 backgroundWhite border">
-            <div asp-validation-summary="ModelOnly" class="text-danger">
+<h2>Edit Lot 200ACRES</h2>
 
+<hr />
+<form action="/Owner/Lots/Edit/1" method="post">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" data-val="true" data-val-required="The LotId field is required." id="Lot_LotId" name="Lot.LotId" value="1" />
+            <input type="hidden" data-val="true" data-val-required="The Id field is required." id="Address_Id" name="Address.Id" value="352" />
+
+            <div class="form-group">
+                <label asp-for="LotObj.Lot.LotNumber"></label>
+                <input class="form-control" asp-for="LotObj.Lot.LotNumber" />
+                <span class="text-danger" asp-validation-for="LotObj.Lot.LotNumber"></span>
             </div>
-            <div class="col-12 px-3 border-bottom-1 mt-3">
-                <h2 class="text-primary">@(Model.LotObj.Lot.Id != 0 ? "Update" : "Create") Lot </h2>
+            <div class="form-group">
+                <label asp-for="LotObj.Lot.TaxId"></label>
+                <input class="form-control" asp-for="LotObj.Lot.TaxId" />
+                <span class="text-danger" asp-validation-for="LotObj.Lot.TaxId"></span>
             </div>
-            <div class="col-8 pt-3">
-                <!-- Lot Number -->
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="LotObj.Lot.LotNumber"></label>
-                    </div>
-                    <div class="col-9">
-                        <input class="form-control" asp-for="LotObj.Lot.LotNumber" />
-                        <span class="text-danger" asp-validation-for="LotObj.Lot.LotNumber"></span>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label asp-for="LotObj.Lot.Address"></label>
+                <input class="form-control" asp-for="LotObj.Lot.Address" />
+                <span class="text-danger" asp-validation-for="LotObj.Lot.Address"></span>
+            </div>
+        </div>
 
-                <!-- Tax Id -->
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="LotObj.Lot.TaxId"></label>
-                    </div>
-                    <div class="col-9">
-                        <input class="form-control" asp-for="LotObj.Lot.TaxId" />
-                        <span class="text-danger" asp-validation-for="LotObj.Lot.TaxId"></span>
-                    </div>
-                </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="LotObj.OwnersList"></label>
+                @Html.DropDownList("OwnerIds", (MultiSelectList)Model.LotObj.OwnersList, new { multiple = "multiple" })
 
-                <!-- Street Address -->
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="LotObj.Lot.Address"></label>
-                    </div>
-                    <div class="col-9">
-                        <input class="form-control" asp-for="LotObj.Lot.Address" />
-                        <span class="text-danger" asp-validation-for="LotObj.Lot.Address"></span>
-                    </div>
+                @*<label class="control-label" for="OwnerIds">Owner(s)</label>
+            <br />
+            <select id="OwnerIds" name="OwnerIds" multiple="multiple" class="form-control"></select>*@
+            </div>
+            <h5>Items Present on Lot</h5>
+            @foreach (var item in Model.LotObj.InventoryList)
+            {
+                <div class="form-group">
+                    <input name="InventoryList" type="checkbox" value="@item.Id" @(item.IsChecked == true ? "checked" : "") /> @item.ItemName
+                    <input name="InventoryList" type="hidden" value="@item.Id">
+                    @*<input name="InventoryList" type="checkbox" value="1" />
+                    <label class="control-label">Septic System</label>*@
                 </div>
-                <!-- Lot Transfer -->
-                <!-- TODO: Make lot transfer Interface-->
-                <select class="mdb-select md-form" multiple searchable="Search here..">
-                    <option value="" disabled selected>Choose your country</option>
-                    <option value="1">USA</option>
-                    <option value="2">Germany</option>
-                    <option value="3">France</option>
-                    <option value="3">Poland</option>
-                    <option value="3">Japan</option>
-                </select>
-                <button class="btn-save btn btn-primary btn-sm">Save</button>
-                <!-- Inventory -->
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label>Inventory</label>
-                    </div>
-                    <div class="col-9">
-                        <!-- TODO: Automatically Generate the Checkboxes based on Inventory Table-->
-                    </div>
-                </div>
+            }
+        </div>
 
-                <div class="form-group row">
-                    <div class="col-9 offset-3">
-                        <div class="row">
-                            <div class="col-6">
-                                @if (Model.LotObj.Lot.Id != 0)
-                                {
-                                    <button type="submit" class="btn btn-primary form-control">Update</button>
-                                }
-                                else
-                                {
-                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
-                                }
-                            </div>
-                            <div class="col-6">
-                                <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
 </form>
+    <div>
+        <a href="/Owner/Lots">Back to List</a>
+    </div>
 
 @section Scripts {
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: "lists",
-            menubar: 'file edit format'
-        });
-
-        function ValidateInput() {
-            if (document.getElementById("uploadBox").value == "") {
-                swal('Error', 'Please Select an Image', 'error');
-                return false;
+<script>
+    $(document).ready(function () {
+        $('#OwnerIds').select2({
+            placeholder: "Select an Owner",
+            allowClear: true,
+            ajax: {
+                url: "/api/Lot/GetOwners",
+                type: 'get',
+                contentType: 'application/json',
+                dataType: "json",
+                delay: 250, // pause x milli seconds until after users stops typing before sending request
+                contentType: "application/json; charset=utf-8",
+                data: function (params) {
+                    var query =
+                    {
+                        term: params.term,
+                    };
+                    return query;
+                },
+                processResults: function (r) {
+                    return {
+                        results: $.map(r.data, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.fullName
+                            };
+                        }),
+                    };
+                }
             }
-            return true;
-        }
-    </script>
-    <script>
-        // Material Select Initialization
-        $(document).ready(function () {
-            $('.mdb-select').materialSelect();
         });
-    </script>
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    });
+</script>
 }

@@ -10,8 +10,8 @@ namespace Sunridge.Models.ViewModels
         // The Fields needed to display the Lot Index Page.
         public string LotNumber { get; set; }
         public string Address { get; set; }
-        public IList<Owner> Owners { get; set; }
         public string TaxId { get; set; }
-        public IList<Inventory> Lot_Inventory { get; set; }
+        public MultiSelectList OwnersList { get; set; }
+        public List<Inventory> InventoryList { get; set; }
     }
 }

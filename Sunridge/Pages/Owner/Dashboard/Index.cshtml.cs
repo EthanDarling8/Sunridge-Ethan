@@ -6,7 +6,7 @@ using Sunridge.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sunridge.Pages.Admin
+namespace Sunridge.Pages.Owner.Dashboard
 {
     [Authorize]
     public class IndexModel : PageModel

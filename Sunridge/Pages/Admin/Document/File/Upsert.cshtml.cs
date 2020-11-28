@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 using Sunridge.Utility;
 using System;
 using System.Collections.Generic;
@@ -26,25 +27,23 @@ namespace Sunridge.Pages.Admin.Document.File
 
 
         [BindProperty]
-        public Models.DocumentFile DocumentFileObj { get; set; }
+        public DocumentFile DocumentFileObj { get; set; }
 
         [BindProperty]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
 
 
-
-        
         public IActionResult OnGet(int fileId, int documentCategoryId)
         {
             //Alwayas Initialize
-            DocumentFileObj = new Models.DocumentFile();
+            DocumentFileObj = new DocumentFile();
             CategoryList = _unitOfWork.DocumentCategory.GetListForDropDown();
 
 
             //Adding new from documents page (selected category preserved)
             if (documentCategoryId != 0)
             {
-                //Get existing
+                //Get category from documents page selection
                 DocumentFileObj.DocumentCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == documentCategoryId);
 
                 if (DocumentFileObj.DocumentCategory == null)

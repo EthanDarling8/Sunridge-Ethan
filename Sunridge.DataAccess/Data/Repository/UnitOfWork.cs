@@ -32,7 +32,6 @@ namespace Sunridge.DataAccess.Data.Repository
         //Documents IRepositories
         public IDocumentCategoryRepository DocumentCategory { get; private set; }
         public IDocumentFileRepository DocumentFile { get; private set; }
-        public IDocumentFileKeywordRepository DocumentFileKeyword { get; private set; }
         public IDocumentSectionRepository DocumentSection { get; private set; }
         public IDocumentSectionTextRepository DocumentSectionText { get; private set; }
 
@@ -88,7 +87,6 @@ namespace Sunridge.DataAccess.Data.Repository
             //Documents Models
             DocumentCategory = new DocumentCategoryRepository(_db);
             DocumentFile = new DocumentFileRepository(_db);
-            DocumentFileKeyword = new DocumentFileKeywordRepository(_db);
             DocumentSection = new DocumentSectionRepository(_db);
             DocumentSectionText = new DocumentSectionTextRepository(_db);           
             

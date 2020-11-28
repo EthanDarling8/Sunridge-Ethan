@@ -13,6 +13,9 @@ namespace Sunridge.Models
         [Required]
         public string Name { get; set; }
 
+        [Display(Name = "Search Keywords")]
+        public string Keywords { get; set; }
+
         //Store the extension for displaying file type information and icon
         [Required]
         public string Extension { get; set; }

@@ -87,6 +87,18 @@
                 </div>
 
 
+                @* Keywords *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.Keywords"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="DocumentFileObj.Keywords" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.Keywords"></span>
+                    </div>
+                </div>
+
+
                 @* File Upload *@
                 <div class="form-group row">
                     <div class="col-3">

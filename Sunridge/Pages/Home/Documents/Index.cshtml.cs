@@ -28,7 +28,6 @@ namespace Sunridge.Pages.Home.Documents
         //Lists for displaying everything
         public IEnumerable<DocumentCategory> DocumentCategoryList { get; set; }
         public IEnumerable<DocumentFile> DocumentFileList { get; set; }
-        public IEnumerable<DocumentFileKeyword> DocumentFileKeywordList { get; set; }
         public IEnumerable<DocumentSection> DocumentSectionList { get; set; }        
         public IEnumerable<DocumentSectionText> DocumentSectionTextList { get; set; }
 
@@ -107,11 +106,9 @@ namespace Sunridge.Pages.Home.Documents
 
 
                     //Add Keyword Results
-                    DocumentFileKeywordList = _unitOfWork.DocumentFileKeyword.GetAll(k => k.DocumentFileId == documentFile.Id);
-
-                    foreach (DocumentFileKeyword documentFileKeyword in DocumentFileKeywordList.Where(k => k.Keyword.ToLower().Contains(Search)))
-                    { 
-                        //Only add it wasn't already added
+                    if (documentFile.Keywords.ToLower().Contains(Search))
+                    {
+                        //Only add if it wasn't already added
                         if (SearchedDocumentFileList.Where(f => f.Id == documentFile.Id).Count() == 0)
                         {
                             SearchedDocumentFileList.Add(documentFile);

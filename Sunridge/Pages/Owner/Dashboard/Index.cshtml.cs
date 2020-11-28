@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Sunridge.Pages.Owner.Dashboard
 {
-    [Authorize]
+    [Authorize(Roles = "Owner")]
     public class IndexModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;

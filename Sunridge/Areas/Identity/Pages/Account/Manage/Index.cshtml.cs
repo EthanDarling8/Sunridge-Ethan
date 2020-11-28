@@ -21,8 +21,6 @@ namespace Sunridge.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        public string Username { get; set; }
-
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -58,7 +56,7 @@ namespace Sunridge.Areas.Identity.Pages.Account.Manage
 
             public string City { get; set; }
 
-            public int Zip { get; set; }
+            public string Zip { get; set; }
 
             public string State { get; set; }
 
@@ -66,46 +64,27 @@ namespace Sunridge.Areas.Identity.Pages.Account.Manage
             public string EmergencyContact { get; set; }
 
             [Display(Name = "Emergency Contact Number")]
-            public int EmergencyContactNumber { get; set; }
+            public string EmergencyContactNumber { get; set; }
         }
 
         private async Task LoadAsync(Owner user)
         {
-            var ownerId = user.Id;
-            var userName = await _userManager.GetUserNameAsync(user);
-            var email = user.Email;
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var firstName = user.FirstName;
-            var lastName = user.LastName;
-            var occupation = user.Occupation;
-            var birthday = user.Birthday;
-            var streetAddress = user.StreetAddress;
-            var apartment = user.Apartment;
-            var city = user.City;
-            var zip = user.Zip;
-            var state = user.State;
-            var emergencyContact = user.EmergencyContact;
-            var emergencyContactNumber = user.EmergencyContactNumber;
-
-
-            Username = userName;
-
             Input = new InputModel
             {
-                OwnerId = ownerId,
-                Email = email,
-                PhoneNumber = phoneNumber,
-                FirstName = firstName,
-                LastName = lastName,
-                Occupation = occupation,
-                Birthday = birthday,
-                StreetAddress = streetAddress,
-                Apartment = apartment,
-                City = city,
-                Zip = zip,
-                State = state,
-                EmergencyContact = emergencyContact,
-                EmergencyContactNumber = emergencyContactNumber
+                OwnerId = user.Id,
+                Email = user.Email,
+                PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Occupation = user.Occupation,
+                Birthday = user.Birthday,
+                StreetAddress = user.StreetAddress,
+                Apartment = user.Apartment,
+                City = user.City,
+                Zip = user.Zip,
+                State = user.State,
+                EmergencyContact = user.EmergencyContact,
+                EmergencyContactNumber = user.EmergencyContactNumber
             };
         }
 
@@ -145,6 +124,20 @@ namespace Sunridge.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Occupation = Input.Occupation;
+            user.Birthday = Input.Birthday;
+
+            user.Email = Input.Email;
+            user.StreetAddress = Input.StreetAddress;
+            user.Apartment = Input.Apartment;
+            user.City = Input.City;
+            user.Zip = Input.Zip;
+            user.State = Input.State;
+            user.EmergencyContact = Input.EmergencyContact;
+            user.EmergencyContactNumber = Input.EmergencyContactNumber;
 
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);

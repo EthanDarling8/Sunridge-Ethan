@@ -16,6 +16,7 @@ namespace Sunridge.Models
 
         public string Occupation { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
         [Display(Name = "Street Address")]
@@ -25,7 +26,7 @@ namespace Sunridge.Models
 
         public string City { get; set; }
 
-        public int Zip { get; set; }
+        public string Zip { get; set; }
 
         public string State { get; set; }
 
@@ -33,7 +34,7 @@ namespace Sunridge.Models
         public string EmergencyContact { get; set; }
 
         [Display(Name = "Emergency Contact Number")]
-        public int EmergencyContactNumber { get; set; }
+        public string EmergencyContactNumber { get; set; }
 
 
         [NotMapped]

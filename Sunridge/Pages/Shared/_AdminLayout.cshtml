@@ -43,12 +43,12 @@
         <div class="bg-dark text-light border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">Admin</div>
             <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
+                <a asp-page="/Admin/Owners/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
                 <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Keys</a>
-                <a asp-page="Admin/KeyHistory" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
+                <a asp-page="/Admin/KeyHistory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
                 <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
                 <a @*asp-page="/Owners/Forms/Index"*@ href="/Owner/Forms/" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
+                <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
                 <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-dollar-sign"></i> Classifieds</a>
                 <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photos</a>
                 <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>

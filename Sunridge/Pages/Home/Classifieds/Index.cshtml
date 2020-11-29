@@ -4,6 +4,7 @@
     ViewData["Title"] = "Classifieds";
 }
 
+ 
 <h1 class="row col-sm-12 pb-4">Classified Listings</h1>
 <div class="row m-1 p-1">
 
@@ -52,7 +53,7 @@
         </div>
     </div>
     <div class="col-9">
-        <div class="row container">
+        <div class="row container-fluid">
             <div class="col-12">
                 <div class="row">
 
@@ -62,10 +63,10 @@
                         @foreach (var classifiedsItem in Model.ClassifiedsItemList)
                         {
                             <div class="card-deck">
-                                <div class="col-lg-3 col-xl-3 col-md-3 pb-2 m-2">
-                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 250px">
+                                <div class="col-lg-2 col-xl-2 col-md-2 pb-2 m-2">
+                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 300px">
                                         <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
-                                            <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
+                                            <img class="card-img-top img-fluid" style="width: 300px; height: 225px; " src="@classifiedsItem.Images" alt="Card image cap">
                                         </a>
 
                                         <div class="card-body">
@@ -103,6 +104,7 @@
     </div>
 
 </div>
+     
 
 
 

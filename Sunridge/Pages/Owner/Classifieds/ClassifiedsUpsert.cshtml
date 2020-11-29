@@ -41,18 +41,18 @@
                     </div>
                 </div>
                 @*<div class="form-group row">
-                <div class="col-3">
-                    <label asp-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></label>
-                </div>
-                <div class="col-9">
-                    @Html.DropDownListFor(c => c.ClassifiedsItemObj.ClassifiedsItem.SubcategoryId,
-                                          Model.ClassifiedsItemObj.ClassifiedsSubcategoryList,
-                                          "- Please select a Subcategory - ",
-                                          new { @class = "form-control" })
+                        <div class="col-3">
+                            <label asp-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></label>
+                        </div>
+                        <div class="col-9">
+                            @Html.DropDownListFor(c => c.ClassifiedsItemObj.ClassifiedsItem.SubcategoryId,
+                                                  Model.ClassifiedsItemObj.ClassifiedsSubcategoryList,
+                                                  "- Please select a Subcategory - ",
+                                                  new { @class = "form-control" })
 
-                    <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></span>
-                </div>
-            </div>*@
+                            <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.SubcategoryId"></span>
+                        </div>
+                    </div>*@
                 <div class="form-group row">
                     <div class="col-3">
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Description"></label>
@@ -84,7 +84,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Name"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Name" />
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Name" id="name"/>
                         <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Name"></span>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone" placeholder="(123) 456-7890"/>
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Phone" id="phone" />
                         <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Phone"></span>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Email"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Email" />
+                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.Email" id="email"/>
                         <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.Email"></span>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId" id="ownerId" />
+                        <input class="form-control"  asp-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId" id="" />
                         <span class="text-danger" asp-validation-for="ClassifiedsItemObj.ClassifiedsItem.OwnerId"></span>
                     </div>
                 </div>
@@ -157,11 +157,11 @@
                 </div>
             </div>
             @*@if (Model.MenuItemObj.MenuItem != null)
-        {
-            <div class="col-4 p-4">
-                <img src="@Model.MenuItemObj.MenuItem.Image" style="border-radius: 5px; width:100%; border: 1px solid #bbb9b9" />
-            </div>
-        }*@
+                {
+                    <div class="col-4 p-4">
+                        <img src="@Model.MenuItemObj.MenuItem.Image" style="border-radius: 5px; width:100%; border: 1px solid #bbb9b9" />
+                    </div>
+                }*@
         </div>
     </div>
 </form>
@@ -182,53 +182,69 @@
 
         
 
+            $( document ).ready(function() {
+                // after the page elements are all loaded, then run the script
+                // Set the input field with unique ID #email to a value
+
+                $("#email").val('@User.Identity.Name');
+
+            // Set the input field with unique ID #name
+
+                @*$("#name").val('@Model.ClassifiedsItemObj.ClassifiedsItem.OwnerId.FullName');*@
+
+                @*$("#phone").val('@Model.ClassifiedsItemObj.ClassifiedsItem.Owner.PhoneNumber')*@
+
+            });
+
+    
 
 
 
 
 
-        function ValidateInput() {
-            if (document.getElementById("uploadBox").value == "") {
-                swal('Error', 'Please Select an Image', 'error')
-                return false;
-            }
-            return true;
-        }
-        var x = timeSince();
-        document.getElementById("time").innerHTML = x;
 
-        function timeSince(date) {
+    function ValidateInput() {
+    if (document.getElementById("uploadBox").value == "") {
+    swal('Error', 'Please Select an Image', 'error')
+    return false;
+    }
+    return true;
+    }
+    var x = timeSince();
+    document.getElementById("time").innerHTML = x;
 
-            var seconds = Math.floor((new Date().getTime() / 1000) - date);
+    function timeSince(date) {
 
-            var interval = seconds / 31536000;
+    var seconds = Math.floor((new Date().getTime() / 1000) - date);
 
-            if (interval >= 1) {
-                return Math.floor(interval) + " years";
-            }
-            interval = seconds / 2592000;
-            if (interval >= 1) {
-                return Math.floor(interval) + " months";
-            }
-            interval = seconds / 86400;
-            if (interval >= 1) {
-                return Math.floor(interval) + " days";
-            }
-            interval = seconds / 3600;
-            if (interval >= 1) {
-                return Math.floor(interval) + " hours";
-            }
-            interval = seconds / 60;
-            if (interval >= 1) {
-                return Math.floor(interval) + " minutes";
-            }
-            return Math.floor(seconds) + " seconds";
-        }
-        var aDay = 24 * 60 * 60 * 1000;
-        console.log(timeSince(new Date(Date.now() - aDay)));
-        console.log(timeSince(new Date(Date.now() - aDay * 2)));
+    var interval = seconds / 31536000;
 
-        
+    if (interval >= 1) {
+    return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval >= 1) {
+    return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval >= 1) {
+    return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval >= 1) {
+    return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval >= 1) {
+    return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+    }
+    var aDay = 24 * 60 * 60 * 1000;
+    console.log(timeSince(new Date(Date.now() - aDay)));
+    console.log(timeSince(new Date(Date.now() - aDay * 2)));
+
+
     </script>
 
 }

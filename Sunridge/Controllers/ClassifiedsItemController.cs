@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Pages.Owner.Classifieds;
+using Sunridge.Utility;
 
 namespace Sunridge.Controllers
 {
@@ -30,11 +31,11 @@ namespace Sunridge.Controllers
             public IActionResult Get(int id)
             {
 
-            string adminName = User.Identity.Name;
+            
             string ownerId = User.Identity != null && User.Identity.IsAuthenticated && User.Claims.ToList().Count > 0 ? User.Claims.ToList()[0].Value : null;
-            //if (roleName == true)
+            //if (User.IsInRole(SD.AdministratorRole))
             //{
-            //    return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
+                //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
             //}
             //else
             //{

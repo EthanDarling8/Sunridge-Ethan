@@ -42,6 +42,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         // Lost And Found Repositories
         ILostItemRepository LostItem { get; }
 
+        
         //Classifieds Repositories
         IClassifiedsItemRepository ClassifiedsItem { get; }
         IClassifiedsCategoryRepository ClassifiedsCategory { get; }
@@ -49,6 +50,6 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
 
         IViewCountRepository ViewCount { get; }
 
-        void Save();
+    void Save();
     }
 }

@@ -25,10 +25,16 @@
             <div class=" ml-3">
                 <h5>Contact Name:</h5>
                 <p>@Model.OwnerObj.FullName</p>
-                <h5>Phone:</h5>
-                <p>@Model.phoneNumber</p>
-                <h5>Email:</h5>
-                <a href="mailto: @Html.Raw(Model.OwnerObj.Email)">@Model.OwnerObj.Email</a>
+                @if (Model.LostItemObj.LostItem.DisplayPhone)
+                {
+                    <h5>Phone:</h5>
+                    <p>@Model.phoneNumber</p>
+                }
+                @if (Model.LostItemObj.LostItem.DisplayEmail)
+                {
+                    <h5>Email:</h5>
+                    <a href="mailto: @Html.Raw(Model.OwnerObj.Email)">@Model.OwnerObj.Email</a>
+                }
                 <hr />
             </div>
             <div class="col-12 ">

@@ -38,15 +38,15 @@ function loadList() {
                                 <i class="fas fa-book-open"></i>
                                 Read 
                             </a>
+                            <a onClick=Resolve('/api/ownerLostItem/'+${data})
+                               class="btn btn-success text-white" style="cursor: pointer"; width: 100px;">
+                                <i class="far fa-check-square"></i>
+                                Resolve
+                            </a>
                             <a href="/Owner/lostandfound/Upsert?id=${data}"
                                class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
-                            </a>
-                            <a onClick=Delete('/api/LostItem/'+${data})
-                               class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
-                                <i class="far fa-trash-alt"></i>
-                                Delete
                             </a>
                         </div>
                         `}, width: "20%"
@@ -76,6 +76,32 @@ function Delete(url) {
         if (willDelete) {
             $.ajax({
                 type: 'DELETE',
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    });
+}
+//RESOLVE FUNCTION
+function Resolve(url) {
+    swal({
+        title: "Are you sure you want to resolve this listing?",
+        text: "This will remove the listing!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: 'POST',
                 url: url,
                 success: function (data) {
                     if (data.success) {
@@ -125,6 +151,7 @@ function addSearchControl(json) {
                 dataTable.column(index).search(searchControl.val()).draw();
             });
         }
+        if (index == 4) { $(this).replaceWith('<th class="w-100 mx-auto"></th >'); }
 
     });
 }

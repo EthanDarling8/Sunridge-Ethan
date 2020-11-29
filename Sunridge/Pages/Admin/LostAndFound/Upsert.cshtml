@@ -32,7 +32,7 @@
                         <label asp-for="LostItemObj.LostItem.Date"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" id="datepicker" asp-for="LostItemObj.LostItem.Date" type="text" />
+                        <input class="form-control" id="datepicker" asp-for="LostItemObj.LostItem.Date" asp-format="{0:MM/dd/yyyy}" type="text" />
                         <span class="text-danger" asp-validation-for="LostItemObj.LostItem.Date"></span>
                     </div>
                 </div>
@@ -77,17 +77,20 @@
                 @* User Input *@
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="LostItemObj.LostItem.OwnerId">User</label>
+                        @Html.LabelFor(model => model.LostItemObj.LostItem.OwnerId, "Owner", new { @class = "control-lable" })
                     </div>
                     <div class="col-9">
-                        @Html.DropDownListFor(m => m.LostItemObj.LostItem.OwnerId,
-                                                Model.LostItemObj.OwnerList,
-                                                "- Please select an Owner - ",
-                                                new { @class = "form-control" })
-                        <span class="text-danger" asp-validation-for="LostItemObj.LostItem.OwnerId"></span>
+                        @Html.DropDownListFor(o => o.LostItemObj.LostItem.OwnerId,
+                            Model.LostItemObj.OwnerList,
+                            new
+                                 {
+                                @class = "form-control selectpicker"
+                            })
+                        <input type="hidden" asp-for="LostItemObj.LostItem.OwnerId" />
+                        <span class="text-danger" asp-validation-for="@Model.LostItemObj.LostItem.OwnerId"></span>
                     </div>
-
                 </div>
+
                 @*Image Preview*@
                 @if (Model.LostItemObj.LostItem != null)
                 {
@@ -126,6 +129,8 @@
 </form>
 
 @section Scripts {
+    <partial name="Shared/_ValidationScriptsPartial" />
+    <partial name="Shared/_Scripts" />
     <script>
         @* Create the DateTime Picker *@
         $(function () {
@@ -159,5 +164,6 @@
             }
             return true;
         }
+
     </script>
 }

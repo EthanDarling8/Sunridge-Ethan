@@ -8,7 +8,7 @@ function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax":
         {
-            "url": "/api/lostitem",
+            "url": "/api/adminlostitem",
             "type": "GET",
             "datatype": "json"
         },
@@ -29,6 +29,9 @@ function loadList() {
                     , width: "30%"
                 },
                 {
+                    data: "active", width: "20%"
+                },
+                {
                     data: "id",
                     "render": function (data) {
                         return `
@@ -38,12 +41,17 @@ function loadList() {
                                 <i class="fas fa-book-open"></i>
                                 Read 
                             </a>
+                            <a onClick=Resolve('/api/adminLostItem/'+${data})
+                               class="btn btn-success text-white" style="cursor: pointer"; width: 100px;">
+                                <i class="far fa-check-square"></i>
+                                Resolve
+                            </a>
                             <a href="/Admin/lostandfound/Upsert?id=${data}"
                                class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
                             </a>
-                            <a onClick=Delete('/api/LostItem/'+${data})
+                            <a onClick=Delete('/api/adminLostItem/'+${data})
                                class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
                                 <i class="far fa-trash-alt"></i>
                                 Delete
@@ -90,6 +98,32 @@ function Delete(url) {
         }
     });
 }
+//RESOLVE FUNCTION
+function Resolve(url) {
+    swal({
+        title: "Are you sure you want to resolve this listing?",
+        text: "This will remove the listing!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    });
+}
 // FILTERING GENERAL LOST AND FOUND FUNCTION
 function addSearchControl(json) {
     $("#DT_load thead").append($("#DT_load thead tr:first").clone());                           // Clone the First row
@@ -98,13 +132,8 @@ function addSearchControl(json) {
         if (index == 1) {
             var statusDropDown = $('<select class="w-auto mx-auto"/>');
             statusDropDown.append($('<option class="w-auto mx-auto"/>').attr('value', '').text('Select'));
-            var statusarr = [];
-            $(json.data).each(function (index, element) {
-                if ($.inArray(element.status, statusarr) == -1) {
-                    statusarr.push(element.status);
-                    statusDropDown.append($('<option/>').attr('value', element.status).text(element.status));
-                }
-            });
+            statusDropDown.append($('<option/>').attr('value', 'Lost').text('Lost'));
+            statusDropDown.append($('<option/>').attr('value', 'Found').text('Found'));
             $(this).replaceWith('<th class="w-auto mx-auto">' + $(statusDropDown).prop('outerHTML') + '</th>');
             var searchControl = $("#DT_load thead tr:eq(1) th:eq(" + index + ") select");
             searchControl.on('change', function () {
@@ -125,6 +154,18 @@ function addSearchControl(json) {
                 dataTable.column(index).search(searchControl.val()).draw();
             });
         }
+        if (index == 4) {
+            var statusDropDown = $('<select class="w-auto mx-auto"/>');
+            statusDropDown.append($('<option class="w-auto mx-auto"/>').attr('value', '').text('Select'));
+            statusDropDown.append($('<option/>').attr('value', 'true').text('true'));
+            statusDropDown.append($('<option/>').attr('value', 'false').text('false'));
+            $(this).replaceWith('<th class="w-auto mx-auto">' + $(statusDropDown).prop('outerHTML') + '</th>');
+            var searchControl = $("#DT_load thead tr:eq(1) th:eq(" + index + ") select");
+            searchControl.on('change', function () {
+                dataTable.column(index).search(searchControl.val() == "" ? "" : '^' + searchControl.val() + '$', true, false).draw();
+            });
+        }
+        if (index == 5) { $(this).replaceWith('<th class="w-100 mx-auto"></th >'); }
 
     });
 }

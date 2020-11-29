@@ -89,6 +89,8 @@ namespace Sunridge.Pages.Admin.LostItem
 
                 // Update
                 var objFromDb = _unitOfWork.LostItem.Get(LostItemObj.LostItem.Id);
+                objFromDb.Active = true;                                 // Set the Status of the newly created or edited Lost & Found Listing to true.
+                objFromDb.ExpirationDate = DateTime.Now.AddDays(30);     // Set the Listing to expire in 30 days from creation or last edit.
                 if (files.Count > 0)
                 {
                     // Upload and save image

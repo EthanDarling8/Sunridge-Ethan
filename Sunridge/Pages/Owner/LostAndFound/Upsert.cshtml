@@ -32,7 +32,7 @@
                         <label asp-for="LostItemObj.LostItem.Date"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" id="datepicker" asp-for="LostItemObj.LostItem.Date" type="text" />
+                        <input class="form-control" id="datepicker" asp-for="LostItemObj.LostItem.Date" asp-format="{0:MM/dd/yyyy}" type="text" />
                         <span class="text-danger" asp-validation-for="LostItemObj.LostItem.Date"></span>
                     </div>
                 </div>
@@ -72,7 +72,6 @@
                     <div class="col-9">
                         <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayEmail">Email <br />
                         <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayPhone">Phone <br />
-                        <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayAddress">Address <br />
                     </div>
                 </div>
                 @* HIDDEN - User Input *@

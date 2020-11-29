@@ -61,8 +61,6 @@ namespace Sunridge.DataAccess.Data
         //public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
 
 
-        public DbSet<ViewCount> ViewCount { get; set; }
-
         // Many to Many relationship handling
         protected override void OnModelCreating(ModelBuilder builder)
         {

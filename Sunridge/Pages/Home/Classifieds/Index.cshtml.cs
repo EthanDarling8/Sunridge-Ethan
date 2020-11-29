@@ -54,6 +54,13 @@ namespace Sunridge.Pages.Home.Classifieds
             ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetAll();
             //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetAll();
         }
+        public IActionResult OnPostPlus(int itemId)
+        {
+            var item = _unitOfWork.ClassifiedsItem.GetAll().FirstOrDefault(c => c.Id == itemId);
+            _unitOfWork.ClassifiedsItem.Increment(item, 1);
+            _unitOfWork.Save();
+            return RedirectToPage("/Home/Classifieds/Details/Index", new {id = itemId});
+        }
     }
 }
 

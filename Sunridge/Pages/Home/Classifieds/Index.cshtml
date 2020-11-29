@@ -65,9 +65,11 @@
                             <div class="card-deck">
                                 <div class="col-lg-2 col-xl-2 col-md-2 pb-2 m-2">
                                     <div class="card h-100 d-flex flex-column justify-content-between" style="width: 300px">
-                                        <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
-                                            <img class="card-img-top img-fluid" style="width: 300px; height: 225px; " src="@classifiedsItem.Images" alt="Card image cap">
-                                        </a>
+                                        <form asp-page-handler="plus" asp-route-itemId="@classifiedsItem.Id" method="post">
+                                            <input type="image" class="card-img-top img-fluid" style="width: 300px; height: 225px; " src="@classifiedsItem.Images" alt="Card image cap"/>
+                                                
+                                            
+                                        </form>
 
                                         <div class="card-body">
                                             <h5 class="card-title text-primary">@classifiedsItem.Title</h5>
@@ -77,12 +79,12 @@
                                                 <p class="card-text d-inline-block text-truncate" style="max-width: 250px;">
 
 
-                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page-handler="plus" asp-route-itemId="@classifiedsItem.Id">(see more...)</a>
                                                 </p>
 
                                             </div>
                                             <div class="card-footer bg-transparent text-right">
-                                            <p><small class="text-muted">@*@classifiedsItem.TimeAdded*@</small><i class="far fa-eye text-right"></i>&nbsp;5</p>
+                                            <p><small class="text-muted">Created @classifiedsItem.TimeAdded</small><i class="far fa-eye text-right"></i>&nbsp;@classifiedsItem.ViewCount</p>
                                                 </div>
                                         </div>
 

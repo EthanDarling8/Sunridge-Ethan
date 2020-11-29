@@ -75,7 +75,7 @@ namespace Sunridge.Pages.Owner.Classifieds
             {
                     //Physically upload and save image
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
+                    var uploads = Path.Combine(webRootPath, @"images\classifiedsitems");
                     var extension = Path.GetExtension(files[0].FileName);
 
                     using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
@@ -83,7 +83,10 @@ namespace Sunridge.Pages.Owner.Classifieds
                         files[0].CopyTo(fileStream);
                     }
                     //save the string data path
-                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
+                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\images\classifiedsitems\" + fileName + extension;
+
+                //get time stamp
+                ClassifiedsItemObj.ClassifiedsItem.TimeAdded = DateTime.Now.ToShortDateString();
 
 
                     _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
@@ -98,7 +101,7 @@ namespace Sunridge.Pages.Owner.Classifieds
                     
                         //Physically upload and save image
                         string fileName = Guid.NewGuid().ToString();
-                        var uploads = Path.Combine(webRootPath, @"img\classifiedsitems");
+                        var uploads = Path.Combine(webRootPath, @"images\classifiedsitems");
                         var extension = Path.GetExtension(files[0].FileName);
 
                         var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
@@ -112,7 +115,7 @@ namespace Sunridge.Pages.Owner.Classifieds
                             files[0].CopyTo(fileStream);
                         }
                         //save the string data path
-                        ClassifiedsItemObj.ClassifiedsItem.Images = @"\img\classifiedsitems\" + fileName + extension;
+                        ClassifiedsItemObj.ClassifiedsItem.Images = @"\images\classifiedsitems\" + fileName + extension;
                     
                 }
                 else

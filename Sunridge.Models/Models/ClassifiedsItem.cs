@@ -11,10 +11,12 @@ namespace Sunridge.Models
 {
     public class ClassifiedsItem
     {
+        
         [Key]
         public int Id { get; set; }
         [Display(Name = "Category")]
         public int CategoryId { get; set; } //Cabins, Lots, Recreational Vehicles, Services, etc.
+        public int ViewCount { get; set; }
 
         public string Name { get; set; }
 

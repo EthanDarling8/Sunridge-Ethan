@@ -29,6 +29,7 @@ namespace Sunridge.Pages.Home.Classifieds.Details
 
 
         }
+       
 
     }
 }

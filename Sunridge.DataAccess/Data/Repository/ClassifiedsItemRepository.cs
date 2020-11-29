@@ -29,6 +29,12 @@ namespace Sunridge.DataAccess.Data.Repository
             classifiedsFromDb.TimeAdded = classifieds.TimeAdded;
             classifiedsFromDb.Name = classifieds.Name;
             classifiedsFromDb.Owner = classifieds.Owner;
+            classifiedsFromDb.ViewCount = classifieds.ViewCount;
+            
+        }
+        public void Increment(ClassifiedsItem classifiedsItem, int viewCount)
+        {
+            classifiedsItem.ViewCount += viewCount;
             
         }
 

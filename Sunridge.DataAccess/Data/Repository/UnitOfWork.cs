@@ -52,8 +52,6 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // Lost & Found IRepositories
         public ILostItemRepository LostItem { get; private set; }
-
-        public IViewCountRepository ViewCount { get; private set; }
         
 
 

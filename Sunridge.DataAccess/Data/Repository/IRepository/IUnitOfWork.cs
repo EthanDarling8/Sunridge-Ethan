@@ -48,7 +48,7 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IClassifiedsCategoryRepository ClassifiedsCategory { get; }
         //IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; }
 
-        IViewCountRepository ViewCount { get; }
+       
 
     void Save();
     }

@@ -9,5 +9,6 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository
     public interface IClassifiedsItemRepository : IRepository<ClassifiedsItem>
     {
         void Update(ClassifiedsItem classifieds);
+        public void Increment(ClassifiedsItem classifiedsItem, int viewCount);
     }
 }

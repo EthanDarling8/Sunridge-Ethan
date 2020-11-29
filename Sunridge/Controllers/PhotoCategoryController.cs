@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 
 namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]    
     [ApiController]
+    [Authorize(Roles = SD.AdministratorRole)]
     public class PhotoCategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

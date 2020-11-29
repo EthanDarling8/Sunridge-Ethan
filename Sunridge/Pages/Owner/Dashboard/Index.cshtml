@@ -11,12 +11,16 @@
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Information</h3>
+                <h3 class="card-title">Information <a href="~/Identity/Account/Manage"><i class="fa fa-edit"></i></a></h3>
             </div>
             <div class="card-body">
                 <p class="card-text"><strong>Full Name:</strong> @Model.Owner.FullName</p>
                 <p class="card-text"><strong>Email:</strong> @Model.Owner.Email</p>
                 <p class="card-text"><strong>Phone Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(@Model.Owner.PhoneNumber))</p>
+                <p class="card-text"><strong>Birthday:</strong> @Model.Owner.Birthday.ToString("MM/dd/yyyy")</p>
+                <p class="card-text"><strong>Occupation:</strong> @Model.Owner.Occupation</p>
+                <p class="card-text"><strong>Emergency Contact:</strong> @Model.Owner.EmergencyContact</p>
+                <p class="card-text"><strong>Emergency Contact Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(@Model.Owner.EmergencyContactNumber))</p>
             </div>
             <div class="card-footer">
                 <a class="card-link" href="~/Identity/Account/Manage/ChangePassword">Change Password</a>

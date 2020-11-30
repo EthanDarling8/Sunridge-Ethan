@@ -17,10 +17,10 @@ $(document).ready(function () {
                 data: "id", width: "25%",
                 "render": function (data) {
                     return `<div class="text-center">
-                                <a href="/Admin/CommonAreaAssets/Upsert?id=${data}" class="btn btn-success text-white" style="cursor: pointer">
+                                <a href="/Admin/CommonAreaAssets/Upsert?id=${data}" class="btn btn-success text-white" style="cursor: pointer; width: 100px">
                                     <i class="far fa-edit"></i> Edit
                                 </a>
-                                <a onClick=Delete('/api/asset/'+${data}) class="btn btn-danger text-white" style="cursor: pointer">
+                                <a onClick=Delete('/api/asset/'+${data}) class="btn btn-danger text-white" style="cursor: pointer; width: 100px">
                                     <i class="far fa-trash-alt"></i> Delete
                                 </a>
                                 <a href="/Admin/CommonAreaAssets/MaintenanceRecords/Index?id=${data}" class="btn btn-dark text-white" style="cursor: pointer">

@@ -87,7 +87,14 @@ namespace Sunridge.Pages.Admin.Lot.Files {
             }
 
             _unitOfWork.Save();
-            return RedirectToPage("./Index");
+            if (HttpContext.Session.GetInt32("LotId") != null)
+            {
+                LotId = (int)HttpContext.Session.GetInt32("LotId");
+                return RedirectToPage("./index", new { id = LotId }); // If the LotId Session is valid return to files
+            }
+            else{
+                return RedirectToPage("../index"); // If the Session Variable LotId is invalid return to lot, so they have to renew it.
+            }
         }
     }
 }

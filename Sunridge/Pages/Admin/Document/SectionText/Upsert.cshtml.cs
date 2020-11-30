@@ -29,7 +29,7 @@ namespace Sunridge.Pages.Admin.Document.SectionText
 
 
 
-        // **** ToDO **** Setup passing in sectionId to have that section as the only option
+
         public IActionResult OnGet(int sectionTextId, int documentSectionId)
         {
             //Alwayas Initialize

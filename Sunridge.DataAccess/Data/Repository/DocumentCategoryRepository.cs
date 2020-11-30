@@ -41,9 +41,5 @@ namespace Sunridge.DataAccess.Data.Repository
 
             _db.SaveChanges();
         }
-
-
-
-        // **** ToDo **** Deleting a category should change all things linked to it to the "None" category.
     }
 }

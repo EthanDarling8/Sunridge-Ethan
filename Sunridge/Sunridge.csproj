@@ -39,7 +39,6 @@
     <Folder Include="Pages\Owner\Lot\" />
     <Folder Include="wwwroot\files\lot_owner\" />
     <Folder Include="wwwroot\fireinfo" />
-    <Folder Include="wwwroot\images\lostItems\" />
   </ItemGroup>
 
 </Project>

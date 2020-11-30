@@ -21,15 +21,16 @@ function loadList() {
                     data: "address", width: "16%"
                 },
                 {
-                    data: "lot_Owner", width: "16%"
+                    data: "lot_Owner", "aTargets": [0], "render": function (data) { return formatList(data); }
+                    , width: "16%"
                 },
                 {
                     data: "taxId", width: "16%"
                 },
                 {
-                    data: "lot_Inventory", width: "16%"
+                    data: "lot_Inventory", "aTargets": [0], "render": function (data) { return formatList(data); }
+                    , width: "16%"
                 },
-
                 {
                     data: "id",
                     "render": function (data) {
@@ -82,4 +83,11 @@ function Delete(url) {
             });
         }
     });
+}
+// FORMAT LIST FUNCTION
+function formatList(myList) {
+    if (myList != null) {
+        var formattedList = myList.replace(/ *, */g, '<br>');
+        return formattedList;
+    }
 }

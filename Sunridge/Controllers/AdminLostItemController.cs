@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Models;
 using Sunridge.Utility;
 
 namespace Sunridge.Controllers
@@ -15,16 +17,23 @@ namespace Sunridge.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly ApplicationDbContext _context;
 
-        public AdminLostItemController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
+        public AdminLostItemController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment, ApplicationDbContext context)
         {
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
+            // Set Expired Listings to Inactive
+            var expiredListings = _context.LostItem.Where(li => li.ExpirationDate < DateTime.Now).ToList();
+            expiredListings.ForEach(li => li.Active = false);
+            _context.SaveChanges();
+            // Return Lost Items
                 return Json(new { data = _unitOfWork.LostItem.GetAll() }); // If the user in an Administrator they can see both Active and Inactive Listings
         }
         [HttpDelete("{id}")]
@@ -78,5 +87,4 @@ namespace Sunridge.Controllers
             return Json(new { success = true, message = "Listing resolved" });
         }
     }
-
 }

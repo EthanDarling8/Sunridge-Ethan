@@ -15,18 +15,17 @@ namespace Sunridge.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int? id)
         {
-
-            return Json(new { data = _unitOfWork.LotFile.GetAll()});
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            return Json(new { data = _unitOfWork.LotFile.GetAll(lf => lf.LotId == id) });
+                if (id != null)
+                {
+                    return Json(new { data = _unitOfWork.LotFile.GetAll(lf => lf.LotId == id) });
+                }
+                else
+                {
+                    return Json(new { data = _unitOfWork.LotFile.GetAll() });
+                }
         }
 
         [HttpDelete("{id}")]

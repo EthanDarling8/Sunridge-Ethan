@@ -16,12 +16,14 @@
                         <label asp-for="LotFileObj.Title"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="LotFileObj.Title"/>
+                        <input class="form-control" asp-for="LotFileObj.Title" />
                         <span class="text-danger" asp-validation-for="LotFileObj.Title"></span>
                     </div>
-                    @if (Model.LotFileObj.Id != 0) {
-                        <input type="hidden" asp-for="LotFileObj.Id"/>
+                    @if (Model.LotFileObj.Id != 0)
+                    {
+                        <input type="hidden" asp-for="LotFileObj.Id" />
                     }
+                        <input type="hidden" asp-for="LotFileObj.LotId" value="@Model.LotId" />
                 </div>
 
                 <div class="form-group row">

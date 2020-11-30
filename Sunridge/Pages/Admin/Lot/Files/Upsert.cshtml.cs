@@ -17,8 +17,12 @@ namespace Sunridge.Pages.Admin.Lot.Files {
         }
 
         [BindProperty] public Models.LotFile LotFileObj { get; set; }
-
+        public int LotId = 0;
         public IActionResult OnGet(int? id) {
+            if (HttpContext.Session.GetInt32("LotId") != null)
+            {
+                LotId = (int)HttpContext.Session.GetInt32("LotId");
+            }
             LotFileObj = new Models.LotFile();
 
             if (id != null) {

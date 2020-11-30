@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sunridge.DataAccess.Data;
 
 namespace Sunridge.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201128204544_Owner")]
+    partial class Owner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -784,8 +786,8 @@ namespace Sunridge.DataAccess.Migrations
                     b.Property<string>("EmergencyContact")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmergencyContactNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EmergencyContactNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -835,8 +837,8 @@ namespace Sunridge.DataAccess.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Zip")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Zip")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

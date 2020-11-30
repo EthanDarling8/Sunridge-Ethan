@@ -69,6 +69,23 @@ namespace Sunridge.Controllers
             }
             return Json(new { success = true, message = "Delete succcessful" });
         }
+
+        [HttpGet]
+        [Route("GetOwners")]
+        public IActionResult Get(string term)
+        {
+            IEnumerable<Owner> data;
+
+            if (!string.IsNullOrEmpty(term))
+            {
+                data = _unitOfWork.Owner.GetAll().Where(o => o.FirstName.ToLower().Contains(term.ToLower()));
+            }
+            else
+            {
+                data = _unitOfWork.Owner.GetAll();
+            }
+            return Json(new { data });
+        }
     }
 
 }

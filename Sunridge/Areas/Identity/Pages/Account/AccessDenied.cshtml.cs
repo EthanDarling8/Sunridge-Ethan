@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Sunridge.Pages.Admin.KeyHistory
+namespace Sunridge.Areas.Identity.Pages.Account
 {
-    [Authorize(Roles = "Administrator")]
-    public class IndexModel : PageModel
+    public class AccessDeniedModel : PageModel
     {
         public void OnGet()
         {
@@ -17,3 +14,4 @@ namespace Sunridge.Pages.Admin.KeyHistory
         }
     }
 }
+

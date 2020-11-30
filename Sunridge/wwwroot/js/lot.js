@@ -25,12 +25,8 @@ function loadList() {
                     , width: "16%"
                 },
                 {
-                {
-                    data: "lot_Owner", "aTargets": [0], "render": function (data) { return formatList(data); }
+                    data: "taxId", "aTargets": [0], "render": function (data) { return <a href="http://www3.co.weber.ut.us/psearch/tax_summary.php?id=' + data + '" class="statusd-img-top p-2 rounded mx-auto w-100" id="taxLink" >Test</a>'; }
                     , width: "16%"
-                },
-                    data: "taxId", width: "16%"
-                    http://www3.co.weber.ut.us/psearch/tax_summary.php?id=
                 },
                 {
                     data: "lot_Inventory", "aTargets": [0], "render": function (data) { return formatList(data); }

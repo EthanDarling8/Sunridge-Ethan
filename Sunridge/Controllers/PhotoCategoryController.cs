@@ -96,13 +96,13 @@ namespace Sunridge.Controllers
                 _unitOfWork.PhotoCategory.Remove(objFromDb);
 
                 _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Delete Successful." });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
-
-            return Json(new { success = true, message = "Delete Successful." });
         }
     }
 }

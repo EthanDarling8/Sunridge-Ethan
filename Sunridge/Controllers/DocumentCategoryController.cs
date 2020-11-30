@@ -81,27 +81,27 @@ namespace Sunridge.Controllers
                 {
                     //Get all SectionText in Section in Category
                     IEnumerable<DocumentSectionText> SectionTextList = new List<DocumentSectionText>();
-                    SectionTextList = _unitOfWork.DocumentSectionText.GetAll(f => f.DocumentSectionId == section.Id);
+                    SectionTextList = _unitOfWork.DocumentSectionText.GetAll(s => s.DocumentSectionId == section.Id);
 
                     //Delete SectionText database records
                     _unitOfWork.DocumentSectionText.RemoveRange(SectionTextList);
                 }
 
-                //Delete Section database records
+                //Queue delete Section database records
                 _unitOfWork.DocumentSection.RemoveRange(SectionList);
 
-
-                //Delete Category database record
+                //Queue delete Category database record
                 _unitOfWork.DocumentCategory.Remove(objFromDb);
 
+                //Save changes to database
                 _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Delete Successful." });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
-
-            return Json(new { success = true, message = "Delete Successful." });
         }
     }
 }

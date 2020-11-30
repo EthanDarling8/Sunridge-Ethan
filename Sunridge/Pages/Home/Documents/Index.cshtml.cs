@@ -25,6 +25,10 @@ namespace Sunridge.Pages.Home.Documents
         [BindProperty]
         public string Search { get; set; }
 
+        //Counts
+        public int FileCount = 0;
+        public int SectionCount = 0;
+
         //Lists for displaying everything
         public IEnumerable<DocumentCategory> DocumentCategoryList { get; set; }
         public IEnumerable<DocumentFile> DocumentFileList { get; set; }
@@ -41,6 +45,10 @@ namespace Sunridge.Pages.Home.Documents
 
         public IActionResult OnGet(int selectedCategoryId, string search)
         {
+            //Get count of files and sections for use in displaying category selection buttons
+            FileCount = _unitOfWork.DocumentFile.GetAll().Count();
+            SectionCount = _unitOfWork.DocumentSection.GetAll().Count();
+
             //Track selected category
             SelectedCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == selectedCategoryId);
 
@@ -70,6 +78,8 @@ namespace Sunridge.Pages.Home.Documents
             }
 
 
+
+
             //Search
             if (search != null)
             {
@@ -80,8 +90,6 @@ namespace Sunridge.Pages.Home.Documents
                 SearchedDocumentFileList = new List<DocumentFile>();
                 SearchedDocumentSectionList = new List<DocumentSection>();
                 SearchedDocumentSectionTextList = new List<DocumentSectionText>();
-
-
 
                 
                 //Add DocumentFile Name, Description, and Keyword Results
@@ -95,7 +103,7 @@ namespace Sunridge.Pages.Home.Documents
 
 
                     //Add Description Results
-                    if (documentFile.Description.ToLower().Contains(Search))
+                    if (documentFile.Description != null && documentFile.Description.ToLower().Contains(Search))
                     { 
                         //Only add if it wasn't already added
                         if (SearchedDocumentFileList.Where(f => f.Id == documentFile.Id).Count() == 0)
@@ -106,7 +114,7 @@ namespace Sunridge.Pages.Home.Documents
 
 
                     //Add Keyword Results
-                    if (documentFile.Keywords.ToLower().Contains(Search))
+                    if (documentFile.Keywords != null && documentFile.Keywords.ToLower().Contains(Search))
                     {
                         //Only add if it wasn't already added
                         if (SearchedDocumentFileList.Where(f => f.Id == documentFile.Id).Count() == 0)
@@ -117,13 +125,12 @@ namespace Sunridge.Pages.Home.Documents
                 }
 
 
-
-
                 //Add DocumentSection Name Results
                 foreach (DocumentSection documentSection in DocumentSectionList.Where(s => s.Name.ToLower().Contains(Search)))
                 {
                     SearchedDocumentSectionList.Add(documentSection);
                 }
+
 
                 //Add DocumentSectionText Name and Text Results
                 foreach (DocumentSectionText documentSectionText in DocumentSectionTextList.Where(t => t.Name.ToLower().Contains(Search)))
@@ -133,7 +140,7 @@ namespace Sunridge.Pages.Home.Documents
 
 
                     //Add Text Results
-                    if (documentSectionText.Text.ToLower().Contains(Search))
+                    if (documentSectionText.Text != null && documentSectionText.Text.ToLower().Contains(Search))
                     { 
                         //Only add if it wasn't already added
                         if (SearchedDocumentSectionTextList.Where(t => t.Id == documentSectionText.Id).Count() == 0)

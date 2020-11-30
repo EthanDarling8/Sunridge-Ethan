@@ -39,6 +39,8 @@ namespace Sunridge.Pages.Admin.Document.File
             DocumentFileObj = new DocumentFile();
             CategoryList = _unitOfWork.DocumentCategory.GetListForDropDown();
 
+            //Default to today's date
+            DocumentFileObj.PublishedDate = DateTime.Today;
 
             //Adding new from documents page (selected category preserved)
             if (documentCategoryId != 0)
@@ -53,8 +55,6 @@ namespace Sunridge.Pages.Admin.Document.File
                 else
                 {
                     DocumentFileObj.DocumentCategoryId = DocumentFileObj.DocumentCategory.Id;
-                    //Default to today's date
-                    DocumentFileObj.PublishedDate = DateTime.Today;
                 }
             }
             //Existing (edit)

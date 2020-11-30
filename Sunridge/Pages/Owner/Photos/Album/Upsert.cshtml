@@ -1,6 +1,7 @@
 ﻿@page
 @model Sunridge.Pages.Owner.Photos.Album.UpsertModel
 @{
+    Layout = "~/Pages/Shared/_HomeLayout.cshtml";
     ViewData["Title"] = "Photo Album";
 }
 
@@ -84,7 +85,8 @@
                                 <button type="submit"
                                         class="btn btn-primary form-control"
                                         asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
-                                        asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
+                                        asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                        asp-route-myAlbums="@Model.MyAlbums">
 
                                     @(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create")
                                 </button>
@@ -95,6 +97,7 @@
                                 @*Route back with the selected category and album maintained.*@
                                 <a asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
                                    asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                   asp-route-myAlbums="@Model.MyAlbums"
                                    asp-page="/Home/Photos/Index"
                                    class="btn btn-secondary form-control">
                                     Back

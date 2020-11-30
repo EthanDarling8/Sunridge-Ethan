@@ -73,10 +73,10 @@ else
 
             @foreach (var category in Model.DocumentCategoryList)
             {
-                @* Only display categories with stuff in them unless admin *@                 
-                @if ((Model.DocumentSectionList.Where(s => s.DocumentCategoryId == category.Id).Count() > 0 ||
-                      Model.DocumentFileList.Where(f => f.DocumentCategoryId == category.Id).Count() > 0) ||
-                      User.IsInRole(SD.AdministratorRole))
+                @* Only display categories with stuff in them unless admin *@
+                @if ((Model.FileCount > 0 ||
+                     Model.SectionCount > 0) ||
+                     User.IsInRole(SD.AdministratorRole))
                 {
                     <div class="row mb-1">
 
@@ -164,8 +164,8 @@ else
 
                     @* No Results *@
                     @if (Model.SearchedDocumentSectionList.Count() == 0 &&
-                   Model.SearchedDocumentSectionTextList.Count() == 0 &&
-                   Model.SearchedDocumentFileList.Count() == 0)
+                  Model.SearchedDocumentSectionTextList.Count() == 0 &&
+                  Model.SearchedDocumentFileList.Count() == 0)
                     {
                         <h4 class="row ml-1 text-danger"> - No Results - </h4>
                     }
@@ -229,32 +229,32 @@ else
                 }
 
 
-				@* Display Each File + Details *@
+                @* Display Each File + Details *@
                 <div class="accordion mb-4">
-						
-					@foreach (Models.DocumentFile documentFile in Model.DocumentFileList.Where(f => f.DocumentCategoryId == Model.SelectedCategory.Id))
-					{
-						<div class="card z-depth-0 bordered">
 
-							<div class="card-header row" id="@("heading"+@documentFile.Id)">
+                    @foreach (Models.DocumentFile documentFile in Model.DocumentFileList.Where(f => f.DocumentCategoryId == Model.SelectedCategory.Id))
+                    {
+                        <div class="card z-depth-0 bordered">
+
+                            <div class="card-header row" id="@("heading"+@documentFile.Id)">
                                 @* File Name *@
-								<h5 class="mb-0 col">
+                                <h5 class="mb-0 col">
                                     <button class="col btn btn-block collapsed" type="button" data-toggle="collapse"
                                             data-target="#@("collapse"+@documentFile.Id)" aria-expanded="false" aria-controls="@("collapse"+@documentFile.Id)">
                                         @documentFile.Name
                                     </button>
-								</h5>
+                                </h5>
 
-								@* Edit File Button *@
-								@if (User.IsInRole(SD.AdministratorRole))
-								{
-									<a class="col-3 btn btn-outline-warning text-dark"
-									   asp-route-fileId="@documentFile.Id"
-									   asp-page="/Admin/Document/File/Upsert">
-										<i class=" far fa-edit"></i> Edit File
-									</a>
-								}
-							</div>
+                                @* Edit File Button *@
+                                @if (User.IsInRole(SD.AdministratorRole))
+                                {
+                                    <a class="col-3 btn btn-outline-warning text-dark"
+                                       asp-route-fileId="@documentFile.Id"
+                                       asp-page="/Admin/Document/File/Upsert">
+                                        <i class=" far fa-edit"></i> Edit File
+                                    </a>
+                                }
+                            </div>
 
 
                             <div id="@("collapse"+@documentFile.Id)" class="collapse" aria-labelledby="@("heading"+@documentFile.Id)">
@@ -300,30 +300,30 @@ else
                             </div>
 
                         </div>
-					}
+                    }
 
 
-					@* No Files Added *@
-					@if (Model.DocumentFileList.Count() == 0 && User.IsInRole(SD.AdministratorRole))
-					{
-						<div class="row mt-4 border-top">
-							<h4 class="col text-danger"> - No Files - </h4>
-						</div>
-					}
+                    @* No Files Added *@
+                    @if (Model.DocumentFileList.Count() == 0 && User.IsInRole(SD.AdministratorRole))
+                    {
+                        <div class="row mt-4 border-top">
+                            <h4 class="col text-danger"> - No Files - </h4>
+                        </div>
+                    }
 
 
-					@*Add File Button *@
-					@if (User.IsInRole(SD.AdministratorRole))
-					{
-						<div class="col-12 mt-1 ml-3">
-							<a class="col-3 btn btn-outline-primary text-dark"
-							   asp-route-documentCategoryId="@Model.SelectedCategory.Id"
-							   asp-page="/Admin/Document/File/Upsert">
-								<i class=" fas fa-plus"></i> Add File
-							</a>
-						</div>
-					}
-                    
+                    @*Add File Button *@
+                    @if (User.IsInRole(SD.AdministratorRole))
+                    {
+                        <div class="col-12 mt-1 ml-3">
+                            <a class="col-3 btn btn-outline-primary text-dark"
+                               asp-route-documentCategoryId="@Model.SelectedCategory.Id"
+                               asp-page="/Admin/Document/File/Upsert">
+                                <i class=" fas fa-plus"></i> Add File
+                            </a>
+                        </div>
+                    }
+
                 </div>
 
 
@@ -345,25 +345,25 @@ else
                     @foreach (Models.DocumentSection documentSection in Model.DocumentSectionList.Where(s => s.DocumentCategoryId == Model.SelectedCategory.Id))
                     {
                         @* Display Section name *@
-						<h4 class="row mt-4 pt-1 pl-2 border-top" id="@("section"+@documentSection.Id)">
-							@documentSection.Name
-						</h4>
-						
-						@* Edit Section Button *@
-						@if (User.IsInRole(SD.AdministratorRole))
-						{
-							<a class="col-3 mb-2 btn btn-outline-warning text-dark"
-							   asp-route-sectionId="@(documentSection.Id)"
-							   asp-page="/Admin/Document/Section/Upsert">
-								<i class="far fa-edit"></i> Edit Section
-							</a>
-						}                        
-						
-						
-						
+                        <h4 class="row mt-4 pt-1 pl-2 border-top" id="@("section"+@documentSection.Id)">
+                            @documentSection.Name
+                        </h4>
+
+                        @* Edit Section Button *@
+                        @if (User.IsInRole(SD.AdministratorRole))
+                        {
+                            <a class="col-3 mb-2 btn btn-outline-warning text-dark"
+                               asp-route-sectionId="@(documentSection.Id)"
+                               asp-page="/Admin/Document/Section/Upsert">
+                                <i class="far fa-edit"></i> Edit Section
+                            </a>
+                        }
+
+
+
 
                         @* Display SectionText Name+Text *@
-						
+
                         foreach (Models.DocumentSectionText documentSectionText in Model.DocumentSectionTextList.Where(t => t.DocumentSectionId == documentSection.Id))
                         {
                             <div class="card z-depth-0 bordered">
@@ -434,6 +434,13 @@ else
                 }
             }
 
+        </div>
+    }
+    @* No category selected, no search entered - display "How To" *@
+    else
+    {
+        <div class="col-8 ml-3">
+            <h4 class="ml-4 mt-4 text-secondary">- Select a Document Category or Search. -</h4>
         </div>
     }
 

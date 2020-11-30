@@ -12,7 +12,8 @@
                 @*Display an image if there is one and link to the album page*@
                 <a asp-page="Index"
                    asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
-                   asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id">
+                   asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                   asp-route-myAlbums="@Model.MyAlbums">
 
                     @*Title*@
                     <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
@@ -41,6 +42,7 @@
                         <a class="col-5 mr-1 btn btn-warning"
                            asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoCategory.Id"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-route-myAlbums="@Model.MyAlbums"
                            asp-page="/Owner/Photos/Album/Upsert">
                             <i class="far fa-edit"></i>&nbsp;Edit
                         </a>
@@ -65,7 +67,8 @@
             <div class="text-center p-2">
                 @*Display an image if there is one and link to the album page*@
                 <a asp-page="Index"
-                   asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id">
+                   asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                   asp-route-myAlbums="@Model.MyAlbums">
 
                     @*Title*@
                     <h4 class="text-secondary"><b>@Model.PhotoAlbum.Title</b></h4>
@@ -93,6 +96,7 @@
                         @*Edit*@
                         <a class="col-5 mr-1 btn btn-warning"
                            asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-route-myAlbums="@Model.MyAlbums"
                            asp-page="/Owner/Photos/Album/Upsert">
                             <i class="far fa-edit"></i>&nbsp;Edit
                         </a>

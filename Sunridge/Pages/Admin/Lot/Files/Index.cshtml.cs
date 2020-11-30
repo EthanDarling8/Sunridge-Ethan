@@ -10,14 +10,13 @@ using System;
 
 namespace Sunridge.Pages.Admin.Lot.Files {
     public class Index : PageModel {
+        public int LotId;
        public void OnGet()
        {
-            if (!String.IsNullOrEmpty(Request.Query["id"]))
+            if (!String.IsNullOrEmpty(Request.Query["lotid"]))
             {
-                int id = Int32.Parse(Request.Query["id"]);
-                HttpContext.Session.SetInt32("LotId", id);
+                LotId = Int32.Parse(Request.Query["lotid"]);
             }
-
         }
     }
 }

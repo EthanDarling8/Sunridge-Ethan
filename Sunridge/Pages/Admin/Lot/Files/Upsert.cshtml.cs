@@ -19,9 +19,9 @@ namespace Sunridge.Pages.Admin.Lot.Files {
         [BindProperty] public Models.LotFile LotFileObj { get; set; }
         public int LotId = 0;
         public IActionResult OnGet(int? id) {
-            if (HttpContext.Session.GetInt32("LotId") != null)
+            if (!String.IsNullOrEmpty(Request.Query["lotid"]))
             {
-                LotId = (int)HttpContext.Session.GetInt32("LotId");
+                LotId = Int32.Parse(Request.Query["lotid"]);
             }
             LotFileObj = new Models.LotFile();
 
@@ -45,7 +45,7 @@ namespace Sunridge.Pages.Admin.Lot.Files {
 
             if (LotFileObj.Id == 0) {
                 // Upload and save image
-                string fileName = Guid.NewGuid().ToString();
+                string fileName = Path.GetFileNameWithoutExtension(files[0].FileName) + "_" + Guid.NewGuid().ToString();
                 var uploads = Path.Combine(webRootPath, @"files\lot");
                 var extension = Path.GetExtension(files[0].FileName);
 
@@ -62,7 +62,7 @@ namespace Sunridge.Pages.Admin.Lot.Files {
                 var objFromDb = _unitOfWork.LotFile.Get(LotFileObj.Id);
                 if (files.Count > 0) {
                     // Upload and save image
-                    string fileName = Guid.NewGuid().ToString();
+                    string fileName = Path.GetFileNameWithoutExtension(files[0].FileName) + "_" + Guid.NewGuid().ToString();
                     var uploads = Path.Combine(webRootPath, @"files\lot");
                     var extension = Path.GetExtension(files[0].FileName);
 
@@ -87,13 +87,14 @@ namespace Sunridge.Pages.Admin.Lot.Files {
             }
 
             _unitOfWork.Save();
-            if (HttpContext.Session.GetInt32("LotId") != null)
+            if (!String.IsNullOrEmpty(Request.Query["lotid"]))
             {
-                LotId = (int)HttpContext.Session.GetInt32("LotId");
-                return RedirectToPage("./index", new { id = LotId }); // If the LotId Session is valid return to files
+                LotId = Int32.Parse(Request.Query["lotid"]);
+            return RedirectToPage("./index", new { lotid = LotId }); // If the LotId is valid return to files
             }
-            else{
-                return RedirectToPage("../index"); // If the Session Variable LotId is invalid return to lot, so they have to renew it.
+            else
+            {
+                return RedirectToPage("../index"); // If the Variable LotId is invalid return to lot
             }
         }
     }

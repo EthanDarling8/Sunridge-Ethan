@@ -36,7 +36,7 @@ function loadList() {
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/lot/Files/Index?id=${data}"
+                            <a href="/Admin/lot/Files/Index?lotid=${data}"
                                class="btn btn-secondary text-white" style="cursor: pointer; width: 100px;">
                                 <i class="fas fa-folder"></i>
                                 Files 

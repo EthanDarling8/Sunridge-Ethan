@@ -1,5 +1,6 @@
 ﻿var dataTable;
-var id = getUrlParameter('id');
+var lotid = getUrlParameter('lotid');
+var downloadName;
 $(document).ready(function () {
 
     loadList();
@@ -9,7 +10,7 @@ function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax":
         {
-            "url": (id == null) ? "/api/lotfile" : "/api/lotfile?id=" + id,
+            "url": (lotid == null) ? "/api/lotfile" : "/api/lotfile?id=" + lotid,
             "type": "GET",
             "datatype": "json"
         },
@@ -24,12 +25,14 @@ function loadList() {
                 {
                     data: "file", width: "5%",
                     "render": function (data) {
+                        downloadName = data;
                         return `
                         <div class="text-center">
-                            <a href="${data}" download
+                            <a href="/files/lot/${data}" download
                                 class="btn btn-primary text-white"
                                 style="cursor:pointer; width=100px;">
                                 <i class="fas fa-file-download"></i>
+                                Download
                             </a>
                         </div>
                     `
@@ -40,7 +43,7 @@ function loadList() {
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/Lot/Files/Upsert?id=${data}"
+                            <a href="/Admin/Lot/Files/Upsert?lotid=`+ lotid + `&id=${data}"
                                class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 

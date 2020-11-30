@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
@@ -10,6 +11,7 @@ using Sunridge.Models.Models;
 
 namespace Sunridge.Pages.Admin.KeyHistory
 {
+    [Authorize(Roles = "Administrator")]
     public class DetailsModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -30,10 +32,18 @@ namespace Sunridge.Pages.Admin.KeyHistory
 
         public void OnGet(int id)
         {
-
             Lot = _unitOfWork.Lot.GetFirstOrDefault(l => l.Id == id);
             LotOwner = _unitOfWork.Lot_Owner.GetFirstOrDefault(lo => lo.LotId == id);
-            Owner = _unitOfWork.Owner.GetFirstOrDefault(o => o.Id == LotOwner.OwnerId);
+
+            if (LotOwner != null)
+            {
+                Owner = _unitOfWork.Owner.GetFirstOrDefault(o => o.Id == LotOwner.OwnerId);
+            }
+            else
+            {
+                Owner = new Models.Owner { FirstName = "No", LastName = "Owner" };
+            }
+          
             KeyLots = _unitOfWork.KeyLot.GetAll(kl => kl.LotId == id, null, "Key,Lot");
         }
 

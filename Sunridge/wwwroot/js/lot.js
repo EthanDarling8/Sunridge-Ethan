@@ -25,7 +25,12 @@ function loadList() {
                     , width: "16%"
                 },
                 {
+                {
+                    data: "lot_Owner", "aTargets": [0], "render": function (data) { return formatList(data); }
+                    , width: "16%"
+                },
                     data: "taxId", width: "16%"
+                    http://www3.co.weber.ut.us/psearch/tax_summary.php?id=
                 },
                 {
                     data: "lot_Inventory", "aTargets": [0], "render": function (data) { return formatList(data); }

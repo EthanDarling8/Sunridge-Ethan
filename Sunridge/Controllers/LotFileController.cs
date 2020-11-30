@@ -1,5 +1,6 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Sunridge.Controllers
 {
@@ -13,6 +14,13 @@ namespace Sunridge.Controllers
         public LotFileController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+
+            return Json(new { data = _unitOfWork.LotFile.GetAll()});
         }
 
         [HttpGet("{id}")]

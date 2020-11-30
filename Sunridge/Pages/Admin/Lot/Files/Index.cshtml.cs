@@ -9,6 +9,5 @@ using Sunridge.Models;
 
 namespace Sunridge.Pages.Admin.Lot.Files {
     public class Index : PageModel {
-
     }
 }

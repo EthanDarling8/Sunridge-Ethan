@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\fireInfo" />
+    <Folder Include="wwwroot\images\lostItems\" />
     <Folder Include="wwwroot\images\News" />
   </ItemGroup>
 

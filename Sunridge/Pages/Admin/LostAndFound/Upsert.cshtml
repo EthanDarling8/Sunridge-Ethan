@@ -61,7 +61,7 @@
                         <label asp-for="LostItemObj.LostItem.Image"></label>
                     </div>
                     <div class="col-9">
-                        <input type="file" class="form-control" id="uploadBox" name="files" accept=".png,.jpg,.jpeg" />
+                        <input asp-for="LostItemObj.LostItem.Image" type="file" class="form-control" id="uploadBox" name="files" accept=".png,.jpg,.jpeg" />
                     </div>
                 </div>
                 @* Contact Info Input *@

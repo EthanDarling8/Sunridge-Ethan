@@ -61,7 +61,7 @@
                         <label asp-for="LostItemObj.LostItem.Image"></label>
                     </div>
                     <div class="col-9">
-                        <input type="file" class="form-control" id="uploadBox" name="files" accept=".png,.jpg,.jpeg" />
+                        <input asp-for="LostItemObj.LostItem.Image "type="file" class="form-control" id="uploadBox" name="files" accept=".png,.jpg,.jpeg" />
                     </div>
                 </div>
                 @* Contact Info Input *@
@@ -144,12 +144,6 @@
             @* Status Validation *@
             if (!document.getElementById("lostRadio").checked && !document.getElementById("foundRadio").checked) {
                 swal("Error", "Please select a Status for the Lost and Found Item.", "error");
-                return false;
-            }
-
-            @* Image Validation *@
-            if (document.getElementById("uploadBox").value == "") {
-                swal('Error', 'Please Select an Image', 'error');
                 return false;
             }
             return true;

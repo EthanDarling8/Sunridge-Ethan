@@ -65,14 +65,10 @@ namespace Sunridge.Pages.Admin.LostItem
             {
                 return Page();
             }
-            #region Image Upload
-            if (LostItemObj.LostItem.Id == 0)
-            {
-                if (LostItemObj.LostItem.Image == null)
+                #region Image Upload
+                if (LostItemObj.LostItem.Id == 0)
                 {
-                    LostItemObj.LostItem.Image = "default.png";
-                }
-                else
+                if (files.Count > 0)
                 {
                     // Upload and save image
                     string fileName = Guid.NewGuid().ToString();
@@ -85,6 +81,10 @@ namespace Sunridge.Pages.Admin.LostItem
                     }
 
                     LostItemObj.LostItem.Image = fileName + extension;
+                }
+                else
+                {
+                    LostItemObj.LostItem.Image = "default.png";
                 }
                 _unitOfWork.LostItem.Add(LostItemObj.LostItem);
             }

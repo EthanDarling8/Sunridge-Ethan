@@ -32,18 +32,18 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="LotObj.Lot.Address"></label>
-                    <input class="form-control" asp-for="LotObj.Lot.Address" id="txtAddress"/>
+                    <input class="form-control" asp-for="LotObj.Lot.Address" id="txtAddress" />
                     <span class="text-danger" asp-validation-for="LotObj.Lot.Address"></span>
                 </div>
 
                 <div class="form-group">
                     <h5>Lot Owners</h5>
                     <hr />
-                    @Html.DropDownList("LotObj.Owners", (MultiSelectList)Model.LotObj.OwnersList, new { multiple = "multiple", style="width: 100%;" })
+                    @Html.DropDownList("LotObj.Owners", (MultiSelectList)Model.LotObj.OwnersList, new { multiple = "multiple", style = "width: 100%;" })
 
                     @*<label class="control-label" for="OwnerIds">Owner(s)</label>
-            <br />
-            <select id="OwnerIds" name="OwnerIds" multiple="multiple" class="form-control"></select>*@
+                        <br />
+                        <select id="OwnerIds" name="OwnerIds" multiple="multiple" class="form-control"></select>*@
                 </div>
                 <h5>Items Present on Lot</h5>
                 <hr />
@@ -53,7 +53,7 @@
                         <input name="LotObj.Inventory" type="checkbox" value="@item.Id" @(item.IsChecked == true ? "checked" : "") /> @item.ItemName
                         @*<input name="LotObj.InventoryList" type="hidden" value="@item.Id">*@
                         @*<input name="InventoryList" type="checkbox" value="1" />
-                <label class="control-label">Septic System</label>*@
+                            <label class="control-label">Septic System</label>*@
                     </div>
                 }
 
@@ -63,11 +63,11 @@
                             <div class="col-6">
                                 @if (Model.LotObj.Lot.Id != 0)
                                 {
-                                    <input type="submit" value="Update" class="btn btn-primary form-control" onclick=" return ValidateInput()"/>
+                                    <input type="submit" value="Update" class="btn btn-primary form-control" onclick=" return ValidateInput()" />
                                 }
                                 else
                                 {
-                                    <input type="submit" value="Create" class="btn btn-primary form-control" onclick=" return ValidateInput()"/>
+                                    <input type="submit" value="Create" class="btn btn-primary form-control" onclick=" return ValidateInput()" />
                                 }
                             </div>
                             <div class="col-6">
@@ -82,6 +82,8 @@
 </form>
 
 @section Scripts {
+    <partial name="Shared/_ValidationScriptsPartial" />
+    <partial name="Shared/_Scripts" />
     <script>
         $(document).ready(function () {
             $('#LotObj_Owners').select2({

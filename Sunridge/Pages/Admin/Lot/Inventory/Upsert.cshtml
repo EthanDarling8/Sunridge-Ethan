@@ -20,7 +20,7 @@
                         <label asp-for="InventoryObj.ItemName"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="InventoryObj.ItemName" id="txtName"/>
+                        <input class="form-control" asp-for="InventoryObj.ItemName" id="txtName" />
                         <span class="text-danger" asp-validation-for="InventoryObj.ItemName"></span>
                     </div>
                 </div>
@@ -48,8 +48,10 @@
         </div>
     </div>
 </form>
-@section Scripts{ 
-<script>
+@section Scripts{
+    <partial name="Shared/_ValidationScriptsPartial" />
+    <partial name="Shared/_Scripts" />
+    <script>
     function ValidateInput() {
         @* Title Validation *@
             var name = document.getElementById("txtName").value;
@@ -60,5 +62,5 @@
 
         return true;
     }
-</script>
+    </script>
 }

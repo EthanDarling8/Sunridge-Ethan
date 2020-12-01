@@ -39,6 +39,7 @@ namespace Sunridge.Pages.Admin.LostItem
                 LostItem = new Models.LostItem(),
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
+            LostItemObj.LostItem.Date = DateTime.Now; // Default a NEW Lost and Found Item's Date to the current DateTime.
             if (id != null)
             {
                 LostItemObj.LostItem = _unitOfWork.LostItem.GetFirstOrDefault(u => u.Id == id);
@@ -67,18 +68,24 @@ namespace Sunridge.Pages.Admin.LostItem
             #region Image Upload
             if (LostItemObj.LostItem.Id == 0)
             {
-                // Upload and save image
-                string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"images\lostItems");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                if (LostItemObj.LostItem.Image == null)
                 {
-                    files[0].CopyTo(fileStream);
+                    LostItemObj.LostItem.Image = "default.png";
                 }
+                else
+                {
+                    // Upload and save image
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\lostItems");
+                    var extension = Path.GetExtension(files[0].FileName);
 
-                LostItemObj.LostItem.Image = fileName + extension;
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
 
+                    LostItemObj.LostItem.Image = fileName + extension;
+                }
                 _unitOfWork.LostItem.Add(LostItemObj.LostItem);
             }
             #endregion
@@ -88,6 +95,8 @@ namespace Sunridge.Pages.Admin.LostItem
 
                 // Update
                 var objFromDb = _unitOfWork.LostItem.Get(LostItemObj.LostItem.Id);
+                objFromDb.Active = true;                                 // Set the Status of the newly created or edited Lost & Found Listing to true.
+                objFromDb.ExpirationDate = DateTime.Now.AddDays(30);     // Set the Listing to expire in 30 days from creation or last edit.
                 if (files.Count > 0)
                 {
                     // Upload and save image
@@ -96,10 +105,12 @@ namespace Sunridge.Pages.Admin.LostItem
                     var extension = Path.GetExtension(files[0].FileName);
 
                     var filePath = Path.Combine(webRootPath, objFromDb.Image.TrimStart('\\'));
-
-                    if (System.IO.File.Exists(filePath))
+                    if (LostItemObj.LostItem.Image != "default.png")
                     {
-                        System.IO.File.Delete(filePath);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
                     }
 
                     using (var fileStream =

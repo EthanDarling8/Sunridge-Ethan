@@ -41,4 +41,10 @@
     <Folder Include="wwwroot\fireinfo" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Pages\Admin\LostAndFound\Details.cshtml" />
+    <None Include="Pages\Admin\LostAndFound\Index.cshtml" />
+    <None Include="Pages\Admin\LostAndFound\Upsert.cshtml" />
+  </ItemGroup>
+
 </Project>

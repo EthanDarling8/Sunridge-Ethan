@@ -1,6 +1,9 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using Sunridge.Models;
+using System;
 
 namespace Sunridge.Controllers
 {
@@ -22,8 +25,6 @@ namespace Sunridge.Controllers
         [HttpGet]
         public IActionResult Get(int categoryId)
         {
-            //**** ToDO **** filter by categoryId
-            //return Json(new { data = _unitOfWork.DocumentSection.GetAll(c => c.DocumentCategoryId == categoryId) });
             return Json(new { data = _unitOfWork.DocumentSection.GetAll(null, null, "DocumentCategory") });
         }
 
@@ -33,20 +34,35 @@ namespace Sunridge.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int Id)
         {
+            try
+            {
+                //Get section
+                var objFromDb = _unitOfWork.DocumentSection.GetFirstOrDefault(s => s.Id == Id);
 
-            // **** To Do **** Delete needs to remove all section texts associated with that section
+                if (objFromDb == null)
+                {
+                    return Json(new { success = false, message = "Error while deleting." });
+                }
 
+                //Get all SectionText in Section
+                IEnumerable<DocumentSectionText> SectionTextList = new List<DocumentSectionText>();
+                SectionTextList = _unitOfWork.DocumentSectionText.GetAll(s => s.DocumentSectionId == Id);
 
-            var objFromDb = _unitOfWork.DocumentSection.GetFirstOrDefault(s => s.Id == Id);
+                //Queue delete SectionText database records
+                _unitOfWork.DocumentSectionText.RemoveRange(SectionTextList);
 
-            if (objFromDb == null)
+                //Queue delete Section database record
+                _unitOfWork.DocumentSection.Remove(objFromDb);
+
+                //Save changes to database
+                _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Delete Successful." });
+            }
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
-
-            _unitOfWork.DocumentSection.Remove(objFromDb);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful." });
         }
     }
 }

@@ -27,14 +27,18 @@ namespace Sunridge.Pages.Owner.Photos.Album
         public PhotoAlbumVM PhotoAlbumObj { get; set; }        
         public int SelectedPhotoCategoryId { get; set; }        
         public string OwnerId { get; set; }
+        public bool MyAlbums { get; set; }
 
 
 
-
-        public IActionResult OnGet(int? selectedPhotoAlbumId, int selectedPhotoCategoryId)
+        public IActionResult OnGet(int? selectedPhotoAlbumId, int selectedPhotoCategoryId, bool myAlbums = false)
         {
-            //Always preserve selected category
+            //Used to pass selected categroy into page for button links
             SelectedPhotoCategoryId = selectedPhotoCategoryId;
+
+            //Used to pass myAlbums into page for button links to preserve selection
+            MyAlbums = myAlbums;
+
 
             //Get Id of current user.
             OwnerId = _userManager.GetUserId(User);
@@ -54,7 +58,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
                 //selectedPhotoAlbumId does not exist or database fails
                 if (PhotoAlbumObj.PhotoAlbum == null)
                 {
-                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                    return RedirectToPage("/Home/Photos/Index", new { selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
                 }
 
 
@@ -66,7 +70,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
                 }
                 else
                 {
-                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                    return RedirectToPage("/Home/Photos/Index", new { selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
                 }                              
             }
 

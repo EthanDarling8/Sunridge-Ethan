@@ -296,7 +296,8 @@ namespace Sunridge.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
 
                     b.HasKey("Id");
 
@@ -310,46 +311,39 @@ namespace Sunridge.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
                     b.Property<int>("DocumentCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("File")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Keywords")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DocumentCategoryId");
 
                     b.ToTable("DocumentFile");
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentFileKeyword", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DocumentFileId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Keyword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentFileId");
-
-                    b.ToTable("DocumentFileKeyword");
                 });
 
             modelBuilder.Entity("Sunridge.Models.DocumentSection", b =>
@@ -367,7 +361,8 @@ namespace Sunridge.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
 
                     b.HasKey("Id");
 
@@ -391,7 +386,8 @@ namespace Sunridge.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -1027,15 +1023,6 @@ namespace Sunridge.DataAccess.Migrations
                     b.HasOne("Sunridge.Models.DocumentCategory", "DocumentCategory")
                         .WithMany()
                         .HasForeignKey("DocumentCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sunridge.Models.DocumentFileKeyword", b =>
-                {
-                    b.HasOne("Sunridge.Models.DocumentFile", "DocumentFile")
-                        .WithMany()
-                        .HasForeignKey("DocumentFileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

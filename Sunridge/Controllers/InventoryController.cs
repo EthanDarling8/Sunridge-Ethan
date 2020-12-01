@@ -20,17 +20,7 @@ namespace Sunridge.Controllers
         {
             return Json(new { data = _unitOfWork.Inventory.GetAll() });
         }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var objFromDb = _unitOfWork.Inventory.GetFirstOrDefault(u => u.Id == id);
-            if (objFromDb == null)
-            {
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-            _unitOfWork.Inventory.Remove(objFromDb);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete succcessful" });
-        }
+
+        // **** ToDo Setup Post Method? ****
     }
 }

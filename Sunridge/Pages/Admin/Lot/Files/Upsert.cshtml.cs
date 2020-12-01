@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.Lot.Files {
+    [Authorize(Roles = SD.AdministratorRole)]
     public class Upsert : PageModel {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -17,8 +20,12 @@ namespace Sunridge.Pages.Admin.Lot.Files {
         }
 
         [BindProperty] public Models.LotFile LotFileObj { get; set; }
-
+        public int LotId = 0;
         public IActionResult OnGet(int? id) {
+            if (!String.IsNullOrEmpty(Request.Query["lotid"]))
+            {
+                LotId = Int32.Parse(Request.Query["lotid"]);
+            }
             LotFileObj = new Models.LotFile();
 
             if (id != null) {
@@ -41,7 +48,7 @@ namespace Sunridge.Pages.Admin.Lot.Files {
 
             if (LotFileObj.Id == 0) {
                 // Upload and save image
-                string fileName = Guid.NewGuid().ToString();
+                string fileName = Path.GetFileNameWithoutExtension(files[0].FileName) + "_" + Guid.NewGuid().ToString();
                 var uploads = Path.Combine(webRootPath, @"files\lot");
                 var extension = Path.GetExtension(files[0].FileName);
 
@@ -58,7 +65,7 @@ namespace Sunridge.Pages.Admin.Lot.Files {
                 var objFromDb = _unitOfWork.LotFile.Get(LotFileObj.Id);
                 if (files.Count > 0) {
                     // Upload and save image
-                    string fileName = Guid.NewGuid().ToString();
+                    string fileName = Path.GetFileNameWithoutExtension(files[0].FileName) + "_" + Guid.NewGuid().ToString();
                     var uploads = Path.Combine(webRootPath, @"files\lot");
                     var extension = Path.GetExtension(files[0].FileName);
 
@@ -83,7 +90,15 @@ namespace Sunridge.Pages.Admin.Lot.Files {
             }
 
             _unitOfWork.Save();
-            return RedirectToPage("./Index");
+            if (!String.IsNullOrEmpty(Request.Query["lotid"]))
+            {
+                LotId = Int32.Parse(Request.Query["lotid"]);
+            return RedirectToPage("./index", new { lotid = LotId }); // If the LotId is valid return to files
+            }
+            else
+            {
+                return RedirectToPage("../index"); // If the Variable LotId is invalid return to lot
+            }
         }
     }
 }

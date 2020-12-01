@@ -46,6 +46,7 @@ namespace Sunridge.Pages.Owner.LostItem
                 LostItem = new Models.LostItem(),
                 OwnerList = _unitOfWork.Owner.GetOwnerListForDropdown()
             };
+            LostItemObj.LostItem.Date = DateTime.Now; // Default a NEW Lost and Found Item's Date to the current DateTime.
             if (id != null)
             {
                 LostItemObj.LostItem = _unitOfWork.LostItem.GetFirstOrDefault(u => u.Id == id);
@@ -74,17 +75,24 @@ namespace Sunridge.Pages.Owner.LostItem
             #region Image Upload
             if (LostItemObj.LostItem.Id == 0)
             {
-                // Upload and save image
-                string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"images\lostItems");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                if (files.Count > 0)
                 {
-                    files[0].CopyTo(fileStream);
-                }
+                    // Upload and save image
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\lostItems");
+                    var extension = Path.GetExtension(files[0].FileName);
 
-                LostItemObj.LostItem.Image = fileName + extension;
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    LostItemObj.LostItem.Image = fileName + extension;
+                }
+                else
+                {
+                    LostItemObj.LostItem.Image = "default.png";
+                }
 
                 _unitOfWork.LostItem.Add(LostItemObj.LostItem);
             }

@@ -4,7 +4,9 @@
 @using Sunridge.Models
 @using Microsoft.AspNetCore.Identity
 @model Sunridge.Pages.Home.LostAndFound.Index
-
+@{
+    Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+}
 @{
     ViewData["Title"] = "LostAndFound";
 }
@@ -38,5 +40,5 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/homeLostItem.js"></script>
+    <script src="~/js/homelostitem.js"></script>
 }

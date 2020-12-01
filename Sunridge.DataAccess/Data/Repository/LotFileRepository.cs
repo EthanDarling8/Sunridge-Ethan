@@ -20,7 +20,9 @@ namespace Sunridge.DataAccess.Data.Repository
             //Gets the first object from the table that has the same id as the one passed in
             var objFromDb = _db.LotFile.FirstOrDefault(s => s.Id == LotFile.Id);
 
-            // **** ToDo ****
+            objFromDb.Title = LotFile.Title;
+            objFromDb.Description = LotFile.Description;
+            objFromDb.File = LotFile.File;
 
             _db.SaveChanges();
         }

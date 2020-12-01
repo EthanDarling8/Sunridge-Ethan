@@ -7,6 +7,7 @@ namespace Sunridge.Pages.Admin.LostAndFound
     [Authorize(Roles = SD.AdministratorRole)]
     public class Index : PageModel
     {
+
         public void OnGet()
         {
 

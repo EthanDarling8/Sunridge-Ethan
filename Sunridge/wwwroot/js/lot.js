@@ -21,34 +21,31 @@ function loadList() {
                     data: "address", width: "16%"
                 },
                 {
-                    data: "lot_Owner", width: "16%"
+                    data: "lot_Owner", "aTargets": [0], "render": function (data) { if (data != null){ return formatList(data); } else { return ""; } }
+                    , width: "16%"
                 },
                 {
-                    data: "taxId", width: "16%"
+                    data: "taxId", "aTargets": [0], "render": function (data) { return '<a href="http://www3.co.weber.ut.us/psearch/tax_summary.php?id=' + data + '" class="btn btn-secondary text-white" id="taxLink" target="_blank" >Tax Info</a>'; }
+                    , width: "16%"
                 },
                 {
-                    data: "lot_Inventory", width: "16%"
+                    data: "lot_Inventory", "aTargets": [0], "render": function (data) { if (data != null) { return formatList(data); } else { return "";} }
+                    , width: "16%"
                 },
-
                 {
                     data: "id",
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/lot/Details?id=${data}"
-                               class="btn btn-info text-white" style="cursor: pointer; width: 100px;">
-                                <i class="fas fa-book-open"></i>
-                                Read 
+                            <a href="/Admin/lot/Files/Index?lotid=${data}"
+                               class="btn btn-secondary text-white" style="cursor: pointer; width: 100px;">
+                                <i class="fas fa-folder"></i>
+                                Files 
                             </a>
                             <a href="/Admin/lot/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                               class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
-                            </a>
-                            <a onClick=Delete('/api/lot/'+${data})
-                               class="btn btn-danger text-white" style="cursor: pointer"; width: 100px;">
-                                <i class="far fa-trash-alt"></i>
-                                Delete
                             </a>
                         </div>
                         `}, width: "16%"
@@ -87,4 +84,11 @@ function Delete(url) {
             });
         }
     });
+}
+// FORMAT LIST FUNCTION
+function formatList(myList) {
+    if (myList != null) {
+        var formattedList = myList.replace(/ *, */g, '<br>');
+        return formattedList;
+    }
 }

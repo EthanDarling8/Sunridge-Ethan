@@ -1,6 +1,8 @@
 ﻿var dataTable;
-
+var lotid = getUrlParameter('lotid');
+var downloadName;
 $(document).ready(function () {
+
     loadList();
 });
 
@@ -8,28 +10,41 @@ function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax":
         {
-            "url": "/api/lotfile",
+            "url": (lotid == null) ? "/api/lotfile" : "/api/lotfile?id=" + lotid,
             "type": "GET",
             "datatype": "json"
         },
         "columns":
             [
                 {
-                    data: "title", width: "16%"
+                    data: "title", width: "20%"
                 },
                 {
-                    data: "description", width: "16%"
+                    data: "description", width: "60%"
                 },
                 {
-                    data: "file", width: "16%"
+                    data: "file", width: "5%",
+                    "render": function (data) {
+                        downloadName = data;
+                        return `
+                        <div class="text-center">
+                            <a href="/files/lot/${data}" download
+                                class="btn btn-primary text-white"
+                                style="cursor:pointer; width=100px;">
+                                <i class="fas fa-file-download"></i>
+                                Download
+                            </a>
+                        </div>
+                    `
+                    }
                 },
                 {
                     data: "id",
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/lotfile/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                            <a href="/Admin/Lot/Files/Upsert?lotid=`+ lotid + `&id=${data}"
+                               class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
                             </a>
@@ -39,7 +54,7 @@ function loadList() {
                                 Delete
                             </a>
                         </div>
-`}, width: "16%"
+`}, width: "15%"
 
                 }
             ],
@@ -74,3 +89,16 @@ function Delete(url) {
         }
     });
 }
+// GET PARAMETER
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};

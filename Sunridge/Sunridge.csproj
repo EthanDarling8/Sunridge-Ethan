@@ -39,9 +39,18 @@
     <Folder Include="wwwroot\images\photoGallery\" />
     <Folder Include="Pages\Owner\Lot\" />
     <Folder Include="wwwroot\files\lot_owner\" />
-    <Folder Include="wwwroot\files\lot\" />
     <Folder Include="wwwroot\fireinfo" />
-    <Folder Include="wwwroot\images\lostItems\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Admin\LostAndFound\Details.cshtml" />
+    <None Include="Pages\Admin\LostAndFound\Index.cshtml" />
+    <None Include="Pages\Admin\LostAndFound\Upsert.cshtml" />
+    <None Include="Pages\Home\LostAndFound\Details.cshtml" />
+    <None Include="Pages\Home\LostAndFound\Index.cshtml" />
+    <None Include="Pages\Owner\LostAndFound\Details.cshtml" />
+    <None Include="Pages\Owner\LostAndFound\Index.cshtml" />
+    <None Include="Pages\Owner\LostAndFound\Upsert.cshtml" />
   </ItemGroup>
 
 </Project>

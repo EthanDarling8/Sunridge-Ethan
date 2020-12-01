@@ -1,12 +1,14 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Authorization;
+using Sunridge.Utility;
 
 namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize(Roles = SD.AdministratorRole)]
     public class DocumentSectionTextController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

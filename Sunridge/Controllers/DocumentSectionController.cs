@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using Sunridge.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
+using Sunridge.Utility;
 
 namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize(Roles = SD.AdministratorRole)]
     public class DocumentSectionController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

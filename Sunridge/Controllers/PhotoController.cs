@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using Sunridge.Utility;
 
 namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class PhotoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

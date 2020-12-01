@@ -47,6 +47,9 @@
     <None Include="Pages\Admin\LostAndFound\Upsert.cshtml" />
     <None Include="Pages\Home\LostAndFound\Details.cshtml" />
     <None Include="Pages\Home\LostAndFound\Index.cshtml" />
+    <None Include="Pages\Owner\LostAndFound\Details.cshtml" />
+    <None Include="Pages\Owner\LostAndFound\Index.cshtml" />
+    <None Include="Pages\Owner\LostAndFound\Upsert.cshtml" />
   </ItemGroup>
 
 </Project>

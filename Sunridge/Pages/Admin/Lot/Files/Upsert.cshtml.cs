@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.Lot.Files {
+    [Authorize(Roles = SD.AdministratorRole)]
     public class Upsert : PageModel {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;

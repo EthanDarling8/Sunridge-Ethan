@@ -22,7 +22,7 @@ using System.Linq;
 namespace Sunridge.Pages.Admin.Lot
 {
     #region Authorization
-    //[Authorize(Roles = SD.AdministratorRole)] // Authorize use for only Administrators
+    [Authorize(Roles = SD.AdministratorRole)]
     #endregion
     public class Upsert : PageModel
     {

@@ -26,7 +26,7 @@
                     <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsIndex">My Listings</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" asp-page="/Owner/Classifieds/ClassifiedsUpsert">Create New Listing</a>
-                    
+
                 </div>
             </li>
             <li class="nav-item">
@@ -41,15 +41,23 @@
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/News/Index">News</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-page="/Home/LostFound/Index">Lost&Found</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle dropdown-content" asp-page="/Home/LostAndFound/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+                    Lost & Found
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" asp-page="/Owner/LostAndFound/Index">My Lost & Found</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-page="/Home/LostAndFound/Index">Browse Lost & Found</a>
+
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/Photos/Index">Photo Gallery</a>
             </li>
 
             <!-- This menu is hidden in bigger devices with d-sm-none.
-            The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+    The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
             <li class="nav-item dropdown d-sm-block d-md-none">
                 <a class="nav-link dropdown-toggle" asp-page="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dashboard Menu

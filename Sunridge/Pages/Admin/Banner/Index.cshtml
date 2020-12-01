@@ -1,6 +1,7 @@
 ﻿@page
 @model Sunridge.Pages.Admin.Banner.IndexModel
 @{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
 
@@ -14,50 +15,48 @@
 <div class="table-responsive-sm">
     <table class="table table-responsive-sm table-hover">
         <thead>
-            <tr>
-                <th id="bannerHead">
-                    Head
-                </th>
-                <th id="bannerBody">
-                    Body
-                </th>
-                <th id="bannerArchived">
-                    Archived
-                </th>
-                <th></th>
-            </tr>
+        <tr>
+            <th id="bannerHead">
+                Head
+            </th>
+            <th id="bannerBody">
+                Body
+            </th>
+            <th id="bannerArchived">
+                Archived
+            </th>
+            <th></th>
+        </tr>
         </thead>
 
-@if (Model.BannerList.Count > 0)
-{
-        <tbody>
-    @foreach (var item in Model.BannerList)
-    {
-            <tr>
-                <td style="width: 25%">
-                    @Html.Raw(@item.Header)
-                </td>
-                <td style="width: 50%">
-                    @Html.Raw(@item.Body)
-                </td>
-                <td>
-                    @item.Archived
-                </td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn btn-info btn-sm" asp-page="/Admin/Banner/Upsert" asp-route-id="@item.Id">
-                            <span class="d-none d-lg-block">Edit</span>
-                            <i class="fas fa-edit d-lg-none"></i>
-                        </a>
-                        <a class="btn btn-danger btn-sm" asp-page="/Admin/Banner/Delete" asp-route-id="@item.Id">
-                            <span class="d-none d-lg-block">Delete</span>
-                            <i class="fas fa-trash d-lg-none"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-    }
-        </tbody>
-}
+        @if (Model.BannerList.Count > 0) {
+            <tbody>
+            @foreach (var item in Model.BannerList) {
+                <tr>
+                    <td style="width: 25%">
+                        @Html.Raw(@item.Header)
+                    </td>
+                    <td style="width: 50%">
+                        @Html.Raw(@item.Body)
+                    </td>
+                    <td>
+                        @item.Archived
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-info btn-sm" asp-page="/Admin/Banner/Upsert" asp-route-id="@item.Id">
+                                <span class="d-none d-lg-block">Edit</span>
+                                <i class="fas fa-edit d-lg-none"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm" asp-page="/Admin/Banner/Delete" asp-route-id="@item.Id">
+                                <span class="d-none d-lg-block">Delete</span>
+                                <i class="fas fa-trash d-lg-none"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        }
     </table>
 </div>

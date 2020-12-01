@@ -8,7 +8,7 @@ function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax":
         {
-            "url": "/api/lostitem",
+            "url": "/api/homelostitem",
             "type": "GET",
             "datatype": "json"
         },
@@ -25,7 +25,8 @@ function loadList() {
                     data: "name", width: "20%"
                 },
                 {
-                    data: "date", width: "20%"
+                    data: "date", "aTargets": [0], "render": function (data) { return formatDate(data); }
+                    , width: "30%"
                 },
                 {
                     data: "id",
@@ -51,32 +52,6 @@ function loadList() {
             "emptyTable": "no data found."
         },
         "width": "100%"
-    });
-}
-//DELETE FUNCTION
-function Delete(url) {
-    swal({
-        title: "Are you sure you want to delete?",
-        text: "You will not be able to restore the date!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    }).then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type: 'DELETE',
-                url: url,
-                success: function (data) {
-                    if (data.success) {
-                        toastr.success(data.message);
-                        dataTable.ajax.reload();
-                    }
-                    else {
-                        toastr.error(data.message);
-                    }
-                }
-            });
-        }
     });
 }
 // FILTERING GENERAL LOST AND FOUND FUNCTION
@@ -114,6 +89,12 @@ function addSearchControl(json) {
                 dataTable.column(index).search(searchControl.val()).draw();
             });
         }
+        if (index == 4) { $(this).replaceWith('<th class="w-100 mx-auto"></th >'); }
 
     });
+}
+// Date Formatting
+function formatDate(myDate) {
+    var date = new Date(myDate);
+    return '' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + '';
 }

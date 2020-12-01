@@ -26,7 +26,7 @@ namespace Sunridge.Utility
             var msg = new SendGridMessage()
             {
                 //THIS MUST MATCH A VERIFIED EMAIL ACCOUNT IN SENDGRID
-                From = new EmailAddress("rich@richfry.com", Options.SendGridUser),
+                From = new EmailAddress("webmaster@sunridge.info", Options.SendGridUser),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

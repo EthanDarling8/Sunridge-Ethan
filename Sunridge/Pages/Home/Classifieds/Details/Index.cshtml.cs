@@ -20,12 +20,15 @@ namespace Sunridge.Pages.Home.Classifieds.Details
         public ClassifiedsItemVM ClassifiedsItemObj { get; set; }
 
         public IEnumerable<ClassifiedsItem> ClassifiedsItemList { get; set; }
+        public IEnumerable<ClassifiedsImages> ClassifiedsImagesList { get; set; }
 
         public int ClassifiedsItemId { get; set; }
         
         public void OnGet(int id)
         {
             ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.Id == id);
+            ClassifiedsImagesList = _unitOfWork.ClassifiedsImages.GetAll().Where(x => x.ClassifiedsItemId == id);
+
 
 
         }

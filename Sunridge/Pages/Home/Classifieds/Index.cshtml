@@ -1,15 +1,19 @@
 ﻿@page
+@using Sunridge.Utility;
+
 @model Sunridge.Pages.Home.Classifieds.IndexModel
 @{
     ViewData["Title"] = "Classifieds";
+    
+    Layout = "~/Pages/Shared/_ClassifiedsLayout.cshtml";
 }
 
  
-<h1 class="row col-sm-12 pb-4">Classified Listings</h1>
+<h1 class="row col-sm-12 pb-4 m-1">Classified Listings</h1>
 <div class="row m-1 p-1">
 
 
-    <div class="col-3">
+    <div class="col-2">
 
         <div class="row mb-2">
             <a class="btn btn-block btn-primary" asp-page="/Owner/Classifieds/ClassifiedsUpsert">
@@ -52,8 +56,8 @@
             </a>
         </div>
     </div>
-    <div class="col-9">
-        <div class="row container-fluid">
+    <div class="col-10">
+        <div class="row container-fluid ml-4">
             <div class="col-12">
                 <div class="row">
 
@@ -62,30 +66,40 @@
 
                         @foreach (var classifiedsItem in Model.ClassifiedsItemList)
                         {
-                            <div class="card-deck">
+                           <div class="card-deck">
                                 <div class="col-lg-2 col-xl-2 col-md-2 pb-2 m-2">
-                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 300px">
+                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 275px">
                                         <form asp-page-handler="plus" asp-route-itemId="@classifiedsItem.Id" method="post">
-                                            <input type="image" class="card-img-top img-fluid" style="width: 300px; height: 225px; " src="@classifiedsItem.Images" alt="Card image cap"/>
-                                                
+                                           
+                                            
+                                                <input type="image" class="card-img-top img-fluid" style="width: 275px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap"/>
                                             
                                         </form>
-
+                                            
                                         <div class="card-body">
                                             <h5 class="card-title text-primary">@classifiedsItem.Title</h5>
                                             <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
-                                            <div class="card-text">
-
-                                                <p class="card-text d-inline-block text-truncate" style="max-width: 250px;">
-
-
-                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page-handler="plus" asp-route-itemId="@classifiedsItem.Id">(see more...)</a>
+                                            <div class="card-text d-inline-block text-truncate" style="max-width: 275px;">
+                                                <p>
+                                                    @Html.Raw(classifiedsItem.Description)
                                                 </p>
+                                                <form asp-page-handler="plus" asp-route-itemId="@classifiedsItem.Id" method="post">
+                                                    <input class="aaron" type="submit" value="(see more...)" />
+                                                </form>
+                                                @*<p class="card-text d-inline-block text-truncate" style="max-width: 275px;">
+                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-age="/Details/Index" asp-page-handler="plus"
+                                                        asp-route-itemId="@classifiedsItem.Id" method="post">(see more...)</a>
+                                                </p>*@
 
                                             </div>
-                                            <div class="card-footer bg-transparent text-right">
-                                            <p><small class="text-muted">Created @classifiedsItem.TimeAdded</small><i class="far fa-eye text-right"></i>&nbsp;@classifiedsItem.ViewCount</p>
+                                            <div class="card-footer row bg-transparent">
+                                                <div class="col text-left m-0">
+                                                    <small class="text-muted">Listed:&nbsp; @classifiedsItem.TimeAdded</small>
                                                 </div>
+                                                <div class="col-3 text-right">
+                                                    <small><i class="far fa-eye"></i>&nbsp;@classifiedsItem.ViewCount</small>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>

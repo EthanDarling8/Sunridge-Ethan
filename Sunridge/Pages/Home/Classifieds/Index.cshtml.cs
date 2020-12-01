@@ -28,6 +28,8 @@ namespace Sunridge.Pages.Home.Classifieds
 
         public IEnumerable<ClassifiedsItem> ClassifiedsItemList { get; set; }
         public IEnumerable<ClassifiedsCategory> ClassifiedsCategoryList { get; set; }
+        public IEnumerable<ClassifiedsImages> ClassifiedsImagesList { get; set; }
+
        // public IEnumerable<ClassifiedsSubcategory> ClassifiedsSubcategoryList { get; set; }
         public int CategoryId { get; set; }
         public int SubcategoryId { get; set; }
@@ -37,7 +39,9 @@ namespace Sunridge.Pages.Home.Classifieds
             if (catid != null)
             {
                 CategoryId = int.Parse(catid);
-                ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.CategoryId == CategoryId);
+                
+               ClassifiedsItemList = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.CategoryId == CategoryId);
+               //ClassifiedsImagesList = _unitOfWork.ClassifiedsImages.GetAll(); 
 
                 //if (subcatid != null)
                 //{

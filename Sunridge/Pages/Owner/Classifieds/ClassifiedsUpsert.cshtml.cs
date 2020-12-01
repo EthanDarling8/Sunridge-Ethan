@@ -34,19 +34,26 @@ namespace Sunridge.Pages.Owner.Classifieds
         //public IEnumerable<SelectListItem> ClassifiedsSubcategoryList { get; private set; }
         public IActionResult OnGet(int? id)
         {
-            
+
 
             ClassifiedsItemObj = new ClassifiedsItemVM
-                {
-                    ClassifiedsItem = new Models.ClassifiedsItem(),
-                    ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetClassifiedsCategoryListForDropDown(),
+            {
+                ClassifiedsItem = new Models.ClassifiedsItem(),
+                //ClassifiedsImages = new Models.ClassifiedsImages(),
+                ClassifiedsCategoryList = _unitOfWork.ClassifiedsCategory.GetClassifiedsCategoryListForDropDown(),
+                    
+                    
                     //ClassifiedsSubcategoryList = _unitOfWork.ClassifiedsSubcategory.GetClassifiedsSubcategoryListForDropDown()
                 };
+
+            
 
             if (id != null)
             {
                 ClassifiedsItemObj.ClassifiedsItem = _unitOfWork.ClassifiedsItem.GetFirstOrDefault(u => u.Id == id);
-                
+                //ClassifiedsItemObj.ClassifiedsImages = _unitOfWork.ClassifiedsImages.GetFirstOrDefault(u => u.Id == id);
+
+
 
                 if (ClassifiedsItemObj.ClassifiedsItem == null)
                 {
@@ -73,24 +80,24 @@ namespace Sunridge.Pages.Owner.Classifieds
 
             if (ClassifiedsItemObj.ClassifiedsItem.Id == 0) //means a brand new menu item
             {
-                    //Physically upload and save image
-                    string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"images\classifiedsitems");
-                    var extension = Path.GetExtension(files[0].FileName);
+                //Physically upload and save image
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(webRootPath, @"images\classifiedsitems");
+                var extension = Path.GetExtension(files[0].FileName);
 
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                    {
-                        files[0].CopyTo(fileStream);
-                    }
-                    //save the string data path
-                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\images\classifiedsitems\" + fileName + extension;
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                //save the string data path
+                ClassifiedsItemObj.ClassifiedsItem.Images = @"\images\classifiedsitems\" + fileName + extension;
 
                 //get time stamp
                 ClassifiedsItemObj.ClassifiedsItem.TimeAdded = DateTime.Now.ToShortDateString();
 
 
-                    _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
-                
+                _unitOfWork.ClassifiedsItem.Add(ClassifiedsItemObj.ClassifiedsItem);
+
             }
 
             else //update
@@ -98,25 +105,25 @@ namespace Sunridge.Pages.Owner.Classifieds
                 var objFromDb = _unitOfWork.ClassifiedsItem.Get(ClassifiedsItemObj.ClassifiedsItem.Id);
                 if (files.Count > 0)
                 {
-                    
-                        //Physically upload and save image
-                        string fileName = Guid.NewGuid().ToString();
-                        var uploads = Path.Combine(webRootPath, @"images\classifiedsitems");
-                        var extension = Path.GetExtension(files[0].FileName);
 
-                        var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
+                    //Physically upload and save image
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\classifiedsitems");
+                    var extension = Path.GetExtension(files[0].FileName);
 
-                        if (System.IO.File.Exists(imagePath))
-                        {
-                            System.IO.File.Delete(imagePath);
-                        }
-                        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                        {
-                            files[0].CopyTo(fileStream);
-                        }
-                        //save the string data path
-                        ClassifiedsItemObj.ClassifiedsItem.Images = @"\images\classifiedsitems\" + fileName + extension;
-                    
+                    var imagePath = Path.Combine(webRootPath, objFromDb.Images.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+                    //save the string data path
+                    ClassifiedsItemObj.ClassifiedsItem.Images = @"\images\classifiedsitems\" + fileName + extension;
+
                 }
                 else
                 {
@@ -133,3 +140,4 @@ namespace Sunridge.Pages.Owner.Classifieds
 
     }
 }
+

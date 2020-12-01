@@ -2,6 +2,8 @@
 @model Sunridge.Pages.Owner.Classifieds.ClassifiedsUpsertModel
 @{
     ViewData["Title"] = "ClassifiedsUpsert";
+
+    Layout = "~/Pages/Shared/_ClassifiedsLayout.cshtml";
 }
 <form method="post" asp-action="ClassifiedsUpsert" enctype="multipart/form-data">
     <div class="container">
@@ -76,7 +78,7 @@
                         <label asp-for="ClassifiedsItemObj.ClassifiedsItem.Images"></label>
                     </div>
                     <div class="col-9">
-                        <input type="file" class="form-control" id="uploadBox" name="files" accept="image/x-png,image/gif,image/jpeg" />
+                        <input multiple type="file" class="form-control" id="uploadBox" name="files" accept="image/x-png,image/gif,image/jpeg" />
                     </div>
                 </div>
                 <div class="form-group row">

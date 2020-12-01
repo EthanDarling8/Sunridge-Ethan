@@ -28,56 +28,54 @@ namespace Sunridge.Controllers
         }
 
         [HttpGet]
-            public IActionResult Get(int id)
-            {
+        public IActionResult Get(int id)
+        {
 
-            
+
             string ownerId = User.Identity != null && User.Identity.IsAuthenticated && User.Claims.ToList().Count > 0 ? User.Claims.ToList()[0].Value : null;
             //if (User.IsInRole(SD.AdministratorRole))
             //{
-                //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
+            //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll() });
             //}
             //else
             //{
-                //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll(null, null, "ClassifiedsCategory,ClassifiedsSubCategory") });
-                return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.OwnerId == ownerId) });
+            //return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll(null, null, "ClassifiedsCategory,ClassifiedsSubCategory") });
+            return Json(new { data = _unitOfWork.ClassifiedsItem.GetAll().Where(x => x.OwnerId == ownerId) });
             //}
         }
 
-            [HttpDelete("{id}")]
-            public IActionResult Delete(int id)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
             {
-                try
+                var objFromDb = _unitOfWork.ClassifiedsItem.GetFirstOrDefault(u => u.Id == id);
+
+                if (objFromDb == null)
                 {
-                    var objFromDb = _unitOfWork.ClassifiedsItem.GetFirstOrDefault(u => u.Id == id);
-
-                    if (objFromDb == null)
-                    {
-                        return Json(new { success = false, message = "Error while deleting" });
-                    }
-
-                    //physically remove image (if exists)
-                    var imagePath = Path.Combine(_hostingEnvironment.WebRootPath, objFromDb.Images.TrimStart('\\'));
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-
-
-                    _unitOfWork.ClassifiedsItem.Remove(objFromDb);
-                    _unitOfWork.Save();
-                }
-                catch (Exception)
-                {
-
                     return Json(new { success = false, message = "Error while deleting" });
                 }
-                return Json(new { success = true, message = "Delete Successful" });
+
+                //physically remove image (if exists)
+                var imagePath = Path.Combine(_hostingEnvironment.WebRootPath, objFromDb.Images.TrimStart('\\'));
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+
+                _unitOfWork.ClassifiedsItem.Remove(objFromDb);
+                _unitOfWork.Save();
             }
+            catch (Exception)
+            {
 
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            return Json(new { success = true, message = "Delete Successful" });
         }
+
     }
+}
 
-
-    
 

@@ -1,10 +1,12 @@
 ﻿@page
+@using Sunridge.Utility;
+
 @model Sunridge.Pages.Owner.Classifieds.ClassifiedsIndexModel
 @{
-    ViewData["Title"] = "ClassifiedsIndex";
+    Layout = "~/Pages/Shared/_ClassifiedsLayout.cshtml";
 }
 
-<h1 class="row col-sm-12 pb-4">My Listings</h1>
+<h1 class="row col-sm-12 pb-4 m-1">My Listings</h1>
 <div class="row m-1 p-1">
 
 
@@ -20,7 +22,7 @@
 
 
         <div class="row mb-2 dropright">
-            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle" 
+            <a id="butnGroupDrop1" class="btn btn-block btn-secondary dropdown-toggle"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="collapseExample" href="#collapseExample">
                 Categories
             </a>
@@ -53,8 +55,8 @@
             </a>
         </div>
     </div>
-    <div class="col-9">
-        <div class="row container">
+    <div class="col-10">
+        <div class="row container-fluid ml-4">
             <div class="col-12">
                 <div class="row">
 
@@ -65,9 +67,9 @@
                         {
                             <div class="card-deck">
                                 <div class="col-lg-3 col-xl-3 col-md-3 pb-2 m-2">
-                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 250px">
+                                    <div class="card h-100 d-flex flex-column justify-content-between" style="width: 275px">
                                         <a asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">
-                                            <img class="card-img-top img-fluid" style="width: 250px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
+                                            <img class="card-img-top img-fluid" style="width: 275px; height: 200px; " src="@classifiedsItem.Images" alt="Card image cap">
                                         </a>
 
                                         <div class="card-body">
@@ -75,22 +77,30 @@
                                             <h4 class="card-title">@classifiedsItem.Price.ToString("c")</h4>
                                             <div class="card-text">
 
-                                                <p class="card-text d-inline-block text-truncate" style="max-width: 250px;">
+                                                <p class="card-text d-inline-block text-truncate" style="max-width: 275px;">
 
 
-                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Home/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
+                                                    @Html.Raw(classifiedsItem.Description)<a style="color: black" asp-page="/Owner/Classifieds/Details/Index" asp-route-id="@classifiedsItem.Id">(see more...)</a>
                                                 </p>
 
                                             </div>
-                                            <p class="card-footer bg-transparent text-right"><small class="text-muted">Created @classifiedsItem.TimeAdded</small><i class="far fa-eye text-right"></i>&nbsp;@classifiedsItem.ViewCount</p>
-
+                                            <div class="card-footer row bg-transparent">
+                                                <div class="col text-left">
+                                                    <small class="text-muted">Listed:&nbsp; @classifiedsItem.TimeAdded</small>
+                                                </div>
+                                                <div class="col-3 text-right">
+                                                    <small><i class="far fa-eye"></i>&nbsp;@classifiedsItem.ViewCount</small>
+                                                </div>
+                                            </div>
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
+                        
+                        
 
-                        }
+                    }
                     }
 
                     @if (Model.ClassifiedsItemList.Count() == 0)
@@ -103,11 +113,11 @@
         </div>
     </div>
 
-</div>
+    </div>
 
-@section Scripts{
-    <script src="~/js/expandlisting.js"></script>
-}
+    @section Scripts{
+        <script src="~/js/expandlisting.js"></script>
+    }
 
 
 

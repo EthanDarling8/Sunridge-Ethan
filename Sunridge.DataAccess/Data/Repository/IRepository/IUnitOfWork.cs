@@ -25,9 +25,6 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         IDocumentSectionRepository DocumentSection { get; }
         IDocumentSectionTextRepository DocumentSectionText { get; }
 
-        IClassifiedsCategoryRepository ClassifiedsCategory { get; }
-        IClassifiedsItemRepository ClassifiedsItem{ get; }
-
         //Photo Gallery Repositories
         IPhotoCategoryRepository PhotoCategory { get; }
         IPhotoAlbumRepository PhotoAlbum { get; }
@@ -52,10 +49,9 @@ namespace Sunridge.DataAccess.Data.Repository.IRepository {
         //Classifieds Repositories
         IClassifiedsItemRepository ClassifiedsItem { get; }
         IClassifiedsCategoryRepository ClassifiedsCategory { get; }
+        IClassifiedsImagesRepository ClassifiedsImages { get; }
         //IClassifiedsSubcategoryRepository ClassifiedsSubcategory { get; }
 
-       
-
-    void Save();
+        void Save();
     }
 }

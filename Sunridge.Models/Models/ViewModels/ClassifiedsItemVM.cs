@@ -8,8 +8,10 @@ namespace Sunridge.Models
     public class ClassifiedsItemVM
     {
         public ClassifiedsItem ClassifiedsItem { get; set; }
+        public ClassifiedsImages ClassifiedsImages { get; set; }
         public IEnumerable<SelectListItem> ClassifiedsCategoryList { get; set; }
         public IEnumerable<SelectListItem> OwnerList { get; set; }
+
         //public IEnumerable<SelectListItem> ClassifiedsSubcategoryList { get; set; }
     }
 }

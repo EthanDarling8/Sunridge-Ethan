@@ -1,37 +1,33 @@
 ﻿@page
 @model Sunridge.Pages.Home.Classifieds.Details.IndexModel
 @{
+    Layout = "~/Pages/Shared/_ClassifiedsLayout.cshtml";
 }
 
 @foreach (var item in Model.ClassifiedsItemList)
 {
 <div class="container-fluid">
+    <div class="row ml-5 col-7 pb-4 justify-content-center">
+        <h2 class="text-center">@item.Title</h2>
+    </div>
 
-    <h2 class="row col-sm-12 pb-4">@item.Title</h2>
-    
-</div>
-
-    @*<div>
-            //<h5> *** this will be total time elapsed since ad was posted ***</h5>
-        </div>*@
-    <div>
+    <div class="row ml-3 col-6 justify-content-center">
         <h3>@item.Price.ToString("c")</h3>
     </div>
 
-    <div class="row m-3 p-1">
+    <div class="row mt-3 p-1 justify-content-center">
 
-        <div class="card mb-3 col-sm-12">
+        <div class="card mb-3 col-sm-6">
 
             <div id="carouselExampleControls" class="carousel slide card-img-top" data-ride="carousel">
 
-                @*@for(int i = 0; i < (@item.Images.ToArray().Length) - 1; i++)*@
-                @*//{*@
+
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="@item.Images" class="d-block w-100 img-responsive" alt="..." style="height: 500px; width: 700px; object-fit: contain">
                     </div>
                 </div>
-                @*//}*@
+
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -56,18 +52,20 @@
 
                 </p>
 
-                <p class="card-text"><small class="text-muted">@item.TimeAdded</small></p>
+                <p class="card-text"><small class="text-muted">Listed: @item.TimeAdded</small></p>
             </div>
         </div>
     </div>
-    <div class="row mb-2">
-        <div class="col-12 text-center">
+    <div class="row mb-2 col-12 justify-content-center">
+        <div class=" text-center">
             <a class="btn btn-block btn-primary" href="#" onclick="location.href = document.referrer; return false;">
 
                 <i class="fas fa-arrow-alt-circle-left"></i>&nbsp;Back to Listings
             </a>
         </div>
     </div>
+    
+</div>
 }
 
 

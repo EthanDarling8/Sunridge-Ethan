@@ -13,24 +13,20 @@ function loadList() {
         },
         "columns": [
             { data: "id", width: "25%" },
-            { data: "name", width: "25%" },
+            { data: "name", width: "50%" },
             {
                 data: "id",
                 "render": function (data) {
                     return `
                         <div class="text-center">
                             <a href="/Admin/Classifieds/Category/Upsert?id=${data}"
-                            class="btn btn-success text-white style="cursor:pointer; width:100px;">
+                            class="btn btn-warning text-black style="cursor:pointer; width:100px;">
                             <i class="far fa-edit"></i>
                             Edit
                             </a>
-                            <a onClick=Delete('/api/ClassifiedsCategory/'+${data})
-                            class="btn btn-danger text-white style="cursor:pointer; width:100px;">
-                            <i class="far fa-trash-alt"></i>
-                            Delete
-                            </a>
+                            
                         </div>`;
-                }, width: "50%"
+                }, width: "25%"
             }
         ],
         "language": {

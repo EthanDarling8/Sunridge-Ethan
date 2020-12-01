@@ -237,6 +237,26 @@ namespace Sunridge.DataAccess.Migrations
                     b.ToTable("ClassifiedsCategory");
                 });
 
+            modelBuilder.Entity("Sunridge.Models.ClassifiedsImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassifiedsItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassifiedsItemId");
+
+                    b.ToTable("ClassifiedsImages");
+                });
+
             modelBuilder.Entity("Sunridge.Models.ClassifiedsItem", b =>
                 {
                     b.Property<int>("Id")
@@ -1006,6 +1026,15 @@ namespace Sunridge.DataAccess.Migrations
                     b.HasOne("Sunridge.Models.Owner", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sunridge.Models.ClassifiedsImages", b =>
+                {
+                    b.HasOne("Sunridge.Models.ClassifiedsItem", "ClassifiedsItem")
+                        .WithMany()
+                        .HasForeignKey("ClassifiedsItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

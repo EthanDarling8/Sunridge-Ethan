@@ -13,7 +13,7 @@ function loadList() {
             "type": "GET",
             "datatype": "json"
         },
-        
+
         "columns": [
             { data: "id", width: "5%" },
             { data: "title", width: "5%" },
@@ -23,14 +23,14 @@ function loadList() {
             { data: "phone", width: "5%" },
             { data: "email", width: "5%" },
             { data: "website", width: "5%" },
-            { data: "images", width: "5%" },
+            //{ data: "images", width: "5%" },
             {
                 data: "id",
                 "render": function (data) {
                     return `
                         <div class="text-center">
                             <a href="/Owner/Classifieds/ClassifiedsUpsert?id=${data}"
-                            class="btn btn-success text-white style="cursor:pointer; width:100px;">
+                            class="btn btn-warning text-black style="cursor:pointer; width:100px;">
                             <i class="far fa-edit"></i>
                             Edit
                             </a>
@@ -40,13 +40,13 @@ function loadList() {
                             Delete
                             </a>
                         </div>`;
-                }, width: "25%"
+                }, width: "30%"
             }
         ],
         "language": {
             "emptyTable": "no data found."
         },
-        "width": "66%",
+        "width": "100%",
         "order": [[2, "asc"]]
     });
 }

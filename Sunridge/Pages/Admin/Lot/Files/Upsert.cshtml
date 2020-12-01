@@ -56,7 +56,7 @@
                                 }
                             </div>
                             <div class="col-6">
-                                <a asp-page="./index" asp-route-id="@Model.LotId" class="btn btn-secondary form-control">Back to List</a>
+                                <a asp-page="./index" asp-route-lotid="@Model.LotId" class="btn btn-secondary form-control">Back to List</a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
     
         function ValidateInput() {
             if (document.getElementById("uploadBox").value == "") {
-                swal('Error', 'Please Select an Image', 'error');
+                swal('Error', 'Please select a File', 'error');
                 return false;
             }
             return true;

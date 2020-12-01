@@ -25,7 +25,7 @@ function loadList() {
                     , width: "16%"
                 },
                 {
-                    data: "taxId", "aTargets": [0], "render": function (data) { return '<a href="http://www3.co.weber.ut.us/psearch/tax_summary.php?id=' + data + '" class="btn btn-secondary text-white" id="taxLink" >Tax Info</a>'; }
+                    data: "taxId", "aTargets": [0], "render": function (data) { return '<a href="http://www3.co.weber.ut.us/psearch/tax_summary.php?id=' + data + '" class="btn btn-secondary text-white" id="taxLink" target="_blank" >Tax Info</a>'; }
                     , width: "16%"
                 },
                 {

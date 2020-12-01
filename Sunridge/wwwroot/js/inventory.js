@@ -26,7 +26,7 @@ function loadList() {
                         return `
                         <div class="text-center">
                             <a href="/Admin/Lot/Inventory/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                               class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
                             </a>

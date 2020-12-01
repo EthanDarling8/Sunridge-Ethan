@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Sunridge.Models.ViewModels;
 using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.BoardMembers {
+    [Authorize(Roles = SD.AdministratorRole)]
     public class UpsertModel : FileUploadBase {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;

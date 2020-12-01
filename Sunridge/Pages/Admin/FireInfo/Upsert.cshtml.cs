@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using System;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.FireInfo {
+    [Authorize(Roles = SD.AdministratorRole)]
     public class UpsertModel : PageModel {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostingEnvironment;

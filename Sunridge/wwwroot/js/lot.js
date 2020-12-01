@@ -21,7 +21,7 @@ function loadList() {
                     data: "address", width: "16%"
                 },
                 {
-                    data: "lot_Owner", "aTargets": [0], "render": function (data) { return formatList(data); }
+                    data: "lot_Owner", "aTargets": [0], "render": function (data) { if (data != null){ return formatList(data); } else { return ""; } }
                     , width: "16%"
                 },
                 {
@@ -29,7 +29,7 @@ function loadList() {
                     , width: "16%"
                 },
                 {
-                    data: "lot_Inventory", "aTargets": [0], "render": function (data) { return formatList(data); }
+                    data: "lot_Inventory", "aTargets": [0], "render": function (data) { if (data != null) { return formatList(data); } else { return "";} }
                     , width: "16%"
                 },
                 {

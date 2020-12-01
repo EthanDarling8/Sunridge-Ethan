@@ -22,17 +22,17 @@
 
                 <div class="form-group">
                     <label asp-for="LotObj.Lot.LotNumber"></label>
-                    <input class="form-control" asp-for="LotObj.Lot.LotNumber" />
+                    <input class="form-control" asp-for="LotObj.Lot.LotNumber" id="txtName" />
                     <span class="text-danger" asp-validation-for="LotObj.Lot.LotNumber"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="LotObj.Lot.TaxId"></label>
-                    <input class="form-control" asp-for="LotObj.Lot.TaxId" />
+                    <input class="form-control" asp-for="LotObj.Lot.TaxId" id="txtTax" />
                     <span class="text-danger" asp-validation-for="LotObj.Lot.TaxId"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="LotObj.Lot.Address"></label>
-                    <input class="form-control" asp-for="LotObj.Lot.Address" />
+                    <input class="form-control" asp-for="LotObj.Lot.Address" id="txtAddress"/>
                     <span class="text-danger" asp-validation-for="LotObj.Lot.Address"></span>
                 </div>
 
@@ -63,11 +63,11 @@
                             <div class="col-6">
                                 @if (Model.LotObj.Lot.Id != 0)
                                 {
-                                    <input type="submit" value="Update" class="btn btn-primary form-control" />
+                                    <input type="submit" value="Update" class="btn btn-primary form-control" onclick=" return ValidateInput()"/>
                                 }
                                 else
                                 {
-                                    <input type="submit" value="Create" class="btn btn-primary form-control" />
+                                    <input type="submit" value="Create" class="btn btn-primary form-control" onclick=" return ValidateInput()"/>
                                 }
                             </div>
                             <div class="col-6">
@@ -114,5 +114,28 @@
                 }
             });
         });
+        function ValidateInput() {
+
+            @* Lot Name Validation *@
+            var name = document.getElementById("txtName").value;
+            if (name.toString() == '') {
+                swal("Error", "Please enter a Name for the Lot.", "error");
+                return false;
+            }
+            @* Lot TaxId Validation *@
+            var name = document.getElementById("txtTax").value;
+            if (name.toString() == '') {
+                swal("Error", "Please enter a Tax Id for the Lot.", "error");
+                return false;
+            }
+            @* Lot Address Validation *@
+            var name = document.getElementById("txtAddress").value;
+            if (name.toString() == '') {
+                swal("Error", "Please enter an Address for the Lot.", "error");
+                return false;
+            }
+
+            return true;
+        }
     </script>
 }

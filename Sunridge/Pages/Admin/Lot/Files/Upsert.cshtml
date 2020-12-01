@@ -16,7 +16,7 @@
                         <label asp-for="LotFileObj.Title"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="LotFileObj.Title" />
+                        <input class="form-control" asp-for="LotFileObj.Title" id="txtTitle" />
                         <span class="text-danger" asp-validation-for="LotFileObj.Title"></span>
                     </div>
                     @if (Model.LotFileObj.Id != 0)
@@ -75,10 +75,19 @@
         });
     
         function ValidateInput() {
+
+            @*File Validation*@
             if (document.getElementById("uploadBox").value == "") {
                 swal('Error', 'Please select a File', 'error');
                 return false;
             }
+            @* Title Validation *@
+            var name = document.getElementById("txtTitle").value;
+            if (name.toString() == '') {
+                swal("Error", "Please enter a Title for the File.", "error");
+                return false;
+            }
+
             return true;
         }
     </script>

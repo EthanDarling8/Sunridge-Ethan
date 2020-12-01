@@ -7,5 +7,6 @@ namespace Sunridge.Models.ViewModels {
         public Owner Owner { get; set; }
         public OwnerBoardMember OwnerBoardMember { get; set; }
         public IEnumerable<SelectListItem> OwnerList { get; set; }
+        public Lot Lot { get; set; }
     }
 }

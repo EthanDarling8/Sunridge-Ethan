@@ -1,6 +1,7 @@
 ﻿@page
 @model Sunridge.Pages.Owner.Photos.Album.Photo.UpsertModel
 @{
+    Layout = "~/Pages/Shared/_HomeLayout.cshtml";
     ViewData["Title"] = "Photo";
 }
 
@@ -67,7 +68,8 @@
                                             class="btn btn-primary form-control"
                                             asp-route-photoId="@Model.PhotoObj.Id"
                                             asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
-                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
+                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                            asp-route-myAlbums="@Model.MyAlbums">
                                         Update
                                     </button>
                                 }
@@ -77,7 +79,8 @@
                                             class="btn btn-primary form-control"
                                             onclick="return ValidateInput()"
                                             asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
-                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId">
+                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                            asp-route-myAlbums="@Model.MyAlbums">
                                         Add
                                     </button>
                                 }
@@ -88,6 +91,7 @@
                                 @*Route back with the selected category and album maintained.*@
                                 <a asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
                                    asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                   asp-route-myAlbums="@Model.MyAlbums"
                                    asp-page="/Home/Photos/Index"
                                    class="btn btn-secondary form-control">
                                     Back

@@ -35,12 +35,19 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
         public PhotoAlbum SelectedPhotoAlbum { get; set; }
         public int SelectedPhotoCategoryId { get; set; }
         public string OwnerId { get; set; }
+        public bool MyAlbums { get; set; }
 
 
-        public IActionResult OnGet(int selectedPhotoAlbumId, int selectedPhotoCategoryId, int photoId)
+
+
+        public IActionResult OnGet(int selectedPhotoAlbumId, int selectedPhotoCategoryId, int photoId, bool myAlbums = false)
         {
-            //Always preserve selected category
-            SelectedPhotoCategoryId = selectedPhotoCategoryId;                       
+            //Used to pass selected categroy into page for button links to preserve selection
+            SelectedPhotoCategoryId = selectedPhotoCategoryId;
+
+            //Used to pass myAlbums into page for button links to preserve selection
+            MyAlbums = myAlbums;
+
 
             //Get Id of current user.
             OwnerId = _userManager.GetUserId(User);
@@ -56,7 +63,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
                 if (PhotoObj == null)
                 {
-                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                    return RedirectToPage("/Home/Photos/Index", new { selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
                 }
 
                 SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == PhotoObj.PhotoAlbumId);
@@ -69,7 +76,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
                 //No selectedPhotoAlbumId entered: invalid
                 if (selectedPhotoAlbumId == 0)
                 {
-                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                    return RedirectToPage("/Home/Photos/Index", new { selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
                 }
 
 
@@ -83,7 +90,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
                 }
                 else
                 {
-                    return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                    return RedirectToPage("/Home/Photos/Index", new { selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
                 }                
             }            
 
@@ -95,14 +102,14 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
             }
             else
             {
-                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                return RedirectToPage("/Home/Photos/Index", new { selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
             }
         }
 
 
 
 
-        public IActionResult OnPost(int photoId, int selectedPhotoAlbumId, int selectedPhotoCategoryId)
+        public IActionResult OnPost(int photoId, int selectedPhotoAlbumId, int selectedPhotoCategoryId, bool myAlbums = false)
         {
             //Keep track of selected PhotoCategory
             SelectedPhotoCategoryId = selectedPhotoCategoryId;
@@ -129,7 +136,7 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
                     //Check photo exists
                     if (objFromDb == null)
                     {
-                        return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId });
+                        return RedirectToPage("/Home/Photos/Index", new { selectedPhotoAlbumId = selectedPhotoAlbumId, myAlbums = myAlbums });
                     }
 
                     //Remove existing image.

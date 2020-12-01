@@ -25,18 +25,33 @@ namespace Sunridge.Pages.Admin.Document.Section
         [BindProperty]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
 
+        
+        
 
-
-        // **** ToDO **** Setup passing in categoryId to have that category as the only option
-        public IActionResult OnGet(int sectionId, int categoryId)
+        public IActionResult OnGet(int sectionId, int documentCategoryId)
         {
             //Alwayas Initialize
             DocumentSectionObj = new Models.DocumentSection();
             CategoryList = _unitOfWork.DocumentCategory.GetListForDropDown();
 
 
+            //Adding new from documents page (selected category preserved)
+            if (documentCategoryId != 0)
+            {
+                //Get existing
+                DocumentSectionObj.DocumentCategory = _unitOfWork.DocumentCategory.GetFirstOrDefault(c => c.Id == documentCategoryId);
+
+                if (DocumentSectionObj.DocumentCategory == null)
+                {
+                    return RedirectToPage("/Home/Documents/Index");
+                }
+                else
+                {
+                    DocumentSectionObj.DocumentCategoryId = DocumentSectionObj.DocumentCategory.Id;
+                }
+            }
             //Existing (edit)
-            if (sectionId != 0)
+            else if (sectionId != 0)
             {
                 //Get existing
                 DocumentSectionObj = _unitOfWork.DocumentSection.GetFirstOrDefault(s => s.Id == sectionId);

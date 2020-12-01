@@ -1,6 +1,9 @@
 ﻿using Sunridge.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace Sunridge.Controllers
 {
@@ -10,10 +13,12 @@ namespace Sunridge.Controllers
     public class DocumentFileController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public DocumentFileController(IUnitOfWork unitOfWork)
+        public DocumentFileController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -22,8 +27,6 @@ namespace Sunridge.Controllers
         [HttpGet]
         public IActionResult Get(int categoryId)
         {
-            //**** ToDO **** filter by categoryId
-            //return Json(new { data = _unitOfWork.DocumentSection.GetAll(c => c.DocumentCategoryId == categoryId) });
             return Json(new { data = _unitOfWork.DocumentFile.GetAll(null, null, "DocumentCategory") });
         }
 
@@ -33,20 +36,37 @@ namespace Sunridge.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int Id)
         {
+            try
+            {
+                var objFromDb = _unitOfWork.DocumentFile.GetFirstOrDefault(s => s.Id == Id);
 
-            // **** To Do **** Delete needs to remove all section texts associated with that section
+                if (objFromDb == null)
+                {
+                    return Json(new { success = false, message = "Error while deleting." });
+                }
 
+                //Delete file from wwwroot
+                //This concatonates the path of wwwroot with the image path from database.
+                //Remove the slash from the image path
+                var filePath = Path.Combine(_hostingEnvironment.WebRootPath, objFromDb.File.TrimStart('\\'));
+                //Remove the file from wwwroot before removing path in database.
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
 
-            var objFromDb = _unitOfWork.DocumentFile.GetFirstOrDefault(s => s.Id == Id);
+                //Queue delete file database record
+                _unitOfWork.DocumentFile.Remove(objFromDb);
 
-            if (objFromDb == null)
+                //Save changes to database
+                _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Delete Successful." });
+            }
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
-
-            _unitOfWork.DocumentFile.Remove(objFromDb);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful." });
         }
     }
 }

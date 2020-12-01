@@ -16,12 +16,14 @@
                         <label asp-for="LotFileObj.Title"></label>
                     </div>
                     <div class="col-9">
-                        <input class="form-control" asp-for="LotFileObj.Title"/>
+                        <input class="form-control" asp-for="LotFileObj.Title" id="txtTitle" />
                         <span class="text-danger" asp-validation-for="LotFileObj.Title"></span>
                     </div>
-                    @if (Model.LotFileObj.Id != 0) {
-                        <input type="hidden" asp-for="LotFileObj.Id"/>
+                    @if (Model.LotFileObj.Id != 0)
+                    {
+                        <input type="hidden" asp-for="LotFileObj.Id" />
                     }
+                    <input type="hidden" asp-for="LotFileObj.LotId" value="@Model.LotId" />
                 </div>
 
                 <div class="form-group row">
@@ -38,7 +40,7 @@
                         <label asp-for="LotFileObj.File"></label>
                     </div>
                     <div class="col-9">
-                        <input type="file" class="form-control" id="uploadBox" name="files" accept=".pdf,.docx"/>
+                        <input type="file" class="form-control" id="uploadBox" name="files" accept=".pdf,.docx" />
                     </div>
                 </div>
 
@@ -46,15 +48,17 @@
                     <div class="col-9 offset-3">
                         <div class="row">
                             <div class="col-6">
-                                @if (Model.LotFileObj.Id != 0) {
+                                @if (Model.LotFileObj.Id != 0)
+                                {
                                     <button type="submit" class="btn btn-primary form-control">Update</button>
                                 }
-                                else {
+                                else
+                                {
                                     <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
                                 }
                             </div>
                             <div class="col-6">
-                                <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+                                <a asp-page="./index" asp-route-lotid="@Model.LotId" class="btn btn-secondary form-control">Back to List</a>
                             </div>
                         </div>
                     </div>
@@ -65,18 +69,29 @@
 </form>
 
 @section Scripts {
+    <partial name="Shared/_ValidationScriptsPartial" />
+    <partial name="Shared/_Scripts" />
     <script>
         tinymce.init({
             selector: 'textarea',
             plugins: "lists",
             menubar: 'file edit format'
         });
-    
+
         function ValidateInput() {
+
+            @*File Validation*@
             if (document.getElementById("uploadBox").value == "") {
-                swal('Error', 'Please Select an Image', 'error');
+                swal('Error', 'Please select a File', 'error');
                 return false;
             }
+            @* Title Validation *@
+            var name = document.getElementById("txtTitle").value;
+            if (name.toString() == '') {
+                swal("Error", "Please enter a Title for the File.", "error");
+                return false;
+            }
+
             return true;
         }
     </script>

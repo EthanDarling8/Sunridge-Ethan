@@ -17,12 +17,10 @@ namespace Sunridge.DataAccess.Data.Repository
         }
 
 
-        public void Update(Inventory Inventory)
+        public void Update(Inventory inventory)
         {
-            //Gets the first object from the table that has the same id as the one passed in
-            var objFromDb = _db.Inventory.FirstOrDefault(s => s.Id == Inventory.Id);
-
-            // **** ToDo ****
+            var objFromDb = _db.Inventory.FirstOrDefault(u => u.Id == inventory.Id);
+            objFromDb.ItemName = inventory.ItemName;
 
             _db.SaveChanges();
         }

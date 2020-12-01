@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
+using Sunridge.Utility;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sunridge.Pages.Home.Photos
@@ -24,11 +26,12 @@ namespace Sunridge.Pages.Home.Photos
         [BindProperty]
         public PhotoGalleryVM PhotoGalleryVM { get; set; }
 
-        //This is used by a partial view to generate cards for display based on selected category.
+        //This is used by a partial view to generate cards for display
         public PhotoAlbum PhotoAlbum { get; set; }
 
         public bool MyAlbums { get; set; }
 
+        //This is used by a partial view to generate cards for display
         public Photo Photo { get; set; }
 
         public Models.Owner CurrentOwner { get; set; }
@@ -72,7 +75,7 @@ namespace Sunridge.Pages.Home.Photos
 
             //1
             //Only allow logged in users to access "My Albums"
-            if (myAlbums == true && User.Identity.IsAuthenticated)
+            if (myAlbums == true && User.Identity.IsAuthenticated && selectedPhotoAlbumId == 0)
             {
                 PhotoGalleryVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(a => a.OwnerId == CurrentOwner.Id, a => a.OrderBy(a => a.Title), "Owner");
 
@@ -86,7 +89,27 @@ namespace Sunridge.Pages.Home.Photos
             }
             else
             {
-                PhotoGalleryVM.PhotoAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title), "Owner");
+                //Only display albums with photos in them unless logged in as admin or the album owner
+
+                //Get all albums
+                IEnumerable<PhotoAlbum> allAlbumList = _unitOfWork.PhotoAlbum.GetAll(null, a => a.OrderBy(a => a.Title), "Owner");
+
+                //Store desired albums here
+                ICollection<PhotoAlbum> filteredAlbumList = new List<PhotoAlbum>();
+
+                //Add only albums that have photos in them unless logged in as admin or the album owner
+                foreach (PhotoAlbum tempAlbum in allAlbumList)
+                {
+                    if (_unitOfWork.Photo.GetFirstOrDefault(p => p.PhotoAlbumId == tempAlbum.Id) != null ||
+                        (CurrentOwner != null && tempAlbum.OwnerId == CurrentOwner.Id) ||
+                        User.IsInRole(SD.AdministratorRole))
+                    {
+                        filteredAlbumList.Add(tempAlbum);
+                    }
+                }
+
+                //Copy desired albums into ViewModel.
+                PhotoGalleryVM.PhotoAlbumList = filteredAlbumList;
             }
 
 
@@ -115,7 +138,6 @@ namespace Sunridge.Pages.Home.Photos
                 PhotoGalleryVM.SelectedPhotoCategory = _unitOfWork.PhotoCategory.GetFirstOrDefault(c => c.Id == selectedPhotoCategoryId);
                 PhotoGalleryVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId, "Owner");
                 PhotoGalleryVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
-                //PhotoGalleryVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoGalleryVM.SelectedPhotoAlbum.OwnerId);
             }
             //4
             else if (selectedPhotoCategoryId == 0 && selectedPhotoAlbumId != 0)
@@ -129,7 +151,6 @@ namespace Sunridge.Pages.Home.Photos
                 PhotoGalleryVM.SelectedPhotoCategory = null;
                 PhotoGalleryVM.SelectedPhotoAlbum = _unitOfWork.PhotoAlbum.GetFirstOrDefault(a => a.Id == selectedPhotoAlbumId, "Owner");
                 PhotoGalleryVM.PhotoList = _unitOfWork.Photo.GetAll(p => p.PhotoAlbumId == selectedPhotoAlbumId);
-                //PhotoGalleryVM.AlbumCreator = _unitOfWork.Owner.GetFirstOrDefault(u => u.Id == PhotoGalleryVM.SelectedPhotoAlbum.OwnerId);
             }
             //5
             else

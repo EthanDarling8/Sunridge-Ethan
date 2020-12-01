@@ -24,7 +24,17 @@
                         <div class="col-lg-8">
                             <div class="card-body">
                                 <h3 class="card-title">@ob.Owner.FullName</h3>
-                                <h6>@ob.BoardMember.Position - Lot Here</h6>
+
+                                <h6>
+                                    @ob.BoardMember.Position - Lots:  
+                                    @foreach (var lo in Model.LotOwners) {
+                                        if (ob.OwnerId == lo.OwnerId) {
+                                            @lo.Lot.LotNumber
+                                        }
+                                        @Html.Raw(" ")
+                                    }
+
+                                </h6>
                                 <h6>
                                     <a href="mailto:@ob.Owner.Email" target="_blank">@ob.Owner.Email</a>
                                 </h6>

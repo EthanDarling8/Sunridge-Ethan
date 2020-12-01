@@ -8,7 +8,7 @@ function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax":
         {
-            "url": "/api/lotfile",
+            "url": "/api/inventory",
             "type": "GET",
             "datatype": "json"
         },
@@ -18,15 +18,15 @@ function loadList() {
                     data: "id", width: "33%"
                 },
                 {
-                    data: "itemname", width: "33%"
+                    data: "itemName", width: "33%"
                 },
                 {
                     data: "id",
                     "render": function (data) {
                         return `
                         <div class="text-center">
-                            <a href="/Admin/inventory/Upsert?id=${data}"
-                               class="btn btn-success text-white" style="cursor: pointer; width: 100px;">
+                            <a href="/Admin/Lot/Inventory/Upsert?id=${data}"
+                               class="btn btn-warning text-white" style="cursor: pointer; width: 100px;">
                                 <i class="far fa-edit"></i>
                                 Edit 
                             </a>

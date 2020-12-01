@@ -22,7 +22,7 @@ using System.Linq;
 namespace Sunridge.Pages.Admin.Lot
 {
     #region Authorization
-    //[Authorize(Roles = SD.AdministratorRole)] // Authorize use for only Administrators
+    [Authorize(Roles = SD.AdministratorRole)]
     #endregion
     public class Upsert : PageModel
     {
@@ -68,7 +68,7 @@ namespace Sunridge.Pages.Admin.Lot
 
             var LotOwnerIds = _unitOfWork.Lot_Owner.GetAll(l => l.LotId == LotObj.Lot.Id).ToList();
             string[] LotOwners = new string[LotOwnerIds.Count];
-            for(int c = 0; c < LotOwnerIds.Count; c++)
+            for (int c = 0; c < LotOwnerIds.Count; c++)
             {
                 LotOwners[c] = LotOwnerIds[c].OwnerId.ToString();
             }
@@ -79,9 +79,9 @@ namespace Sunridge.Pages.Admin.Lot
             int i = 0;
             foreach (var item in LotObj.InventoryList)
             {
-                foreach(var lotInv in InventoryIds)
+                foreach (var lotInv in InventoryIds)
                 {
-                    if(lotInv.InventoryId == item.Id)
+                    if (lotInv.InventoryId == item.Id)
                     {
                         LotObj.InventoryList[i].IsChecked = true;
                     }

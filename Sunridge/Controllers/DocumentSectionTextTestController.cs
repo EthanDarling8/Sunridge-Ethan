@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.Models;
+using System;
 
 namespace Sunridge.Controllers
 {
@@ -89,16 +90,25 @@ namespace Sunridge.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int Id)
         {
-            var objFromDb = _unitOfWork.DocumentSectionText.GetFirstOrDefault(t => t.Id == Id);
+            try
+            {
+                var objFromDb = _unitOfWork.DocumentSectionText.GetFirstOrDefault(t => t.Id == Id);
 
-            if (objFromDb == null)
+                if (objFromDb == null)
+                {
+                    return Json(new { success = false, message = "Error while deleting." });
+                }
+
+                _unitOfWork.DocumentSectionText.Remove(objFromDb);
+
+                _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Delete Successful." });
+            }
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
-
-            _unitOfWork.DocumentSectionText.Remove(objFromDb);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful." });
         }
     }
 }

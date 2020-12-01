@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
+using Sunridge.Models.ViewModels;
 
 namespace Sunridge.Controllers
 {
@@ -25,6 +27,10 @@ namespace Sunridge.Controllers
             _unitOfWork = unitOfWork;
             _hostingEnvironment = hostingEnvironment;
         }
+
+        //public LotOwnerInvVM LotOwnerInvObj { get; set; }
+        [BindProperty]
+        public LotVM data { get; set; }
 
         [HttpGet]
         public IActionResult Get()
@@ -86,6 +92,7 @@ namespace Sunridge.Controllers
             }
             return Json(new { data });
         }
+
     }
 
 }

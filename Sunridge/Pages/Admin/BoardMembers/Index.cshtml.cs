@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data;
 using Sunridge.DataAccess.Data.Repository.IRepository;
 using Sunridge.Models;
 using Sunridge.Models.ViewModels;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Admin.BoardMembers {
+    [Authorize(Roles = SD.AdministratorRole)]
     public class Index : PageModel {
         private readonly ApplicationDbContext _db;
         private readonly IUnitOfWork _unitOfWork;

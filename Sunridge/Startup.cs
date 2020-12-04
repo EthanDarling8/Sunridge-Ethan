@@ -29,7 +29,9 @@ namespace Sunridge
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddRazorPages();           
+            services.AddRazorPages(options => {
+                options.Conventions.AuthorizeFolder("/Admin");
+            });           
 
             //database connection
             services.AddDbContext<ApplicationDbContext>(options =>

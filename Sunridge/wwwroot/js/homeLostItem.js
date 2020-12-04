@@ -16,17 +16,17 @@ function loadList() {
             [
                 {
                     data: "image", "aTargets": [0], "render": function (data) { return '<img src="\\images\\lostItems\\' + data + '" class="statusd-img-top p-2 rounded mx-auto w-100" id="collectionImg" />'; }
-                    , width: "30%"
+                    , width: "25%"
                 },
                 {
-                    data: "status", width: "20%"
+                    data: "status", width: "15%"
                 },
                 {
-                    data: "name", width: "20%"
+                    data: "name", width: "15%"
                 },
                 {
                     data: "date", "aTargets": [0], "render": function (data) { return formatDate(data); }
-                    , width: "30%"
+                    , width: "15%"
                 },
                 {
                     data: "id",
@@ -43,7 +43,6 @@ function loadList() {
 
                 }
             ],
-        "sDom": 'lrtip',
         "fnInitComplete": function (oSettings, json) {
             addSearchControl(json);
         },

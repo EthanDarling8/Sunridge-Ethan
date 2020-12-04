@@ -53,7 +53,7 @@ namespace Sunridge.Pages.Admin.Banner
             if (BannerObj.Id == 0)
             {
                 string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"img\BannerImages");
+                var uploads = Path.Combine(webRootPath, @"images\BannerImages");
                 var extension = Path.GetExtension(files[0].FileName);
 
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
@@ -61,7 +61,7 @@ namespace Sunridge.Pages.Admin.Banner
                     files[0].CopyTo(fileStream);
                 }
 
-                BannerObj.Image = @"\img\BannerImages\" + fileName + extension;
+                BannerObj.Image = @"\images\BannerImages\" + fileName + extension;
 
                 _unitOfWork.Banner.Add(BannerObj);
                 _unitOfWork.Save();
@@ -72,7 +72,7 @@ namespace Sunridge.Pages.Admin.Banner
                 if (files.Count > 0)
                 {
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"img\BannerImages");
+                    var uploads = Path.Combine(webRootPath, @"images\BannerImages");
                     var extension = Path.GetExtension(files[0].FileName);
 
                     var imagePath = Path.Combine(webRootPath, objFromDb.Image.TrimStart('\\'));
@@ -86,7 +86,7 @@ namespace Sunridge.Pages.Admin.Banner
                         files[0].CopyTo(fileStream);
                     }
 
-                    BannerObj.Image = @"\img\BannerImages\" + fileName + extension;
+                    BannerObj.Image = @"\images\BannerImages\" + fileName + extension;
                 }
                 else
                 {

@@ -41,17 +41,26 @@
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/News/Index">News</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle dropdown-content" asp-page="/Home/LostAndFound/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
-                    Lost & Found
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" asp-page="/Owner/LostAndFound/Index">My Lost & Found</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Home/LostAndFound/Index">Browse Lost & Found</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle dropdown-content" asp-page="/Home/LostAndFound/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+                        Lost & Found
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-page="/Owner/LostAndFound/Index">My Lost & Found</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-page="/Home/LostAndFound/Index">Browse Lost & Found</a>
 
-                </div>
-            </li>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Home/LostAndFound/Index">Lost & Found</a>
+                </li>
+            }
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/Photos/Index">Photo Gallery</a>
             </li>
@@ -80,7 +89,7 @@
                     <a class="dropdown-item" asp-page="/Admin/Banner/Index">Banner Items</a>
                     <a class="dropdown-item" asp-page="/NewsItem/Index/Index">News Items</a>
                     <a class="dropdown-item" asp-page="/Admin/ScheduledEvents/Index">Scheduled Events</a>
-                    
+
 
                 </div>
             </li><!-- Smaller devices menu END -->

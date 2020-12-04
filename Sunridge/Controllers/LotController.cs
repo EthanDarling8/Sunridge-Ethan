@@ -49,6 +49,7 @@ namespace Sunridge.Controllers
             "FROM Lot " +
             "LEFT JOIN Lot_Owner ON Lot_Owner.LotId = Lot.Id " +
             "LEFT JOIN AspNetUsers ON Lot_Owner.OwnerId = AspNetUsers.Id " +
+            "WHERE AspNetUsers.LockoutEnd IS NULL OR LockoutEnd < GETDATE() " +
             "GROUP BY LotNumber) Query2 ON Lot.LotNumber = Query2.LotNumber " +
 "ORDER BY Lot.LotNumber asc").ToList();
 

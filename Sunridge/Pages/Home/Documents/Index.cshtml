@@ -75,8 +75,8 @@ else
             {
                 @* Only display categories with stuff in them unless admin *@
                 @if ((Model.FileCount > 0 ||
-                     Model.SectionCount > 0) ||
-                     User.IsInRole(SD.AdministratorRole))
+                   Model.SectionCount > 0) ||
+                   User.IsInRole(SD.AdministratorRole))
                 {
                     <div class="row mb-1">
 
@@ -105,51 +105,52 @@ else
             }
         </div>
 
-
-        @* Search Box *@
-        <div class="mb-3">
-            <h5 class="row mb-1">Search</h5>
-
-            @* Category Selected *@
-            @if (Model.SelectedCategory != null)
-            {
-                <form class="row mb-1" method="post" asp-page-handler="Search">
-                    <input type="search" asp-for="Search" id="search" class="col" placeholder="@("Search " + @Model.SelectedCategory.Name)" />
-                    <button class="col-2 btn btn-outline-secondary" type="submit" asp-route-selectedCategoryId="@Model.SelectedCategory.Id" asp-page-handler="Search"><i class="fas fa-search"></i></button>
-                </form>
-
-                @if (Model.Search != null)
-                {
-                    @* Clear Search *@
-                    <a class="col-12 btn btn-outline-secondary" asp-route-selectedCategoryId="@Model.SelectedCategory.Id" asp-page="Index"><i class="far fa-times-circle"></i> Clear Search</a>
-                }
-
-            }
-            @* No Category Selected *@
-            else
-            {
-                <form class="row mb-1" method="post" asp-page-handler="Search">
-                    <input type="search" asp-for="Search" id="search" class="col-10" placeholder="Search" />
-                    <button class="col-2 btn btn-outline-secondary" type="submit" asp-page-handler="Search"><i class="fas fa-search"></i></button>
-                </form>
-
-                @if (Model.Search != null)
-                {
-                    @* Clear Search *@
-                    <a class="col-12 btn btn-block btn-outline-secondary" asp-page="Index"><i class="far fa-times-circle"></i> Clear Search</a>
-                }
-            }
-        </div>
-
     </div>
 
 
 
 
-    @* Display Search results / files / sections / anything else *@
-    @if (Model.SelectedCategory != null || Model.Search != null)
-    {
-        <div class="col-8 ml-3">
+    @* Main Display Area *@
+    <div class="col-8 ml-3">
+
+        @* Search Box *@
+        @* Category Selected *@
+        @if (Model.SelectedCategory != null)
+        {
+            <form class="col-6 float-right" method="post" asp-page-handler="Search">
+				<button class="col-2 btn btn-info float-right" type="submit" asp-route-selectedCategoryId="@Model.SelectedCategory.Id" asp-page-handler="Search"><i class="fas fa-search"></i></button>
+                <input class="col-9 pt-1 pb-1 mr-1 float-right" type="search" asp-for="Search" id="search" placeholder="@("Search " + @Model.SelectedCategory.Name)" />
+                           
+			
+				@if (Model.Search != null)
+				{
+					@* Clear Search Button *@
+					<a class="col-9 btn btn-outline-secondary float-right mr-1" asp-route-selectedCategoryId="@Model.SelectedCategory.Id" asp-page="Index"><i class="far fa-times-circle"></i> Clear Search</a>
+				}
+			</form>
+        }
+        @* No Category Selected *@
+        else
+        {
+            <form class="col-6 float-right" method="post" asp-page-handler="Search">
+                <button class="col-2 btn btn-info float-right" type="submit" asp-page-handler="Search"><i class="fas fa-search"></i></button>
+                <input class="col-9 pt-1 pb-1 mr-1 float-right" type="search" asp-for="Search" id="search" placeholder="Search All" />
+
+
+                @if (Model.Search != null)
+                {
+                    @* Clear Search Button *@
+                    <a class="col-9 btn btn-outline-secondary float-right mr-1" asp-page="Index"><i class="far fa-times-circle"></i> Clear Search</a>
+                }
+            </form>
+        }
+
+
+
+
+        @* Display Search results / files / sections / anything else *@
+        @if (Model.SelectedCategory != null || Model.Search != null)
+        {
 
             @* Display Search Results *@
             @if (Model.Search != null)
@@ -164,8 +165,8 @@ else
 
                     @* No Results *@
                     @if (Model.SearchedDocumentSectionList.Count() == 0 &&
-                  Model.SearchedDocumentSectionTextList.Count() == 0 &&
-                  Model.SearchedDocumentFileList.Count() == 0)
+              Model.SearchedDocumentSectionTextList.Count() == 0 &&
+              Model.SearchedDocumentFileList.Count() == 0)
                     {
                         <h4 class="row ml-1 text-danger"> - No Results - </h4>
                     }
@@ -434,15 +435,16 @@ else
                 }
             }
 
-        </div>
-    }
-    @* No category selected, no search entered - display "How To" *@
-    else
-    {
-        <div class="col-8 ml-3">
-            <h4 class="ml-4 mt-4 text-secondary">- Select a Document Category or Search. -</h4>
-        </div>
-    }
+        }
 
+
+
+        @* No category selected, no search entered - display "How To" *@
+        else
+        {
+            <h4 class="row mt-4 ml-3 text-secondary">Search or select a Category.</h4>
+        }
+
+    </div>
 </div>
 

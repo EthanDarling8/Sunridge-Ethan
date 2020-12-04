@@ -21,13 +21,13 @@ namespace Sunridge.Pages.Admin.Lot.Files {
 
         [BindProperty] public Models.LotFile LotFileObj { get; set; }
         public int LotId = 0;
+        public DateTime date = DateTime.Now;
         public IActionResult OnGet(int? id) {
             if (!String.IsNullOrEmpty(Request.Query["lotid"]))
             {
                 LotId = Int32.Parse(Request.Query["lotid"]);
             }
             LotFileObj = new Models.LotFile();
-
             if (id != null) {
                 LotFileObj = _unitOfWork.LotFile.GetFirstOrDefault(f => f.Id == id);
                 if (LotFileObj == null) {
@@ -41,6 +41,7 @@ namespace Sunridge.Pages.Admin.Lot.Files {
         public IActionResult OnPost() {
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
+
 
             if (!ModelState.IsValid) {
                 return Page();
@@ -57,12 +58,13 @@ namespace Sunridge.Pages.Admin.Lot.Files {
                 }
 
                 LotFileObj.File = fileName + extension;
-
+                LotFileObj.Date = date;
                 _unitOfWork.LotFile.Add(LotFileObj);
             }
             else {
                 // Update
                 var objFromDb = _unitOfWork.LotFile.Get(LotFileObj.Id);
+                objFromDb.Date = date;
                 if (files.Count > 0) {
                     // Upload and save image
                     string fileName = Path.GetFileNameWithoutExtension(files[0].FileName) + "_" + Guid.NewGuid().ToString();

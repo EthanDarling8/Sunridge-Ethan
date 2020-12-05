@@ -53,7 +53,6 @@ function loadList() {
 
                 }
             ],
-        "sDom": 'lrtip',
         "fnInitComplete": function (oSettings, json) {
             addSearchControl(json);
         },

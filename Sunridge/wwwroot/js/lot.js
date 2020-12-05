@@ -52,7 +52,7 @@ function loadList() {
 
                 }
             ],
-        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+        "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
         "language": {
             "emptyTable": "no data found."
         },

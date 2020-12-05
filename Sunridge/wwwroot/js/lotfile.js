@@ -20,7 +20,11 @@ function loadList() {
                     data: "title", width: "20%"
                 },
                 {
-                    data: "description", width: "60%"
+                    data: "description", width: "40%"
+                },
+                {
+                    data: "date", "aTargets": [0], "render": function (data) { return formatDate(data); }
+                    , width: "20%"
                 },
                 {
                     data: "file", width: "5%",
@@ -102,3 +106,9 @@ function getUrlParameter(sParam) {
         }
     }
 };
+// Date Formatting
+function formatDate(myDate) {
+    var date = new Date(myDate);
+    return '' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + '';
+
+}

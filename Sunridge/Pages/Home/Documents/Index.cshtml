@@ -3,21 +3,30 @@
 @using Sunridge.Utility
 @{
     ViewData["Title"] = "Documents";
+
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
 }
 
 
 @* Display Selected Category *@
 @if (Model.SelectedCategory != null)
 {
-    <h1 class="row mb-4">Documents - @Model.SelectedCategory.Name</h1>
+    <h1 class="row mb-4 ml-5">Documents - @Model.SelectedCategory.Name</h1>
 }
 else
 {
-    <h1 class="row mb-4">Documents</h1>
+    <h1 class="row mb-4 ml-5">Documents</h1>
 }
 
 
-<div class="row">
+<div class="row ml-5">
 
     @* Left nav bar: Display management and category buttons *@
     <div class="col-3">

@@ -1,7 +1,8 @@
 ﻿@page
 @model Sunridge.Pages.Owner.Dashboard.IndexModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dashboard";
+
     if (User.IsInRole(Utility.SD.AdministratorRole)) {
         Layout = "~/Pages/Shared/_AdminLayout.cshtml";
     }
@@ -11,9 +12,9 @@
     }
 }
 
-<h1>Dashboard</h1>
+<h1 class="row ml-5 mb-4">Dashboard</h1>
 
-<div class="row">
+<div class="row ml-4 mr-4">
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header">

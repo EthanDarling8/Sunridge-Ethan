@@ -187,11 +187,11 @@ namespace Sunridge.Pages.Owner.Photos.Album.Photo
 
             if (selectedPhotoCategoryId != 0)
             {
-                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId, SelectedPhotoCategoryId = selectedPhotoCategoryId });
+                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId, SelectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
             }
             else
             {
-                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId });
+                return RedirectToPage("/Home/Photos/Index", new { SelectedPhotoAlbumId = selectedPhotoAlbumId, myAlbums = myAlbums });
             }            
         }
 

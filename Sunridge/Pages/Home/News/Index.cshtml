@@ -1,7 +1,19 @@
 ﻿@page
 @model Sunridge.Pages.Home.News.IndexModel
+@using Sunridge.Utility
 @{ int CurrentYear = DateTime.Now.Year;
     int DisplayNumYears = 3; // show this year and the next two years, will then show the follow year and the link for everything older than that year, need to update NewsController as well
+
+    ViewData["Title"] = "News";
+
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
 }
 
 <div class="container">
@@ -13,10 +25,10 @@
     <div class="form-group row">
         <div class="col"></div>
         <div class="col-3">
-            <input class="form-control" asp-for="Search" />
+            <input class="form-control" asp-for="Search" type="search" placeholder="Search" />
         </div>
-        <div class="col col-2">
-            <button type="submit" id="SearchBtn" class="btn btn-info form-control">Search</button>
+        <div class="col col-1">
+            <button type="submit" id="SearchBtn" class="btn btn-info form-control"><i class="fas fa-search"></i></button>
         </div>
     </div>
 

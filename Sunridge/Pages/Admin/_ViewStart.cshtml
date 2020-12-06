@@ -1,3 +1,11 @@
-﻿@{
-    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+﻿@using Sunridge.Utility
+@{
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
 }

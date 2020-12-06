@@ -1,8 +1,17 @@
 ﻿@page
 @model Sunridge.Pages.Owner.Photos.Album.UpsertModel
+@using Sunridge.Utility 
 @{
-    Layout = "~/Pages/Shared/_HomeLayout.cshtml";
     ViewData["Title"] = "Photo Album";
+
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
 }
 
 

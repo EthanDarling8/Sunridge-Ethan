@@ -82,7 +82,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
 
 
-        public IActionResult OnPost(int selectedPhotoAlbumId, int selectedPhotoCategoryId)
+        public IActionResult OnPost(int selectedPhotoAlbumId, int selectedPhotoCategoryId, bool myAlbums = false)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace Sunridge.Pages.Owner.Photos.Album
 
             _unitOfWork.Save();
 
-            return RedirectToPage("/Home/Photos/Index", new { selectedPhotoAlbumId = selectedPhotoAlbumId, selectedPhotoCategoryId = selectedPhotoCategoryId });
+            return RedirectToPage("/Home/Photos/Index", new { selectedPhotoAlbumId = selectedPhotoAlbumId, selectedPhotoCategoryId = selectedPhotoCategoryId, myAlbums = myAlbums });
         }
     }
 }

@@ -5,12 +5,14 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Sunridge.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
+using Sunridge.Utility;
 
 namespace Sunridge.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize(Roles = SD.AdministratorRole)]
     public class DocumentCategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

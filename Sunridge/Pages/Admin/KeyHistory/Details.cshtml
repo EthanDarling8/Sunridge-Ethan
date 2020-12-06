@@ -13,14 +13,13 @@
     </div>
     <div class="col-lg-9">
         <h3>Issued Keys</h3>
-        <form method="post">
+        <form method="post" id="issued">
             <table class="table">
                 <thead>
                     <tr>
                         <td>Key</td>
-                        <td>Issued</td>
+                        <td>Issued | Select All <input type="checkbox" id="issued-all" checked="checked"/></td>
                         <td>Issue Date</td>
-                        <td>Return Date</td>
                         <td>Paid Amount</td>
                     </tr>
                 </thead>
@@ -40,9 +39,6 @@
                                 @keyLot.IssueDate.ToString("MM/dd/yyyy")
                             </td>
                             <td>
-                                @keyLot.ReturnDate?.ToString("MM/dd/yyy")
-                            </td>
-                            <td>
                                 @keyLot.PaidAmount
                             </td>
                         </tr>
@@ -52,12 +48,12 @@
             <button class="btn btn-primary mb-4" type="submit">Update</button>
         </form>
         <h3>Returned Keys</h3>
-        <form method="post">
+        <form method="post" id="returned">
             <table class="table">
                 <thead>
                     <tr>
                         <td>Key</td>
-                        <td>Issued</td>
+                        <td>Issued | Select All <input type="checkbox" id="returned-all" /></td>
                         <td>Issue Date</td>
                         <td>Return Date</td>
                         <td>Paid Amount</td>
@@ -92,3 +88,15 @@
         </form>
     </div>
 </div>
+
+@section scripts {
+<script>
+    $("#issued-all").change(function () {
+        $("#issued input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+
+    $("#returned-all").change(function () {
+        $("#returned input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+</script>
+}

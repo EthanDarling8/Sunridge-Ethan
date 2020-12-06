@@ -19,6 +19,7 @@ using Sunridge.Models;
 using Sunridge.Utility;
 
 namespace Sunridge.Areas.Identity.Pages.Account {
+    [Authorize(Roles = "Administrator")]
     [AllowAnonymous]
     public class RegisterModel : PageModel {
         private readonly RoleManager<IdentityRole> _roleManager;

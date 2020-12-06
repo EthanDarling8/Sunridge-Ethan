@@ -17,6 +17,15 @@ namespace Sunridge.DataAccess.Data.Repository
         public void Update(Forms updateObj)
         {
             var objFromDb = _db.Forms.FirstOrDefault(s => s.Id == updateObj.Id);
+            objFromDb.DateModified = updateObj.DateModified;
+            objFromDb.DateResolved = updateObj.DateResolved;
+            objFromDb.Description = updateObj.Description;
+            objFromDb.Suggestion = updateObj.Suggestion;
+            objFromDb.Activity = updateObj.Activity;
+            objFromDb.Hours = updateObj.Hours;
+            objFromDb.Comments = updateObj.Comments;
+            objFromDb.Resolved = updateObj.Resolved;
+            objFromDb.AdminId = updateObj.AdminId;
             _db.SaveChanges();
         }
     }

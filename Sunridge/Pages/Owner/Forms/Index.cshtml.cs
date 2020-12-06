@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sunridge.DataAccess.Data.Repository.IRepository;
+using Sunridge.Utility;
 
 namespace Sunridge.Pages.Owner.Forms
 {
+    [Authorize(Roles = SD.AdministratorRole)]
     public class IndexModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -18,9 +21,10 @@ namespace Sunridge.Pages.Owner.Forms
 
         public void OnGet()
         {
-            FormsResolvedList = _unitOfWork.Forms.GetAll(f => f.Resolved == true).ToList();
-            FormsUnResolvedList = _unitOfWork.Forms.GetAll(f => f.Resolved == false).ToList();
+            List<Models.Forms> Forms = _unitOfWork.Forms.GetAll(includeProperties:"Owner").ToList();
 
+            FormsResolvedList = Forms.FindAll(f => f.Resolved == true);
+            FormsUnResolvedList = Forms.FindAll(f => f.Resolved == false);
         }
     }
 }

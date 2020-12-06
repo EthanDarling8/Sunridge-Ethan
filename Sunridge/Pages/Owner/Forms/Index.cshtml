@@ -1,7 +1,6 @@
 ﻿@page
 @model Sunridge.Pages.Owner.Forms.IndexModel
-@{
-}
+@{ }
 
 <h2 class="mb-4">Sunridge Submitted Forms</h2>
 
@@ -9,101 +8,115 @@
     <table class="table table-responsive-sm table-hover">
         <thead>
             <tr>
-                <th id="newsDate">
-                    DisplayDate
+                <th id="type">
+                    Form Type
                 </th>
-                <th id="newsHeader">
-                    Header
+                <th id="owner">
+                    Owner
                 </th>
-                <th id="newsArchived">
-                    Archived
+                <th id="listDate">
+                    List Date
+                </th>
+                <th id="resolveDate">
+                    Resolve Date
+                </th>
+                <th id="resolvedBy">
+                    Resolved by
                 </th>
                 <th></th>
             </tr>
         </thead>
 
         <tbody>
-            @if (Model.FormsResolvedList.Count > 0)
-            {
-                @foreach (var item in Model.FormsResolvedList)
+@if (Model.FormsUnResolvedList.Count > 0)
+{
+    @foreach (var item in Model.FormsUnResolvedList)
+    {
+    <tr>
+        <td>
+            @item.FormType
+        </td>
+        <td>
+            @item.Owner.FullName
+        </td>
+        <td>
+            @item.DateCreated.ToShortDateString()
+        </td>
+        <td>
+            @if(item.Resolved == true)
+                @item.DateResolved.ToShortDateString()
+        </td>
+        <td>
+            @item.AdminId
+        </td>
+        <td>
+            <div class="btn-group">
+                @if (item.FormType == Models.FormType.InKindWork)
                 {
-                    <tr>
-                        <td style="width: 25%">
-                            @item.FormType
-                        </td>
-                        <td style="width: 50%">
-                            @item.OwnerId
-                        </td>
-                        <td>
-                            @item.DateCreated
-                        </td>
-                        <td>
-                            @item.DateResolved
-                        </td>
-                        <td>
-                            @item.AdminId
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-info btn-sm" asp-page="/Owner/Forms/Upsert" asp-route-id="@item.Id">
-                                    <span class="d-none d-lg-block">View</span>
-                                    <i class="fas fa-edit d-lg-none"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                    <a class="btn btn-info btn-sm" asp-page="/Owner/Forms/InKindWork" asp-route-id="@item.Id">
+                        <span class="d-none d-lg-block">View</span>
+                        <i class="fas fa-edit d-lg-none"></i>
+                    </a> 
                 }
-            }
-            else
-            {
-                <tr>
-                    <td style="width: 100%">
-                    No unresolved forms right now!
-                    </td>
-                </tr>
-            }
-</tbody>
+                else if (item.FormType == Models.FormType.SuggestionComplaint)
+                {
+                    <a class="btn btn-info btn-sm" asp-page="/Owner/Forms/SuggestionComplaint" asp-route-id="@item.Id">
+                        <span class="d-none d-lg-block">View</span>
+                        <i class="fas fa-edit d-lg-none"></i>
+                    </a>
+                }
+            </div>
+        </td>
+    </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="6" style="width: 100%">
+            No unresolved forms right now!
+        </td>
+    </tr>
+}
+        </tbody>
 
         <tbody>
             @if (Model.FormsResolvedList.Count > 0)
             {
-                @foreach (var item in Model.FormsResolvedList)
-                {
-                    <tr>
-                        <td>
-                            @item.FormType
-                        </td>
-                        <td>
-                            @item.OwnerId
-                        </td>
-                        <td>
-                            @item.DateCreated
-                        </td>
-                        <td>
-                            @item.DateResolved
-                        </td>
-                        <td>
-                            @item.AdminId
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-info btn-sm" asp-page="/Owner/Forms/Upsert" asp-route-id="@item.Id">
-                                    <span class="d-none d-lg-block">View</span>
-                                    <i class="fas fa-edit d-lg-none"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            }
+@foreach (var item in Model.FormsResolvedList)
+{
+<tr>
+    <td>
+        @item.FormType
+    </td>
+    <td>
+        @item.OwnerId
+    </td>
+    <td>
+        @item.DateCreated
+    </td>
+    <td>
+        @item.DateResolved
+    </td>
+    <td>
+        @item.AdminId
+    </td>
+    <td>
+        <div class="btn-group">
+            <a class="btn btn-info btn-sm" asp-page="/Owner/Forms/Upsert" asp-route-id="@item.Id">
+                <span class="d-none d-lg-block">View</span>
+                <i class="fas fa-edit d-lg-none"></i>
+            </a>
+        </div>
+    </td>
+</tr>                } }
             else
             {
-                <tr>
-                    <td style="width: 100%">
-                        No resolved forms entered!
-                    </td>
-                </tr>
-            }
+<tr>
+    <td colspan="6" style="width: 100%">
+        No resolved forms entered!
+    </td>
+</tr>            }
         </tbody>
 
 

@@ -18,7 +18,10 @@ namespace Sunridge.Models
         public DateTime DateResolved { get; set; }
         public FormType FormType { get; set; }
         public string Description { get; set; }
-        public string Equipment_Sugestions { get; set; }
+        public string Suggestion { get; set; }
+        public string Activity { get; set; }
+        public string Hours { get; set; }
+        public string Comments { get; set; }
         public bool Resolved { get; set; } = false;
         [Display(Name = "Resolved By")]
         public string AdminId { get; set; }
@@ -33,7 +36,7 @@ namespace Sunridge.Models
     {
         [Description("Suggestion / Complaint")]
         SuggestionComplaint = 0,
-        [Description("Work in Kind")]
-        WorkInkind = 1
+        [Description("In Kind Work")]
+        InKindWork = 1
     }
 }

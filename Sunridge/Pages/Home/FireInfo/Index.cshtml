@@ -35,7 +35,7 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-2">
+        <div class="col-3">
             <table id="DT_load" class="table table-bordered m-5">
                 <tr>
                     <td>
@@ -46,7 +46,7 @@
                 {
                     <tr>
                         <td>
-                            <a class="nav-link fireFilter" id="@year" asp-page="#">@year</a>
+                            <a class="nav-link fireFilter" id="@year" href="#" onclick="return false">@year</a>
                         </td>
                     </tr>
                 }
@@ -57,8 +57,9 @@
                 </tr>
             </table>
         </div>
+        <div class="col-1"></div>
         <div class="col">
-            <div class="list-group" id="newsListings">
+            <div class="list-group" id="fireListings">
                 @if (Model.FireList.Count > 0)
                 {
                     @foreach (var item in Model.FireList)
@@ -84,53 +85,68 @@
 
 @section Scripts{
     <script>
-        $(document).on("click", ".fireFilter", function (event) {
-            var filterYear = $(this).attr('id');
-            $.get("api/News/" + filterYear, function (result) {
-    if (result.FireList) {
-        var body = '';
-                    $.each(result.FireList, function (index, item) {
-        @* items need to be pre-formatted in the controller *@
-        body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">'+
-            '<div class="d-flex w-100 justify-content-between">'+
-                '<h5 class="mb-1">'+item.Title+'+</h5>'+
-                '<small class="text-muted text-right">'+item.DisplayDate+'+</small>'+
-            '</div>'+
-            '<p class="mb-1">item.Content</p>';
-        if (item.Attachment != null)
-        {
-            body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" asp-page="'+item.Attachment+'">'+item.Attachment+'</a></small>\r\n</div>';
-        }
-                    });
-    }
-            });
-        });
-        $(document).on("click", "#SearchBtn", function (event) {
-            var SearchString = $("#Search").val();
-            $.ajax({
-                url: "api/FireInfo/",
-                type: 'POST',
-                data: { "Search": SearchString },
-                contentType: 'application/json',
-                dataType: "json",
-                success: function (result) {
-                    if (result.NewsList) {
-                        var body = '';
-                        $.each(result.NewsList, function (index, item) {
-                            @* items need to be pre - formatted in the controller *@
-                            body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
-                                '<div class="d-flex w-100 justify-content-between">' +
-                                '<h5 class="mb-1">' + item.Title + '+</h5>' +
-                                '<small class="text-muted text-right">' + item.DisplayDate + '+</small>' +
-                                '</div>' +
-                                '<p class="mb-1">item.Content</p>';
-                            if (item.Attachment != null) {
-                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" asp-page="' + item.Attachment + '">' + item.Attachment + '</a></small>\r\n</div>';
-                            }
-                        });
-                    }
-                }
-            });
-        });
-    </script>
+         $(document).on("click", ".fireFilter", function (event) {
+             var filterYear = $(this).attr('id');
+             $.ajax({
+                 url: "/api/FireInfo/" + filterYear,
+                 type: 'get',
+                 contentType: 'application/json',
+                 dataType: "json",
+                 success: function (result) {
+                     var body = '';
+                     if (result.fireList) {
+                         $.each(result.fireList, function (index, item) {
+                             item.content = item.content == null ? "" : item.content;
+                             body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                                 '<div class="d-flex w-100 justify-content-between">' +
+                                 '<h5 class="mb-1">' + item.title + '</h5>' +
+                                 '<small class="text-muted text-right">' + item.formatDate + '</small>' +
+                                 '</div>' +
+                                 '<p class="mb-1">' + item.content+'</p>';
+                             if (item.displayName != "") {
+                                body += '\r\n<a class="nav-link" id="1900" href="' + item.attachment + '">Open Attachment</a> <iframe src="' + item.attachment + '"></iframe>';
+                             }
+                             body += '\r\n</div >';
+ 
+                         });
+                         $("#fireListings").html(body);
+                     } else {
+                         $("#fireListings").html("No Info returned");
+                     }
+                 }
+             });
+         });
+         $(document).on("click", "#SearchBtn", function (event) {
+             event.preventDefault(); 
+             var SearchString = $("#Search").val();
+             $.ajax({
+                 url: "/api/FireInfo/?Search=" + encodeURIComponent(SearchString),
+                 type: 'post',
+                 //data: { "Search": SearchString },
+                 contentType: 'application/json',
+                 success: function (result) {
+                     var body = '';
+                     if (result.fireList) {
+                         $.each(result.fireList, function (index, item) {
+                             item.content = item.content == null ? "" : item.content;
+                             body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                                 '<div class="d-flex w-100 justify-content-between">' +
+                                 '<h5 class="mb-1">' + item.title + '</h5>' +
+                                 '<small class="text-muted text-right">' + item.formatDate + '</small>' +
+                                 '</div>' +
+                                 '<p class="mb-1">'+item.content+'</p>';
+                             if (item.displayName != "") {
+                                 body += '\r\n<a class="nav-link" id="1900" href="' + item.attachment + '">Open Attachment</a> <iframe src="' + item.attachment + '"></iframe>';
+                             }
+                             body += '\r\n</div >';
+                         });
+                         $("#fireListings").html(body);
+                     }
+                     else {
+                         $("#fireListings").html("No Info returned");
+                     }
+                 }
+             });
+         });
+     </script>
 }

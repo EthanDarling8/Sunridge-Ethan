@@ -17,6 +17,7 @@ namespace Sunridge.DataAccess.Data.Repository {
 
             objFromDb.Title = updateObj.Title;
             objFromDb.Content = updateObj.Content;
+            objFromDb.Attachment = updateObj.Attachment;
             objFromDb.DisplayDate = updateObj.DisplayDate;
             objFromDb.Archived = updateObj.Archived;
             _db.SaveChanges();

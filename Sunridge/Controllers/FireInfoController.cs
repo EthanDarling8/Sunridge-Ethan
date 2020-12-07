@@ -41,6 +41,20 @@ namespace Sunridge.Controllers {
                 FireList = _unitOfWork.FireInfo.GetAll(n => n.Archived == false && n.DisplayDate.Date.Year == year)
                     .OrderBy(d => d.DisplayDate).Reverse().ToList();
 
+
+            if (FireList.Count() > 0) {
+                int i = 0;
+                foreach (var item in FireList) {
+                    FireList[i].FormatDate = item.DisplayDate.Date.ToLongDateString();
+                    FireList[i].DisplayName = "";
+                    if (item.Attachment != null) {
+                        FireList[i].DisplayName = Path.GetFileName(item.Attachment);
+                    }
+
+                    i++;
+                }
+            }
+
             return Json(new {FireList});
         }
 
@@ -54,6 +68,20 @@ namespace Sunridge.Controllers {
                 .GetAll(n => n.Archived == false && (n.Title.ToLower().Contains(Search.ToLower()) ||
                                                      n.Content.ToLower().Contains(Search.ToLower())))
                 .OrderBy(d => d.DisplayDate).Reverse().ToList();
+
+            if (FireList.Count() > 0) {
+                int i = 0;
+                foreach (var item in FireList) {
+                    FireList[i].FormatDate = item.DisplayDate.Date.ToLongDateString();
+                    FireList[i].DisplayName = "";
+                    if (item.Attachment != null) {
+                        FireList[i].DisplayName = Path.GetFileName(item.Attachment);
+                    }
+
+                    i++;
+                }
+            }
+
             return Json(new {FireList});
         }
 

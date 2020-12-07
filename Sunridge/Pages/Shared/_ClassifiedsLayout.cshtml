@@ -41,45 +41,53 @@
     <div class="d-flex" id="wrapper">
         @if (User.IsInRole(SD.AdministratorRole))
         {
-        <div class="bg-dark text-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Admin</div>
-            <div class="list-group list-group-flush">
-                <a asp-page="/Admin/Owners/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Keys</a>
-                <a asp-page="/Admin/KeyHistory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
-                <a @*asp-page="/Owners/Forms/Index"*@ href="/Owner/Forms/" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
-                <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
-                <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Classifieds</a>
-                <div id="sidebarSubmenu" class="collapse">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Category/Index">Categories</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Listings/ItemsTable">Listings</a>
-                </div>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photos</a>
-                <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>
-                <div id="sidebarSubmenu" class="collapse">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Inventory Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Banner/Index">Banner Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/News/Index">News Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/FireInfo/Index">Fire Info Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/BoardMembers/Index">Board Members</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Events</a>
+            <div class="bg-dark text-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading">Admin</div>
+                <div class="list-group list-group-flush">
+                    <a asp-page="/Admin/Owners/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
+                    @*<a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Keys</a>*@
+                    <a asp-page="/Admin/KeyHistory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
+                    <a @*asp-page="/Owners/Forms/Index"*@ href="/Owner/Forms/" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
+                    <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
+                    <a href="#classifiedsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Classifieds</a>
+                    <div id="classifiedsSubmenu" class="collapse">
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Category/Index">Categories</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Listings/ItemsTable">Listings</a>
+                    </div>
+                    <a href="#documentsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 far fa-folder-open"></i> Documents</a>
+                    <div id="documentsSubmenu" class="collapse">
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Category/Index">Categories</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/File/Index">Files</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Section/Index">Sections</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/SectionText/Index">Section Text</a>
+                    </div>
+                    <a href="/Admin/PhotoCategory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photo Categories</a>
+                    <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>
+                    <div id="sidebarSubmenu" class="collapse">
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Lot/Inventory/Index">Inventory Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Banner/Index">Banner Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/News/Index">News Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/FireInfo/Index">Fire Info Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/BoardMembers/Index">Board Members</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Events</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/LostAndFound/Index">Lost & Found Items</a>
+                    </div>
                 </div>
             </div>
-        </div>
         }
         <!-- Page Content -->
-    <div id="page-content-wrapper">
-        @if (User.IsInRole(SD.AdministratorRole))
-        {
-        <button class="btn btn-primary ml-3 m-2" id="menu-toggle"><i class="fa fa-bars"></i></button>
-        }
-        <div class="container-fluid">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+        <div id="page-content-wrapper">
+            @if (User.IsInRole(SD.AdministratorRole))
+            {
+                <button class="btn btn-primary ml-3 m-2" id="menu-toggle"><i class="fa fa-bars"></i></button>
+            }
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
-    </div>
     </div>
 
     <hr />

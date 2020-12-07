@@ -49,7 +49,11 @@
                 <a asp-page="/Admin/Lot/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
                 <a @*asp-page="/Owners/Forms/Index"*@ href="/Owner/Forms/" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
                 <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
-                <a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-dollar-sign"></i> Classifieds</a>
+                <a href="#classifiedsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Classifieds</a>
+                <div id="classifiedsSubmenu" class="collapse">
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Category/Index">Categories</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Listings/ItemsTable">Listings</a>
+                </div>
                 <a href="#documentsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 far fa-folder-open"></i> Documents</a>
                 <div id="documentsSubmenu" class="collapse">
                     <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Category/Index">Categories</a>

@@ -12,7 +12,6 @@ using Sunridge.Utility;
 namespace Sunridge.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = SD.AdministratorRole)]
     public class FireInfoController : Controller {
         private readonly IUnitOfWork _unitOfWork;
         private int DisplayNumYears = 3;
@@ -23,7 +22,6 @@ namespace Sunridge.Controllers {
 
         // GET api/<FireController>/5
         [HttpGet("{year}")]
-        [Authorize(Roles = SD.AdministratorRole)]
         public IActionResult Get(int year) {
             var FireList = new List<FireInfo>();
             if (year == 0)
@@ -60,7 +58,6 @@ namespace Sunridge.Controllers {
 
         // POST api/<FireController>
         [HttpPost]
-        [Authorize(Roles = SD.AdministratorRole)]
         //public void Post([FromBody] string value)
         public IActionResult Post(string Search) {
             var FireList = new List<FireInfo>();

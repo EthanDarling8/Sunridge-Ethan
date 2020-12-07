@@ -14,50 +14,49 @@
 <div class="table-responsive-sm">
     <table class="table table-responsive-sm table-hover">
         <thead>
-            <tr>
-                <th id="newsDate">
-                    DisplayDate
-                </th>
-                <th id="newsHeader">
-                    Header
-                </th>
-                <th id="newsArchived">
-                    Archived
-                </th>
-                <th></th>
-            </tr>
+        <tr>
+            <th id="newsDate">
+                DisplayDate
+            </th>
+            <th id="newsHeader">
+                Header
+            </th>
+            <th id="newsArchived">
+                Archived
+            </th>
+            <th></th>
+        </tr>
         </thead>
 
-@if (Model.NewsList.Count > 0)
-{
-        <tbody>
-    @foreach (var item in Model.NewsList)
-    {
-            <tr>
-                <td style="width: 25%">
-                    @item.DisplayDate.Date.ToShortDateString()
-                </td>
-                <td style="width: 50%">
-                    @Html.Raw(@item.Title)
-                </td>
-                <td>
-                    @item.Archived
-                </td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn btn-info btn-sm" asp-page="/Admin/News/Upsert" asp-route-id="@item.Id">
-                            <span class="d-none d-lg-block">Edit</span>
-                            <i class="fas fa-edit d-lg-none"></i>
-                        </a>
-                        <a class="btn btn-danger btn-sm" asp-page="/Admin/News/Delete" asp-route-id="@item.Id">
-                            <span class="d-none d-lg-block">Delete</span>
-                            <i class="fas fa-trash d-lg-none"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-    }
-        </tbody>
-}
+        @if (Model.NewsList.Count > 0) {
+            <tbody>
+            @foreach (var item in Model.NewsList) {
+                <tr>
+                    <td style="width: 25%">
+                        @item.DisplayDate.Date.ToShortDateString()
+                    </td>
+                    <td style="width: 50%">
+                        @Html.Raw(@item.Title)
+                    </td>
+                    <td>
+                        @item.Archived
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-info btn-sm" asp-page="/Admin/News/Upsert" asp-route-id="@item.Id">
+                                <span class="d-none d-lg-block">Edit</span>
+                                <i class="fas fa-edit d-lg-none"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm" asp-controller="News" asp-action="Delete" asp-route-id="@item.Id"
+                               onclick="return confirm('Are you sure you want to delete this item?')">
+                                <span class="d-none d-lg-block">Delete</span>
+                                <i class="fas fa-trash d-lg-none"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        }
     </table>
 </div>

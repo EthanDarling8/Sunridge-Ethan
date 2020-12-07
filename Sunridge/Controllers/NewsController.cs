@@ -81,5 +81,12 @@ namespace Sunridge.Controllers
 
             return Json(new { NewsList });
         }
+        
+        public IActionResult Delete(int id) {
+            var objFromDb = _unitOfWork.News.GetFirstOrDefault(unitOfWork => unitOfWork.Id == id);
+            _unitOfWork.News.Remove(objFromDb);
+            _unitOfWork.Save();
+            return RedirectToPage("/Admin/News/Index");
+        }
     }
 }

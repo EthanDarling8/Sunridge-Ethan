@@ -1,0 +1,161 @@
+﻿@page
+@model Sunridge.Pages.Admin.Event.UpsertModel
+@{
+    ViewData["Title"] = "Event";
+}
+
+
+
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Keep track of Id if editing existing.*@
+            @if (Model.EventObj.Id != 0)
+            {
+                <input type="hidden" asp-for="@Model.EventObj.Id" value="@Model.EventObj.Id" />
+            }
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.EventObj.Id !=0 ? "Update" : "Create") Event</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+
+                @*Title*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.Title"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="EventObj.Title" />
+                        <span class="text-danger" asp-validation-for="EventObj.Title"></span>
+                    </div>
+                </div>
+
+
+                @*Description*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="EventObj.Description" id="txtDesc" style="height:200px;"></textarea>
+                    </div>
+                </div>
+
+
+                @*Location*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.Location"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="EventObj.Location" />
+                        <span class="text-danger" asp-validation-for="EventObj.Location"></span>
+                    </div>
+                </div>
+
+
+                @*Start*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.Start"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="date" class="form-control" asp-for="EventObj.Start" />
+                        <span class="text-danger" asp-validation-for="EventObj.Start"></span>
+                    </div>
+                </div>
+
+
+                @*End*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.End"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="date" class="form-control" asp-for="EventObj.End" />
+                        <span class="text-danger" asp-validation-for="EventObj.End"></span>
+                    </div>
+                </div>
+
+
+                @*All Day*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.AllDay"></label>
+                    </div>
+                    <div class="col-9 text-left float-left">
+                        <input type="checkbox" class="form-control text-left float-left" asp-for="EventObj.AllDay" value="true" />
+                        <span class="text-danger" asp-validation-for="EventObj.AllDay"></span>
+                    </div>
+                </div>
+
+
+                @* File Upload *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="EventObj.Image"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" />
+                    </div>
+                </div>
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+            The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @*Display Update if existing, Create if new.*@
+                                @if (Model.EventObj.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                                }
+                            </div>
+
+                            @* **** ToDo **** Make sure this returns to the correct place *@
+                            <div class="col-6">
+                                <a asp-page="Index" class="btn btn-secondary form-control">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Display Image preview if in edit mode and image exists*@
+            @if (Model.EventObj.Image != null)
+            {
+                <div class="col-4 p-4">
+                    <img src="@Model.EventObj.Image" style="border-radius:5px; width:100%; border:1px solid #bbb9b9;" />
+                </div>
+            }
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        })
+    </script>
+}

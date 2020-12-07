@@ -61,7 +61,10 @@ namespace Sunridge.DataAccess.Data.Repository
 
         // Lost & Found IRepositories
         public ILostItemRepository LostItem { get; private set; }
-        
+
+        // Event IRepositories
+        public IEventRepository Event { get; private set; }
+
 
 
         public UnitOfWork(ApplicationDbContext db)
@@ -115,7 +118,9 @@ namespace Sunridge.DataAccess.Data.Repository
          
             // Lost & Found Models
             LostItem = new LostItemRepository(_db);
-            
+
+            // Event Models
+            Event = new EventRepository(_db);
         }
 
         public void Dispose()

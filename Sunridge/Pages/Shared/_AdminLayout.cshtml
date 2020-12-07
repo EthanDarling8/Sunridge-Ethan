@@ -38,39 +38,41 @@
 
     <!-- Wrapper -->
     <div class="d-flex" id="wrapper">
-
-        <!-- Admin sidebar TODO: only make visible to admin role -->
+        
         <div class="bg-dark text-light border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">Admin</div>
             <div class="list-group list-group-flush">
-                <a asp-page="/Admin/Owners/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
-                @*<a href="#" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Keys</a>*@
+                <a asp-page="/Admin/Owners/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>                
                 <a asp-page="/Admin/KeyHistory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
                 <a asp-page="/Admin/Lot/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
-                <a @*asp-page="/Owners/Forms/Index"*@ href="/Owner/Forms/" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
-                <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
-                <a href="#classifiedsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Classifieds</a>
-                <div id="classifiedsSubmenu" class="collapse">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Category/Index">Categories</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Listings/ItemsTable">Listings</a>
-                </div>
-                <a href="#documentsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 far fa-folder-open"></i> Documents</a>
-                <div id="documentsSubmenu" class="collapse">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Category/Index">Categories</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/File/Index">Files</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Section/Index">Sections</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/SectionText/Index">Section Text</a>
-                </div>
-                <a href="/Admin/PhotoCategory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photo Categories</a>
+                <a asp-page="/Owner/Forms/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
+                <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>                
                 <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>
                 <div id="sidebarSubmenu" class="collapse">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Lot/Inventory/Index">Inventory Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Banner/Index">Banner Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/News/Index">News Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/FireInfo/Index">Fire Info Items</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/BoardMembers/Index">Board Members</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" href="#">Events</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/LostAndFound/Index">Lost & Found Items</a>
+
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Banner/Index"><i class="mr-2 fas fa-scroll"></i> Banner Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/BoardMembers/Index"><i class="mr-2 fas fa-portrait"></i> Board Members</a>
+
+                    <a href="#classifiedsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fas fa-stream"></i> Classifieds</a>
+                    <div id="classifiedsSubmenu" class="collapse">
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Category/Index">Categories</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Listings/ItemsTable">Listings</a>
+                    </div>
+
+                    <a href="#documentsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 far fa-folder-open"></i> Documents</a>
+                    <div id="documentsSubmenu" class="collapse">
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Category/Index">Categories</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/File/Index">Files</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Section/Index">Sections</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/SectionText/Index">Section Text</a>
+                    </div>
+
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Event/Index"><i class="mr-2 fas fa-calendar-alt"></i> Events</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/FireInfo/Index"><i class="mr-2 fas fa-fire-extinguisher"></i> Fire Info Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Lot/Inventory/Index"><i class="mr-2 fas fa-dolly-flatbed"></i> Inventory Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/LostAndFound/Index"><i class="mr-2 fas fa-binoculars"></i> Lost & Found Items</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/News/Index"><i class="mr-2 far fa-newspaper"></i> News Items</a>
+                    <a href="/Admin/PhotoCategory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photo Categories</a>
                 </div>
             </div>
         </div>

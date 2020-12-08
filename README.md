@@ -149,7 +149,7 @@
 - [ ] Photos datatable for admins
 - [ ] Perhaps assign category to photos rather than album. Filter albums by other metadata.
 - [ ] Prevent empty photo albums from being viewed except by album owner or admin when their Id is manually entered into the URL.
-- [ ] Display selections in <h1> IE: My Albums, "SelectedAlbum", "SelectedCategory"...
+- [ ] Improve header by displaying user selections IE: My Albums, "SelectedAlbum", "SelectedCategory"...
 - [ ] Back button on Album Edit page when clicked from the Album card should return the user to whichever view they accessed it from. Right now it returns to the album details page 	regardless.
 - [ ] Modification history
 - [ ] Ensure uploaded file is actually a photo

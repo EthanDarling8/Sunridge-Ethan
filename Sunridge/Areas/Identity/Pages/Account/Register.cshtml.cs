@@ -19,8 +19,8 @@ using Sunridge.Models;
 using Sunridge.Utility;
 
 namespace Sunridge.Areas.Identity.Pages.Account {
+
     [Authorize(Roles = "Administrator")]
-    [AllowAnonymous]
     public class RegisterModel : PageModel {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<Owner> _signInManager;
@@ -66,17 +66,17 @@ namespace Sunridge.Areas.Identity.Pages.Account {
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
-                MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; } = "Temp123";
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; } = "Temp123";
+            // [Required]
+            // [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+            //     MinimumLength = 6)]
+            // [DataType(DataType.Password)]
+            // [Display(Name = "Password")]
+            // public string Password { get; set; } = "Temp123";
+            // 
+            // [DataType(DataType.Password)]
+            // [Display(Name = "Confirm password")]
+            // [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            // public string ConfirmPassword { get; set; } = "Temp123";
 
             [Required]
             [Phone]
@@ -92,6 +92,7 @@ namespace Sunridge.Areas.Identity.Pages.Account {
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null) {
+            string role = Request.Form["userRole"].ToString();
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -103,7 +104,7 @@ namespace Sunridge.Areas.Identity.Pages.Account {
                     PhoneNumber = Input.PhoneNumber
                 };
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, "Temp123$");
                 if (result.Succeeded) {
                     
                     // Create roles 
@@ -115,8 +116,14 @@ namespace Sunridge.Areas.Identity.Pages.Account {
                         await _roleManager.CreateAsync(new IdentityRole(SD.OwnerRole));
                     }
 
-                    // Set new user to Admin Role by default
-                    await _userManager.AddToRoleAsync(user, SD.AdministratorRole);
+                    if (role == SD.AdministratorRole)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.AdministratorRole);
+                    }
+                    else if (role == SD.OwnerRole)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.OwnerRole);
+                    }
 
                     _logger.LogInformation("User created a new account with password.");
 

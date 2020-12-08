@@ -43,7 +43,7 @@ namespace Sunridge
             services.AddIdentity<Owner, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
 

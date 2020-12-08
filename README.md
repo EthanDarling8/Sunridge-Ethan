@@ -127,7 +127,6 @@
 - [ ] File size limits
 - [ ] Clicking a link from search results clears the search. Should probably preserve the search.
 - [ ] Back buttons on upsert pages should return to whatever page the user came from. OnPost redirects should have similar behavior.
-- [ ] Clean up **** ToDo **** comments left in the code.
 
 ### Events Calendar:
 - [ ] Images don't display well inside the event box. They are HUGE! Need to scale down image display.
@@ -158,3 +157,4 @@
 - [ ] Preserve myAlbums value when deleting an album.
 - [ ] MyAlbums and other values might be better preserved as cookies rather than in the URL. Although, it is better to have selected album in the URL for bookmarking / sharing a link to that album. Cannot link to cookies.
 - [ ] Deleting a photo or album refreshes the entire page, clearing all selections. Need to preserve user selections.
+

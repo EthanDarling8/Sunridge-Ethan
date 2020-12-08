@@ -6,12 +6,9 @@ namespace Sunridge.Models.Models
 {
     public class AuthSenderOptions
     {
-        private string user = "Brayden Perry"; // The name you want to show up on your email
-                                               // Make sure the string passed in below matches your API Key
+        private string user = "Sunridge Webmaster";
 
-        // private string key = "M00$elakeM00$lake";
-
-        private string key = "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";
+        private string key = "M00$elakeM00$lake";
 
         public string SendGridUser { get { return user; } }
 

@@ -101,3 +101,7 @@
 	- Common Area Assets:
 		- [x] Track HOA owned stuff.
 		- [x]  Maintenance records for it.
+
+### TODO for Future Groups:
+- [ ] Implement Lot_OwnerFiles.
+- [ ] Adjust DataTable UI for better scaling.

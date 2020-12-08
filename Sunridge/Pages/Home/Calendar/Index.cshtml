@@ -3,16 +3,14 @@
 @using Sunridge.Utility
 @{
     ViewData["Title"] = "Event Calendar";
-
-    if (User.IsInRole(SD.AdministratorRole))
-    {
-        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
-    }
-    else
-    {
-        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
-    }
+    Layout = "~/Pages/Shared/_HomeLayout.cshtml";
 }
+
+@using Microsoft.AspNetCore.Identity
+@using Sunridge.Models
+
+@inject SignInManager<Owner> SignInManager
+@inject UserManager<Owner> UserManager
 
 
 @*Welcome Header*@
@@ -34,6 +32,10 @@
         <link href="/lib/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
 
         <div class="container">
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole(SD.AdministratorRole))
+                {
+                    <a class="btn btn-primary mt-4 text-white mr-1" href="/Admin/Event"><i class="far fa-edit"></i> Edit Events</a> 
+                }
             <a class="btn btn-primary mt-4 text-white" href="mailto:Webmaster@sunridge.info">Contact the Webmaster to publish a new event</a>
         </div>
     </div>
@@ -50,6 +52,10 @@
                 <p id="eventDetails"></p>
             </div>
             <div class="modal-footer">
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole(SD.AdministratorRole))
+                {
+                    <button type="button" class="btn btn-primary" onclick="editEvent()">Edit Event</button>
+                }
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -61,6 +67,7 @@
 
 @section Scripts{
     <script src="/lib/fullcalendar/fullcalendar.min.js"></script>
+    <script src="/lib/moment.js/moment.min.js"></script>
 
     <script>
         var selectedEvent = null;
@@ -70,7 +77,7 @@
                 type: "GET",
                 url: "/api/event",
                 success: function (data) {
-                    $.each(data, function (i, v) {
+                    $.each(data.data, function (i, v) {
                         events.push({
                             id: v.id,
                             title: v.subject,

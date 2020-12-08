@@ -51,8 +51,8 @@ namespace Sunridge.Pages.Admin.Event
             else
             {
                 //Default to today's date
-                EventObj.Start = DateTime.Today;
-                EventObj.End = DateTime.Today;
+                EventObj.Start = DateTime.Now;
+                EventObj.End = DateTime.Now;
             }
             
 

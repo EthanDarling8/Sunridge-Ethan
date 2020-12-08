@@ -158,3 +158,9 @@
 - [ ] MyAlbums and other values might be better preserved as cookies rather than in the URL. Although, it is better to have selected album in the URL for bookmarking / sharing a link to that album. Cannot link to cookies.
 - [ ] Deleting a photo or album refreshes the entire page, clearing all selections. Need to preserve user selections.
 
+### Board Member:
+- [ ] Create Position Table
+- [ ] Placeholders for unfilled Board positions
+- [ ] Tie Position table to Board Members and Owners
+- [ ] When deleting a Board Member, the position should stay on the Board Member page but say that it is unfilled.
+

@@ -42,7 +42,6 @@
     <Folder Include="wwwroot\images\photoGallery\" />
     <Folder Include="Pages\Owner\Lot\" />
     <Folder Include="wwwroot\files\lot_owner\" />
-    <Folder Include="wwwroot\fireinfo" />
   </ItemGroup>
 
   <ItemGroup>

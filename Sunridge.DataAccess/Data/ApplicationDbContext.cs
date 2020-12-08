@@ -55,7 +55,6 @@ namespace Sunridge.DataAccess.Data
         public DbSet<Lot_Owner> Lot_Owner { get; set; }
         public DbSet<Lot_Inventory> Lot_Inventory { get; set; }
        
-
         // Lost & Found DBSets
         public DbSet<LostItem> LostItem { get; set; }
 
@@ -66,6 +65,9 @@ namespace Sunridge.DataAccess.Data
         public DbSet<ClassifiedsImages> ClassifiedsImages { get; set; }
 
         //public DbSet<ClassifiedsSubcategory> ClassifiedsSubcategory { get; set; }
+
+        // Event DBSets
+        public DbSet<Event> Event { get; set; }
 
 
         // Many to Many relationship handling

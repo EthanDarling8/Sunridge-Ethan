@@ -32,9 +32,6 @@
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/FireInfo/Index">Fire Info</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-page="/Home/News/Index">News</a>
-            </li>
             @if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item dropdown">
@@ -56,38 +53,11 @@
                 </li>
             }
             <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/News/Index">News</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" asp-page="/Home/Photos/Index">Photo Gallery</a>
             </li>
-
-            <!-- This menu is hidden in bigger devices with d-sm-none.
-    The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
-            <li class="nav-item dropdown d-sm-block d-md-none">
-                <a class="nav-link dropdown-toggle" asp-page="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dashboard Menu
-                </a>
-                <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
-                    <a class="dropdown-item" asp-page="/Owner/Lots/MyLots/Index">My Lots</a>
-                    <a class="dropdown-item" asp-page="/Home/Classifieds/Index">My Classifieds</a>
-                    <a class="dropdown-item" asp-page="/OwnerPhotos/MyPhotos/Index">My Photos</a>
-                    <a class="dropdown-item" asp-page="/Home/Forms/Index">Forms</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="/Admin/Owners/Index">Owners</a>
-                    <a class="dropdown-item" asp-page="/Admin/Keys/Index">Keys</a>
-                    <a class="dropdown-item" asp-page="/Admin/KeyHistory/Index">Key History</a>
-                    <a class="dropdown-item" asp-page="/Owner/Lots/Index">HOA Lots</a>
-                    <a class="dropdown-item" asp-page="/Owner/Forms/Index">Reports</a>
-                    <a class="dropdown-item" asp-page="/Admin/CommonAreaAssets/Index">Common Area Assets</a>
-                    <a class="dropdown-item" asp-page="/Home/Classifieds/Index">Classifieds</a>
-                    <a class="dropdown-item" asp-page="/AdminPhotos/Index/Index">Photos</a>
-                    <a class="dropdown-item" asp-page="/Admin/Inventories/Index">Inventory Items</a>
-                    <a class="dropdown-item" asp-page="/Admin/Banner/Index">Banner Items</a>
-                    <a class="dropdown-item" asp-page="/NewsItem/Index/Index">News Items</a>
-                    <a class="dropdown-item" asp-page="/Admin/ScheduledEvents/Index">Scheduled Events</a>
-
-
-                </div>
-            </li><!-- Smaller devices menu END -->
-
         </ul>
     </div>
     <div>

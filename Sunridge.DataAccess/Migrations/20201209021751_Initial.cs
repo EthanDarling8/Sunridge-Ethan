@@ -741,6 +741,25 @@ namespace Sunridge.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(maxLength: 60, nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    Start = table.Column<DateTime>(nullable: false),
+                    End = table.Column<DateTime>(nullable: false),
+                    AllDay = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -989,6 +1008,9 @@ namespace Sunridge.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "PhotoCategory");
+
+            migrationBuilder.DropTable(
+                name: "Event");
         }
     }
 }

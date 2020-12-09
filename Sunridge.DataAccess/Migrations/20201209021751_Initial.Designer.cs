@@ -10,7 +10,7 @@ using Sunridge.DataAccess.Data;
 namespace Sunridge.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201206054739_Initial")]
+    [Migration("20201209021751_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -422,6 +422,41 @@ namespace Sunridge.DataAccess.Migrations
                     b.HasIndex("DocumentSectionId");
 
                     b.ToTable("DocumentSectionText");
+                });
+
+            modelBuilder.Entity("Sunridge.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AllDay")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Event");
                 });
 
             modelBuilder.Entity("Sunridge.Models.FireInfo", b =>

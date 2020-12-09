@@ -104,12 +104,28 @@
 
 
 ## TODO / Known Bugs for Future Groups:
-- [ ] Implement Lot_OwnerFiles.
-- [ ] Adjust DataTable UI for better scaling.
-
-
 ### General:
 - [ ] Remove unnecessary using statements
+- [ ] Dropdown menus where the main button is also a link dont work on mobile. The main link is just loaded with no opportunity to tap other links. (IE lost and found)
+- [ ] Move "create new" button on photo and document admin pages to the left side to match other UIs. Do more general UI matching.
+- [ ] Title data on admin pages
+- [ ] prevent locking the super admin account
+- [ ] Several of the admin areas have no create option
+- [ ] Make everything async?
+- [ ] Add try/catch to many areas for added stability.
+- [ ] Almost all our nav buttons are clipped/squished or otherwise weird on mobile. Should put all the navigation and search into a collapsible menu.
+- [ ] Clean up **** ToDo **** comments throughout the solution after addressing their issues.
+- [ ] Make a favicon for the site.
+- [ ] Admins could reset user passwords?
+- [ ] Layout, HomeLayout, AdminLayout, and Classifieds Layout should all be condensed. All the scripts and navbar partials should be in layout, HomeLayout deleted, classifieds layout deleted, AdminLayout should just contain the admin navbar, and therefore could be a partial that is loaded inside layout when the user is an admin.
+- [ ] Registering a new user currently logs you in as that user, need to disable this.
+
+
+### Board Member:
+- [ ] Create Position Table
+- [ ] Placeholders for unfilled Board positions
+- [ ] Tie Position table to Board Members and Owners
+- [ ] When deleting a Board Member, the position should stay on the Board Member page but say that it is unfilled.
 
 ### Documents:
 - [ ] Add try / catch to upset pages OnPost methods + anywhere else that still needs one (controllers are done)
@@ -134,6 +150,18 @@
 - [ ] Don't display a start time on AllDay=true events
 - [ ] Multi-day events only show on 1 day
 
+### Forms:
+- [ ] Change into something dynamic like Google Forms
+
+### Key History:
+- [ ] Allow the mass creation of keys 
+- [ ] Seperate key creation and assignment
+- [ ] Put in a missing key field
+
+### Lot:
+- [ ] Implement Lot_OwnerFiles.
+- [ ] Adjust DataTable UI for better scaling.
+
 ### Photo Gallery:
 - [ ] Add try / catch to upset pages OnPost methods + anywhere else that still needs one (controllers are done)
 - [ ] Be able to select the thumbnail for an album
@@ -157,17 +185,3 @@
 - [ ] Preserve myAlbums value when deleting an album.
 - [ ] MyAlbums and other values might be better preserved as cookies rather than in the URL. Although, it is better to have selected album in the URL for bookmarking / sharing a link to that album. Cannot link to cookies.
 - [ ] Deleting a photo or album refreshes the entire page, clearing all selections. Need to preserve user selections.
-
-### Board Member:
-- [ ] Create Position Table
-- [ ] Placeholders for unfilled Board positions
-- [ ] Tie Position table to Board Members and Owners
-- [ ] When deleting a Board Member, the position should stay on the Board Member page but say that it is unfilled.
-
-### Forms:
-- [ ] Change into something dynamic like Google Forms
-
-### Key History:
-- [ ] Allow the mass creation of keys 
-- [ ] Seperate key creation and assignment
-- [ ] Put in a missing key field

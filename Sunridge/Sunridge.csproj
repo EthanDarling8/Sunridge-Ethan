@@ -55,8 +55,4 @@
     <None Include="Pages\Owner\LostAndFound\Upsert.cshtml" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <RestoreSources>$(RestoreSources);https://api.nuget.org/v3/index.json;/tmp/Nuget</RestoreSources>
-  </PropertyGroup>
-
 </Project>

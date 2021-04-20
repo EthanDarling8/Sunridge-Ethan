@@ -1,0 +1,163 @@
+﻿@page
+@model Sunridge.Pages.Admin.LostItem.Upsert
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+
+            </div>
+            <div class="col-12 px-3 border-bottom-1 mt-3">
+                <h2 class="text-primary">@(Model.LostItemObj.LostItem.Id != 0 ? "Update" : "Create") Lost & Found Listing</h2>
+            </div>
+            <div class="col-8 pt-3">
+                @* Name Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" id="txtName" asp-for="LostItemObj.LostItem.Name" />
+                        <span class="text-danger" asp-validation-for="LostItemObj.LostItem.Name"></span>
+                    </div>
+                    @* HIDDEN - Lost Item Id Input *@
+                    @if (Model.LostItemObj.LostItem.Id != 0)
+                    {
+                        <input type="hidden" asp-for="LostItemObj.LostItem.Id" />
+                    }
+                </div>
+                @* Date Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Date"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" id="datepicker" asp-for="LostItemObj.LostItem.Date" asp-format="{0:MM/dd/yyyy}" type="text" />
+                        <span class="text-danger" asp-validation-for="LostItemObj.LostItem.Date"></span>
+                    </div>
+                </div>
+                @* Status Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Status"></label>
+                    </div>
+                    <div class="col-9">
+                        <label><input asp-for="LostItemObj.LostItem.Status" value="Lost" type="radio" id="lostRadio">Lost</label> <br />
+                        <label><input asp-for="LostItemObj.LostItem.Status" value="Found" type="radio" id="foundRadio">Found</label> <br />
+                    </div>
+                </div>
+                @* Description Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="LostItemObj.LostItem.Description" id="txtDesc" style="height: 200px"></textarea>
+                    </div>
+                </div>
+                @* Image Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="LostItemObj.LostItem.Image"></label>
+                    </div>
+                    <div class="col-9">
+                        <input asp-for="LostItemObj.LostItem.Image" type="file" class="form-control" id="uploadBox" name="files" accept=".png,.jpg,.jpeg" />
+                    </div>
+                </div>
+                @* Contact Info Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Contact</label>
+                    </div>
+                    <div class="col-9">
+                        <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayEmail">Email <br />
+                        <input type="checkbox" asp-for="LostItemObj.LostItem.DisplayPhone">Phone <br />
+                    </div>
+                </div>
+                @* User Input *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        @Html.LabelFor(model => model.LostItemObj.LostItem.OwnerId, "Owner", new { @class = "control-lable" })
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(o => o.LostItemObj.LostItem.OwnerId,
+                            Model.LostItemObj.OwnerList,
+                            new
+                                 {
+                                @class = "form-control selectpicker"
+                            })
+                        <input type="hidden" asp-for="LostItemObj.LostItem.OwnerId" />
+                        <span class="text-danger" asp-validation-for="@Model.LostItemObj.LostItem.OwnerId"></span>
+                    </div>
+                </div>
+
+                @*Image Preview*@
+                @if (Model.LostItemObj.LostItem != null)
+                {
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <label>Image Preview</label>
+                        </div>
+                        <div class="col-9">
+                            <img src="/images/lostItems/@Model.LostItemObj.LostItem.Image" style=" width: 100%; border-radius:5px; border: 1px solid #bbb9b9;" alt="Image Preview" />
+                        </div>
+                    </div>
+                }
+                @* Button Group *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @if (Model.LostItemObj.LostItem.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+                                }
+                            </div>
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="Shared/_ValidationScriptsPartial" />
+    <partial name="Shared/_Scripts" />
+    <script>
+        @* Create the DateTime Picker *@
+        $(function () {
+            $("#datepicker").datepicker({endDate: "today" });
+        });
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function ValidateInput() {
+            @* Name Validation *@
+            var name = document.getElementById("txtName").value;
+            if (name.toString() == '') {
+                swal("Error", "Please enter a Name for the Lost and Found Item.", "error");
+                return false;
+            }
+
+            @* Status Validation *@
+            if (!document.getElementById("lostRadio").checked && !document.getElementById("foundRadio").checked ) {
+                swal("Error", "Please select a Status for the Lost and Found Item.", "error");
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+}

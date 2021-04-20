@@ -1,0 +1,66 @@
+﻿        <!-- Bootstrap NavBar -->
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+</style>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/BoardMembers/Index">Board Members</a>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/Classifieds/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+                    Classified Ads
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/Documents/Index">Documents</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/Calendar/Index">Event Calendar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/FireInfo/Index">Fire Info</a>
+            </li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle dropdown-content" asp-page="/Home/LostAndFound/Index" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+                        Lost & Found
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-page="/Owner/LostAndFound/Index">My Lost & Found</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-page="/Home/LostAndFound/Index">Browse Lost & Found</a>
+
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Home/LostAndFound/Index">Lost & Found</a>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/News/Index">News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Home/Photos/Index">Photo Gallery</a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <partial name="_LoginPartial" />
+    </div>
+</nav><!-- NavBar END -->

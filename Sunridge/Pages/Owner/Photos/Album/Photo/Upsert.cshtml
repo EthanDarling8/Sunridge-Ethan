@@ -1,0 +1,145 @@
+﻿@page
+@model Sunridge.Pages.Owner.Photos.Album.Photo.UpsertModel
+@using Sunridge.Utility 
+@{
+    ViewData["Title"] = "Photo";
+
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
+}
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.PhotoObj.Id !=0 ? "Update" : "Add") Photo</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                @*Title*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoObj.Title"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="PhotoObj.Title" />
+                        <span class="text-danger" asp-validation-for="PhotoObj.Title"></span>
+                    </div>
+                </div>
+
+
+                @*Description*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoObj.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="PhotoObj.Description" id="txtDesc" style="height:200px;"></textarea>
+                    </div>
+                </div>
+
+
+                @*Image Upload*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoObj.Image"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" />
+                    </div>
+                </div>
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+            The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @*Display Update if existing, Add if new.*@
+                                @if (Model.PhotoObj.Id != 0)
+                                {
+                                    <button type="submit"
+                                            class="btn btn-primary form-control"
+                                            asp-route-photoId="@Model.PhotoObj.Id"
+                                            asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
+                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                            asp-route-myAlbums="@Model.MyAlbums">
+                                        Update
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit"
+                                            class="btn btn-primary form-control"
+                                            onclick="return ValidateInput()"
+                                            asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
+                                            asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                            asp-route-myAlbums="@Model.MyAlbums">
+                                        Add
+                                    </button>
+                                }
+                            </div>
+
+                            
+                            <div class="col-6">
+                                @*Route back with the selected category and album maintained.*@
+                                <a asp-route-selectedPhotoAlbumId="@Model.PhotoObj.PhotoAlbumId"
+                                   asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                   asp-route-myAlbums="@Model.MyAlbums"
+                                   asp-page="/Home/Photos/Index"
+                                   class="btn btn-secondary form-control">
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Display Image preview if in edit mode and image exists*@
+            @if (Model.PhotoObj != null)
+            {
+                <div class="col-4 p-4">
+                    <img src="@Model.PhotoObj.Thumb" style="border-radius:5px; width:100%; border:1px solid #bbb9b9;" />
+                </div>
+            }
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        })
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select an Image', 'error')
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@page
+@model Sunridge.Pages.Admin.PhotoCategory.UpsertModel
+@{
+    ViewData["Title"] = "Photo Category";
+}
+
+
+
+
+<form method="post">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Keep track of Id if editing existing.*@
+            @if (Model.PhotoCategoryObj.Id != 0)
+            {
+                <input type="hidden" asp-for="PhotoCategoryObj.Id" />
+            }
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.PhotoCategoryObj.Id !=0 ? "Update" : "Create") Photo Category</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                @*PhotoCategory Name*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="PhotoCategoryObj.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="PhotoCategoryObj.Name" />
+                        <span class="text-danger" asp-validation-for="PhotoCategoryObj.Name"></span>
+                    </div>
+                </div>
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+                    The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary form-control">@(Model.PhotoCategoryObj.Id !=0 ? "Update" : "Create")</button>
+                            </div>
+                            
+                            
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-secondary form-control">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

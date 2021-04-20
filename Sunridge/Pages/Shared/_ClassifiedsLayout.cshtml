@@ -1,0 +1,124 @@
+﻿@using Microsoft.Extensions.Configuration
+@using Sunridge.Utility;
+
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sunridge</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.9.0/baguetteBox.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="Stylesheet" href="~/css/General/dashboard.css" type="text/css" />
+    <link rel="Stylesheet" href="~/css/Admin/content.css" type="text/css" />
+    <link href="~/css/landing-page.css" rel="stylesheet">
+    <link rel="Stylesheet" href="~/css/Admin/adminnavbar.css?version=51" type="text/css" />
+    <link rel="Stylesheet" href="~/css/General/classifieds.css" type="text/css" />
+</head>
+<body>
+    <header>
+        <partial name="_NavHeaderPartial" />
+    </header>
+
+    <!-- Wrapper -->
+    <div class="d-flex" id="wrapper">
+        @if (User.IsInRole(SD.AdministratorRole))
+        {
+            <div class="bg-dark text-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading">Admin</div>
+                <div class="list-group list-group-flush">
+                    <a asp-page="/Admin/Owners/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-users"></i> Owners</a>
+                    <a asp-page="/Admin/KeyHistory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-key"></i> Key History</a>
+                    <a asp-page="/Admin/Lot/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-map"></i> HOA Lots</a>
+                    <a asp-page="/Owner/Forms/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-clipboard"></i> Forms / Reports</a>
+                    <a href="/Admin/CommonAreaAssets/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-wrench"></i> Common Area Assets</a>
+                    <a href="#sidebarSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fa fa-globe"></i> Site Admin</a>
+                    <div id="sidebarSubmenu" class="collapse">
+
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Banner/Index"><i class="mr-2 fas fa-scroll"></i> Banner Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/BoardMembers/Index"><i class="mr-2 fas fa-portrait"></i> Board Members</a>
+
+                        <a href="#classifiedsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 fas fa-stream"></i> Classifieds</a>
+                        <div id="classifiedsSubmenu" class="collapse">
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Category/Index">Categories</a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Classifieds/Listings/ItemsTable">Listings</a>
+                        </div>
+
+                        <a href="#documentsSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle"><i class="mr-2 far fa-folder-open"></i> Documents</a>
+                        <div id="documentsSubmenu" class="collapse">
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Category/Index">Categories</a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/File/Index">Files</a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/Section/Index">Sections</a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Document/SectionText/Index">Section Text</a>
+                        </div>
+
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Event/Index"><i class="mr-2 fas fa-calendar-alt"></i> Events</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/FireInfo/Index"><i class="mr-2 fas fa-fire-extinguisher"></i> Fire Info Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/Lot/Inventory/Index"><i class="mr-2 fas fa-dolly-flatbed"></i> Inventory Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/LostAndFound/Index"><i class="mr-2 fas fa-binoculars"></i> Lost & Found Items</a>
+                        <a class="list-group-item list-group-item-action bg-dark text-light" asp-page="/Admin/News/Index"><i class="mr-2 far fa-newspaper"></i> News Items</a>
+                        <a href="/Admin/PhotoCategory/Index" class="list-group-item list-group-item-action bg-dark text-light"><i class="mr-2 fa fa-image"></i> Photo Categories</a>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            @if (User.IsInRole(SD.AdministratorRole))
+            {
+                <button class="btn btn-primary ml-3 m-2" id="menu-toggle"><i class="fa fa-bars"></i></button>
+            }
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <footer class="footer bg-light">
+        <partial name="_FooterPartial" />
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.9.0/baguetteBox.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=@SD.TinyMCE"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

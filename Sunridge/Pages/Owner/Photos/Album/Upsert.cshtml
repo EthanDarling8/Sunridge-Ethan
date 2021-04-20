@@ -1,0 +1,144 @@
+﻿@page
+@model Sunridge.Pages.Owner.Photos.Album.UpsertModel
+@using Sunridge.Utility 
+@{
+    ViewData["Title"] = "Photo Album";
+
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
+}
+
+
+
+<form method="post">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Keep track of Id if editing existing.*@
+            @if (Model.PhotoAlbumObj.PhotoAlbum.Id != 0)
+            {
+                <input type="hidden" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Id" />
+            }
+
+            @*Hidden Inputs*@
+            @*UserId*@
+            <input type="hidden" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.OwnerId" value="@Model.OwnerId" />
+            @*Thumb*@
+            <input type="hidden" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" value="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" />
+
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create") Photo Album</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                @*Title*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Title"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Title" />
+                        <span class="text-danger" asp-validation-for="@Model.PhotoAlbumObj.PhotoAlbum.Title"></span>
+                    </div>
+                </div>
+
+
+                @*Category Dropdown List*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="@Model.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(a => a.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId,
+                                              Model.PhotoAlbumObj.PhotoCategoryList,
+                                              new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="@Model.PhotoAlbumObj.PhotoAlbum.PhotoCategoryId"></span>
+                    </div>
+                </div>
+
+
+
+                @*Description*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="@Model.PhotoAlbumObj.PhotoAlbum.Description" id="txtDesc" style="height:200px;"></textarea>
+                    </div>
+                </div>
+
+
+
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+                The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+
+
+                            <div class="col-6">
+                                <button type="submit"
+                                        class="btn btn-primary form-control"
+                                        asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
+                                        asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                        asp-route-myAlbums="@Model.MyAlbums">
+
+                                    @(Model.PhotoAlbumObj.PhotoAlbum.Id !=0 ? "Update" : "Create")
+                                </button>
+                            </div>
+
+                            
+                            <div class="col-6">
+                                @*Route back with the selected category and album maintained.*@
+                                <a asp-route-selectedPhotoAlbumId="@Model.PhotoAlbumObj.PhotoAlbum.Id"
+                                   asp-route-selectedPhotoCategoryId="@Model.SelectedPhotoCategoryId"
+                                   asp-route-myAlbums="@Model.MyAlbums"
+                                   asp-page="/Home/Photos/Index"
+                                   class="btn btn-secondary form-control">
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            @*Display Image preview if in edit mode and image exists*@
+            @if (Model.PhotoAlbumObj.PhotoAlbum != null)
+            {
+                <div class="col-4 p-4">
+                    <img src="@Model.PhotoAlbumObj.PhotoAlbum.Thumb" style="border-radius:5px; width:100%; border:1px solid #bbb9b9;" />
+                </div>
+            }
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        })
+    </script>
+}

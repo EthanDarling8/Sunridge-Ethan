@@ -1,0 +1,53 @@
+﻿@page
+
+@{
+
+    Layout = "~/Pages/Shared/_ClassifiedsLayout.cshtml";
+}
+    <h1>Classified Listings Details</h1>
+    <div class="container ml-0 mb-3 mt-1">
+        <div class="row">
+            <div class="col-12">
+                <a asp-page="ClassifiedsUpsert" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+                <a asp-page="/Owner/Classifieds/ClassifiedsIndex" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-left"></i>&nbsp;Back</a>
+            </div>
+        </div>
+    </div>
+    <table id="DT_load" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Listing Number
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Contact
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Website
+                </th>
+                @*<th>
+                    Image
+                </th>*@
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+    @section Scripts{
+        <script src="~/js/classifiedsListings.js"></script>
+    }
+

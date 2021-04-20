@@ -1,0 +1,163 @@
+﻿@page
+@model Sunridge.Pages.Admin.Document.File.UpsertModel
+@{
+    ViewData["Title"] = "Document File";
+}
+
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Keep track of Id if editing existing.*@
+            @if (Model.DocumentFileObj.Id != 0)
+            {
+                <input type="hidden" asp-for="@Model.DocumentFileObj.Id" value="@Model.DocumentFileObj.Id" />
+            }
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.DocumentFileObj.Id !=0 ? "Update" : "Create") Document File</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                @* Category Dropdown List*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.DocumentCategoryId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(m => m.DocumentFileObj.DocumentCategoryId,
+                                              Model.CategoryList,
+                                              new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.DocumentCategoryId"></span>
+                    </div>
+                </div>
+
+
+                @* Name *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="DocumentFileObj.Name" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.Name"></span>
+                    </div>
+                </div>
+
+
+                @*Description*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="DocumentFileObj.Description" id="txtDesc" style="height:200px;"></textarea>
+                    </div>
+                </div>
+
+
+                @*Published Date*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.PublishedDate"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="date" class="form-control" asp-for="DocumentFileObj.PublishedDate" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.PublishedDate"></span>
+                    </div>
+                </div>
+
+
+                @* Display Order *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.DisplayOrder"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="DocumentFileObj.DisplayOrder" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.DisplayOrder"></span>
+                    </div>
+                </div>
+
+
+                @* Keywords *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.Keywords"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="DocumentFileObj.Keywords" />
+                        <span class="text-danger" asp-validation-for="DocumentFileObj.Keywords"></span>
+                    </div>
+                </div>
+
+
+                @* File Upload *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentFileObj.File"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" />
+                    </div>
+                </div>
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+                The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @*Display Update if existing, Create if new.*@
+                                @if (Model.DocumentFileObj.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+                                }
+                            </div>
+
+                            @* **** ToDo **** Make sure this returns to the correct place *@
+                            <div class="col-6">
+                                <a asp-page="Index" class="btn btn-secondary form-control">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        })
+
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select a File', 'error')
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

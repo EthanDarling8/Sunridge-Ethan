@@ -1,0 +1,142 @@
+﻿@page
+@model Sunridge.Pages.Home.News.IndexModel
+@using Sunridge.Utility
+@{ int CurrentYear = DateTime.Now.Year;
+    int DisplayNumYears = 3; // show this year and the next two years, will then show the follow year and the link for everything older than that year, need to update NewsController as well
+
+    ViewData["Title"] = "News";
+
+    if (User.IsInRole(SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
+}
+
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h1 class="ml-3">News History</h1>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col"></div>
+        <div class="col-3">
+            <input class="form-control" asp-for="Search" type="search" placeholder="Search" />
+        </div>
+        <div class="col col-1">
+            <button type="submit" id="SearchBtn" class="btn btn-info form-control"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-3">
+            <table id="DT_load" class="table table-bordered m-5">
+                <tr>
+                    <td><a class="nav-link newsFilter" id="0" asp-page="#">All Articles</a></td>
+                </tr>
+                @for (int year = CurrentYear; year > (CurrentYear - DisplayNumYears); year--)
+                {
+    <tr>
+        <td><a class="nav-link newsFilter" id="@year" href="#" onclick="return false;">@year</a></td>
+    </tr>}
+                <tr>
+                    <td><a class="nav-link newsFilter" id="2000" asp-page="#">@(CurrentYear- DisplayNumYears) and older</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-1"></div>
+        <div class="col">
+            <div class="list-group" id="newsListings">
+@if (Model.NewsList.Count > 0)
+{
+    @foreach (var item in Model.NewsList)
+    {
+            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@Html.Raw(item.Title)</h5>
+                    <small class="text-muted text-right">@item.DisplayDate.Date.ToLongDateString()</small>
+                </div>
+                <p class="mb-1">@Html.Raw(item.Content)</p>
+        @if (item.Attachment != null)
+        {
+                <small class="text-muted"><a class="nav-link" id="1900" href="@item.Attachment" target="_blank">@item.DisplayName</a></small>
+        }
+            </div>
+    }
+}
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).on("click", ".newsFilter", function (event) {
+            var filterYear = $(this).attr('id');
+            $.ajax({
+                url: "/api/News/" + filterYear,
+                type: 'get',
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    var body = '';
+                    if (result.newsList) {
+                        $.each(result.newsList, function (index, item) {
+                            item.content = item.content == null ? "" : item.content;
+                            body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                                '<div class="d-flex w-100 justify-content-between">' +
+                                '<h5 class="mb-1">' + item.title + '</h5>' +
+                                '<small class="text-muted text-right">' + item.formatDate + '</small>' +
+                                '</div>' +
+                                '<p class="mb-1">' + item.content+'</p>';
+                            if (item.displayName != "") {
+                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" href="' + item.attachment + '" target="_blank">' + item.displayName + '</a></small>';
+                            }
+                            body += '\r\n</div >';
+
+                        });
+                        $("#newsListings").html(body);
+                    } else {
+                        $("#newsListings").html("No Articles returned");
+                    }
+                }
+            });
+        });
+        $(document).on("click", "#SearchBtn", function (event) {
+            event.preventDefault(); 
+            var SearchString = $("#Search").val();
+            $.ajax({
+                url: "/api/News/?Search=" + encodeURIComponent(SearchString),
+                type: 'post',
+                //data: { "Search": SearchString },
+                contentType: 'application/json',
+                success: function (result) {
+                    var body = '';
+                    if (result.newsList) {
+                        $.each(result.newsList, function (index, item) {
+                            item.content = item.content == null ? "" : item.content;
+                            body += '\r\n<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                                '<div class="d-flex w-100 justify-content-between">' +
+                                '<h5 class="mb-1">' + item.title + '</h5>' +
+                                '<small class="text-muted text-right">' + item.formatDate + '</small>' +
+                                '</div>' +
+                                '<p class="mb-1">'+item.content+'</p>';
+                            if (item.displayName != "") {
+                                body += '\r\n<small class="text-muted"><a class="nav-link" id="1900" href="' + item.attachment + '" target="_blank">' + item.displayName + '</a></small>';
+                            }
+                            body += '\r\n</div >';
+                        });
+                        $("#newsListings").html(body);
+                    }
+                    else {
+                        $("#newsListings").html("No Articles returned");
+                    }
+                }
+            });
+        });
+    </script>
+}

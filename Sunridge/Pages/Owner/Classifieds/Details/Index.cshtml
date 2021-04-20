@@ -1,0 +1,80 @@
+﻿@page
+@using Sunridge.Utility;
+
+@model Sunridge.Pages.Owner.Classifieds.Details.DetailsModel
+
+@{
+    Layout = "~/Pages/Shared/_ClassifiedsLayout.cshtml";
+}
+@foreach (var item in Model.ClassifiedsItemList)
+{
+    @*<div class="container-fluid">*@
+        <div class="row pb-3">
+            <div class="col-md-6 offset-md-3">
+                <h2>@item.Title</h2>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3 style="color: dodgerblue">@item.Price.ToString("c")</h3>
+            </div>
+        </div>
+
+        <div class="row mt-3 p-1 justify-content-center">
+
+            <div class="card mb-3 col-sm-6">
+
+                <div id="carouselExampleControls" class="carousel slide card-img-top" data-ride="carousel">
+
+
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="@item.Images" class="d-block w-100 img-responsive" alt="..." style="height: 500px; width: 700px; object-fit: contain">
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-ico " aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+                @*<img src="@item.Images" class="card-img-top" alt="...">*@
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <p class="card-text">@Html.Raw(item.Description)</p>
+                    <h5>Contact Information</h5>
+
+                    <p class="card-text">
+                        @item.Name
+                        <br>@item.Phone
+                        <br><a href="mailto:@item.Email">@item.Email</a>
+                        <br><a href="https://@item.Website">@item.Website</a>
+
+                    </p>
+
+                    <p class="card-text"><small class="text-muted">Listed: @item.TimeAdded</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 col-12 justify-content-center">
+            <div class=" text-center">
+                <a class="btn btn-block btn-primary" href="#" onclick="location.href = document.referrer; return false;">
+
+                    <i class="fas fa-arrow-alt-circle-left"></i>&nbsp;Back to Listings
+                </a>
+            </div>
+        </div>
+        }
+
+
+
+
+
+

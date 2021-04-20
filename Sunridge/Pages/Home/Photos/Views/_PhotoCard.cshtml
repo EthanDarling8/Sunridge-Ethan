@@ -1,0 +1,91 @@
+﻿@model Sunridge.Pages.Home.Photos.IndexModel
+@using Sunridge.Utility
+
+<div class="col-xl-4 col-md-6 mb-3">
+
+    @*Category Selected*@
+    @if (@Model.PhotoGalleryVM.SelectedPhotoCategory != null)
+    {
+        <div class="card">
+            <div class="text-center p-2">
+
+                @*Display thumb and setup for baguetteBox*@
+                <a href="/../@Model.Photo.Image" title="@Model.Photo.Title @Model.Photo.Description">
+                    @*Title*@
+                    <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
+
+                    @*Thumb*@
+                    <img src="@Model.Photo.Thumb" class="card-img-top rounded" />
+                </a>
+
+
+                @* Edit / Delete Buttons *@
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoGalleryVM.SelectedPhotoAlbum.OwnerId) ||
+                   User.IsInRole(SD.AdministratorRole))
+                {
+                    <div class="row mt-2 justify-content-center">
+                        @*Edit*@
+                        <a class="col-5 mr-1 btn btn-warning"
+                           asp-route-selectedPhotoCategoryId="@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoAlbum.Id"
+                           asp-route-myAlbums="@Model.MyAlbums"
+                           asp-route-photoId="@Model.Photo.Id"
+                           asp-page="/Owner/Photos/Album/Photo/Upsert">
+                            <i class="far fa-edit"></i>&nbsp;Edit
+                        </a>
+
+                        @*Delete*@
+                        <a onClick=Delete(/api/photo/+@Model.Photo.Id)
+                           class="col-5 ml-1 btn btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @*No Category Selected*@
+    else
+    {
+        <div class="card">
+            <div class="text-center p-2">
+
+                @*Display thumb and setup for baguetteBox*@                
+                <a href="/../@Model.Photo.Image" title="@Model.Photo.Title @Model.Photo.Description">
+                    @*Title*@
+                    <h4 class="text-secondary"><b>@Model.Photo.Title</b></h4>
+
+                    @*Thumb*@
+                    <img src="@Model.Photo.Thumb" class="card-img-top rounded" />
+                </a>                
+
+
+                @* Edit / Delete Buttons *@
+                @if ((User.Identity.IsAuthenticated && Model.CurrentOwner.Id == Model.PhotoGalleryVM.SelectedPhotoAlbum.OwnerId) ||
+                   User.IsInRole(SD.AdministratorRole))
+                {
+                    <div class="row mt-2 justify-content-center">
+                        @*Edit*@
+                        <a class="col-5 mr-1 btn btn-warning"
+                           asp-route-selectedPhotoAlbumId="@Model.PhotoGalleryVM.SelectedPhotoAlbum.Id"
+                           asp-route-myAlbums="@Model.MyAlbums"
+                           asp-route-photoId="@Model.Photo.Id"
+                           asp-page="/Owner/Photos/Album/Photo/Upsert">
+                            <i class="far fa-edit"></i>&nbsp;Edit
+                        </a>
+
+                        @*Delete*@
+                        <a onClick=Delete(/api/photo/+@Model.Photo.Id)
+                           class="col-5 ml-1 btn btn-danger text-white">
+                            <i class="far fa-trash-alt"></i>&nbsp;Delete
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+

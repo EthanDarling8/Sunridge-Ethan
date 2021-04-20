@@ -1,0 +1,126 @@
+﻿@page
+@model Sunridge.Pages.Owner.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+
+    if (User.IsInRole(Utility.SD.AdministratorRole)) {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+    }
+}
+
+<h1 class="row ml-5 mb-4">Dashboard</h1>
+
+<div class="row ml-4 mr-4">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Information <a href="~/Identity/Account/Manage"><i class="fa fa-edit"></i></a></h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Full Name:</strong> @Model.Owner.FullName</p>
+                <p class="card-text"><strong>Email:</strong> @Model.Owner.Email</p>
+                <p class="card-text"><strong>Phone Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(@Model.Owner.PhoneNumber))</p>
+                <p class="card-text"><strong>Birthday:</strong> @Model.Owner.Birthday.ToString("MM/dd/yyyy")</p>
+                <p class="card-text"><strong>Occupation:</strong> @Model.Owner.Occupation</p>
+                <p class="card-text"><strong>Emergency Contact:</strong> @Model.Owner.EmergencyContact</p>
+                <p class="card-text"><strong>Emergency Contact Number:</strong> @String.Format("{0:(###) ###-####}", Convert.ToInt64(@Model.Owner.EmergencyContactNumber))</p>
+            </div>
+            <div class="card-footer">
+                <a class="card-link" href="~/Identity/Account/Manage/ChangePassword">Change Password</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">Lots</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Lot
+                            </th>
+                            <th>
+                                Tax Id
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lotOwner in Model.LotOwners)
+                        {
+                            <tr>
+                                <td>
+                                    @lotOwner.Lot.LotNumber
+                                </td>
+                                <td>
+                                    @lotOwner.Lot.TaxId
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 id="subtitle">Notice Something in the Community?</h5>
+            </div>
+            <div class="card-body">
+                <div>
+                    <a id="btnNotice" class="btn btn-block btn-info" asp-page="/Owner/Forms/SuggestionComplaint"><i class="fas fa-file-alt"></i> File A Suggestion or Complaint</a>
+                </div>
+                <div>
+                    <a id="btnNotice" class="btn btn-block btn-info" href="/files/documents/Sunridge-claim-form-fillable.pdf" target="_blank"><i class="fas fa-tools"></i> Property Damage or Loss Claim Form</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">Keys</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Lot
+                            </th>
+                            <th>
+                                Serial Number
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var keyLot in Model.KeyLots)
+                        {
+                            @if (Model.LotOwners.Any(t => t.LotId == keyLot.LotId))
+                            {
+                                <tr>
+                                    <td>
+                                        @keyLot.Lot.LotNumber
+                                    </td>
+                                    <td>
+                                        @keyLot.Key.Year-@keyLot.Key.SerialNumber
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

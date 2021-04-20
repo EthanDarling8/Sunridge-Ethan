@@ -1,0 +1,58 @@
+﻿@page
+@inject UserManager<Owner> UserManager
+@inject SignInManager<Owner> SignInManager
+@using Sunridge.Models
+@using Microsoft.AspNetCore.Identity
+@model Sunridge.Pages.Owner.LostAndFound.Index
+@{ 
+    if (User.IsInRole(Utility.SD.AdministratorRole))
+    {
+        Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Pages/Shared/_HomeLayout.cshtml";
+
+    }
+    ViewData["Title"] = "LostAndFound";
+}
+
+<div class="container">
+    <h1>Lost and Found</h1>
+    <div class="btn-group-vertical">
+        @if (User.IsInRole(Utility.SD.AdministratorRole))
+        {
+            <a asp-page="/Admin/LostAndFound/Index" class="btn btn-primary mt-1">&nbsp;Manage All Listings</a>
+        }
+        <a asp-page="/Home/LostAndFound/Index" class="btn btn-primary mt-1 mb-1">&nbsp;Browse Listings</a>
+        <a asp-page="Upsert" class="btn btn-primary mb-1"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+    </div>
+    <table id="DT_load" class="table table-striped table-bordered">
+
+        <thead>
+            <tr>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Item Name
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/ownerLostItem.js"></script>
+}

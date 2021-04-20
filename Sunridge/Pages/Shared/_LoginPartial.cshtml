@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Sunridge.Models
+@using Sunridge.Utility
+
+@inject SignInManager<Owner> SignInManager
+@inject UserManager<Owner> UserManager
+
+<ul class="nav navbar-nav navbar-right login">
+    @if (SignInManager.IsSignedIn(User)) {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" asp-page="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                @if (User.IsInRole(SD.AdministratorRole)) {
+                    <a class="dropdown-item btn btn-link navbar-btn navbar-link" asp-page="/Admin/Owners/Index">Admin</a>
+                }
+                <a id="manage" class="dropdown-item nav-item btn btn-link navbar-btn navbar-link" asp-page="/Owner/Dashboard/Index" title="Manage">Dashboard</a>
+                <form id="logoutForm" class="navbar-right" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new {area = ""})">
+                    <button type="submit" class="dropdown-item btn btn-link navbar-btn navbar-link">Logout</button>
+                </form>
+            </div>
+        </li>
+        <li class="small mt-2 d-none d-md-inline d-lg-inline">Hello @UserManager.GetUserName(User)</li>
+    }
+    else {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>

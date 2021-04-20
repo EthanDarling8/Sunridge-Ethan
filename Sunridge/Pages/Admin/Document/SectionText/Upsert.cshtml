@@ -1,0 +1,113 @@
+﻿@page
+@model Sunridge.Pages.Admin.Document.SectionText.UpsertModel
+@{
+    ViewData["Title"] = "Section Text";
+}
+
+
+
+
+<form method="post">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            @*Display any validation/error messages here.*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Keep track of Id if editing existing.*@
+            @if (Model.DocumentSectionTextObj.Id != 0)
+            {
+                <input type="hidden" asp-for="@Model.DocumentSectionTextObj.Id" value="@Model.DocumentSectionTextObj.Id" />                
+            }
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                @*Displays "Update" if their is an Id, "Create" if there is not*@
+                <h2>@(Model.DocumentSectionTextObj.Id !=0 ? "Update" : "Create") Document Section Text</h2>
+            </div>
+
+
+            <div class="col-8 pt-3">
+                @* Section Dropdown List. Don't show if adding to specific section from documents page. *@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentSectionTextObj.DocumentSectionId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(m => m.DocumentSectionTextObj.DocumentSectionId,
+                                        Model.SectionList,
+                                        new { @class = "form-control" })                            
+
+                        <span class="text-danger" asp-validation-for="DocumentSectionTextObj.DocumentSectionId"></span>
+                    </div>
+                </div>
+
+
+                @*Name*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentSectionTextObj.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="DocumentSectionTextObj.Name" />
+                        <span class="text-danger" asp-validation-for="DocumentSectionTextObj.Name"></span>
+                    </div>
+                </div>
+
+
+                @*Display Order*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentSectionTextObj.DisplayOrder"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="DocumentSectionTextObj.DisplayOrder" />
+                        <span class="text-danger" asp-validation-for="DocumentSectionTextObj.DisplayOrder"></span>
+                    </div>
+                </div>
+
+
+                @*Text*@
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="DocumentSectionTextObj.Text"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="DocumentSectionTextObj.Text" id="text" style="height:200px;"></textarea>
+                        <span class="text-danger" asp-validation-for="DocumentSectionTextObj.Text"></span>
+                    </div>
+                </div>
+
+
+                @*Buttons. offset-3 shifts the buttons 3 columns right
+                The Back to List "button" isn't actually a button. Just a link. *@
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary form-control">@(Model.DocumentSectionTextObj.Id !=0 ? "Update" : "Create")</button>
+                            </div>
+
+                            @* **** ToDo **** Make sure this returns to the correct place *@
+                            <div class="col-6">
+                                <a asp-page="Index" class="btn btn-secondary form-control">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        })
+    </script>
+}

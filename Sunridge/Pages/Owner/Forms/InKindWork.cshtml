@@ -1,0 +1,98 @@
+﻿@page
+@using Sunridge.Utility
+@model Sunridge.Pages.Owner.Forms.InKindWorkModel
+@{
+}
+
+<h2>Sunridge Owner In-Kind Work Form</h2>
+<form method="post">
+    @if (Model.FormsObj.Id != 0)
+    {
+        <input type="hidden" asp-for="FormsObj.Id" />
+        <p>Submitted by @Model.FormsObj.Owner.FullName</p>
+        <p>@Model.FormsObj.DateCreated.ToShortDateString()</p>
+    }
+
+    <div class="row">
+        <div class="col-md-8">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FormsObj.Description">Describe Activity (List what you did):</label>
+                <textarea class="form-control" rows="10" asp-for="FormsObj.Description"></textarea>
+                <span asp-validation-for="FormsObj.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormsObj.Suggestion">Describe Equipment used (make, model of chainsaw, weed eater, two-wheel drive/four-wheel drive truck, ATV, tractor, dozer, dump truck, total hours, etc.):</label>
+                <textarea class="form-control" rows="10" asp-for="FormsObj.Suggestion"></textarea>
+                <span asp-validation-for="FormsObj.Suggestion" class="text-danger"></span>
+            </div>
+
+            <label class="control-label">Total Monthly Labor Hours:</label>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label">Activity:</label>
+                    <input class="form-control" type="text" asp-for="FormsObj.Activity" />
+                    <span asp-validation-for="FormsObj.Activity" class="text-danger"></span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="control-label">Hours:</label>
+                    <input class="form-control" type="text" asp-for="FormsObj.Hours" />
+                    <span asp-validation-for="FormsObj.Hours" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+            <h4>Comments</h4>
+            <div class="row">
+                <div class="col-md-2">
+                    @if (@Model.FormsObj.Admin != null)
+                    {
+                        @Model.FormsObj.Admin
+                    }
+                </div>
+                <div class="col-md-4">
+                    @if (@Model.FormsObj.DateResolved != null)
+                    {
+                        @Model.FormsObj.DateResolved.ToShortDateString()
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    @if (User.IsInRole(SD.AdministratorRole))
+                    {
+                        <textarea class="form-control" rows="6" asp-for="FormsObj.Comments"></textarea>
+                    }
+                    else
+                    {
+                        <textarea class="form-control" readonly="readonly" rows="6">
+                        @if (@Model.FormsObj.Comments != null)
+                        {
+                            @Model.FormsObj.Comments
+                        }
+                        </textarea>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @if (Model.FormsObj.Id != 0)
+                {
+    @if (Model.FormsObj.Resolved != true)
+    {
+<button type="submit" class="btn btn-primary form-control">Update</button>} }
+                else
+                {
+    <button type="submit" class="btn btn-primary form-control">Create</button>}
+            </div>
+
+            <hr />
+
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-page="/Owner/Dashboard/Index">Back to Dashboard</a>
+</div>

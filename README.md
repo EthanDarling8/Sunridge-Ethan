@@ -1,6 +1,6 @@
 # Sunridge
 
-## Sensitive data such as database context and personal information has been removed in order to make this repo public for resume use. As a result, there are only a couple commits to change the readme and remove API keys and it will not run in ISS Express. Our repo originally had around 300 commits by the end of the semester. To view the working site go here: [Capstone Sunridge](https://capstonesitesunridge.azurewebsites.net/).
+## Sensitive data such as database context and personal information has been removed in order to make this repo public for resume use. As a result, there are only a couple commits to change the readme and remove API keys and it will not run in ISS Express. Our repo originally had around 300 commits by the end of the semester.
 
 ### This website was built using C# .NET using razor pages and a repository pattern. The group that worked on this site consisted of 6 people. The site itself is meant to replace a personal website that our Professor was using for a community of cabins in his local area.
 

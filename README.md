@@ -4,6 +4,8 @@
 
 ### This website was built using C# .NET using razor pages and a repository pattern. The group that worked on this site consisted of 6 people. The site itself is meant to replace a personal website that our Professor was using for a community of cabins in his local area.
 
+## View my test site here: https://capstoneethansunridge.azurewebsites.net
+
 ## Version 2.0 (Fall 2020) TODO List:
 
 ### Entire site should be usable on a phone with no functionality lost. Everything it has now should be there, but fixed.
